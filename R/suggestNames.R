@@ -1,5 +1,5 @@
 suggestNames <- function(x){
-  dictio <- paste(find.package("biomonitoR"),"/ephemeroptera_ref.dic", sep="")
+  dictio <- paste(find.package("biomonitoR"),"/dict/ephemeroptera_ref.dic", sep="")
   taxaCar <- as.character(x$Taxa)
 
   # nameCheck and nameSuggest check for the wrong names and suggest for correct names.
