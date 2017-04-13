@@ -4,8 +4,7 @@ Title: What the Package Does (Title Case)
 Version: 0.1.0
 Authors: Alex Laini, Tommaso Cancellario
 Maintainer: Alex Laini <alex.laini@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: A package to calculate indices for biomonitoring of running water with a focus on macroinvertebrate community.
 Depends: hunspell
 License: GPL-2
 LazyLoad: Yes
