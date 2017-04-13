@@ -18,6 +18,9 @@
 
 asBiomonitor <- function(x){
   if(checkNames(x)==TRUE){
+    userTaxa <- x$Taxa
+    userTaxaCap <- factor(capWords(userTaxa))
+    x$Taxa <- userTaxaCap
     temp <- merge(ref,x, by="Taxa")
   }
   else {
