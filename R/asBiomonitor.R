@@ -19,7 +19,7 @@
 asBiomonitor <- function(x){
   if(checkNames(x)==TRUE){
     userTaxa <- x$Taxa
-    userTaxaCap <- factor(capWords(userTaxa))
+    userTaxaCap <- sapply(userTaxa,capWords,USE.NAMES=F)
     x$Taxa <- userTaxaCap
     temp <- merge(ref,x, by="Taxa")
   }
