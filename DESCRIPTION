@@ -1,10 +1,19 @@
 Package: biomonitoR
 Type: Package
 Title: calculates indices for biomonitoring of running waters.
+<<<<<<< HEAD
 Version: 0.0.0.9000
 Authors: Alex Laini [aut, cre],
 Tommaso Cancellario [aut]
 Manteiner: Alex Laini <alex.laini@gmail.com>
+=======
+Version: 0.1.0
+Authors@R: c(person("Alex", "Laini", role = c("aut", "cre"),
+                     email = "alex.laini@gmail.com"),
+              person("Tommaso", "Cancellario", role = "aut"))
+Authors: 
+Maintainer: Alex Laini <alex.laini@gmail.com>
+>>>>>>> 1b0d04f3d89a91fff5ece7eb8a2bae1ffa4b9f29
 Description: A package to calculate indices for biomonitoring of running water with a focus on macroinvertebrate community.
 Depends: hunspell
 License: GPL-2
