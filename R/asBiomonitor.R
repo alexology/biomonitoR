@@ -22,7 +22,7 @@ asBiomonitor <- function(x){
     userTaxa <- x$Taxa
     userTaxaCap <- sapply(userTaxa,capWords,USE.NAMES=F)
     x$Taxa <- userTaxaCap
-    temp <- merge(ref, x, by="Taxa", all=T)
+    temp <- merge(ref, x, by="Taxa", all=F)
   }
   else {
     return("Wrong taxa name are present: use rename function to correct the names")
