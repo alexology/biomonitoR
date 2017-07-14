@@ -18,6 +18,7 @@
 
 asBiomonitor <- function(x){
   if(checkNames(x)==TRUE){
+    x <- aggregate(. ~ Taxa, x, FUN=sum)
     userTaxa <- x$Taxa
     userTaxaCap <- sapply(userTaxa,capWords,USE.NAMES=F)
     x$Taxa <- userTaxaCap
