@@ -1,5 +1,5 @@
 checkNames <- function(x){
-  dictio <- system.file("dict", "ephemeroptera_ref.txt", package="biomonitoR")
+  dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
   taxaCar <- as.character(x$Taxa)
 
   # nameCheck and nameSuggest check for the wrong names and suggest for correct names.
