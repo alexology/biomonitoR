@@ -14,6 +14,10 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #' shannon(data.agR)
+#' @export simpson
+#' @export margalef
+#' @export margalef
+#' @export menhinick
 
 
 shannon <- function(x, base=2, taxLev="Family"){

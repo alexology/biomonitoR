@@ -2,6 +2,8 @@
 
 export(aggregatoR)
 export(asBiomonitor)
+export(famNumb)
+export(genNumb)
 export(rename)
 export(shannon)
 export(speNumb)

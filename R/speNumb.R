@@ -14,6 +14,7 @@
 #' genNumb(data.agR)
 #' @export genNumb
 #' @export famNumb
+#' @export ordNumb
 
 
 speNumb <- function(x){
