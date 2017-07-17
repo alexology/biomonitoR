@@ -12,6 +12,7 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #' genNumb(data.agR)
+#' @rdname genNumb
 
 speNumb <- function(x){
   spe <- x[["Species"]]
