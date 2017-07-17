@@ -12,12 +12,9 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #' genNumb(data.agR)
-<<<<<<< HEAD
 #' @export genNumb
 #' @export famNumb
-=======
-#' @rdname genNumb
->>>>>>> 3a3259bfc85c6a2e5b9df307e57dc07e08e27b22
+
 
 speNumb <- function(x){
   spe <- x[["Species"]]
