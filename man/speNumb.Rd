@@ -2,6 +2,10 @@
 % Please edit documentation in R/speNumb.R
 \name{speNumb}
 \alias{speNumb}
+\alias{genNumb}
+\alias{famNumb}
+\alias{ordNumb}
+\alias{abu}
 \title{speNumb}
 \usage{
 speNumb(x)
@@ -10,7 +14,7 @@ speNumb(x)
 \item{x}{results of function aggregatoR}
 }
 \description{
-Functions for calculating species, genus, family and order Richness
+Functions for calculating species, genus, family and order Richness and abundance
 }
 \details{
 By now only species, genus and family richness calculation are reliable. This is because order assignment for order in the reference database is not completely covered. Unassigned taxon are exluded from the calculations.
