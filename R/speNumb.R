@@ -15,6 +15,7 @@
 #' @export genNumb
 #' @export famNumb
 #' @export ordNumb
+#' @export claNumb
 
 
 speNumb <- function(x){

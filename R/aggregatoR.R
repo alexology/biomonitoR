@@ -17,9 +17,14 @@ aggregatoR <- function(x){
     on.exit(options(opt))
     return("Object x is not an object of class biomonitoR")
   }
-  tx <- c("Order", "Genus", "Family", "Species", "Taxa")
+  tx <- c("Class", "Order", "Genus", "Family", "Species", "Taxa")
   stz <- x[!(names(x) %in% tx)]
   stz_n <- names(stz)     # station names
+
+  # Counting Classes
+  cla.agg <- aggregate(stz, by=list(x$Class),sum)
+  levels(cla.agg$Group.1)[levels(cla.agg$Group.1)==""] <- "unassigned"
+  names(cla.agg) <- c("Class",stz_n)
 
   # Counting Orders
   ord.agg <- aggregate(stz, by=list(x$Order),sum)
@@ -46,8 +51,8 @@ aggregatoR <- function(x){
   levels(tax.agg$Group.1)[levels(tax.agg$Group.1)==""] <- "unassigned"
   names(tax.agg) <- c("Taxon",stz_n)
 
-  temp <- list(ord.agg,fam.agg,gen.agg,spe.agg,tax.agg)
-  names(temp) <- c( "Order", "Family", "Genus", "Species", "Taxa")
+  temp <- list(cla.agg,ord.agg,fam.agg,gen.agg,spe.agg,tax.agg)
+  names(temp) <- c( "Class", "Order", "Family", "Genus", "Species", "Taxa")
   class(temp) <- "biomonitoR"
   return(temp)
 }
