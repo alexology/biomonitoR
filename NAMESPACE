@@ -2,6 +2,9 @@
 
 export(aggregatoR)
 export(asBiomonitor)
+export(aspt)
+export(bmwp)
+export(claNumb)
 export(famNumb)
 export(genNumb)
 export(margalef)
