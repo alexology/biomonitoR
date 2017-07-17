@@ -16,7 +16,8 @@ install_github("alexology/biomonitoR")
 ```R
 library(biomonitoR)
 
-# load example dataset
+# load example dataset. biomonitoR package needs a dataset with taxa names in the first column called "Taxa" and samples on the columns. Take a look to macro_ex for an example:
+
 data(macro_ex)
 
 # Prepare data for the analysis.
