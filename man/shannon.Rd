@@ -2,6 +2,9 @@
 % Please edit documentation in R/shannon.R
 \name{shannon}
 \alias{shannon}
+\alias{simpson}
+\alias{margalef}
+\alias{menhinick}
 \title{shannon}
 \usage{
 shannon(x, base = 2, taxLev = "Family")
