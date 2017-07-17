@@ -27,5 +27,6 @@ asBiomonitor <- function(x){
   else {
     return("Wrong taxa name are present: use rename function to correct the names")
   }
+  class(temp) <- "biomonitoR"
   return(temp)
 }
