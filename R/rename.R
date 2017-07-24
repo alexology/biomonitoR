@@ -31,5 +31,6 @@ rename <- function(x, write.table=F){
     dfNameChange <- paste0(dfName, "_mod",".txt")
     write.table(x, file=dfNameChange, quote=F, append=F)
   }
+  x$Taxa <- ("_", " ", x$Taxa)
   return(x)
 }
