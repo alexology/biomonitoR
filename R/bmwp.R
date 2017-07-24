@@ -53,5 +53,5 @@ bmwp <- function( x , method = "a") {
     tot.st <- which(names(tot.mer)%in%st.names)
     tot.bmwp <- apply(tot.mer$Value*tot.mer[ , tot.st, drop=F], 2, sum)
   }
-  return(tot.bmwp)
+  return( tot.bmwp )
 }
