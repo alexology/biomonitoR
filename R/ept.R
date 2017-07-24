@@ -11,7 +11,7 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #' ept(data.bio)
-#' ept()
+
 
 epti <- function (x, taxLev = "Family"){
   x_ept <- x[["Tree"]]
