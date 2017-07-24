@@ -8,9 +8,14 @@ ept(x, taxLev = "Family")
 }
 \arguments{
 \item{x}{results of function aggregatoR}
+
+\item{taxLev}{the taxonomic level for calculating EPT richness.}
 }
 \description{
-This function calculates EPT richnes
+This function calculates the number of Ephemeroptera, Plecotera and Trichoptera (ept) taxa.
+}
+\details{
+The parameter taxLev can be "Species", "Genus", "Family" or "Order".
 }
 \examples{
 data(macro_ex)

@@ -1,9 +1,10 @@
 #' ept
 #'
-#' This function calculates EPT richnes
+#' This function calculates the number of Ephemeroptera, Plecotera and Trichoptera (ept) taxa.
 #' @param x results of function aggregatoR
+#' @param taxLev the taxonomic level for calculating EPT richness.
 #' @keywords ept
-#' @details
+#' @details The parameter taxLev can be "Species", "Genus", "Family" or "Order".
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
