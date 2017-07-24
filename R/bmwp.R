@@ -24,7 +24,7 @@ bmwp <- function( x , method = "a") {
   z <- bfam_acc}
   if(method == "i") {y <- aspt_i
   z <- ifam_acc}
-  if(method == "b" || method == "i") (x <- checkBmwpFam(df=x[,-numb], famNames=z, stNames=st.names))
+  if(method == "b" || method == "i") (x <- checkBmwpFam(df=x[-numb], famNames=z, stNames=st.names))
 
   x.bin <- lapply(x, function(x){data.frame( x[,1,drop=F], (x[,-1]>0)*1)})
 
