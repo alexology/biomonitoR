@@ -17,7 +17,7 @@ aggregatoR <- function(x){
     on.exit(options(opt))
     return("Object x is not an object of class biomonitoR")
   }
-  tx <- c("Class", "Order", "Genus", "Family", "Species", "Taxa")
+  tx <- c("Class", "Order", "Family", "Genus", "Species", "Taxa")
   stz <- x[!(names(x) %in% tx)]
   stz_n <- names(stz)     # station names
 
@@ -51,8 +51,11 @@ aggregatoR <- function(x){
   levels(tax.agg$Group.1)[levels(tax.agg$Group.1)==""] <- "unassigned"
   names(tax.agg) <- c("Taxon",stz_n)
 
-  temp <- list(cla.agg,ord.agg,fam.agg,gen.agg,spe.agg,tax.agg)
-  names(temp) <- c( "Class", "Order", "Family", "Genus", "Species", "Taxa")
+  tree.agg <- aggregate(stz, by=list(x$Class,x$Order, x$Family, x$Genus, x$Species, x$Taxa),sum)
+  names(tree.agg) <- c(tx,stz_n)
+
+  temp <- list(cla.agg,ord.agg,fam.agg,gen.agg,spe.agg,tax.agg,tree.agg)
+  names(temp) <- c( "Class", "Order", "Family", "Genus", "Species", "Taxa", "Tree")
   class(temp) <- "biomonitoR"
   return(temp)
 }
