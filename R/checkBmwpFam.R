@@ -8,8 +8,11 @@ checkBmwpFam <- function(df, famNames, stNames){
       famDf$Family[famDf$Family == taxName] <- as.character(subset(famNames, Family==taxName)[,2])
     }
     famDf <- aggregate(. ~ Family, famDf, sum)
-    names(famDf) <- c("Family", StNames)
+    names(famDf) <- c("Family", stNames)
     df[["Family"]] <- famDf
+    return(df)
   }
-  else{df <- df}
+  else{df <- df
+  return(df)
+  }
 }
