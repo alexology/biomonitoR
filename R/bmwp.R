@@ -18,12 +18,13 @@
 bmwp <- function( x , method = "a") {
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
+  numb <- which(names(x)=="Tree") # position of the Tree element in the list to remove
   if(method == "a") (y <- aspt_h)
   if(method == "b") {y <- aspt_b
   z <- bfam_acc}
   if(method == "i") {y <- aspt_i
   z <- ifam_acc}
-  if(method == "b" || method == "i") (checkBmwpFam(df=x, famNames=z, stNames=st.names))
+  if(method == "b" || method == "i") (x <- checkBmwpFam(df=x[,-numb], famNames=z, stNames=st.names))
 
   x.bin <- lapply(x, function(x){data.frame( x[,1,drop=F], (x[,-1]>0)*1)})
 

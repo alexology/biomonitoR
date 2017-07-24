@@ -16,7 +16,7 @@ This function calculates EPT richnes
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-ept(data.bio)
+ept(data.agR)
 }
 \seealso{
 \code{\link{aggregatoR}}
