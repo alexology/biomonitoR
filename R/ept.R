@@ -13,7 +13,7 @@
 #' ept(data.bio)
 
 
-epti <- function (x, taxLev = "Family"){
+ept <- function (x, taxLev = "Family"){
   x_ept <- x[["Tree"]]
   tx <- c("Class", "Order", "Family", "Genus", "Species", "Taxa")
   stz <- x_ept[!(names(x_ept) %in% tx)]
