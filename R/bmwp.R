@@ -11,8 +11,8 @@
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' aspt()
-#' @export aspt
+#' bmwp(data.agR)
+
 
 
 bmwp <- function( x , method = "a") {
@@ -28,28 +28,29 @@ bmwp <- function( x , method = "a") {
   x.bin <- lapply(x, function(x){data.frame( x[,1,drop=F], (x[,-1]>0)*1)})
 
   # merge families
-  fam.mer <- merge(y[["Family"]],x.bin[["Family"]])
+  fam.mer <- merge( y[["Family"]], x.bin[["Family"]] )
+  colnames(fam.mer)[1] <- "Taxa"
 
   # merge order
-  ord.mer <- merge(y[["Order"]],x.bin[["Order"]])
+  ord.mer <- merge( y[["Order"]], x.bin[["Order"]] )
+  colnames(ord.mer)[1] <- "Taxa"
 
   # merge subclasses
-  cla.mer <- merge(y[["Class"]],x.bin[["Class"]])
+  cla.mer <- merge( y[["Class"]], x.bin[["Class"]] )
+  colnames(cla.mer)[1] <- "Taxa"
+
+  # rbind merges
+  tot.mer <- rbind(fam.mer, ord.mer, cla.mer)
 
   # check if merge results provided valid data.frame
-  if(nrow(fam.mer)==0&&nrow(ord.mer)==0&&nrow(scla.mer)==0){
-    opt <- options(show.error.messages=T)
-    on.exit(options(opt))
+  if( nrow(tot.mer) == 0 ){
+    opt <- options( show.error.messages = T )
+    on.exit( options( opt ) )
     return("No valid taxon provided")
   }
   else {
-    fam.st <- which(names(fam.mer)%in%st.names)
-    ord.st <- which(names(ord.mer)%in%st.names)
-    cla.st <- which(names(cla.mer)%in%st.names)
-    fam.bmwp <- apply(fam.mer$Value*fam.mer[ , fam.st, drop=F], 2, sum)
-    ord.bmwp <- apply(ord.mer$Value*ord.mer[ , ord.st, drop=F], 2, sum)
-    cla.bmwp <- apply(cla.mer$Value*cla.mer[ , cla.st, drop=F], 2, sum)
-    bmwp.res <- fam.bmwp+ord.bmwp+cla.bmwp
+    tot.st <- which(names(tot.mer)%in%st.names)
+    tot.bmwp <- apply(tot.mer$Value*tot.mer[ , tot.st, drop=F], 2, sum)
   }
-  return(bmwp.res)
+  return(tot.bmwp)
 }
