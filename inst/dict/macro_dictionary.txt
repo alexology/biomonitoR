@@ -1,4 +1,4 @@
-10417
+10424
 Acroloxidae
 Acroloxus_lacustris
 Acroloxus
@@ -925,6 +925,7 @@ Branchiobdellidae
 Xironogiton_instabilis
 Xironogiton
 Branchiobdellida
+Ostracoda
 Argyroneta_aquatica
 Argyroneta
 Argyronetinae
@@ -10416,3 +10417,9 @@ Prostoma_graecense
 Prostoma
 Tetrastemmatidae
 Nemertea
+Leptoconops acer
+Leptoconops gallicus
+Leptoconops kerteszi
+Leptoconops laurae
+Leptoconops noei
+Leptoconops pugnax
