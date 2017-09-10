@@ -21,13 +21,14 @@ asBiomonitor <- function (x)
   if (checkNames(x) == TRUE) {
     x <- aggregate(. ~ Taxa, x, FUN = sum)
     userTaxa <- x$Taxa
+    st.names <- names(x)[-which(names(x) %in% c("Taxa"))]
     userTaxaCap <- sapply(userTaxa, capWords, USE.NAMES = F)
     x$Taxa <- userTaxaCap
     temp <- merge(ref, x, by = "Taxa", all = F)
     temp_valid <- temp[which(temp$Taxonomic_Status=="yes"),]
     temp_novalid <- temp[which(temp$Taxonomic_Status=="no"),]
     taxa_def <- as.list(temp_valid[,-which(names(temp) %in% c("Taxonomic_Status"))])
-    taxa_def$novalid <- temp_novalid
+    taxa_def$novalid <- temp_novalid[, c("Taxa", st.names)]
   }
   else {
     return("Wrong taxa name are present: use rename function to correct the names")
