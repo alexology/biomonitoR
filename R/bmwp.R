@@ -15,7 +15,7 @@
 
 
 
-bmwpx <- function( d , method = "a") {
+bmwp <- function( d , method = "a") {
   numb <- c(which(names(d)=="Tree"), which(names(d)=="Taxa")) # position of the Tree element in the list to remove
   x <- d[-numb]
   # y is the reference data.set for bmwp calculation
