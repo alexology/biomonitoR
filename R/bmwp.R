@@ -15,9 +15,9 @@
 
 
 
-bmwp <- function( x , method = "a") {
-  numb <- which(names(x)=="Tree") # position of the Tree element in the list to remove
-  x <- x[-numb]
+bmwpx <- function( d , method = "a") {
+  numb <- c(which(names(d)=="Tree"), which(names(d)=="Taxa")) # position of the Tree element in the list to remove
+  x <- d[-numb]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
     if(method == "a") (y <- aspt_h)
@@ -27,23 +27,15 @@ bmwp <- function( x , method = "a") {
   z <- ifam_acc}
   if(method == "b" || method == "i") (x <- checkBmwpFam(df=x, famNames=z, stNames=st.names))
 
-  x.bin <- lapply(x, function(x){data.frame( x[,1,drop=F], (x[,-1]>0)*1)})
-
-  # merge families
-  fam.mer <- merge( y[["Family"]], x.bin[["Family"]] )
-  colnames(fam.mer)[1] <- "Taxa"
-
-  # merge order
-  ord.mer <- merge( y[["Order"]], x.bin[["Order"]] )
-  colnames(ord.mer)[1] <- "Taxa"
-
-  # merge subclasses
-  cla.mer <- merge( y[["Class"]], x.bin[["Class"]] )
-  colnames(cla.mer)[1] <- "Taxa"
-
-  # rbind merges
-  tot.mer <- rbind(fam.mer, ord.mer, cla.mer)
-
+  for(i in 1:length(x)){
+    colnames(x[[i]])[1] <- "Taxon"
+  }
+  
+  df <- do.call( "rbind" , x )
+  rownames( df ) <- NULL
+  df <- data.frame( df[ , 1 , drop =F ], (df[ , -1 ] > 0 ) * 1 )
+  tot.mer <- merge( y , df )
+  
   # check if merge results provided valid data.frame
   if( nrow(tot.mer) == 0 ){
     opt <- options( show.error.messages = T )

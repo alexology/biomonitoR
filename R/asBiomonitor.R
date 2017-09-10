@@ -16,17 +16,23 @@
 
 
 
-asBiomonitor <- function(x){
-  if(checkNames(x)==TRUE){
-    x <- aggregate(. ~ Taxa, x, FUN=sum)
+asBiomonitor <- function (x) 
+{
+  if (checkNames(x) == TRUE) {
+    x <- aggregate(. ~ Taxa, x, FUN = sum)
     userTaxa <- x$Taxa
-    userTaxaCap <- sapply(userTaxa,capWords,USE.NAMES=F)
+    userTaxaCap <- sapply(userTaxa, capWords, USE.NAMES = F)
     x$Taxa <- userTaxaCap
-    temp <- merge(ref, x, by="Taxa", all=F)
+    temp <- merge(ref, x, by = "Taxa", all = F)
+    temp_valid <- temp[which(temp$Taxonomic_Status=="yes"),]
+    temp_novalid <- temp[which(temp$Taxonomic_Status=="no"),]
+    # no valid taxonomic taxa introduced (e.g. Ancylidae)
+    taxa_def <- as.list(temp_valid[,-which(names(temp) %in% c("Taxonomic_Status"))]) 
+    taxa_def$novalid <- temp_novalid
   }
   else {
     return("Wrong taxa name are present: use rename function to correct the names")
   }
-  class(temp) <- "biomonitoR"
-  return(temp)
+  class(taxa_def) <- "biomonitoR"
+  return(taxa_def)
 }
