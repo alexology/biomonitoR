@@ -35,3 +35,4 @@ asBiomonitor <- function (x)
   class(taxa_def) <- "biomonitoR"
   return(taxa_def)
 }
+
