@@ -27,7 +27,8 @@ asBiomonitor <- function (x)
     temp_valid <- temp[which(temp$Taxonomic_Status=="yes"),]
     temp_novalid <- temp[which(temp$Taxonomic_Status=="no"),]
     taxa_def <- as.list(temp_valid[,-which(names(temp) %in% c("Taxonomic_Status"))])
-    taxa_def$novalid <- temp_novalid
+    tx <- c("Class",  "Subclass", "Order", "Family", "Genus", "Species", "Taxonomic_Status")
+    taxa_def$novalid <- temp_novalid[!(names(temp_novalid) %in% tx)]
   }
   else {
     return("Wrong taxa name are present: use rename function to correct the names")
