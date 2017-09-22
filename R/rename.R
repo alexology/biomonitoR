@@ -1,6 +1,6 @@
 rename <- function(x, write.table=F){
   dfName <- deparse(substitute(x))
-  tempNames <- suggestNames(x)
+  tempNames <- suggestUserNames(x)
   wrong <- tempNames$wrongNames
   correct <- tempNames$correctNames
   result <- x$Taxa

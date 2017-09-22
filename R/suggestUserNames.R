@@ -1,13 +1,13 @@
 suggestUserNames <- function(x){
   dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
   taxaCar <- as.character(x$Taxa)
-  
+
   # nameCheck and nameSuggest check for the wrong names and suggest for correct names.
   # hunspell_check and hunspell_suggest are from the package hunspell
   nameCheck <- hunspell::hunspell_check(taxaCar, dict = dictio)
   nameSuggest <- hunspell::hunspell_suggest(taxaCar, dict = dictio)
-  
-  
+
+
   n <- which(nameCheck==F) #number of wrong names
   temp <- rep(NA, length(n)) # vector to store user choices
   wrongName <- as.vector(x[n,"Taxa"]) # vector of wrong taxa names
