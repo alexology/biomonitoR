@@ -1,6 +1,6 @@
 # biomonitoR
-A package to calculate indices for biomonitoring of running water with a focus on macroinvertebrate community. 
-Still in HEAVY development.
+A package for calculating indices for biomonitoring of running water with a focus on macroinvertebrate community. 
+Still in development.
 
 
 # Installation
@@ -22,8 +22,7 @@ data(macro_ex)
 
 # Prepare data for the analysis.
 data(macro_ex)
-data.ren <- rename(macro_ex)
-data.bio <- asBiomonitor(data.ren)
+data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 
 # calculate genus and family richness
@@ -31,11 +30,17 @@ genNumb(data.agR)
 famNumb(data.agR)
 
 # calculate shannon index
-shannon(data.agR)
+shannon(data.agR, taxLev = "Family")
+
+# calculate italian bmwp and aspt
+bmwp(data.agR, method="b")
+aspt(data.agR, method="b")
 
 # calculate iberian bmwp and aspt
 bmwp(data.agR, method="i")
 aspt(data.agR, method="i")
+
+```
 
 ## References
 Reference database is from [freshwaterecology.info](http://www.freshwaterecology.info/).
