@@ -4,12 +4,12 @@
 \alias{bmwp}
 \title{aggregatoR}
 \usage{
-bmwp(x, method = "a")
+bmwp(d, method = "a")
 }
 \arguments{
-\item{x}{results of function aggregatoR}
-
 \item{method}{a,b or i. See details.}
+
+\item{x}{results of function aggregatoR}
 }
 \description{
 Functions for calculating BMWP and ASPT

@@ -4,7 +4,7 @@
 \alias{asBiomonitor}
 \title{asBiomonitor}
 \usage{
-asBiomonitor(x)
+asBiomonitor(x, dfref = NULL, overwrite = F)
 }
 \arguments{
 \item{x}{a data.frame as specified in details}
@@ -19,9 +19,6 @@ asBiomonitor check the correctness of taxa names in the data.frame provided by t
 \examples{
 data(macro_ex)
 asBiomonitor(macro_ex)
-# Select the correct name "Ametropus"
-macro_ex.mod <- rename(macro_ex)
-asBiomonitoring(macro_ex.mod)
 }
 \seealso{
 \code{\link{rename}}

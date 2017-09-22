@@ -4,7 +4,7 @@
 \alias{aggregatoR}
 \title{aggregatoR}
 \usage{
-aggregatoR(x)
+aggregatoR(z)
 }
 \arguments{
 \item{x}{results of function asBiomonitoR}
