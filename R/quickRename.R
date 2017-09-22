@@ -9,7 +9,7 @@
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
 #' data(macro_ex)
-#' macro_ex.mod <- rename(macro_ex)
+#' macro_ex.mod <- quickRename(macro_ex)
 
 
 

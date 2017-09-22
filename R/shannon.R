@@ -24,7 +24,6 @@ shannon <- function(x, base=2, taxLev="Family"){
   
   # check if the object d is of class "biomonitoR"
   
-  {
     if (class(z) != "biomonitoR") {
       opt <- options(show.error.messages = FALSE)
       on.exit(options(opt))

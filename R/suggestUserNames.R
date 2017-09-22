@@ -13,12 +13,17 @@ suggestUserNames <- function(x){
   wrongName <- as.vector(x[n,"Taxa"]) # vector of wrong taxa names
   correctName <- nameSuggest[n] # list of suggestions
   for(i in 1:length(n)){
-    choice <- c(correctName[[i]]) # choices provided to the user
+    choice <- c(correctName[[i]],"User taxon input") # choices provided to the user
     # provide suggestions to the user and if the user can't find the correct name he can enter
     # the right name by himself
     temp[i] <- select.list(choice, title=wrongName[i])
+    if(temp[i]=="User taxon input"){
+      temp[i] <- readline(prompt="Enter taxon name: ")
+    }
+    else{
+      temp[i] <- temp[i]
+    }
   }
   # Remove hashtag for a standalone function
   return(list("wrongNames" = wrongName, "correctNames" = temp))
-  
 }

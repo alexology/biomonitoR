@@ -17,7 +17,6 @@ aspt <- function( d , method = "a") {
   
   # check if the object d is of class "biomonitoR"
   
-  {
     if (class(z) != "biomonitoR") {
       opt <- options(show.error.messages = FALSE)
       on.exit(options(opt))
