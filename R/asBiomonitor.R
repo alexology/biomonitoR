@@ -10,9 +10,6 @@
 #' @examples
 #' data(macro_ex)
 #' asBiomonitor(macro_ex)
-#' # Select the correct name "Ametropus"
-#' macro_ex.mod <- rename(macro_ex)
-#' asBiomonitoring(macro_ex.mod)
 
 
 asBiomonitor <- function (x, dfref = NULL, overwrite = F ) 

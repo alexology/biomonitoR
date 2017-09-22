@@ -1,4 +1,15 @@
 menhinick <- function(x, taxLev = "Family"){
+
+  # check if the object d is of class "biomonitoR"
+  
+  {
+    if (class(z) != "biomonitoR") {
+      opt <- options(show.error.messages = FALSE)
+      on.exit(options(opt))
+      return("Object x is not an object of class biomonitoR")
+    }
+    
+  
   if(class(x) != "biomonitoR"){
     stop("Object x is not a data.frame of class biomonitoR")
   }
@@ -13,5 +24,5 @@ menhinick <- function(x, taxLev = "Family"){
   else{
     men <- apply(df[,-1], 2, FUN = function(x){Pi( x, index = "Menhinick")})
   }
-  return(men)
+  return( round(men, 3) )
 }

@@ -1,5 +1,15 @@
 simpson <- function(x, taxLev = "Family"){
-  if(class(x) != "biomonitoR"){
+  
+  # check if the object d is of class "biomonitoR"
+  
+  {
+    if (class(z) != "biomonitoR") {
+      opt <- options(show.error.messages = FALSE)
+      on.exit(options(opt))
+      return("Object x is not an object of class biomonitoR")
+    }
+    
+    if(class(x) != "biomonitoR"){
     stop("Object x is not a data.frame of class biomonitoR")
   }
   df <-  x[[taxLev]]
@@ -13,5 +23,5 @@ simpson <- function(x, taxLev = "Family"){
   else{
     sim <- apply(df[,-1], 2, FUN = function(x){Pi( x, index = "Simpson")})
   }
-  return(sim)
+  return( round(sim,3))
 }

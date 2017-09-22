@@ -21,6 +21,16 @@
 
 
 shannon <- function(x, base=2, taxLev="Family"){
+  
+  # check if the object d is of class "biomonitoR"
+  
+  {
+    if (class(z) != "biomonitoR") {
+      opt <- options(show.error.messages = FALSE)
+      on.exit(options(opt))
+      return("Object x is not an object of class biomonitoR")
+    }
+  
   if(class(x)!="biomonitoR"){
     opt <- options(show.error.messages=FALSE)
     on.exit(options(opt))
@@ -37,6 +47,6 @@ shannon <- function(x, base=2, taxLev="Family"){
   else{
     sha <- apply(df[,-1], 2, FUN = function(x){Pi( x, index = "Shannon", base = base )})
   }
-  return(sha)
+  return( round(sha, 3) )
 }
 
