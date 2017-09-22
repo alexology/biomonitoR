@@ -19,6 +19,16 @@
 
 
 speNumb <- function(x){
+  
+  # check if the object d is of class "biomonitoR"
+  
+  if (class(x) != "biomonitoR") {
+    opt <- options(show.error.messages = FALSE)
+    on.exit(options(opt))
+    return("Object x is not an object of class biomonitoR")
+  }
+  
+  
   spe <- x[["Species"]]
   if("unassigned" %in% spe[,1]){
     z <- which(spe$Species=="unassigned")

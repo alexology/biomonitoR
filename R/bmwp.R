@@ -20,7 +20,7 @@ bmwp <- function( d , method = "a") {
   # check if the object d is of class "biomonitoR"
   
 
-    if (class(z) != "biomonitoR") {
+    if (class(d) != "biomonitoR") {
       opt <- options(show.error.messages = FALSE)
       on.exit(options(opt))
       return("Object x is not an object of class biomonitoR")

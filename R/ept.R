@@ -15,6 +15,16 @@
 
 
 ept <- function (x, taxLev = "Family"){
+  
+  # check if the object d is of class "biomonitoR"
+  
+  if (class(x) != "biomonitoR") {
+    opt <- options(show.error.messages = FALSE)
+    on.exit(options(opt))
+    return("Object x is not an object of class biomonitoR")
+  }
+  
+  
   x_ept <- x[["Tree"]]
   tx <- c("Class", "Order", "Family", "Genus", "Species", "Taxa")
   stz <- x_ept[!(names(x_ept) %in% tx)]
