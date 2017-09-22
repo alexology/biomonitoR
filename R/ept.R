@@ -26,7 +26,7 @@ ept <- function (x, taxLev = "Family"){
   
   
   x_ept <- x[["Tree"]]
-  tx <- c("Class", "Order", "Family", "Genus", "Species", "Taxa")
+  tx <- c("Class", "Subclass", "Order", "Family", "Genus", "Species", "Taxa")
   stz <- x_ept[!(names(x_ept) %in% tx)]
   stz_n <- names(stz)     # station names
   ept_taxa <- x_ept[which(x_ept$Order == "Plecoptera" |
@@ -43,7 +43,7 @@ ept <- function (x, taxLev = "Family"){
       z <- which(ept_temp.agg[,1]=="unassigned")
       ept_temp.agg<- ept_temp.agg[-z,] # remove unassigned row from the species count
     }
-    temp <- colSums(ept_temp.agg[,-1,drop=F] > 1)
+    temp <- colSums(ept_temp.agg[,-1,drop=F] > 0)
     return(temp)
   }
 }
