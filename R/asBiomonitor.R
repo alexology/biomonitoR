@@ -15,24 +15,47 @@
 #' asBiomonitoring(macro_ex.mod)
 
 
-
-asBiomonitor <- function (x) 
+asBiomonitor <- function (x, dfref = NULL, overwrite = F ) 
 {
-  if (checkNames(x) == TRUE) {
-    x <- aggregate(. ~ Taxa, x, FUN = sum)
-    userTaxa <- x$Taxa
-    userTaxaCap <- sapply(userTaxa, capWords, USE.NAMES = F)
-    x$Taxa <- userTaxaCap
-    temp <- merge(ref, x, by = "Taxa", all = F)
-    temp_valid <- temp[which(temp$Taxonomic_Status=="yes"),]
-    temp_novalid <- temp[which(temp$Taxonomic_Status=="no"),]
-    taxa_def <- as.list(temp_valid[,-which(names(temp) %in% c("Taxonomic_Status"))])
-    tx <- c("Class",  "Subclass", "Order", "Family", "Genus", "Species", "Taxonomic_Status")
-    taxa_def$novalid <- temp_novalid[!(names(temp_novalid) %in% tx)]
+  
+  # allow the user to update the database adding taxa to reference condition
+  if(is.null(dfref) == F & overwrite == F){
+    ref <- rbind(ref, dfref)
+  } 
+  
+  # allow the user to update the database replacing the reference database with is own reference database
+  if(is.null(dfref) == F & overwrite == T){
+    ref <- dfref
   }
-  else {
-    return("Wrong taxa name are present: use rename function to correct the names")
+  
+  x <- aggregate(. ~ Taxa, x, FUN = sum)
+  userTaxa <- x$Taxa
+  
+  # cahnge the name of taxa to lowercase and capital letter
+  userTaxaCap <- sapply(userTaxa, capWords, USE.NAMES = F)
+  
+  # changes various flavours of Hydracarina to Trombidiformes
+  hydrac <- c("Hydracarina", "Hydracnidia", "Acariformes")
+  hydrac_temp <- userTaxaCap %in% hydrac
+  if(length(which(hydrac_temp == T)) != 0 ){
+    userTaxaCap[which(hydrac_temp)] <- "Trombidiformes"
   }
+    
+  x$Taxa <- userTaxaCap
+  x <- rename(x)
+  temp <- merge(ref, x, by = "Taxa", all = F)
+  temp_valid <- temp[which(temp$Taxonomic_Status=="yes"),]
+  temp_novalid <- temp[which(temp$Taxonomic_Status=="no"),]
+  taxa_def <- as.list(temp_valid[,-which(names(temp) %in% c("Taxonomic_Status"))])
+  tx <- c("Class",  "Subclass", "Order", "Family", "Genus", "Species", "Taxonomic_Status")
+  taxa_def$novalid <- temp_novalid[!(names(temp_novalid) %in% tx)]
+
   class(taxa_def) <- "biomonitoR"
-  return(taxa_def)
+  
+  if(length(which(hydrac_temp == T)) != 0 ){
+    message("Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes")
+    taxa_def
+  }
+  
+  else{ taxa_def }
 }
