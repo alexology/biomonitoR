@@ -26,5 +26,4 @@ suggestUserNames <- function(x){
   }
   # Remove hashtag for a standalone function
   return(list("wrongNames" = wrongName, "correctNames" = temp))
-  
 }
