@@ -10,8 +10,8 @@ taxNumb <- function(x){
 
 
   tax <- x[["Taxa"]]
-  if("unassigned" %in% fam[,1]){
-    z <- which(tax$Taxa=="unassigned")
+  if("unassigned" %in% tax[,1]){
+    z <- which(tax$Taxon=="unassigned")
     tax <- tax[-z,] # remove unassigned row from the species count
   }
   tax <- apply(tax[,-1], 2, FUN=function(x){length(x[x>0])})
