@@ -2,7 +2,7 @@
 #'
 #' This function calculates the Average Score Per Taxon following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) formulations.
 #' @param x results of function aggregatoR
-#' @param method the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and i (Alba-Tercedor & Sanchez Ortega, 1988)  
+#' @param method the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and i (Alba-Tercedor & Sanchez Ortega, 1988)
 #' @keywords aggregatoR
 #' @details
 #' @references ALBA-TERCEDOR,  J.  &  A.  SÁNCHEZ-ORTEGA. 1988.  Un  método  rápido  y  simple  para  evaluar  la calidad biológica de las aguas corrientes basado en el de Hellawell (1978). Limnetica, 4: 51-56.
@@ -17,15 +17,15 @@
 #' aspt(data.agR)
 
 aspt <- function( d , method = "a") {
-  
+
   # check if the object d is of class "biomonitoR"
-  
+
     if (class(d) != "biomonitoR") {
       opt <- options(show.error.messages = FALSE)
       on.exit(options(opt))
       return("Object x is not an object of class biomonitoR")
     }
-  
+
   numb <- c(which(names(d)=="Tree"), which(names(d)=="Taxa")) # position of the Tree element in the list to remove
   x <- d[-numb]
   # y is the reference data.set for bmwp calculation
@@ -36,16 +36,16 @@ aspt <- function( d , method = "a") {
   if(method == "i") {y <- aspt_i
   z <- ifam_acc}
   if(method == "b" || method == "i") (x <- checkBmwpFam(df=x, famNames=z, stNames=st.names))
-  
+
   for(i in 1:length(x)){
     colnames(x[[i]])[1] <- "Taxon"
   }
-  
+
   df <- do.call( "rbind" , x )
   rownames( df ) <- NULL
   df <- data.frame( df[ , 1 , drop =F ], (df[ , -1 ] > 0 ) * 1 )
   tot.mer <- merge( y , df )
-  
+
   # check if merge results provided valid data.frame
   if( nrow(tot.mer) == 0 ){
     opt <- options( show.error.messages = T )
