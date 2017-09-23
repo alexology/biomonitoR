@@ -1,10 +1,13 @@
 #' aggregatoR
 #'
-#' Functions for calculating BMWP and ASPT
+#' This function calculates the Average Score Per Taxon following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) formulations.
 #' @param x results of function aggregatoR
-#' @param method a,b or i. See details.
+#' @param method the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and i (Alba-Tercedor & Sanchez Ortega, 1988)  
 #' @keywords aggregatoR
 #' @details
+#' @references ALBA-TERCEDOR,  J.  &  A.  SÁNCHEZ-ORTEGA. 1988.  Un  método  rápido  y  simple  para  evaluar  la calidad biológica de las aguas corrientes basado en el de Hellawell (1978). Limnetica, 4: 51-56.
+#' @references Armitage, P. D., Moss, D., Wright, J. F., & Furse, M. T. (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. Water research, 17(3), 333-347.
+#' @references Davy-Bowker J., Clarke R., Corbin T., Vincent H, Pretty J., Hawczak A., Blackburn J., Murphy J., Jones I., 2008. River Invertebrate Classification Tool. Final report. WFD72C. SNIFFER. 276 pp
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
