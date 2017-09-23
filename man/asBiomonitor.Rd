@@ -8,13 +8,17 @@ asBiomonitor(x, dfref = NULL, overwrite = F)
 }
 \arguments{
 \item{x}{a data.frame as specified in details}
+
+\item{overwrite}{if set to T replace the reference database with the one provided by the user}
+
+\item{dref}{allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database}
 }
 \description{
-This function prepares data for further calculations.
+This function merge the user dataframe with the reference database. Options to improve or replace the reference database are provided.
 }
 \details{
 data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
-asBiomonitor check the correctness of taxa names in the data.frame provided by the user. If names are correct the function will process the data.frame to a biomonitor object, else it suggest to rename the wrong names with the function \code{\link{rename}}.
+asBiomonitor check the correctness of taxa names in the data.frame provided by the user. If names are correct the function will process the data.frame to a biomonitor object, otherwise it provide suggestion for correct names.
 }
 \examples{
 data(macro_ex)
