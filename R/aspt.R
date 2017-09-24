@@ -1,4 +1,4 @@
-#' aggregatoR
+#' aspt
 #'
 #' This function calculates the Average Score Per Taxon following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) formulations.
 #' @param x results of function aggregatoR

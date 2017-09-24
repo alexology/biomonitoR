@@ -1,4 +1,4 @@
-#' aggregatoR
+#' bmwp
 #'
 #' Functions for calculating BMWP and ASPT
 #' @param x results of function aggregatoR
@@ -16,16 +16,16 @@
 
 
 bmwp <- function( d , method = "a") {
-  
+
   # check if the object d is of class "biomonitoR"
-  
+
 
     if (class(d) != "biomonitoR") {
       opt <- options(show.error.messages = FALSE)
       on.exit(options(opt))
       return("Object x is not an object of class biomonitoR")
     }
-    
+
   numb <- c(which(names(d)=="Tree"), which(names(d)=="Taxa")) # position of the Tree element in the list to remove
   x <- d[-numb]
   # y is the reference data.set for bmwp calculation
@@ -40,12 +40,12 @@ bmwp <- function( d , method = "a") {
   for(i in 1:length(x)){
     colnames(x[[i]])[1] <- "Taxon"
   }
-  
+
   df <- do.call( "rbind" , x )
   rownames( df ) <- NULL
   df <- data.frame( df[ , 1 , drop =F ], (df[ , -1 ] > 0 ) * 1 )
   tot.mer <- merge( y , df )
-  
+
   # check if merge results provided valid data.frame
   if( nrow(tot.mer) == 0 ){
     opt <- options( show.error.messages = T )
