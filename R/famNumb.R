@@ -1,14 +1,14 @@
 famNumb <- function(x){
-  
+
   # check if the object d is of class "biomonitoR"
-  
+
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
     on.exit(options(opt))
     return("Object x is not an object of class biomonitoR")
   }
-  
-  
+
+
   fam <- x[["Family"]]
   if("unassigned" %in% fam[,1]){
     z <- which(fam$Family=="unassigned")
