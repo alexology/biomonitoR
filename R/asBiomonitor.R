@@ -22,7 +22,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
     temp.ref <- ref$Taxa
     temp.dfref <- dfref$Taxa
     both <- temp.ref[which(temp.dfref %in% temp.ref)]
-    if(length(both) == 0){
+    if(length(both) > 0){
       opt <- options(show.error.messages = FALSE)
       on.exit(options(opt))
       return("user reference database contains taxa of the default reference database, please consider overwrite = T")
