@@ -1,9 +1,11 @@
 suggestNames <- function(x, custom = F){
   if(custom == F){
-    dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
+    dic.path <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
+    dictio <- hunspell::dictionary(dic.path, cache = F)    
   } 
   if(custom == T){
-    dictio <- c(paste(getwd(),"/custom_dictio.dic", sep=""))
+    dic.path <- c(paste(getwd(),"/custom_dictio.dic", sep="")) 
+    dictio <- hunspell::dictionary(dic.path, cache = F)
   }
   taxaCar <- as.character(x$Taxa)
 
@@ -24,6 +26,7 @@ suggestNames <- function(x, custom = F){
     temp[i] <- select.list(choice, title=wrongName[i])
   }
   # Remove hashtag for a standalone function
+  Sys.unsetenv(dic.path)
   return(list("wrongNames" = wrongName, "correctNames" = temp))
 
 }
