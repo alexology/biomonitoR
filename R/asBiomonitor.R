@@ -6,7 +6,7 @@
 #' @param overwrite if set to T replace the reference database with the one provided by the user
 #' @keywords asBiomonitor
 #' @details data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
-#' asBiomonitor check the correctness of taxa names in the data.frame provided by the user. If names are correct the function will process the data.frame to a biomonitor object, otherwise it provide suggestion for correct names.  
+#' asBiomonitor check the correctness of taxa names in the data.frame provided by the user. If names are correct the function will process the data.frame to a biomonitor object, otherwise it provide suggestion for correct names. If dfref = T a custom dictionary will be save in the working directory. 
 #' @export
 #' @seealso \code{\link{rename}}
 #' @examples
@@ -16,6 +16,19 @@
 
 asBiomonitor <- function (x, dfref = NULL, overwrite = F ) 
 {
+  
+  # check if user database contains taxa of the reference database
+  if(is.null(dfref) == F){
+    temp.ref <- ref$Taxa
+    temp.dfref <- dfref$Taxa
+    both <- temp.ref[which(temp.dref %in% temp.ref)]
+    if(length(both) == 0){
+      opt <- options(show.error.messages = FALSE)
+      on.exit(options(opt))
+      return("user reference database contains taxa of the default reference database, please consider overwrite = T")
+    }
+    
+  }
   
   # allow the user to update the database adding taxa to reference database
   if(is.null(dfref) == F & overwrite == F){
@@ -47,8 +60,14 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
   if(is.null(dfref) == T){
     x <- rename(x)
   } else {
-    newDictio(ref)
-    x <- rename(x, custom = T)
+    if(is.null(dfref) == F & overwrite == F){
+      newDictio(ref)
+      x <- rename(x, custom = T)
+    } else {
+      newDictio(ref, overwrite = T)
+      x <- rename(x, custom = T)
+    }
+    
   }
   
   temp <- merge(ref, x, by = "Taxa", all = F)
