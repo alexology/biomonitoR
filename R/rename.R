@@ -1,4 +1,4 @@
-rename <- function(x, write.table=F, custom = F){
+rename <- function(x, write.table=F, customx = F){
   dfName <- deparse(substitute(x))
   if(custom == F){
     tempNames <- suggestNames(x)

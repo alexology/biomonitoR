@@ -63,12 +63,12 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
   
   if(is.null(dfref) == F & overwrite == F){
     newDictio(ref)
-    x <- rename(x, custom = T)
+    x <- rename(x, customx = T)
   } 
   
   if(is.null(dfref) == F & overwrite == T) {
       newDictio(ref)
-      x <- rename(x, custom = T)
+      x <- rename(x, customx = T)
   }
   
   temp <- merge(ref, x, by = "Taxa", all = F)
