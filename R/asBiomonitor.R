@@ -37,7 +37,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
   
   # allow the user to update the database replacing the reference database with is own reference database
   if(is.null(dfref) == F & overwrite == T){
-    uref <- dfref
+    ref <- dfref
   }
   
   x <- aggregate(. ~ Taxa, x, FUN = sum)
@@ -59,15 +59,16 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
   x$Taxa <- userTaxaCap
   if(is.null(dfref) == T){
     x <- rename(x)
-  } else {
-    if(is.null(dfref) == F & overwrite == F){
+  } 
+  
+  if(is.null(dfref) == F & overwrite == F){
+    newDictio(ref)
+    x <- rename(x, custom = T)
+  } 
+  
+  if(is.null(dfref) == F & overwrite == T) {
       newDictio(ref)
       x <- rename(x, custom = T)
-    } else {
-      newDictio(uref)
-      x <- rename(x, custom = T)
-    }
-    
   }
   
   temp <- merge(ref, x, by = "Taxa", all = F)

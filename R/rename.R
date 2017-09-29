@@ -3,7 +3,7 @@ rename <- function(x, write.table=F, custom = F){
   if(custom == F){
     tempNames <- suggestNames(x)
   } else {
-    tempNames <- suggestNames(x, custom =T)
+    tempNames <- suggestNames(x, custom = T)
   }
   
   wrong <- tempNames$wrongNames
