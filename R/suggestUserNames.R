@@ -1,4 +1,4 @@
-suggestUserNames <- function(x, custom = F){
+suggestUserNames <- function(x){
   dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
   taxaCar <- as.character(x$Taxa)
   taxaCar <- as.character(x$Taxa)

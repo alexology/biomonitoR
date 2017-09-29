@@ -1,4 +1,4 @@
-suggestNames <- function(x){
+suggestNames <- function(x, custom = F){
   if(custom == F){
     dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
   } 
