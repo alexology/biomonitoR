@@ -1,5 +1,6 @@
-suggestUserNames <- function(x){
+suggestUserNames <- function(x, custom = F){
   dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
+  taxaCar <- as.character(x$Taxa)
   taxaCar <- as.character(x$Taxa)
   
   # nameCheck and nameSuggest check for the wrong names and suggest for correct names.

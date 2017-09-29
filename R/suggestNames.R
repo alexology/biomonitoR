@@ -1,5 +1,10 @@
 suggestNames <- function(x){
-  dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
+  if(custom == F){
+    dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
+  } 
+  if(custom == T){
+    dictio <- c(paste(getwd(),"/custom_dictio.dic", sep=""))
+  }
   taxaCar <- as.character(x$Taxa)
 
   # nameCheck and nameSuggest check for the wrong names and suggest for correct names.
