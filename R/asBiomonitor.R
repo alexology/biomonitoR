@@ -21,7 +21,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
   if(is.null(dfref) == F){
     temp.ref <- ref$Taxa
     temp.dfref <- dfref$Taxa
-    both <- temp.ref[which(temp.dref %in% temp.ref)]
+    both <- temp.ref[which(temp.dfref %in% temp.ref)]
     if(length(both) == 0){
       opt <- options(show.error.messages = FALSE)
       on.exit(options(opt))
