@@ -64,7 +64,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
       newDictio(ref)
       x <- rename(x, custom = T)
     } else {
-      newDictio1(uref, overwrite = T)
+      newDictio(uref, overwrite = T)
       x <- rename(x, custom = T)
     }
     
