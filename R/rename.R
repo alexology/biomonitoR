@@ -1,6 +1,6 @@
 rename <- function(x, write.table=F, customx = F){
   dfName <- deparse(substitute(x))
-  if(custom == F){
+  if(customx == F){
     tempNames <- suggestNames(x)
   } else {
     tempNames <- suggestNames(x, custom = T)
