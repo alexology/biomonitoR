@@ -37,7 +37,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
   
   # allow the user to update the database replacing the reference database with is own reference database
   if(is.null(dfref) == F & overwrite == T){
-    ref <- dfref
+    uref <- dfref
   }
   
   x <- aggregate(. ~ Taxa, x, FUN = sum)
@@ -64,7 +64,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
       newDictio(ref)
       x <- rename(x, custom = T)
     } else {
-      newDictio(ref, overwrite = T)
+      newDictio1(uref, overwrite = T)
       x <- rename(x, custom = T)
     }
     
