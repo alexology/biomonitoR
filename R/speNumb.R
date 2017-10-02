@@ -17,6 +17,7 @@
 #' @export famNumb
 #' @export ordNumb
 #' @export claNumb
+#' @export abu
 
 
 speNumb <- function(x){

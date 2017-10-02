@@ -15,22 +15,22 @@
 
 
 ept <- function (x, taxLev = "Family"){
-  
+
   # check if the object d is of class "biomonitoR"
-  
+
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
     on.exit(options(opt))
     return("Object x is not an object of class biomonitoR")
   }
-  
-  
+
+
   x_ept <- x[["Tree"]]
   tx <- c("Class", "Subclass", "Order", "Family", "Genus", "Species", "Taxa")
   stz <- x_ept[!(names(x_ept) %in% tx)]
   stz_n <- names(stz)     # station names
   ept_taxa <- x_ept[which(x_ept$Order == "Plecoptera" |
-                            x_ept$Order == "Ephemeroptera" | x_ept$Order == "Trichoptera"),]
+                            x_ept$Order == "Ephemeroptera" | x_ept$Order == "Trichoptera"), , drop=F]
   if(nrow(ept_taxa)==0){
     ept_taxa[1,-1] <- rep(0, ncol(ept_taxa)-1)
     return(ept_taxa[,-1])

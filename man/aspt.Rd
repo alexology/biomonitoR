@@ -2,7 +2,7 @@
 % Please edit documentation in R/aspt.R
 \name{aspt}
 \alias{aspt}
-\title{aggregatoR}
+\title{aspt}
 \usage{
 aspt(d, method = "a")
 }
