@@ -1,6 +1,6 @@
 # biomonitoR
 A package for calculating indices for biomonitoring of running water with a focus on macroinvertebrate community. 
-Still in development.
+Still in development. See www.biomonitor.it for tips.
 
 
 # Installation
