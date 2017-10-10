@@ -27,7 +27,7 @@ aspt <- function( d , method = "a") {
     }
 
   numb <- c(which(names(d)=="Tree"), which(names(d)=="Taxa")) # position of the Tree element in the list to remove
-  x <- d[-numb]
+  x <- d[-numb, drop = F]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
   if(method == "a") (y <- aspt_h)
@@ -52,7 +52,7 @@ aspt <- function( d , method = "a") {
   df <- do.call( "rbind" , x )
   rownames( df ) <- NULL
   df <- data.frame( df[ , 1 , drop =F ], (df[ , -1 ] > 0 ) * 1 )
-  
+
   # # solving the Planorbidae/Ancylidae problem
   if(method == "i"){
     planorbidae.row <- which(df$Taxon == "Planorbidae")
@@ -70,7 +70,7 @@ aspt <- function( d , method = "a") {
       df <- rbind(df, temp.anc)
     }
   }
-  
+
   df <- aggregate(. ~ Taxon, df, sum)
   df <- data.frame( df[ , 1 , drop =F ], (df[ , -1 ] > 0 ) * 1 )
   tot.mer <- merge( y , df )

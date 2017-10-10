@@ -14,6 +14,6 @@ taxNumb <- function(x){
     z <- which(tax$Taxon=="unassigned")
     tax <- tax[-z,] # remove unassigned row from the species count
   }
-  tax <- apply(tax[,-1], 2, FUN=function(x){length(x[x>0])})
+  tax <- apply(tax[,-1, drop = F], 2, FUN=function(x){length(x[x>0])})
   return(tax)
 }

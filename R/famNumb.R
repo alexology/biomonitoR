@@ -14,6 +14,6 @@ famNumb <- function(x){
     z <- which(fam$Family=="unassigned")
     fam <- fam[-z,] # remove unassigned row from the species count
   }
-  nfam <- apply(fam[,-1], 2, FUN=function(x){length(x[x>0])})
+  nfam <- apply(fam[,-1, drop = F], 2, FUN=function(x){length(x[x>0])})
   return(nfam)
 }
