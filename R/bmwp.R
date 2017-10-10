@@ -28,7 +28,7 @@ bmwp <- function( d , method = "a") {
 
 
   numb <- c(which(names(d)=="Tree"), which(names(d)=="Taxa")) # position of the Tree element in the list to remove
-  x <- d[-numb]
+  x <- d[-numb, drop = F]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
   if(method == "a") (y <- aspt_h)
@@ -84,6 +84,7 @@ bmwp <- function( d , method = "a") {
     return("No valid taxon provided")
   }
   else {
+    names(tot.mer)[-c(1,2)] <- st.names
     tot.st <- which(names(tot.mer)%in%st.names)
     tot.bmwp <- apply(tot.mer$Value*tot.mer[ , tot.st, drop=F], 2, sum)
   }

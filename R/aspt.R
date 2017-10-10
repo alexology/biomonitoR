@@ -82,8 +82,9 @@ aspt <- function( d , method = "a") {
     return("No valid taxon provided")
   }
   else {
+    names(tot.mer)[-c(1,2)] <- st.names
     tot.st <- which(names(tot.mer)%in%st.names)
-    ntaxa <- colSums(tot.mer[,-c(1:2)] == 1)
+    ntaxa <- colSums(tot.mer[, -c(1:2), drop = F] == 1)
     tot.aspt <- apply(tot.mer$Value*tot.mer[ , tot.st, drop=F], 2, sum)/ntaxa
   }
   return( round(tot.aspt, 3) )
