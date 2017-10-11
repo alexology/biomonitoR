@@ -36,7 +36,7 @@ speNumb <- function(x){
     z <- which(spe$Species=="unassigned")
     spe <- spe[-z,] # remove unassigned row from the species count
   }
-  nspe <- apply(spe[,-1], 2, FUN=function(x){length(x[x>0])})
+  nspe <- apply(spe[,-1, drop =F], 2, FUN=function(x){length(x[x>0])})
   return(nspe)
 }
 
