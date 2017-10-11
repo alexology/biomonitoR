@@ -67,6 +67,7 @@ aspt <- function( d , method = "a") {
     } else {
       levels(df$Taxon) <- c(levels(df$Taxon), "Ancylidae")
       temp.anc <- data.frame(Taxon = "Ancylidae", as.data.frame(t(ancylidae.pa)))
+      colnames(df)[-1] <- st.names
       df <- rbind(df, temp.anc)
     }
   }
