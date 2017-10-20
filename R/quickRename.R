@@ -16,6 +16,11 @@
 quickRename <- function(x, write.table=F){
   dfName <- deparse(substitute(x))
   tempNames <- suggestUserNames(x)
+  if(length(tempNames) == 0){
+    message("All names are correct")
+    return(x)
+  }
+  else{
   wrong <- tempNames$wrongNames
   correct <- tempNames$correctNames
   result <- x$Taxa
@@ -33,4 +38,5 @@ quickRename <- function(x, write.table=F){
   }
   x$Taxa <- sub("_", " ", x$Taxa)
   return(x)
+  }
 }

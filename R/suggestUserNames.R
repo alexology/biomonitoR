@@ -10,6 +10,10 @@ suggestUserNames <- function(x){
   
   
   n <- which(nameCheck==F) #number of wrong names
+  if(length(n) == 0){
+    return(n)
+  }
+  else{
   temp <- rep(NA, length(n)) # vector to store user choices
   wrongName <- as.vector(x[n,"Taxa"]) # vector of wrong taxa names
   correctName <- nameSuggest[n] # list of suggestions
@@ -27,4 +31,5 @@ suggestUserNames <- function(x){
   }
   # Remove hashtag for a standalone function
   return(list("wrongNames" = wrongName, "correctNames" = temp))
+  }
 }
