@@ -6,6 +6,11 @@ rename <- function(x, write.table=F, customx = F){
     tempNames <- suggestNames(x, custom = T)
   }
   
+  if(length(tempNames) == 0){
+    message("All names are correct")
+    return(x)
+  }
+  else{
   wrong <- tempNames$wrongNames
   correct <- tempNames$correctNames
   result <- x$Taxa
@@ -23,4 +28,5 @@ rename <- function(x, write.table=F, customx = F){
   }
   x$Taxa <- sub("_", " ", x$Taxa)
   return(x)
+  }
 }

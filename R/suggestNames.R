@@ -14,8 +14,12 @@ suggestNames <- function(x, custom = F){
   nameCheck <- hunspell::hunspell_check(taxaCar, dict = dictio)
   nameSuggest <- hunspell::hunspell_suggest(taxaCar, dict = dictio)
 
-
+  
   n <- which(nameCheck==F) #number of wrong names
+  if(length(n) == 0){
+    return(n)
+  }
+  else{
   temp <- rep(NA, length(n)) # vector to store user choices
   wrongName <- as.vector(x[n,"Taxa"]) # vector of wrong taxa names
   correctName <- nameSuggest[n] # list of suggestions
@@ -28,5 +32,5 @@ suggestNames <- function(x, custom = F){
   # Remove hashtag for a standalone function
   Sys.unsetenv(dic.path)
   return(list("wrongNames" = wrongName, "correctNames" = temp))
-
+  }
 }
