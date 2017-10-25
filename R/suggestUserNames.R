@@ -1,14 +1,16 @@
 suggestUserNames <- function(x){
   dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
   taxaCar <- as.character(x$Taxa)
-  taxaCar <- as.character(x$Taxa)
-  
+
+  # replace space with underscore to be compatible with hunspell
+  taxaCar <- gsub(" ",'_',taxaCar)
+
   # nameCheck and nameSuggest check for the wrong names and suggest for correct names.
   # hunspell_check and hunspell_suggest are from the package hunspell
   nameCheck <- hunspell::hunspell_check(taxaCar, dict = dictio)
   nameSuggest <- hunspell::hunspell_suggest(taxaCar, dict = dictio)
-  
-  
+
+
   n <- which(nameCheck==F) #number of wrong names
   if(length(n) == 0){
     return(n)
