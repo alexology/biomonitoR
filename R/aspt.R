@@ -37,13 +37,18 @@ aspt <- function( d , method = "a") {
   z <- ifam_acc
   # solving the Planorbidae/Ancylidae problem
   # Ancylidae genus http://eol.org/pages/2402/names
-  ancylidae.gen <- c("Ancylus", "Ferrissia", "Gundlachia", "Hebetoncylus", "Laevapex", "Rhodacmaea", "Rhodacme")
+  ancylidae.gen <- c("Ancylus", "Gundlachia", "Hebetoncylus", "Laevapex", "Rhodacmaea", "Rhodacme")
   temp.tree <- d[["Tree"]]
   ancylidae.sub <- temp.tree[which(temp.tree$Genus %in% ancylidae.gen), st.names, drop=F]
   ancylidae.abu <- apply(ancylidae.sub, 2, sum)
   ancylidae.pa <- ancylidae.abu
-  ancylidae.pa[ which( ancylidae.pa >0 ) ] <-1}
-  if(method == "b" || method == "i") (x <- checkBmwpFam(df=x, famNames=z, stNames=st.names))
+  ancylidae.pa[ which( ancylidae.pa >0 ) ] <-1
+  ferrissia.sub <- temp.tree[which(temp.tree$Genus == "Ferrissia"), st.names, drop=F]
+  ferrissia.abu <- apply(ferrissia.sub, 2, sum)
+  ferrissia.pa <- ferrissia.abu
+  ferrissia.pa[ which(ferrissia.pa >0 ) ] <-1
+  }
+  if(method == "b") (x <- checkBmwpFam(df=x, famNames=z, stNames=st.names))
 
   for(i in 1:length(x)){
     colnames(x[[i]])[1] <- "Taxon"
@@ -58,7 +63,7 @@ aspt <- function( d , method = "a") {
     planorbidae.row <- which(df$Taxon == "Planorbidae")
     ancylidae.row <- which(df$Taxon == "Ancylidae")
     if( length(planorbidae.row) != 0){
-      df[planorbidae.row ,-1] <- df[planorbidae.row ,-1] - ancylidae.pa
+      df[planorbidae.row ,-1] <- df[planorbidae.row ,-1] - ancylidae.pa - ferrissia.pa
     }
     if( length(ancylidae.row) != 0){
       temp.anc <- as.numeric(df[ancylidae.row ,-1]) + ancylidae.pa
