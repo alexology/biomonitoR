@@ -7,7 +7,7 @@
 aggregatoR(z)
 }
 \arguments{
-\item{x}{results of function asBiomonitoR}
+\item{z}{results of function asBiomonitoR}
 }
 \description{
 This function prepares data for further calculations.

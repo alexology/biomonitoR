@@ -17,13 +17,16 @@ shannon(x, base = 2, taxLev = "Family")
 \item{taxaLev}{taxonimc level on which the calculation has to be made.}
 }
 \description{
-Functions for calculating shannon, simpson, margalef and menhinick indexes.
+Functions for calculating shannon, simpson, margalef and menhinick indices.
 }
 \examples{
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 shannon(data.agR)
+
+# natural logarithm
+shannon(data.agR, base=exp(1))
 }
 \seealso{
 \code{\link{aggregatoR}}

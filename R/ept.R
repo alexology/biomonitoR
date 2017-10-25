@@ -1,6 +1,6 @@
 #' ept
 #'
-#' This function calculates the number of Ephemeroptera, Plecotera and Trichoptera (ept) taxa.
+#' This function calculates the number of Ephemeroptera, Plecotera and Trichoptera (EPT) taxa at different taxonomic levels.
 #' @param x results of function aggregatoR
 #' @param taxLev the taxonomic level for calculating EPT richness.
 #' @keywords ept

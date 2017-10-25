@@ -10,7 +10,10 @@ gold(x)
 \item{x}{results of function aggregatoR}
 }
 \description{
-This function calculates the 1 - GOLD metric.
+This function calculates the 1 - GOLD metric, where GOLD stands for Gastropoda, Oligochaeta and Diptera.
+}
+\details{
+The metric 1 - GOLD is calculated as 1 minus the relative abundance of Gastropoda, Oligochaeta and Diptera. If a custom database is provided (see \code{\link{aggregatoR}}) please be sure that Gastropoda and Oligochaeta are submitted as Class and Diptera as Order, otherwise the gold calculation will be meaningless.
 }
 \examples{
 data(macro_ex)

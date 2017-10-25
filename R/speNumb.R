@@ -1,10 +1,9 @@
 #' speNumb
 #'
-#' Functions for calculating species, genus, family and order Richness and abundance
-#' @aliases  speNumb  genNumb famNumb ordNumb abu
+#' Functions for calculating species, genus, family richness and abundance
+#' @aliases  speNumb  genNumb famNumb abu
 #' @param x results of function aggregatoR
 #' @keywords speNumb, genNumb, famNumb, ordNumb
-#' @details By now only species, genus and family richness calculation are reliable. This is because order assignment for order in the reference database is not completely covered. Unassigned taxon are exluded from the calculations.
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
@@ -15,8 +14,6 @@
 #' @export taxNumb
 #' @export genNumb
 #' @export famNumb
-#' @export ordNumb
-#' @export claNumb
 #' @export abu
 
 

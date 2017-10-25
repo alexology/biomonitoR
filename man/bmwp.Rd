@@ -7,18 +7,26 @@
 bmwp(d, method = "a")
 }
 \arguments{
-\item{method}{a,b or i. See details.}
+\item{d}{results of function aggregatoR}
 
-\item{x}{results of function aggregatoR}
+\item{method}{the formulation of BMWP. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and i (MAGRAMA 2011)}
 }
 \description{
-Functions for calculating BMWP and ASPT
+This function calculates the Biological Monitoring Working Party following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 }
 \examples{
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 bmwp(data.agR)
+bmwp(data.agR, method = "i")
+}
+\references{
+Armitage, P. D., Moss, D., Wright, J. F., & Furse, M. T. (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. Water research, 17(3), 333-347.
+
+Davy-Bowker J., Clarke R., Corbin T., Vincent H, Pretty J., Hawczak A., Blackburn J., Murphy J., Jones I., 2008. River Invertebrate Classification Tool. Final report. WFD72C. SNIFFER. 276 pp
+
+MAGRAMA-Ministerio de Agricultura y medio Ambiente (2011) Protocolo de muestreo y laboratorio de fauna bentónica de invertebrados en ríos vadeables. ML-Rv-I-2011, Cód, 23 pp.
 }
 \seealso{
 \code{\link{aggregatoR}}

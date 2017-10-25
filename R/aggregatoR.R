@@ -1,7 +1,7 @@
 #' aggregatoR
 #'
 #' This function prepares data for further calculations.
-#' @param x results of function asBiomonitoR
+#' @param z results of function asBiomonitoR
 #' @keywords aggregatoR
 #' @details
 #' @export
@@ -11,7 +11,7 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 
-aggregatoR <- function (z) 
+aggregatoR <- function (z)
 {
   if (class(z) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
@@ -44,12 +44,12 @@ aggregatoR <- function (z)
   tax.agg <- aggregate(stz, by = list(x$Taxa), sum)
   levels(tax.agg$Group.1)[levels(tax.agg$Group.1) == ""] <- "unassigned"
   names(tax.agg) <- c("Taxon", stz_n)
-  tree.agg <- aggregate(stz, by = list(x$Class, x$Subclass, x$Order, x$Family, 
+  tree.agg <- aggregate(stz, by = list(x$Class, x$Subclass, x$Order, x$Family,
                                        x$Genus, x$Species, x$Taxa), sum)
   names(tree.agg) <- c(tx, stz_n)
-  temp <- list(cla.agg, scla.agg, ord.agg, fam.agg, gen.agg, spe.agg, 
+  temp <- list(cla.agg, scla.agg, ord.agg, fam.agg, gen.agg, spe.agg,
                tax.agg, tree.agg)
-  names(temp) <- c("Class", "Subclass", "Order", "Family", "Genus", "Species", 
+  names(temp) <- c("Class", "Subclass", "Order", "Family", "Genus", "Species",
                    "Taxa", "Tree")
   temp$novalid <- z[["novalid"]]
   class(temp) <- "biomonitoR"

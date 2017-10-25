@@ -10,7 +10,7 @@ eptd(x)
 \item{x}{results of function aggregatoR}
 }
 \description{
-This function calculates the log10(Sel_EPTD + 1) metric.
+This function calculates the log10(Sel_EPTD + 1) metric, where EPTD stands for Ephemeroptera, Plecoptera Oligochaeta and Diptera.
 }
 \details{
 log10(Sel_EPTD + 1) the base-10 logarithm of the abundance of the selected EPTD families plus 1.

@@ -12,7 +12,7 @@ ept(x, taxLev = "Family")
 \item{taxLev}{the taxonomic level for calculating EPT richness.}
 }
 \description{
-This function calculates the number of Ephemeroptera, Plecotera and Trichoptera (ept) taxa.
+This function calculates the number of Ephemeroptera, Plecotera and Trichoptera (EPT) taxa at different taxonomic levels.
 }
 \details{
 The parameter taxLev can be "Species", "Genus", "Family" or "Order".
