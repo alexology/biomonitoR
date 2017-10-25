@@ -8,6 +8,9 @@ suggestNames <- function(x, custom = F){
     dictio <- hunspell::dictionary(dic.path, cache = F)
   }
   taxaCar <- as.character(x$Taxa)
+  
+  # replace space with underscore to be compatible with hunspell 
+  taxaCar <- gsub(" ",'_',taxaCar)
 
   # nameCheck and nameSuggest check for the wrong names and suggest for correct names.
   # hunspell_check and hunspell_suggest are from the package hunspell
