@@ -17,15 +17,17 @@
 #' aspt(data.agR)
 
 aspt <- function( d , method = "a") {
-
+  
   # check if the object d is of class "biomonitoR"
-
-    if (class(d) != "biomonitoR") {
-      opt <- options(show.error.messages = FALSE)
-      on.exit(options(opt))
-      return("Object x is not an object of class biomonitoR")
-    }
-
+  
+  
+  if (class(d) != "biomonitoR") {
+    opt <- options(show.error.messages = FALSE)
+    on.exit(options(opt))
+    return("Object x is not an object of class biomonitoR")
+  }
+  
+  
   numb <- c(which(names(d)=="Tree"), which(names(d)=="Taxa")) # position of the Tree element in the list to remove
   x <- d[-numb, drop = F]
   # y is the reference data.set for bmwp calculation
@@ -34,7 +36,6 @@ aspt <- function( d , method = "a") {
   if(method == "b") {y <- aspt_b
   z <- bfam_acc}
   if(method == "i") {y <- aspt_i
-  z <- ifam_acc
   # solving the Planorbidae/Ancylidae problem
   # Ancylidae genus http://eol.org/pages/2402/names
   ancylidae.gen <- c("Ancylus", "Gundlachia", "Hebetoncylus", "Laevapex", "Rhodacmaea", "Rhodacme")
@@ -48,16 +49,16 @@ aspt <- function( d , method = "a") {
   ferrissia.pa <- ferrissia.abu
   ferrissia.pa[ which(ferrissia.pa >0 ) ] <-1
   }
+  
   if(method == "b") (x <- checkBmwpFam(df=x, famNames=z, stNames=st.names))
-
+  
   for(i in 1:length(x)){
     colnames(x[[i]])[1] <- "Taxon"
   }
-
+  
   df <- do.call( "rbind" , x )
   rownames( df ) <- NULL
-  df <- data.frame( df[ , 1 , drop =F ], (df[ , -1 ] > 0 ) * 1 )
-
+  
   # # solving the Planorbidae/Ancylidae problem
   if(method == "i"){
     planorbidae.row <- which(df$Taxon == "Planorbidae")
@@ -72,15 +73,14 @@ aspt <- function( d , method = "a") {
     } else {
       levels(df$Taxon) <- c(levels(df$Taxon), "Ancylidae")
       temp.anc <- data.frame(Taxon = "Ancylidae", as.data.frame(t(ancylidae.pa)))
-      colnames(df)[-1] <- st.names
       df <- rbind(df, temp.anc)
     }
   }
-
+  
   df <- aggregate(. ~ Taxon, df, sum)
   df <- data.frame( df[ , 1 , drop =F ], (df[ , -1 ] > 0 ) * 1 )
   tot.mer <- merge( y , df )
-
+  
   # check if merge results provided valid data.frame
   if( nrow(tot.mer) == 0 ){
     opt <- options( show.error.messages = T )
