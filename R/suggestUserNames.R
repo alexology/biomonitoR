@@ -20,7 +20,7 @@ suggestUserNames <- function(x){
   wrongName <- as.vector(x[n,"Taxa"]) # vector of wrong taxa names
   correctName <- nameSuggest[n] # list of suggestions
   for(i in 1:length(n)){
-    choice <- c(correctName[[i]],"User taxon input") # choices provided to the user
+    choice <- c(correctName[[i]],wrongName[i], "User taxon input") # choices provided to the user
     # provide suggestions to the user and if the user can't find the correct name he can enter
     # the right name by himself
     temp[i] <- select.list(choice, title=wrongName[i])
