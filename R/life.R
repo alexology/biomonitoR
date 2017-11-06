@@ -14,7 +14,7 @@
 #' data.agR <- aggregatoR(data.bio)
 #' data.life <- life(data.agR, method = "Family")
 
-life <- function(x, method = "Family"){
+lifea <- function(x, method = "Family"){
 
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
@@ -30,9 +30,18 @@ life <- function(x, method = "Family"){
     life_scores <- life_scores_spe
   }
 
-  fam <- x[[ "Family" ]]
-  st.names <- names(fam)[-1]
-  names(fam)[1] <- "Taxon"
+  numb <- c(which(names(d)=="Tree"), which(names(d)=="Taxa")) # position of the Tree element in the list to remove
+  fam <- x[-numb, drop = F]
+  # y is the reference data.set for bmwp calculation
+  st.names <- names(x[[1]][-1]) # names of sampled sites
+  
+  for(i in 1:length(fam)){
+    colnames(fam[[i]])[1] <- "Taxon"
+  }
+  
+  fam <- do.call( "rbind" , fam )
+  rownames( fam ) <- NULL
+  fam <- aggregate(. ~ Taxon, fam, FUN = sum)
 
   fam.long <- reshape(fam, direction="long", varying=list(names(fam)[-1]), v.names="Abu",
           idvar="Taxon", times = names(fam)[-1], timevar = "Site")
