@@ -1,9 +1,9 @@
 #' life
 #'
-#' This function calculates LIFE index according to Extence et al. (1999). 
+#' This function calculates LIFE index according to Extence et al. (1999).
 #' @param x results of function aggregatoR function
-#' @param method possible choices 
-#' @keywords aggregatoR
+#' @param method possible choices
+#' @keywords life
 #' @details life currently calculates life index to family and species level, following the nomenclature used by Extence et al. (1999). Species level nomenclature of Extence et al. (1999) is outdated, an updated version will be released soon in biomonitoR.
 #' @references Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.
 #' @seealso \code{\link{asBiomonitor}}
@@ -14,32 +14,32 @@
 #' data.life <- life(data.agR, method = "Family")
 
 life <- function(x, method = "Family"){
-  
+
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
     on.exit(options(opt))
     return("Object x is not an object of class biomonitoR")
   }
-  
+
   if(method == "Family"){
     life_scores <- life_scores_fam
   }
-  
+
   if(method == "Species"){
     life_scores <- life_scores_spe
   }
-  
+
   fam <- x[[ "Family" ]]
   st.names <- names(fam)[-1]
   names(fam)[1] <- "Taxon"
-  
-  fam.long <- reshape(fam, direction="long", varying=list(names(fam)[-1]), v.names="Abu", 
+
+  fam.long <- reshape(fam, direction="long", varying=list(names(fam)[-1]), v.names="Abu",
           idvar="Taxon", times = names(fam)[-1], timevar = "Site")
   rownames(fam.long) <- NULL
-  
+
   # keep only numeric columns
-  temp <- fam.long[, 3, drop = F] 
-  
+  temp <- fam.long[, 3, drop = F]
+
   # transform row abundances to abunance classes
   names(temp) <- "ABU_NUM"
   temp[temp==0] <- 0
@@ -48,12 +48,12 @@ life <- function(x, method = "Family"){
   temp[temp>=100&temp<=999] <- 3
   temp[temp>=1000&temp<=9999] <- 4
   temp[temp>=10000] <- 5
-  
-  fam.long <- data.frame(fam.long, temp) 
+
+  fam.long <- data.frame(fam.long, temp)
   fam.long <- merge(fam.long, life_scores)
   names(fam.long)[5] <- "FS"
   fam.long <- merge(fam.long, fs_life)
-  
+
   fam.sub <- fam.long[,c(4,9)]
   fam.life <- aggregate(. ~ Site, fam.sub, FUN = sum)
   fam.life$rich <- aggregate(. ~ Site, fam.sub, FUN = length)[,2]
