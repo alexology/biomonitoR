@@ -4915,7 +4915,7 @@ Stactobia_maclachlani
 Stactobia_malacantosa
 Stactobia_moselyi
 Stactobia_nybomi
-Stactobia_sp.
+Stactobia
 Stactobia_storai
 Stactobia_urania
 Stactobiella_risi
@@ -5244,7 +5244,7 @@ Chaetopteryx_stankovici
 Chaetopteryx_subradiata
 Chaetopteryx_trinacriae
 Chaetopteryx_villosa_gonzalezi
-Chaetopteryx_villosa_ssp.
+Chaetopteryx_villosa
 Chaetopteryx_villosa_villosa
 Chaetopteryx_vulture
 Chilostigma_sieboldi
