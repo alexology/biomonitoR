@@ -10417,10 +10417,9 @@ Prostoma_graecense
 Prostoma
 Tetrastemmatidae
 Nemertea
-Leptoconops acer
-Leptoconops gallicus
-Leptoconops kerteszi
-Leptoconops laurae
-Leptoconops noei
-Leptoconops pugnax
-Ancylidae
+Leptoconops_acer
+Leptoconops_gallicus
+Leptoconops_kerteszi
+Leptoconops_laurae
+Leptoconops_noei
+Leptoconops_pugnax
