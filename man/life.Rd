@@ -29,4 +29,4 @@ Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic 
 \seealso{
 \code{\link{asBiomonitor}}
 }
-\keyword{aggregatoR}
+\keyword{life}
