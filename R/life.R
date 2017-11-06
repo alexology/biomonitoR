@@ -6,6 +6,7 @@
 #' @keywords life
 #' @details life currently calculates life index to family and species level, following the nomenclature used by Extence et al. (1999). Species level nomenclature of Extence et al. (1999) is outdated, an updated version will be released soon in biomonitoR.
 #' @references Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.
+#' @export
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
 #' data(macro_ex)
