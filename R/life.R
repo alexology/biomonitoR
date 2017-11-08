@@ -30,15 +30,15 @@ life <- function(x, method = "Family"){
     life_scores <- life_scores_spe
   }
 
-  numb <- c(which(names(d)=="Tree"), which(names(d)=="Taxa")) # position of the Tree element in the list to remove
+  numb <- c(which(names(x)=="Tree"), which(names(x)=="Taxa")) # position of the Tree element in the list to remove
   fam <- x[-numb, drop = F]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
-  
+
   for(i in 1:length(fam)){
     colnames(fam[[i]])[1] <- "Taxon"
   }
-  
+
   fam <- do.call( "rbind" , fam )
   rownames( fam ) <- NULL
   fam <- aggregate(. ~ Taxon, fam, FUN = sum)
