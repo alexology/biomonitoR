@@ -14,7 +14,7 @@
 #' data.agR <- aggregatoR(data.bio)
 #' data.life <- life(data.agR, method = "Family")
 
-lifea <- function(x, method = "Family"){
+life <- function(x, method = "Family"){
 
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
