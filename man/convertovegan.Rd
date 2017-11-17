@@ -18,7 +18,7 @@ An utility function to export data to vegan like format
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-data.life <- life(data.agR, method = "Family")
+data.cv <- convertovegan(data.agR, taxLev = "Family")
 }
 \seealso{
 \code{\link{asBiomonitor}}
