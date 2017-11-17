@@ -10,7 +10,7 @@
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' data.life <- life(data.agR, method = "Family")
+#' data.cv <- convertovegan(data.agR, taxLev = "Family")
 
 
 convertovegan <- function(x, taxLev = "Family"){
