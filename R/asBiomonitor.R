@@ -18,7 +18,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
 {
 
   # check if user database contains taxa of the reference database
-  if(is.null(dfref) == F){
+  if(is.null(dfref) == F & overwrite == F){
     temp.ref <- ref$Taxa
     temp.dfref <- dfref$Taxa
     both <- temp.ref[which(temp.dfref %in% temp.ref)]
