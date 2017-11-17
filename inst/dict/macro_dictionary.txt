@@ -1379,6 +1379,7 @@ Trichogrammatidae
 Gammaracanthidae
 Gammaracanthus_loricatus
 Gammaracanthus
+Gammaridae
 Chaetogammarus_chaetocerus
 Chaetogammarus
 Dikerogammarus_bispinosus
@@ -6264,6 +6265,12 @@ Leptoconops_bezzi
 Leptoconops_bidentatus
 Leptoconops_irritans
 Leptoconops_lisbonnei
+Leptoconops_acer
+Leptoconops_gallicus
+Leptoconops_kerteszi
+Leptoconops_laurae
+Leptoconops_noei
+Leptoconops_pugnax
 Leptoconops
 Bezzia_affinis
 Bezzia_albicornis
@@ -10417,9 +10424,3 @@ Prostoma_graecense
 Prostoma
 Tetrastemmatidae
 Nemertea
-Leptoconops_acer
-Leptoconops_gallicus
-Leptoconops_kerteszi
-Leptoconops_laurae
-Leptoconops_noei
-Leptoconops_pugnax
