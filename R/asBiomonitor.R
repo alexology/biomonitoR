@@ -71,13 +71,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
       x <- rename(x, customx = T)
   }
 
-  temp <- merge(ref, x, by = "Taxa", all = F)
-  temp_valid <- temp[which(temp$Taxonomic_Status=="yes"),]
-  temp_novalid <- temp[which(temp$Taxonomic_Status=="no"),]
-  taxa_def <- as.list(temp_valid[,-which(names(temp) %in% c("Taxonomic_Status"))])
-  tx <- c("Class",  "Subclass", "Order", "Family", "Genus", "Species", "Taxonomic_Status")
-  taxa_def$novalid <- temp_novalid[!(names(temp_novalid) %in% tx)]
-
+  taxa_def <- merge(ref, x, by = "Taxa", all = F)
   class(taxa_def) <- "biomonitoR"
 
   if(length(which(hydrac_temp == T)) != 0 ){
