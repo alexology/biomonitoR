@@ -24,7 +24,7 @@ abuTax <- function(x, taxa = NULL, rel = FALSE){
 
 
   # extract taxonomic information from the element Tree in aggregatoR output
-  df <- x[["Tree"]][,1:6]
+  df <- x[["Tree"]][,1:10]
   
   # Position of taxon in the df data.frame
   taxind <- which(df == taxa, arr.ind=T)
