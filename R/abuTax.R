@@ -27,7 +27,12 @@ abuTax <- function(x, taxa = NULL, rel = FALSE){
   df <- x[["Tree"]][,1:10]
   
   # Position of taxon in the df data.frame
-  taxind <- which(df == taxa, arr.ind=T)
+  taxind <- data.frame(row = numeric(), col = numeric())
+  for(i in 1:length(taxa)){
+    temp <- which(df == taxa[i], arr.ind=T)
+    taxind <- rbind(temp, taxind)  
+  }
+  
   
   taxcol <- unique(taxind[,"col"])
   taxgroup <- names(df)[taxcol]
