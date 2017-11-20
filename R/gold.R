@@ -25,7 +25,7 @@ gold <- function (x){
 
 
   x_gold <- x[["Tree"]]
-  tx <- c("Class", "Subclass", "Order", "Family", "Genus", "Species", "Taxa")
+  tx <- c("Phylum", "Class", "Subclass", "Order", "Family", "Subfamily", "Tribus", "Genus", "Species", "Subspecies", "Taxa")
   stz <- x_gold[!(names(x_gold) %in% tx)]
   stz_n <- names(stz)     # station names
   gold_taxa <- x_gold[which(x_gold$Class == "Gastropoda" |

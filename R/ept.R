@@ -26,7 +26,7 @@ ept <- function (x, taxLev = "Family"){
 
 
   x_ept <- x[["Tree"]]
-  tx <- c("Class", "Subclass", "Order", "Family", "Genus", "Species", "Taxa")
+  tx <- c("Phylum", "Class", "Subclass", "Order", "Family", "Subfamily", "Tribus", "Genus", "Species", "Subspecies", "Taxa")
   stz <- x_ept[!(names(x_ept) %in% tx)]
   stz_n <- names(stz)     # station names
   ept_taxa <- x_ept[which(x_ept$Order == "Plecoptera" |

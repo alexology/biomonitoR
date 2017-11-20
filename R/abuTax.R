@@ -17,6 +17,14 @@
 
 abuTax <- function(x, taxa = NULL, rel = FALSE){
   
+  # check if the object d is of class "biomonitoR"
+  
+  if (class(d) != "biomonitoR") {
+    opt <- options(show.error.messages = FALSE)
+    on.exit(options(opt))
+    return("Object x is not an object of class biomonitoR")
+  }
+  
   # stop if user does not provide a taxon name
   if(is.null(taxa) == T || taxa == ""){
     stop("Please provide a taxon name")
