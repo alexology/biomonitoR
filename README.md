@@ -42,6 +42,15 @@ aspt(data.agR, method="i")
 
 ```
 
+# To do list
+1. Check and fill missing data in reference taxa list;
+2. Update taxonomy of the reference datasets (e.g. those for the calculation of BMWP, LIFE, etc.) according to the [freshwaterecology.info](http://www.freshwaterecology.info/) list;
+3. Implement other indices (e.g. metrics of I2M2, PSI, SPEAR, etc.);
+4. Implement combTaxa, a function to combine taxa of a particular taxonomic level in order to find the best combination of taxa that fit with a target environmental variable;
+5. Improve help;
+6. Test biomonitoR extensively.
+
+
 ## References
 Reference database is from [freshwaterecology.info](http://www.freshwaterecology.info/).
 
