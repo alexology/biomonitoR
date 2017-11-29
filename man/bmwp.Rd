@@ -14,6 +14,21 @@ bmwp(d, method = "a")
 \description{
 This function calculates the Biological Monitoring Working Party following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 }
+\details{
+BMWP is calculated as the sum of scores of the sensitive taxa present in a fiven sample. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker implementation take into account composite taxa as follow:
+\enumerate{
+  \item Psychomyiidae (inc. Ecnomidae)
+  \item Rhyachopilidae (inc. Glossomatidae)
+  \item Limnephilidae (inc. Apatanidae)
+  \item Ancylidae (inc. Acroloxidae)
+  \item Gammaridae (inc. Crangonyctidae & Niphargidae)
+  \item Hydrophilidae (inc. Hydraenidae, Helophoridae)
+  \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
+  \item Planariidae (inc. Dugesidae)
+  \item Hydrobiidae (inc. Bithyniidae)
+  \item Oligochaeta (all the families)
+}
+}
 \examples{
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
