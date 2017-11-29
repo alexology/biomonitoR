@@ -2,7 +2,7 @@
 #'
 #' This function calculates the Biological Monitoring Working Party following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 #' @param d results of function aggregatoR
-#' @param method the formulation of BMWP. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and i (MAGRAMA 2011)
+#' @param method the formulation of BMWP. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and "i" (MAGRAMA 2011)
 #' @keywords aggregatoR
 #' @details BMWP is calculated as the sum of scores of the sensitive taxa present in a fiven sample. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker implementation take into account composite taxa as follow:
 #' \enumerate{

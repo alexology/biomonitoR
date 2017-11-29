@@ -11,7 +11,7 @@ abuTax(x, taxa = NULL, rel = FALSE)
 
 \item{taxa}{a Taxon or a vector of taxa.}
 
-\item{rel}{if TRUE calculates relative abundance. default =F.}
+\item{rel}{if TRUE calculates relative abundance. default = F.}
 }
 \description{
 This function calculates the absolute or relative abundance of a Taxon or of a set Taxa.

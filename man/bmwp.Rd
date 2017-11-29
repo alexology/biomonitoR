@@ -9,7 +9,7 @@ bmwp(d, method = "a")
 \arguments{
 \item{d}{results of function aggregatoR}
 
-\item{method}{the formulation of BMWP. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and i (MAGRAMA 2011)}
+\item{method}{the formulation of BMWP. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and "i" (MAGRAMA 2011)}
 }
 \description{
 This function calculates the Biological Monitoring Working Party following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.

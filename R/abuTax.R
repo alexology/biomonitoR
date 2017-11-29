@@ -3,7 +3,7 @@
 #' This function calculates the absolute or relative abundance of a Taxon or of a set Taxa.
 #' @param x results of function aggregatoR.
 #' @param taxa a Taxon or a vector of taxa.
-#' @param rel if TRUE calculates relative abundance. default =F.
+#' @param rel if TRUE calculates relative abundance. default = F.
 #' @keywords aggregatoR
 #' @details
 #' @export

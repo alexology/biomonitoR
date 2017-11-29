@@ -4,23 +4,23 @@
 \alias{combTaxa}
 \title{combTaxa}
 \usage{
-combTaxa(x, ntaxa = 2, taxLev = "Family", rel = F)
+combTaxa(x, ntaxa = 2, taxLev = "Family")
 }
 \arguments{
 \item{x}{results of function aggregatoR.}
 
-\item{rel}{if TRUE calculates relative abundance. default =F.}
+\item{ntaxa}{number of Taxa to choose.}
 
-\item{taxa}{a Taxon or a vector of taxa.}
+\item{taxLev}{taxonimc level on which the calculation has to be made.}
 }
 \description{
-This function calculates the absolute or relative abundance of a Taxon or of a set Taxa.
+This function returns all the combinations of Taxa at the desired taxonomic resolution.
 }
 \examples{
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-combTaxa(data.agr, taxLev = "Family")
+combTaxa(data.agR, taxLev = "Family")
 }
 \seealso{
 \code{\link{aggregatoR}}

@@ -9,10 +9,25 @@ aspt(d, method = "a")
 \arguments{
 \item{d}{results of function aggregatoR}
 
-\item{method}{the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and i (MAGRAMA 2011)}
+\item{method}{the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and "i" (MAGRAMA 2011)}
 }
 \description{
 This function calculates the Average Score Per Taxon following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
+}
+\details{
+ASPT represents the average scores of the families that receive the score. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker implementation take into account composite taxa as follow:
+\enumerate{
+  \item Psychomyiidae (inc. Ecnomidae)
+  \item Rhyachopilidae (inc. Glossomatidae)
+  \item Limnephilidae (inc. Apatanidae)
+  \item Ancylidae (inc. Acroloxidae)
+  \item Gammaridae (inc. Crangonyctidae & Niphargidae)
+  \item Hydrophilidae (inc. Hydraenidae, Helophoridae)
+  \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
+  \item Planariidae (inc. Dugesidae)
+  \item Hydrobiidae (inc. Bithyniidae)
+  \item Oligochaeta (all the families)
+}
 }
 \examples{
 data(macro_ex)
