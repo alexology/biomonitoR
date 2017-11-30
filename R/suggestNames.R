@@ -1,15 +1,16 @@
 suggestNames <- function(x, custom = F){
   if(custom == F){
     dic.path <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
-    dictio <- hunspell::dictionary(dic.path, cache = F)    
-  } 
+    dictio <- hunspell::dictionary(dic.path, cache = F)
+  }
   if(custom == T){
-    dic.path <- c(paste(getwd(),"/custom_dictio.dic", sep="")) 
+    dic.path <- c(paste(getwd(),"/custom_dictio.dic", sep=""))
     dictio <- hunspell::dictionary(dic.path, cache = F)
   }
   taxaCar <- as.character(x$Taxa)
-  
-  # replace space with underscore to be compatible with hunspell 
+  taxaCar <- sapply(taxaCar, capWords, USE.NAMES = F)
+
+  # replace space with underscore to be compatible with hunspell
   taxaCar <- gsub(" ",'_',taxaCar)
 
   # nameCheck and nameSuggest check for the wrong names and suggest for correct names.
@@ -17,7 +18,7 @@ suggestNames <- function(x, custom = F){
   nameCheck <- hunspell::hunspell_check(taxaCar, dict = dictio)
   nameSuggest <- hunspell::hunspell_suggest(taxaCar, dict = dictio)
 
-  
+
   n <- which(nameCheck==F) #number of wrong names
   if(length(n) == 0){
     return(n)
