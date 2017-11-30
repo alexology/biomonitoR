@@ -1,6 +1,7 @@
 suggestUserNames <- function(x){
   dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
   taxaCar <- as.character(x$Taxa)
+  taxaCar <- sapply(taxaCar, capWords, USE.NAMES = F)
 
   # replace space with underscore to be compatible with hunspell
   taxaCar <- gsub(" ",'_',taxaCar)

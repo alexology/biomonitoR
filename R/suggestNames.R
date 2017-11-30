@@ -8,7 +8,7 @@ suggestNames <- function(x, custom = F){
     dictio <- hunspell::dictionary(dic.path, cache = F)
   }
   taxaCar <- as.character(x$Taxa)
-  taxaCar <- sapply(taxaCar, capWords, USE.NAMES = F)
+
 
   # replace space with underscore to be compatible with hunspell
   taxaCar <- gsub(" ",'_',taxaCar)
