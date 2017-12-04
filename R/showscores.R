@@ -16,7 +16,7 @@ showscores <- function(x, writecsv = F){
     stop("provide a valid name")
   }
   else {
-    if(writecsv = F){
+    if(writecsv == F){
       return(x)
     } else {
       write.csv(x, paste(x, ".csv", sep =""))
