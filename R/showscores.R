@@ -15,12 +15,13 @@ showscores <- function(x, writecsv = F){
   if(!x %in% score.list){
     stop("provide a valid name")
   }
+  score.obj <- get(x)
   else {
     if(writecsv == F){
-      return(x)
+      return(score.obj)
     } else {
-      write.csv(x, paste(x, ".csv", sep =""))
-      return(x)
+      write.csv(score.obj, paste(x, ".csv", sep =""))
+      return(score.obj)
     }
   }
 }
