@@ -16,7 +16,19 @@
 
 asBiomonitor <- function (x, dfref = NULL, overwrite = F )
 {
-
+  # check if user database contains a column called Taxa
+  if(!"Taxa" %in% names(x)){
+    stop("Column called Taxa needed")
+  }
+  
+  # check if columns other than Taxa are numeric
+  # position of column Taxa
+  col.taxa <- which(names(x) == "Taxa")
+  col.class <- sapply(x[, -col.taxa ], is.numeric)
+  if(any(col.class == FALSE)){
+    stop("Non-numeric columns are not allowed")
+  }
+  
   # check if user database contains taxa of the reference database
   if(is.null(dfref) == F & overwrite == F){
     temp.ref <- ref$Taxa
