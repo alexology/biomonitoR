@@ -15,8 +15,9 @@ showscores <- function(x, writecsv = F){
   if(!x %in% score.list){
     stop("provide a valid name")
   }
-  score.obj <- get(x)
+  
   else {
+    score.obj <- get(x)
     if(writecsv == F){
       return(score.obj)
     } else {
