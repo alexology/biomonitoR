@@ -29,7 +29,7 @@ quickRename <- function(x, write.table=F){
     stop("pattern and replacement do not have the same length.")
   }
   for(i in 1:n){
-    result <- gsub(wrong[i],correct[i],result)
+    result[which(result == wrong[i])] <- correct[i]
   }
   x$Taxa <- result
   if(write.table==T){
