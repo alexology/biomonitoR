@@ -23,7 +23,7 @@ quickRename <- function(x, write.table=F){
   else{
   wrong <- tempNames$wrongNames
   correct <- tempNames$correctNames
-  result <- x$Taxa
+  result <- as.character(x$Taxa)
   n <- length(wrong)
   if (length(wrong)!=length(correct)) {
     stop("pattern and replacement do not have the same length.")
@@ -37,6 +37,6 @@ quickRename <- function(x, write.table=F){
     write.table(x, file=dfNameChange, quote=F, append=F)
   }
   x$Taxa <- sub("_", " ", x$Taxa)
-  return(x)
+  return(factor(x))
   }
 }
