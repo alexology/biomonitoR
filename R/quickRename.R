@@ -36,7 +36,7 @@ quickRename <- function(x, write.table=F){
     dfNameChange <- paste0(dfName, "_mod",".txt")
     write.table(x, file=dfNameChange, quote=F, append=F)
   }
-  x$Taxa <- sub("_", " ", x$Taxa)
-  return(factor(x))
+  x$Taxa <- factor(sub("_", " ", x$Taxa))
+  return(x)
   }
 }
