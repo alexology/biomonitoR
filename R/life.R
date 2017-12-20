@@ -34,6 +34,9 @@ life <- function(x, method = "Family"){
   fam <- x[-numb, drop = F]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
+  
+  # take into account grouped families
+  fam <- checkBmwpFam(df=fam, famNames=bfam_acc, stNames=st.names)
 
   for(i in 1:length(fam)){
     colnames(fam[[i]])[1] <- "Taxon"
