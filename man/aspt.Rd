@@ -9,7 +9,7 @@ aspt(d, method = "a")
 \arguments{
 \item{d}{results of function aggregatoR}
 
-\item{method}{the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and "i" (MAGRAMA 2011)}
+\item{method}{the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "uk" (Davy-Bowker et al. 2010), "spa" (MAGRAMA 2011), "ita" (Buffagni et al . 2014). Methods "uk_agg"and "ita_agg" implement the composite family approach.}
 }
 \description{
 This function calculates the Average Score Per Taxon following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
