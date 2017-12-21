@@ -4,12 +4,17 @@
 \alias{life}
 \title{life}
 \usage{
-life(x, method = "Family")
+life(x, taxLev = "Family", method = "original", abucl = c(0, 9, 99, 999,
+  9999))
 }
 \arguments{
 \item{x}{results of function aggregatoR function}
 
-\item{method}{possible choices}
+\item{taxLev}{possible choices are "Family" and "Species"}
+
+\item{method}{possible methods are "original" and "revised_2010"}
+
+\item{abucl}{abundance threshold. Default 0, 9, 99, 999, 9999}
 }
 \description{
 This function calculates LIFE index according to Extence et al. (1999).
