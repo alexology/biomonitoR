@@ -25,18 +25,18 @@ life <- function(x, taxLev = "Family", method = "original", abucl = c(0,9,99,999
   }
 
   if(taxLev == "Family" & method == "original"){
-    life_scores <- life_scores_fam
-    fs_life <- fs_life
+    life_scores_use <- life_scores_fam
+    fs_life_use <- fs_life
   }
 
   if(taxLev == "Family" & method == "revised_2010"){
-    life_scores <- life_scores_fam_2010
-    fs_life <- fs_life_2010
+    life_scores_use <- life_scores_fam_2010
+    fs_life_use <- fs_life_2010
   }
 
   if(taxLev == "Species" & method == "original"){
-    life_scores <- life_scores_spe
-    fs_life <- fs_life
+    life_scores_use <- life_scores_spe
+    fs_life_use <- fs_life
   }
 
 
@@ -79,9 +79,9 @@ life <- function(x, taxLev = "Family", method = "original", abucl = c(0,9,99,999
   temp[temp>=c(E+1)] <- 5
 
   fam.long <- data.frame(fam.long, temp)
-  fam.long <- merge(fam.long, life_scores)
+  fam.long <- merge(fam.long, life_scores_use)
   names(fam.long)[5] <- "FS"
-  fam.long <- merge(fam.long, fs_life)
+  fam.long <- merge(fam.long, fs_life_use)
 
   fam.sub <- fam.long[,c(4,9)]
   fam.life <- aggregate(. ~ Site, fam.sub, FUN = sum)
