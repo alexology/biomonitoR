@@ -50,12 +50,12 @@ bmwp <- function( d , method = "a") {
 
   if(method == "a") (y <- aspt_h)
 
-  if(method == "ita") {y <- aspt_b
+  if(method == "ita" || method == "ita_agg") {y <- aspt_b
   z <- bfam_acc}
 
   if(method == "spa") { y <- aspt_i }
 
-  if(method == "uk") {y <- aspt_uk
+  if(method == "uk" || method == "uk_agg") {y <- aspt_uk
   z <- ukfam_acc}
 
   if(method == "ita_agg" || method == "uk_agg") (x <- checkBmwpFam(df=x, famNames=z, stNames=st.names))
