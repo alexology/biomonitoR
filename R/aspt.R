@@ -2,7 +2,7 @@
 #'
 #' This function calculates the Average Score Per Taxon following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 #' @param d results of function aggregatoR
-#' @param method the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "b" (Davy-Bowker et al. 2007) and "i" (MAGRAMA 2011)
+#' @param method the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "uk" (Davy-Bowker et al. 2010), "spa" (MAGRAMA 2011), "ita" (Buffagni et al . 2014). Methods "uk_agg"and "ita_agg" implement the composite family approach.
 #' @keywords aggregatoR
 #' @references Armitage, P. D., Moss, D., Wright, J. F., & Furse, M. T. (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. Water research, 17(3), 333-347.
 #' @references Davy-Bowker J., Clarke R., Corbin T., Vincent H, Pretty J., Hawczak A., Blackburn J., Murphy J., Jones I., 2008. River Invertebrate Classification Tool. Final report. WFD72C. SNIFFER. 276 pp
@@ -45,12 +45,18 @@ aspt <- function( d , method = "a") {
   x <- d[-numb, drop = F]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
-  if(method == "a") (y <- aspt_h)
-  if(method == "b") {y <- aspt_b
-  z <- bfam_acc}
-  if(method == "i") { y <- aspt_i }
 
-  if(method == "b") (x <- checkBmwpFam(df=x, famNames=z, stNames=st.names))
+  if(method == "a") (y <- aspt_h)
+
+  if(method == "ita") {y <- aspt_b
+  z <- bfam_acc}
+
+  if(method == "spa") { y <- aspt_i }
+
+  if(method == "uk") {y <- aspt_uk
+  z <- ukfam_acc}
+
+  if(method == "ita_agg" || method == "uk_agg") (x <- checkBmwpFam(df=x, famNames=z, stNames=st.names))
 
   for(i in 1:length(x)){
     colnames(x[[i]])[1] <- "Taxon"
