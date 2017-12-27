@@ -114,7 +114,7 @@ life <- function(x, taxLev = "Family", composite = F, abucl = c(0,9,99,999,9999)
   fam.life <- aggregate(. ~ Site, fam.sub, FUN = sum)
   fam.life$rich <- aggregate(. ~ Site, fam.sub, FUN = length)[,2]
   fam.life$score <- fam.life[,2] / fam.life[,3]
-  res <- round(fam.life[, "score"], 3)
+  res <- fam.life[, "score"]
   names(res) <- fam.life[, "Site"]
   res <- res[st.names]
   names(res) <- st.names
