@@ -4,8 +4,7 @@
 \alias{life}
 \title{life}
 \usage{
-life(x, taxLev = "Family", composite = "none", abucl = c(0, 9, 99, 999,
-  9999))
+life(x, taxLev = "Family", composite = F, abucl = c(0, 9, 99, 999, 9999))
 }
 \arguments{
 \item{x}{results of function aggregatoR function}
@@ -22,18 +21,18 @@ This function calculates LIFE index according to Davy-Bowker et al. (2010).
 \details{
 Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the version proposed by Davy-Bowker et al. (2010) that has an updated taxonomic list compared to those in Extence et a. (1999). The life function aggregate the following families by default:
 \enumerate{
-  \item Limnephilidae (inc. Apatanidae)
+  \item Limnephilidae (inc. Apataniidae)
   \item Gammaridae (inc. Niphargidae)
   \item Hydrophilidae (inc. Helophoridae, Georissidae & Hydrochidae)
   \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
   \item Siphlonuridae (inc. Ameletidae)
-}  
-  
+}
+
 If composite is set to T the following composite families are used
 
 \enumerate{
   \item Psychomyiidae (inc. Ecnomidae)
-  \item Rhyachopilidae (inc. Glossomatidae)
+  \item Rhyacophilidae (inc. Glossomatidae)
   \item Ancylidae (inc. Acroloxidae)
   \item Gammaridae (inc. Crangonyctidae)
   \item Hydrophilidae (inc. Hydraenidae)
@@ -49,7 +48,7 @@ Scores used for life calculation can be explored with the function code{\link{sh
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-data.life <- life(data.agR, method = "Family")
+data.life <- life(data.agR, taxLev = "Family", composite = F)
 }
 \references{
 Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.

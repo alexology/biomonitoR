@@ -8,7 +8,7 @@
 #' @keywords life
 #' @details Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the version proposed by Davy-Bowker et al. (2010) that has an updated taxonomic list compared to those in Extence et a. (1999). The life function aggregate the following families by default:
 #' \enumerate{
-#'   \item Limnephilidae (inc. Apatanidae)
+#'   \item Limnephilidae (inc. Apataniidae)
 #'   \item Gammaridae (inc. Niphargidae)
 #'   \item Hydrophilidae (inc. Helophoridae, Georissidae & Hydrochidae)
 #'   \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
@@ -19,7 +19,7 @@
 #'
 #' \enumerate{
 #'   \item Psychomyiidae (inc. Ecnomidae)
-#'   \item Rhyachopilidae (inc. Glossomatidae)
+#'   \item Rhyacophilidae (inc. Glossomatidae)
 #'   \item Ancylidae (inc. Acroloxidae)
 #'   \item Gammaridae (inc. Crangonyctidae)
 #'   \item Hydrophilidae (inc. Hydraenidae)
