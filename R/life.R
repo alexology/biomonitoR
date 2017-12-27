@@ -1,22 +1,47 @@
 #' life
 #'
-#' This function calculates LIFE index according to Extence et al. (1999).
+#' This function calculates LIFE index according to Davy-Bowker et al. (2010).
 #' @param x results of function aggregatoR function
 #' @param taxLev possible choices are "Family" and "Species"
-#' @param method possible methods are "original" and "revised_2010"
+#' @param composite if T composite families as listed in the details section are used
 #' @param abucl abundance threshold. Default 0, 9, 99, 999, 9999
 #' @keywords life
-#' @details life currently calculates life index to family and species level, following the nomenclature used by Extence et al. (1999). Species level nomenclature of Extence et al. (1999) is outdated, an updated version will be released soon in biomonitoR.
+#' @details Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the version proposed by Davy-Bowker et al. (2010) that has an updated taxonomic list compared to those in Extence et a. (1999). The life function aggregate the following families by default:
+#' \enumerate{
+#'   \item Limnephilidae (inc. Apatanidae)
+#'   \item Gammaridae (inc. Niphargidae)
+#'   \item Hydrophilidae (inc. Helophoridae, Georissidae & Hydrochidae)
+#'   \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
+#'   \item Siphlonuridae (inc. Ameletidae)
+#' }
+#'
+#' If composite is set to T the following composite families are used
+#'
+#' \enumerate{
+#'   \item Psychomyiidae (inc. Ecnomidae)
+#'   \item Rhyachopilidae (inc. Glossomatidae)
+#'   \item Ancylidae (inc. Acroloxidae)
+#'   \item Gammaridae (inc. Crangonyctidae)
+#'   \item Hydrophilidae (inc. Hydraenidae)
+#'   \item Planariidae (inc. Dugesidae)
+#'   \item Hydrobiidae (inc. Bithyniidae)
+#'   \item Dytiscidae (inc. Noteridae)
+#'   \item Planariidae (inc. Dugesiidae)
+#' }
+#'
+#' Scores used for life calculation can be explored with the function code{\link{showscores}}.
+#'
 #' @references Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.
+#' @references Davy-Bowker J, Arnott S, Close R, Dobson M, Dunbar M, Jofre G, Morton D, Murphy J, Wareham W, Smith S, Gordon V. 2010. SNIFFER WFD 100: Further development of River Invertebrate Classification Tool. Final Report.
 #' @export
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' data.life <- life(data.agR, method = "Family")
+#' data.life <- life(data.agR, taxLev = "Family", composite = F)
 
-life <- function(x, taxLev = "Family", method = "original", abucl = c(0,9,99,999,9999)){
+life <- function(x, taxLev = "Family", composite = F, abucl = c(0,9,99,999,9999)){
 
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
@@ -24,17 +49,12 @@ life <- function(x, taxLev = "Family", method = "original", abucl = c(0,9,99,999
     return("Object x is not an object of class biomonitoR")
   }
 
-  if(taxLev == "Family" & method == "original"){
+  if(taxLev == "Family"){
     life_scores_use <- life_scores_fam
     fs_life_use <- fs_life
   }
 
-  if(taxLev == "Family" & method == "revised_2010"){
-    life_scores_use <- life_scores_fam_2010
-    fs_life_use <- fs_life_2010
-  }
-
-  if(taxLev == "Species" & method == "original"){
+  if(taxLev == "Species"){
     life_scores_use <- life_scores_spe
     fs_life_use <- fs_life
   }
@@ -45,8 +65,15 @@ life <- function(x, taxLev = "Family", method = "original", abucl = c(0,9,99,999
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
 
-  # take into account grouped families
-  fam <- checkBmwpFam(df=fam, famNames=ukfam_acc, stNames=st.names)
+  # composite default families
+
+  fam <- checkBmwpFam(df=fam, famNames=life_acc_default, stNames=st.names)
+
+  # take into account composite families
+  if(composite == T){
+    fam <- checkBmwpFam(df=fam, famNames=life_fam_acc, stNames=st.names)
+  }
+
 
   for(i in 1:length(fam)){
     colnames(fam[[i]])[1] <- "Taxon"

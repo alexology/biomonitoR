@@ -4,7 +4,7 @@
 \alias{life}
 \title{life}
 \usage{
-life(x, taxLev = "Family", method = "original", abucl = c(0, 9, 99, 999,
+life(x, taxLev = "Family", composite = "none", abucl = c(0, 9, 99, 999,
   9999))
 }
 \arguments{
@@ -12,15 +12,38 @@ life(x, taxLev = "Family", method = "original", abucl = c(0, 9, 99, 999,
 
 \item{taxLev}{possible choices are "Family" and "Species"}
 
-\item{method}{possible methods are "original" and "revised_2010"}
+\item{composite}{if T composite families as listed in the details section are used}
 
 \item{abucl}{abundance threshold. Default 0, 9, 99, 999, 9999}
 }
 \description{
-This function calculates LIFE index according to Extence et al. (1999).
+This function calculates LIFE index according to Davy-Bowker et al. (2010).
 }
 \details{
-life currently calculates life index to family and species level, following the nomenclature used by Extence et al. (1999). Species level nomenclature of Extence et al. (1999) is outdated, an updated version will be released soon in biomonitoR.
+Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the version proposed by Davy-Bowker et al. (2010) that has an updated taxonomic list compared to those in Extence et a. (1999). The life function aggregate the following families by default:
+\enumerate{
+  \item Limnephilidae (inc. Apatanidae)
+  \item Gammaridae (inc. Niphargidae)
+  \item Hydrophilidae (inc. Helophoridae, Georissidae & Hydrochidae)
+  \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
+  \item Siphlonuridae (inc. Ameletidae)
+}  
+  
+If composite is set to T the following composite families are used
+
+\enumerate{
+  \item Psychomyiidae (inc. Ecnomidae)
+  \item Rhyachopilidae (inc. Glossomatidae)
+  \item Ancylidae (inc. Acroloxidae)
+  \item Gammaridae (inc. Crangonyctidae)
+  \item Hydrophilidae (inc. Hydraenidae)
+  \item Planariidae (inc. Dugesidae)
+  \item Hydrobiidae (inc. Bithyniidae)
+  \item Dytiscidae (inc. Noteridae)
+  \item Planariidae (inc. Dugesiidae)
+}
+
+Scores used for life calculation can be explored with the function code{\link{showscores}}.
 }
 \examples{
 data(macro_ex)
@@ -30,6 +53,8 @@ data.life <- life(data.agR, method = "Family")
 }
 \references{
 Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.
+
+Davy-Bowker J, Arnott S, Close R, Dobson M, Dunbar M, Jofre G, Morton D, Murphy J, Wareham W, Smith S, Gordon V. 2010. SNIFFER WFD 100: Further development of River Invertebrate Classification Tool. Final Report.
 }
 \seealso{
 \code{\link{asBiomonitor}}
