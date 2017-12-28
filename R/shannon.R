@@ -1,7 +1,7 @@
 #' shannon
 #'
-#' Functions for calculating shannon, simpson, margalef and menhinick indices.
-#' @aliases  shannon simpson margalef menhinick
+#' Functions for calculating shannon, simpson, margalef, menhinick and pielou indices.
+#' @aliases  shannon simpson margalef menhinick pielou
 #' @param x results of function aggregatoR
 #' @param base the base of the logarithm
 #' @param taxaLev taxonimc level on which the calculation has to be made.
