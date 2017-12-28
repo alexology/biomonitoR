@@ -43,6 +43,6 @@ gold <- function (x){
       gold_temp.agg<- gold_temp.agg[-z,] # remove unassigned row from the species count
     }
     temp <- 1 - apply(gold_temp.agg[ , -1], 2 ,sum) / abu(x)
-    return( round(temp, 3) )
+    return( temp )
   }
 }

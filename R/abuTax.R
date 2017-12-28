@@ -71,5 +71,5 @@ abuTax <- function(x, taxa = NULL, rel = FALSE){
   }
   abuperc.v <- as.vector(t(abucum))
   names(abuperc.v) <- names(abucum)
-  return(round(abuperc.v, 3))
+  return( abuperc.v )
 }

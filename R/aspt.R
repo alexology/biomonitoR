@@ -80,5 +80,5 @@ aspt <- function( d , method = "a") {
     ntaxa <- colSums(tot.mer[, -c(1:2), drop = F] == 1)
     tot.aspt <- apply(tot.mer$Value*tot.mer[ , tot.st, drop=F], 2, sum)/ntaxa
   }
-  return( round(tot.aspt, 3) )
+  return( tot.aspt )
 }

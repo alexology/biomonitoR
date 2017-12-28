@@ -28,6 +28,6 @@ eptd <- function (x){
   x_eptd <- x_fam[which(x_fam$Family %in% eptd_fam), , drop=F]
   temp <- log10(apply(x_eptd[ , -1], 2 , sum)+1)
 
-  return( round(temp, 3) )
+  return( temp )
 
 }

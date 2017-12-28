@@ -5,7 +5,7 @@
 #' @param x results of function aggregatoR
 #' @param base the base of the logarithm
 #' @param taxaLev taxonimc level on which the calculation has to be made.
-#' @keywords shannon, simpson, margalef, menhinick
+#' @keywords shannon, simpson, margalef, menhinick, pielou
 #' @details
 #' @export
 #' @seealso \code{\link{aggregatoR}}
@@ -19,9 +19,8 @@
 #' shannon(data.agR, base=exp(1))
 #' @export simpson
 #' @export margalef
-#' @export margalef
 #' @export menhinick
-
+#' @export pielou
 
 shannon <- function(x, base=2, taxLev="Family"){
 
@@ -49,6 +48,6 @@ shannon <- function(x, base=2, taxLev="Family"){
   else{
     sha <- apply(df[,-1], 2, FUN = function(x){Pi( x, index = "Shannon", base = base )})
   }
-  return( round(sha, 3) )
+  return( sha )
 }
 

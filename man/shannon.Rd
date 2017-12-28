@@ -32,6 +32,7 @@ shannon(data.agR, base=exp(1))
 \code{\link{aggregatoR}}
 }
 \keyword{margalef,}
-\keyword{menhinick}
+\keyword{menhinick,}
+\keyword{pielou}
 \keyword{shannon,}
 \keyword{simpson,}
