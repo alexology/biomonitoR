@@ -4,12 +4,15 @@
 \alias{life}
 \title{life}
 \usage{
-life(x, taxLev = "Family", composite = F, abucl = c(0, 9, 99, 999, 9999))
+life(x, taxLev = "Family", version = "extence", composite = F,
+  abucl = c(0, 9, 99, 999, 9999))
 }
 \arguments{
 \item{x}{results of function aggregatoR function}
 
-\item{taxLev}{possible choices are "Family" and "Species"}
+\item{taxLev}{currently only the option "Family" is enabled}
+
+\item{version}{possible choices are "extence" and "life_2017"}
 
 \item{composite}{if T composite families as listed in the details section are used}
 
@@ -19,29 +22,24 @@ life(x, taxLev = "Family", composite = F, abucl = c(0, 9, 99, 999, 9999))
 This function calculates LIFE index according to Davy-Bowker et al. (2010).
 }
 \details{
-Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the version proposed by Davy-Bowker et al. (2010) that has an updated taxonomic list compared to those in Extence et a. (1999). The life function aggregate the following families by default:
-\enumerate{
-  \item Limnephilidae (inc. Apataniidae)
-  \item Gammaridae (inc. Niphargidae)
-  \item Hydrophilidae (inc. Helophoridae, Georissidae & Hydrochidae)
-  \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
-  \item Siphlonuridae (inc. Ameletidae)
-}
-
-If composite is set to T the following composite families are used
+Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the Extence et al. (1999) version called "extence" and the version currently used in UK called "life_2017".
+If composite is set to T the following composite families are used for extence
 
 \enumerate{
   \item Psychomyiidae (inc. Ecnomidae)
   \item Rhyacophilidae (inc. Glossomatidae)
   \item Ancylidae (inc. Acroloxidae)
   \item Gammaridae (inc. Crangonyctidae)
-  \item Hydrophilidae (inc. Hydraenidae)
   \item Planariidae (inc. Dugesidae)
   \item Hydrobiidae (inc. Bithyniidae)
-  \item Dytiscidae (inc. Noteridae)
-  \item Planariidae (inc. Dugesiidae)
 }
 
+while for "life_2017" the following are used:
+
+ \enumerate{
+   \item Hydrophilidae (inc. Georissidae, Hlophoridae, Hydrochidae)
+
+ }
 Scores used for life calculation can be explored with the function code{\link{showscores}}.
 }
 \examples{
@@ -52,8 +50,6 @@ data.life <- life(data.agR, taxLev = "Family", composite = F)
 }
 \references{
 Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.
-
-Davy-Bowker J, Arnott S, Close R, Dobson M, Dunbar M, Jofre G, Morton D, Murphy J, Wareham W, Smith S, Gordon V. 2010. SNIFFER WFD 100: Further development of River Invertebrate Classification Tool. Final Report.
 }
 \seealso{
 \code{\link{asBiomonitor}}

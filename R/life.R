@@ -1,38 +1,33 @@
 #' life
 #'
-#' This function calculates LIFE index according to Davy-Bowker et al. (2010).
+#' This function calculates LIFE index according to most recent version used in UK.
 #' @param x results of function aggregatoR function
-#' @param taxLev possible choices are "Family" and "Species"
+#' @param taxLev currently only the option "Family" is enabled
+#' @param version possible choices are "extence" and "life_2017"
 #' @param composite if T composite families as listed in the details section are used
 #' @param abucl abundance threshold. Default 0, 9, 99, 999, 9999
 #' @keywords life
-#' @details Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the version proposed by Davy-Bowker et al. (2010) that has an updated taxonomic list compared to those in Extence et a. (1999). The life function aggregate the following families by default:
-#' \enumerate{
-#'   \item Limnephilidae (inc. Apataniidae)
-#'   \item Gammaridae (inc. Niphargidae)
-#'   \item Hydrophilidae (inc. Helophoridae, Georissidae & Hydrochidae)
-#'   \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
-#'   \item Siphlonuridae (inc. Ameletidae)
-#' }
-#'
-#' If composite is set to T the following composite families are used
+#' @details Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the Extence et al. (1999) version called "extence" and the version currently used in UK called "life_2017".
+#' If composite is set to T the following composite families are used for extence
 #'
 #' \enumerate{
 #'   \item Psychomyiidae (inc. Ecnomidae)
 #'   \item Rhyacophilidae (inc. Glossomatidae)
 #'   \item Ancylidae (inc. Acroloxidae)
 #'   \item Gammaridae (inc. Crangonyctidae)
-#'   \item Hydrophilidae (inc. Hydraenidae)
 #'   \item Planariidae (inc. Dugesidae)
 #'   \item Hydrobiidae (inc. Bithyniidae)
-#'   \item Dytiscidae (inc. Noteridae)
-#'   \item Planariidae (inc. Dugesiidae)
 #' }
 #'
+#' while for "life_2017" the following are used:
+#'
+#'  \enumerate{
+#'    \item Hydrophilidae (inc. Georissidae, Hlophoridae, Hydrochidae)
+#'
+#'  }
 #' Scores used for life calculation can be explored with the function code{\link{showscores}}.
 #'
 #' @references Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.
-#' @references Davy-Bowker J, Arnott S, Close R, Dobson M, Dunbar M, Jofre G, Morton D, Murphy J, Wareham W, Smith S, Gordon V. 2010. SNIFFER WFD 100: Further development of River Invertebrate Classification Tool. Final Report.
 #' @export
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
@@ -41,7 +36,7 @@
 #' data.agR <- aggregatoR(data.bio)
 #' data.life <- life(data.agR, taxLev = "Family", composite = F)
 
-life <- function(x, taxLev = "Family", composite = F, abucl = c(0,9,99,999,9999)){
+life <- function(x, taxLev = "Family", version = "extence", composite = F, abucl = c(0,9,99,999,9999)){
 
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
@@ -49,13 +44,18 @@ life <- function(x, taxLev = "Family", composite = F, abucl = c(0,9,99,999,9999)
     return("Object x is not an object of class biomonitoR")
   }
 
-  if(taxLev == "Family"){
+  if(taxLev != "Family"){
+    stop("Species level LIFE not implemented yet")
+  }
+
+
+  if(taxLev == "Family" & version == "extence"){
     life_scores_use <- life_scores_fam
     fs_life_use <- fs_life
   }
 
-  if(taxLev == "Species"){
-    life_scores_use <- life_scores_spe
+  if(taxLev == "Family" & version == "life_2017"){
+    life_scores_use <- life_scores_fam_2017
     fs_life_use <- fs_life
   }
 
@@ -67,11 +67,14 @@ life <- function(x, taxLev = "Family", composite = F, abucl = c(0,9,99,999,9999)
 
   # composite default families
 
-  fam <- checkBmwpFam(df=fam, famNames=life_acc_default, stNames=st.names)
+  # take into account composite families
+  if(composite == T & taxLev == "Family" & version == "extence"){
+    fam <- checkBmwpFam(df=fam, famNames=life_fam_acc, stNames=st.names)
+  }
 
   # take into account composite families
-  if(composite == T){
-    fam <- checkBmwpFam(df=fam, famNames=life_fam_acc, stNames=st.names)
+  if(composite == T & taxLev == "Family" & version == "life_2017"){
+    fam <- checkBmwpFam(df=fam, famNames=life_fam_acc_2017, stNames=st.names)
   }
 
 
