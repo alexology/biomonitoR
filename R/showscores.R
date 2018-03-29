@@ -1,17 +1,17 @@
 #' showscores
 #'
 #' This function print the scores used for the calculation of several indices in biomonitoR.
-#' @param x name of the scores to print. Allowed names are "aspt_b", "aspt_i", "aspt_h", "life_scores_spe" and "life_scores_fam"
+#' @param x name of the scores to print. Allowed names are "aspt_b", "aspt_i", "aspt_h", "life_scores_fam" and "whpt_scores_fam"
 #' @param writecsv if TRUE the scores are saved in the working directory.
 #' @keywords asBiomonitor
 #' @export
-#' @seealso \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}
+#' @seealso \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}
 #' @examples
 #' showscores("aspt_i", writecsv = F)
 
 showscores <- function(x, writecsv = F){
   # list of allowed scores
-  score.list <- c("aspt_b", "aspt_i", "aspt_h", "life_scores_spe", "life_scores_fam")
+  score.list <- c("aspt_b", "aspt_i", "aspt_h", "life_scores_fam", "whpt_scores_fam")
   if(!x %in% score.list){
     stop("provide a valid name")
   }

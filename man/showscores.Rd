@@ -7,7 +7,7 @@
 showscores(x, writecsv = F)
 }
 \arguments{
-\item{x}{name of the scores to print. Allowed names are "aspt_b", "aspt_i", "aspt_h", "life_scores_spe" and "life_scores_fam"}
+\item{x}{name of the scores to print. Allowed names are "aspt_b", "aspt_i", "aspt_h", "life_scores_fam" and "whpt_scores_fam"}
 
 \item{writecsv}{if TRUE the scores are saved in the working directory.}
 }
@@ -18,6 +18,6 @@ This function print the scores used for the calculation of several indices in bi
 showscores("aspt_i", writecsv = F)
 }
 \seealso{
-\code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}
+\code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}
 }
 \keyword{asBiomonitor}

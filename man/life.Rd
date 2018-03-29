@@ -19,7 +19,7 @@ life(x, taxLev = "Family", version = "extence", composite = F,
 \item{abucl}{abundance threshold. Default 0, 9, 99, 999, 9999}
 }
 \description{
-This function calculates LIFE index according to Davy-Bowker et al. (2010).
+This function calculates LIFE index according to most recent version used in UK.
 }
 \details{
 Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the Extence et al. (1999) version called "extence" and the version currently used in UK called "life_2017".
