@@ -50,8 +50,10 @@ aspt(data.agR, method="i")
 5. Improve help;
 6. Test biomonitoR extensively.
 
+## Acknowledgments
+This package is based upon work from COST Action CA15113 (SMIRES, Science and Management of Intermittent Rivers and Ephemeral Streams,[www.smires.eu](http://www.freshwaterecology.info/)), supported by COST (European Cooperation in Science and Technology).
 
 ## References
-Reference database is from [freshwaterecology.info](http://www.freshwaterecology.info/).
+Reference database is from [freshwaterecology.info](http://www.smires.eu/).
 
 Schmidt-Kloiber, A. & Hering D. (2015): www.freshwaterecology.info - an online tool that unifies, standardises and codifies more than 20,000 European freshwater organisms and their ecological preferences. Ecological Indicators 53: 271-282. doi: 10.1016/j.ecolind.2015.02.007
