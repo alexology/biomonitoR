@@ -37,7 +37,7 @@ whpt <- function(x, taxLev = "Family", type = "aspt", composite = F, abucl = c(0
     return("Object x is not an object of class biomonitoR")
   }
   
-  if(type != "aspt" || type != "ntaxa" || type != "bmwp"){
+  if(type != "aspt" & type != "ntaxa" & type != "bmwp"){
     stop("Please provide a valide type: aspt, ntaxa or bmwp")
   }
   
