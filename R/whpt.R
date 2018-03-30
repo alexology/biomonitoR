@@ -4,7 +4,7 @@
 #' @param x results of aggregatoR function
 #' @param taxLev currently only the option "Family" is enabled
 #' @param type presence only ("po") or abundance ("ab")
-#' @param metric possible choices are "aspt", "ntaxa", "bmwp"
+#' @param method possible choices are "aspt", "ntaxa", "bmwp"
 #' @param composite if T composite families as listed in the details section are used
 #' @param abucl abundance threshold. Default 0, 9, 99, 999.
 #' @keywords whpt
@@ -30,7 +30,7 @@
 #' data.agR <- aggregatoR(data.bio)
 #' data.whpt <- whpt(data.agR, taxLev = "Family", composite = F)
 
-whpt <- function(x, taxLev = "Family", type = "ab", metric = "aspt", composite = F, abucl = c(0,9,99,999)){
+whpt <- function(x, taxLev = "Family", type = "ab", method = "aspt", composite = F, abucl = c(0,9,99,999)){
 
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
@@ -42,7 +42,7 @@ whpt <- function(x, taxLev = "Family", type = "ab", metric = "aspt", composite =
     stop("Please provide a valide type: po or ab")
   }
 
-  if(metric != "aspt" & metric != "ntaxa" & metric != "bmwp"){
+  if(method != "aspt" & method != "ntaxa" & method != "bmwp"){
     stop("Please provide a valide metric: aspt, ntaxa or bmwp")
   }
 
@@ -121,13 +121,13 @@ whpt <- function(x, taxLev = "Family", type = "ab", metric = "aspt", composite =
   fam.whpt <- aggregate(. ~ Site, fam.sub, FUN = sum)
   fam.whpt$rich <- aggregate(. ~ Site, fam.sub, FUN = length)[,2]
   fam.whpt$score <- fam.whpt[,2] / fam.whpt[,3]
-  if(type == "aspt"){
+  if(method == "aspt"){
     res <- fam.whpt[, "score"]
   }
-  if(type == "ntaxa"){
+  if(method == "ntaxa"){
     res <- fam.whpt[, "rich"]
   }
-  if(type == "bmwp"){
+  if(method == "bmwp"){
     res <- fam.whpt[, "Score"]
   }
   names(res) <- fam.whpt[, "Site"]

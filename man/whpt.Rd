@@ -4,7 +4,7 @@
 \alias{whpt}
 \title{whpt}
 \usage{
-whpt(x, taxLev = "Family", type = "ab", metric = "aspt", composite = F,
+whpt(x, taxLev = "Family", type = "ab", method = "aspt", composite = F,
   abucl = c(0, 9, 99, 999))
 }
 \arguments{
@@ -14,7 +14,7 @@ whpt(x, taxLev = "Family", type = "ab", metric = "aspt", composite = F,
 
 \item{type}{presence only ("po") or abundance ("ab")}
 
-\item{metric}{possible choices are "aspt", "ntaxa", "bmwp"}
+\item{method}{possible choices are "aspt", "ntaxa", "bmwp"}
 
 \item{composite}{if T composite families as listed in the details section are used}
 
