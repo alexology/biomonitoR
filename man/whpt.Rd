@@ -4,19 +4,21 @@
 \alias{whpt}
 \title{whpt}
 \usage{
-whpt(x, taxLev = "Family", type = "aspt", composite = F, abucl = c(0, 9,
-  99, 999, 9999))
+whpt(x, taxLev = "Family", type = "ab", metric = "aspt", composite = F,
+  abucl = c(0, 9, 99, 999))
 }
 \arguments{
 \item{x}{results of aggregatoR function}
 
 \item{taxLev}{currently only the option "Family" is enabled}
 
-\item{type}{possible choices are "aspt", "ntaxa", "bmwp"}
+\item{type}{presence only ("po") or abundance ("ab")}
+
+\item{metric}{possible choices are "aspt", "ntaxa", "bmwp"}
 
 \item{composite}{if T composite families as listed in the details section are used}
 
-\item{abucl}{abundance threshold. Default 0, 9, 99, 999, 9999.}
+\item{abucl}{abundance threshold. Default 0, 9, 99, 999.}
 }
 \description{
 This function calculates WHPT index according to most recent version used in UK.
