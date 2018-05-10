@@ -98,6 +98,7 @@ epsi <- function(x, taxLev = "Family", abucl = c(0,9,99,999), composite = F){
   
   
   fam.long <- data.frame(fam.long, temp)
+  fam.long <- merge(fam.long, epsi_scores_use)
   fam.long$EPSI <- fam.long$ABU_NUM * fam.long$Scores
   epsi.sensitive <- aggregate(EPSI ~ Site, data = fam.long[which(fam.long$Scores >= 0.5),], FUN = sum)
   epsi.insensitive <- aggregate(EPSI ~ Site, data = fam.long, FUN = sum)
