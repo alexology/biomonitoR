@@ -25,7 +25,7 @@
 #' data.agR <- aggregatoR(data.bio)
 #' data.psi <- epsi(data.agR, taxLev = "Family", composite = F)
 
-epsi <- function(x, taxLev = "Family", abucl = c(0,9,99,999)){
+epsi <- function(x, taxLev = "Family", abucl = c(0,9,99,999), composite = F){
   
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
