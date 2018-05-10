@@ -17,17 +17,17 @@ psi(x, taxLev = "Family", abucl = c(0, 9, 99, 999))
 This function calculates Proportion of Sediment-sensitive Invertebrates index (PSI) according to the most recent version used in UK.
 }
 \details{
-Scores used for whpt calculation can be explored with the function code{\link{showscores}}.
+Scores used for psi calculation can be explored with the function code{\link{showscores}}.
 }
 \section{Acknowledgements}{
- We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated WHPT scores and algorithms.
+ We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated PSI scores and algorithms.
 }
 
 \examples{
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-data.psi <- psi(data.agR, taxLev = "Family", composite = F)
+data.psi <- psi(data.agR, taxLev = "Family")
 }
 \references{
 Extence CA, Chadd RP, England J, Dunbar MJ, Wood PJ, Taylor ED. 2013. The assessment of fine sediment accumulation in rivers using macro-invertebrate community response. River Research and Applications 29, 17–55.

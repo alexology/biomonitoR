@@ -7,16 +7,16 @@
 #' @keywords psi
 #' @details 
 #'
-#' Scores used for whpt calculation can be explored with the function code{\link{showscores}}.
+#' Scores used for psi calculation can be explored with the function code{\link{showscores}}.
 #' @references Extence CA, Chadd RP, England J, Dunbar MJ, Wood PJ, Taylor ED. 2013. The assessment of fine sediment accumulation in rivers using macro-invertebrate community response. River Research and Applications 29, 17–55.
-#' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated WHPT scores and algorithms.
+#' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated PSI scores and algorithms.
 #' @export
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' data.psi <- psi(data.agR, taxLev = "Family", composite = F)
+#' data.psi <- psi(data.agR, taxLev = "Family")
 
 psi <- function(x, taxLev = "Family", abucl = c(0,9,99,999)){
   
@@ -27,7 +27,7 @@ psi <- function(x, taxLev = "Family", abucl = c(0,9,99,999)){
   }
   
   if(taxLev != "Family"){
-    stop("Species level WHPT not implemented yet")
+    stop("Currently only family level is implemented!")
   }
   
   

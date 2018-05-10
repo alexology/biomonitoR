@@ -7,7 +7,7 @@
 showscores(x, writecsv = F)
 }
 \arguments{
-\item{x}{name of the scores to print. Allowed names are "aspt_b", "aspt_i", "aspt_h", "life_scores_fam" and "whpt_scores_fam"}
+\item{x}{name of the scores to print. Allowed names are "aspt_b", "aspt_i", "aspt_h", "life_scores_fam", "whpt_scores_fam", "psi_scores_fam" and "psi_scores_fam"}
 
 \item{writecsv}{if TRUE the scores are saved in the working directory.}
 }
