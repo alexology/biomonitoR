@@ -3,7 +3,7 @@ Type: Package
 Title: calculates indices for biomonitoring of running waters.
 Version: 0.0.0.9000
 Author: Alex Laini, Tommaso Cancellario, Cédric Mondy
-Manteiner: Alex Laini <alex.laini@gmail.com>
+Maintainer: Alex Laini <alex.laini@gmail.com>
 Description: A package to calculate indices for biomonitoring of running water with a focus on macroinvertebrate community.
 Depends: hunspell
 License: GPL-2
