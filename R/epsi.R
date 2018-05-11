@@ -103,7 +103,7 @@ epsi <- function(x, taxLev = "Family", abucl = c(0,9,99,999), composite = F){
   epsi.sensitive <- aggregate(EPSI ~ Site, data = fam.long[which(fam.long$Scores >= 0.5),], FUN = sum)
   epsi.insensitive <- aggregate(EPSI ~ Site, data = fam.long, FUN = sum)
   
-  # the next two lines ot overcome the problem of having 0 organisms belonign to 1 and 2 FSSR
+  # the next two lines ot overcome the problem of having 0 organisms belonging to 1 and 2 FSSR
   epsi.mer <- merge(epsi.sensitive, epsi.insensitive, by = "Site", all.x = T, all.y = T)
   epsi.mer[is.na(epsi.mer)] <- 0
   
