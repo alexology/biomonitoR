@@ -4,7 +4,7 @@
 \alias{epsi}
 \title{e-psi}
 \usage{
-epsi(x, taxLev = "Family", abucl = c(0, 9, 99, 999))
+epsi(x, taxLev = "Family", abucl = c(0, 9, 99, 999), composite = F)
 }
 \arguments{
 \item{x}{results of aggregatoR function}
