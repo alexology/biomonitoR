@@ -76,7 +76,7 @@ dness <- function(d, complete = F, taxLev = "Genus", method = "delta", taxatree 
   tax.dis <- ddis(taxtree, st.names = st.names)
   sites <- taxtree[ , which(names(taxtree) %in% st.names)]
   sites.bin <- sites
-  sites[sites > 0 ] <- 1
+  sites.bin[sites.bin > 0 ] <- 1
   
   if(method == "delta") {res <- apply(sites, 2, function( x ) ( delta(x, dis = tax.dis)))}
   if(method == "delta.bin") {res <- apply(sites.bin, 2, function( x ) ( delta(x, dis = tax.dis)))}
