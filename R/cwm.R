@@ -65,6 +65,11 @@
 
 cwm <- function(x, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p) {
 
+  # create dummy variables to avoid R CMD check NOTES
+  traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
+    Abundance <- Sample <- Weight <- Affinity <- totWeight <-
+    weightedAffinity <- Category <- . <- NULL
+
   # check if the object x is of class "biomonitoR"
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
