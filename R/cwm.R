@@ -35,6 +35,7 @@
 #' @importFrom dplyr left_join
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarise
+#' @importFrom dplyr ungroup
 #' @importFrom tidyr gather
 #' @importFrom tidyr spread
 #'
