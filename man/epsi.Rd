@@ -4,7 +4,7 @@
 \alias{epsi}
 \title{e-psi}
 \usage{
-epsi(x, taxLev = "Family", abucl = c(0, 9, 99, 999))
+epsi(x, taxLev = "Family", abucl = c(0, 9, 99, 999), composite = F)
 }
 \arguments{
 \item{x}{results of aggregatoR function}
@@ -19,10 +19,10 @@ This function calculates Empyrically-weighted Proportion of Sediment-sensitive I
 \details{
 ePSI implementation take into account composite taxa as follow:
 \enumerate{
- \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
- \item Siphlonuridae (inc. Ameletidae)
- \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
- }
+\item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
+\item Siphlonuridae (inc. Ameletidae)
+\item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
+}
 Ancylus (0.51) has a different score compared to the other Planorbidae (0). Take it into account when interpreting the results.
 Scores used for epsi calculation can be explored with the function code{\link{showscores}}.
 }

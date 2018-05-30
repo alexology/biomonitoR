@@ -17,16 +17,16 @@ This function calculates the Average Score Per Taxon following Armitage et al. (
 \details{
 ASPT represents the average scores of the families that receive the score. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker implementation take into account composite taxa as follow:
 \enumerate{
-  \item Psychomyiidae (inc. Ecnomidae)
-  \item Rhyachopilidae (inc. Glossomatidae)
-  \item Limnephilidae (inc. Apatanidae)
-  \item Ancylidae (inc. Acroloxidae)
-  \item Gammaridae (inc. Crangonyctidae & Niphargidae)
-  \item Hydrophilidae (inc. Hydraenidae, Helophoridae)
-  \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
-  \item Planariidae (inc. Dugesidae)
-  \item Hydrobiidae (inc. Bithyniidae)
-  \item Oligochaeta (all the families)
+\item Psychomyiidae (inc. Ecnomidae)
+\item Rhyachopilidae (inc. Glossomatidae)
+\item Limnephilidae (inc. Apatanidae)
+\item Ancylidae (inc. Acroloxidae)
+\item Gammaridae (inc. Crangonyctidae & Niphargidae)
+\item Hydrophilidae (inc. Hydraenidae, Helophoridae)
+\item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
+\item Planariidae (inc. Dugesidae)
+\item Hydrobiidae (inc. Bithyniidae)
+\item Oligochaeta (all the families)
 }
 }
 \examples{

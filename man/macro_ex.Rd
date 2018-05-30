@@ -6,9 +6,9 @@
 \title{Ephemeroptera toy example}
 \format{A data frame with 4 rows and 3 variables:
 \describe{
-  \item{Taxa}{name of ephemeroptera taxa}
-  \item{ST1}{abundance in site 1}
-  \item{ST2}{abundance in site 2}
+\item{Taxa}{name of ephemeroptera taxa}
+\item{ST1}{abundance in site 1}
+\item{ST2}{abundance in site 2}
 }}
 \usage{
 macro_ex

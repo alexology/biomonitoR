@@ -27,12 +27,12 @@ This function calculates WHPT index according to most recent version used in UK.
 WHPT is a revision of BMWP and it takes into account the abundances of organisms. The following aggregation is used if composit is set equal to T:
 
 \enumerate{
-  \item Psychomyiidae (inc. Ecnomidae)
-  \item Rhyacophilidae (inc. Glossomatidae)
-  \item Ancylidae (inc. Acroloxidae)
-  \item Gammaridae (inc. Crangonyctidae)
-  \item Planariidae (inc. Dugesidae)
-  \item Hydrobiidae (inc. Bithyniidae)
+\item Psychomyiidae (inc. Ecnomidae)
+\item Rhyacophilidae (inc. Glossomatidae)
+\item Ancylidae (inc. Acroloxidae)
+\item Gammaridae (inc. Crangonyctidae)
+\item Planariidae (inc. Dugesidae)
+\item Hydrobiidae (inc. Bithyniidae)
 }
 
 Scores used for whpt calculation can be explored with the function code{\link{showscores}}.
