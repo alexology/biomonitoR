@@ -12,6 +12,8 @@ epsi(x, taxLev = "Family", abucl = c(0, 9, 99, 999), composite = F)
 \item{taxLev}{currently only the option "Family" is allowed}
 
 \item{abucl}{Log abundance categories. Treshold are set to 0, 9, 99, 999.}
+
+\item{composite}{if T composite families as listed in the details section are used.}
 }
 \description{
 This function calculates Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index (ePSI) according to the most recent version used in UK.
