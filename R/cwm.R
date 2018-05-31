@@ -29,14 +29,8 @@
 #'
 #' @return a table with the CWM values of each trait (trait modality)
 #'
-#' @importFrom dplyr '%>%'
-#' @importFrom dplyr mutate
-#' @importFrom dplyr select
-#' @importFrom dplyr left_join
-#' @importFrom dplyr group_by
-#' @importFrom dplyr summarise
-#' @importFrom tidyr gather
-#' @importFrom tidyr spread
+#' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
+#' @importFrom tidyr gather spread
 #'
 #' @examples
 #' data(macro_ex)
@@ -63,6 +57,11 @@
 #' @export
 
 cwm <- function(x, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p) {
+
+  # create dummy variables to avoid R CMD check NOTES
+  traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
+    Abundance <- Sample <- Weight <- Affinity <- totWeight <-
+    weightedAffinity <- Category <- . <- NULL
 
   # check if the object x is of class "biomonitoR"
   if (class(x) != "biomonitoR") {

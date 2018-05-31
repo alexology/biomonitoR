@@ -5,6 +5,7 @@
 #' @param taxLev the taxonomic level for calculating EPT richness.
 #' @keywords ept
 #' @details The parameter taxLev can be "Species", "Genus", "Family" or "Order".
+#' @importFrom stats aggregate
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples

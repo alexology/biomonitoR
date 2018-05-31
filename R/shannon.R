@@ -6,7 +6,6 @@
 #' @param base the base of the logarithm
 #' @param taxaLev taxonimc level on which the calculation has to be made.
 #' @keywords shannon, simpson, margalef, menhinick, pielou
-#' @details
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples

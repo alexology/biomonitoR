@@ -20,6 +20,7 @@
 #'   \item Hydrobiidae (inc. Bithyniidae)
 #'   \item Oligochaeta (all the families)
 #' }
+#' @importFrom stats aggregate
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
