@@ -5,7 +5,6 @@
 #' @param taxa a Taxon or a vector of taxa.
 #' @param rel if TRUE calculates relative abundance. default = F.
 #' @keywords aggregatoR
-#' @details
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples

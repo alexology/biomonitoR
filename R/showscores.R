@@ -4,6 +4,7 @@
 #' @param x name of the scores to print. Allowed names are "aspt_b", "aspt_i", "aspt_h", "life_scores_fam", "whpt_scores_fam", "psi_scores_fam" and "psi_scores_fam"
 #' @param writecsv if TRUE the scores are saved in the working directory.
 #' @keywords asBiomonitor
+#' @importFrom utils write.csv
 #' @export
 #' @seealso \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}
 #' @examples

@@ -1,3 +1,4 @@
+#' @importFrom stats aggregate
 checkBmwpFam <- function(df, famNames, stNames){
   famDf <- df[["Family"]]
   famDf$Family <- as.character(famDf$Family)
