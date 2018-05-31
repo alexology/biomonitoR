@@ -1,16 +1,16 @@
 Package: biomonitoR
 Type: Package
-Title: calculates indices for biomonitoring of running waters.
+Title: calculates indices for biomonitoring of running waters
 Version: 0.0.0.9000
 Author: Alex Laini, Tommaso Cancellario, Cédric Mondy
 Maintainer: Alex Laini <alex.laini@gmail.com>
 Description: A package to calculate indices for biomonitoring of running water with a focus on macroinvertebrate community.
-Depends: 
-    hunspell,
-    dplyr,
-    tidyr
 License: GPL-2
 LazyLoad: Yes
 Encoding: UTF-8
+Depends: R (>= 3.00)
+Imports: hunspell,
+    dplyr,
+    tidyr
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
