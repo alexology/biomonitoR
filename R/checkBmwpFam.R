@@ -1,5 +1,6 @@
 #' @importFrom stats aggregate
 checkBmwpFam <- function(df, famNames, stNames){
+  Family <- NULL
   famDf <- df[["Family"]]
   famDf$Family <- as.character(famDf$Family)
   famCheck <- famDf[which(famDf[,"Family"] %in% famNames[,"Family"]),"Family"]
