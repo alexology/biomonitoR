@@ -7,6 +7,7 @@
 #' @keywords asBiomonitor
 #' @details data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
 #' asBiomonitor checks the correctness of taxa names in the data.frame provided by the user. If names are correct the function will process the data.frame to a biomonitor object, otherwise it provide suggestion for correct names. If dfref = T a custom dictionary will be saved in the working directory.
+#' @importFrom stats aggregate
 #' @export
 #' @seealso \code{\link{quickRename}}
 #' @examples
@@ -20,7 +21,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
   if(!"Taxa" %in% names(x)){
     stop("Column called Taxa needed")
   }
-  
+
   # check if columns other than Taxa are numeric
   # position of column Taxa
   col.taxa <- which(names(x) == "Taxa")
@@ -28,7 +29,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
   if(any(col.class == FALSE)){
     stop("Non-numeric columns are not allowed")
   }
-  
+
   # check if user database contains taxa of the reference database
   if(is.null(dfref) == F & overwrite == F){
     temp.ref <- ref$Taxa

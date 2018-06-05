@@ -22,6 +22,7 @@
 #' Scores used for whpt calculation can be explored with the function code{\link{showscores}}.
 #'
 #' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated WHPT scores and algorithms.
+#' @importFrom stats aggregate reshape
 #' @export
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples

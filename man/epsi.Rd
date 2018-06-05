@@ -12,6 +12,8 @@ epsi(x, taxLev = "Family", abucl = c(0, 9, 99, 999), composite = F)
 \item{taxLev}{currently only the option "Family" is allowed}
 
 \item{abucl}{Log abundance categories. Treshold are set to 0, 9, 99, 999.}
+
+\item{composite}{if T composite families as listed in the details section are used.}
 }
 \description{
 This function calculates Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index (ePSI) according to the most recent version used in UK.
@@ -19,10 +21,10 @@ This function calculates Empyrically-weighted Proportion of Sediment-sensitive I
 \details{
 ePSI implementation take into account composite taxa as follow:
 \enumerate{
- \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
- \item Siphlonuridae (inc. Ameletidae)
- \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
- }
+\item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
+\item Siphlonuridae (inc. Ameletidae)
+\item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
+}
 Ancylus (0.51) has a different score compared to the other Planorbidae (0). Take it into account when interpreting the results.
 Scores used for epsi calculation can be explored with the function code{\link{showscores}}.
 }

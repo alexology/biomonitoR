@@ -26,20 +26,20 @@ Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et a
 If composite is set to T the following composite families are used for extence
 
 \enumerate{
-  \item Psychomyiidae (inc. Ecnomidae)
-  \item Rhyacophilidae (inc. Glossomatidae)
-  \item Ancylidae (inc. Acroloxidae)
-  \item Gammaridae (inc. Crangonyctidae)
-  \item Planariidae (inc. Dugesidae)
-  \item Hydrobiidae (inc. Bithyniidae)
+\item Psychomyiidae (inc. Ecnomidae)
+\item Rhyacophilidae (inc. Glossomatidae)
+\item Ancylidae (inc. Acroloxidae)
+\item Gammaridae (inc. Crangonyctidae)
+\item Planariidae (inc. Dugesidae)
+\item Hydrobiidae (inc. Bithyniidae)
 }
 
 while for "life_2017" the following are used:
 
- \enumerate{
-   \item Hydrophilidae (inc. Georissidae, Hlophoridae, Hydrochidae)
+\enumerate{
+\item Hydrophilidae (inc. Georissidae, Hlophoridae, Hydrochidae)
 
- }
+}
 Scores used for life calculation can be explored with the function code{\link{showscores}}.
 }
 \section{Acknowledgements}{

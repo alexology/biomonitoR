@@ -5,7 +5,6 @@
 #' @param taxa a Taxon or a vector of taxa.
 #' @param taxLev taxonomic level at which the richness has to be calculated.
 #' @keywords aggregatoR
-#' @details
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples

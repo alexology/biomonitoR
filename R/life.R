@@ -29,6 +29,7 @@
 #'
 #' @references Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.
 #' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated WHPT scores and algorithms.
+#' @importFrom stats aggregate reshape
 #' @export
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples

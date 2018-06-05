@@ -5,7 +5,7 @@
 #' @param ntaxa number of Taxa to choose.
 #' @param taxLev taxonimc level on which the calculation has to be made.
 #' @keywords aggregatoR
-#' @details
+#' @importFrom utils combn
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples

@@ -3,7 +3,7 @@
 #' This function prepares data for further calculations.
 #' @param z results of function asBiomonitoR
 #' @keywords aggregatoR
-#' @details
+#' @importFrom stats aggregate
 #' @export
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
@@ -42,7 +42,7 @@ aggregatoR <- function (z)
   names(sfam.agg) <- c("Subfamily", stz_n)
   tri.agg <- aggregate(stz, by = list(x$Tribus), sum)
   levels(tri.agg$Group.1)[levels(tri.agg$Group.1) == ""] <- "unassigned"
-  names(tri.agg) <- c("Tribus", stz_n)  
+  names(tri.agg) <- c("Tribus", stz_n)
   gen.agg <- aggregate(stz, by = list(x$Genus), sum)
   levels(gen.agg$Group.1)[levels(gen.agg$Group.1) == ""] <- "unassigned"
   names(gen.agg) <- c("Genus", stz_n)
