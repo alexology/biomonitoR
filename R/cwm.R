@@ -142,6 +142,7 @@ cwm <- function(x, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p) {
     group_by(Sample, Category)                     %>%
     summarise(Affinity = sum(weightedAffinity,
                              na.rm = TRUE))        %>%
-    spread(key = Category, value = Affinity)
+    spread(key = Category, value = Affinity)       %>%
+    as.data.frame()
 
 }
