@@ -59,7 +59,13 @@
 #'
 #' @export
 
-cwm <- function(x, traitDB = "traitsTachet", taxLev = "Taxa", trans = log1p) {
+cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
+
+  if( is.null( traitDB ) == T){
+    traitDB = traitsTachet
+  } else {
+    traitDB = traitDB
+  }
 
   # create dummy variables to avoid R CMD check NOTES
   traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
