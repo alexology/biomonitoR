@@ -20,7 +20,8 @@
 #'
 #'   By default, the data base used is the one from Tachet *et al* (2010) that
 #'   can be retrieved from
-#'   [freshwaterecology.info](https://www.freshwaterecology.info/) website (Schmidt-Kloiber & Hering, 2015).
+#'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
+#'   (Schmidt-Kloiber & Hering, 2015).
 #' @param taxLev character string giving the taxonomic level used to retrieve
 #'   trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #'   `"Family"` as returned by the [aggregatoR] function.
@@ -34,6 +35,8 @@
 #'
 #' @examples
 #' data(macro_ex)
+#' data(traitsTachet)
+#'
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #'
@@ -56,7 +59,7 @@
 #'
 #' @export
 
-cwm <- function(x, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p) {
+cwm <- function(x, traitDB, taxLev = "Taxa", trans = log1p) {
 
   # create dummy variables to avoid R CMD check NOTES
   traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
@@ -95,7 +98,6 @@ cwm <- function(x, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p) {
   if (length(taxa[taxa != "unassigned"]) == 0) {
     return("At least one taxa should be identified at a level compatible with the indicated taxLev")
   }
-  ## inclure une condition sur le fait d'avoir au moins un taxon non "unassigned"
 
   if (taxLev == "Taxa") {
     level <- sapply(select(x$Tree, Phylum:Subspecies),
@@ -126,7 +128,9 @@ cwm <- function(x, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p) {
 
   abundances                                       %>%
     gather(key = Sample, value = Abundance, -Taxa) %>%
-    mutate(Taxa   = as.character(Taxa),
+    mutate(Sample = factor(Sample,
+                           levels = colnames(abundances)[-1]),
+           Taxa   = as.character(Taxa),
            Weight = trans(Abundance))              %>%
     left_join(group_by(., Sample)                  %>%
                 summarise(totWeight = sum(Weight)),
@@ -140,6 +144,7 @@ cwm <- function(x, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p) {
     group_by(Sample, Category)                     %>%
     summarise(Affinity = sum(weightedAffinity,
                              na.rm = TRUE))        %>%
-    spread(key = Category, value = Affinity)
+    spread(key = Category, value = Affinity)       %>%
+    as.data.frame()
 
 }
