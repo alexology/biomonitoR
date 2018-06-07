@@ -4,7 +4,7 @@
 \alias{cwm}
 \title{Community-Weighted Mean values of traits}
 \usage{
-cwm(x, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p)
+cwm(x, traitDB, taxLev = "Taxa", trans = log1p)
 }
 \arguments{
 \item{x}{results of function aggregatoR}
@@ -15,7 +15,8 @@ named as follow: TRAIT_MODALITY.
 
 By default, the data base used is the one from Tachet \emph{et al} (2010) that
 can be retrieved from
-\href{https://www.freshwaterecology.info/}{freshwaterecology.info} website (Schmidt-Kloiber & Hering, 2015).}
+\href{https://www.freshwaterecology.info/}{freshwaterecology.info} website
+(Schmidt-Kloiber & Hering, 2015).}
 
 \item{taxLev}{character string giving the taxonomic level used to retrieve
 trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
@@ -44,6 +45,8 @@ abundances (using the \code{trans} function) as weigths
 }
 \examples{
 data(macro_ex)
+data(traitsTachet)
+
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 
