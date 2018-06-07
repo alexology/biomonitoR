@@ -35,7 +35,6 @@
 #'
 #' @examples
 #' data(macro_ex)
-#' data(traitsTachet)
 #'
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
