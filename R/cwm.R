@@ -126,7 +126,9 @@ cwm <- function(x, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p) {
 
   abundances                                       %>%
     gather(key = Sample, value = Abundance, -Taxa) %>%
-    mutate(Taxa   = as.character(Taxa),
+    mutate(Sample = factor(Sample,
+                           levels = colnames(abundances)[-1]),
+           Taxa   = as.character(Taxa),
            Weight = trans(Abundance))              %>%
     left_join(group_by(., Sample)                  %>%
                 summarise(totWeight = sum(Weight)),
