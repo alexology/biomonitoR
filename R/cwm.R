@@ -77,10 +77,10 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
     return("taxLev should be one of the following: Family, Genus, Species or Taxa")
   }
 
-  if(is.null(traitDB) == F){
-    traitDB <-  traitDB
+  if(is.null(traitDB) == T){
+    traitDB <-  traitsTachet
   } else {
-    traitDB <- traitsTachet
+    traitDB <- traitDB
   }
   trait_db <- traitDB                               %>%
     (function(df) {
