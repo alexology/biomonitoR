@@ -59,7 +59,7 @@
 #'
 #' @export
 
-cwm <- function(x, traitDB, taxLev = "Taxa", trans = log1p) {
+cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
 
   # create dummy variables to avoid R CMD check NOTES
   traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
@@ -77,6 +77,11 @@ cwm <- function(x, traitDB, taxLev = "Taxa", trans = log1p) {
     return("taxLev should be one of the following: Family, Genus, Species or Taxa")
   }
 
+  if(is.null(traitDB) == F){
+    traitDB <-  traitDB
+  } else {
+    traitDB <- traitsTachet
+  }
   trait_db <- traitDB                               %>%
     (function(df) {
       mutate(df,
