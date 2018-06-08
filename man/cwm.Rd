@@ -4,7 +4,7 @@
 \alias{cwm}
 \title{Community-Weighted Mean values of traits}
 \usage{
-cwm(x, traitDB, taxLev = "Taxa", trans = log1p)
+cwm(x, traitDB = NULL, taxLev = "Taxa", trans = log1p)
 }
 \arguments{
 \item{x}{results of function aggregatoR}
@@ -45,7 +45,6 @@ abundances (using the \code{trans} function) as weigths
 }
 \examples{
 data(macro_ex)
-data(traitsTachet)
 
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)

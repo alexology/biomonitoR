@@ -35,7 +35,6 @@
 #'
 #' @examples
 #' data(macro_ex)
-#' data(traitsTachet)
 #'
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
@@ -59,7 +58,13 @@
 #'
 #' @export
 
-cwm <- function(x, traitDB, taxLev = "Taxa", trans = log1p) {
+cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
+
+  if( is.null( traitDB ) == T){
+    traitDB = traitsTachet
+  } else {
+    traitDB = traitDB
+  }
 
   # create dummy variables to avoid R CMD check NOTES
   traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
@@ -76,6 +81,7 @@ cwm <- function(x, traitDB, taxLev = "Taxa", trans = log1p) {
   if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
     return("taxLev should be one of the following: Family, Genus, Species or Taxa")
   }
+
 
   trait_db <- traitDB                               %>%
     (function(df) {
