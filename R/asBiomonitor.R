@@ -65,7 +65,7 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
   # changes various flavours of Hydracarina to Trombidiformes
   hydrac <- c("Hydracarina", "Hydracnidia", "Acariformes")
   hydrac_temp <- userTaxaCap %in% hydrac
-  if(length(which(hydrac_temp == T)) != 0 & overwrite == F){
+  if(length(which(hydrac_temp == T)) != 0){
     userTaxaCap[which(hydrac_temp)] <- "Trombidiformes"
   }
 
