@@ -52,29 +52,33 @@ dness <- function(d, complete = F, taxLev = "Genus", method = "delta", taxatree 
 
     colnames(df)[which( names(df) == taxLev)] <- "Taxa"
     taxtree <- merge(ref.c, df, by = "Taxa", all = F)
-    taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names))]
+    taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = F]
   }
 
   if(complete == T & che.ck == T){
     colnames(df)[which( names(df) == taxLev)] <- "Taxa"
     df <- df[-which(df$Taxa == "unassigned"),]
     taxtree <- merge(ref.c, df, by = "Taxa", all = F)
-    taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names))]
+    taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = F]
   }
 
   # remove empty columns (maybe is not a necessary step)
-  temp <- taxtree[ , which(names(taxtree) %in% c(tax.pos))]
+  temp <- taxtree[ , which(names(taxtree) %in% c(tax.pos)), drop = F]
   temptf <- temp != ""
   # remove columns with at least 1 empty cell
   check.col <- apply(temptf, 2, sum) / nrow(temptf)
   if(sum(check.col) != length(temp)){
-    taxtree <- taxtree[, - which(check.col != 1)]
+    taxtree <- taxtree[, - which(check.col != 1), drop = F]
+  }
+
+  if(ncol(taxtree) == 1){
+    stop("Reference database has not enough taxonomic levels to perform the analysis")
   }
 
 
   # calculating taxonomic distance
   tax.dis <- ddis(taxtree, st.names = st.names)
-  sites <- taxtree[ , which(names(taxtree) %in% st.names)]
+  sites <- taxtree[ , which(names(taxtree) %in% st.names), drop = F]
   sites.bin <- sites
   sites.bin[sites.bin > 0 ] <- 1
 
