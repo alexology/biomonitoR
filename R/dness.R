@@ -71,7 +71,7 @@ dness <- function(d, complete = F, taxLev = "Genus", method = "delta", taxatree 
     taxtree <- taxtree[, - which(check.col != 1), drop = F]
   }
 
-  if(ncol(taxtree) == 1){
+  if(ncol(taxtree[, -which(names(taxtree) %in% c(st.names)), drop = F]) == 1){
     stop("Reference database has not enough taxonomic levels to perform the analysis")
   }
 
