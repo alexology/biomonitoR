@@ -60,7 +60,13 @@
 #'
 #' @export
 
-csi <- function(x, traitDB, taxLev = "Taxa", trans = log1p) {
+csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
+
+  if( is.null( traitDB )){
+    traitDB = traitsTachet
+  } else {
+    traitDB = traitDB
+  }
 
   # create dummy variables to avoid R CMD check NOTES
   Taxa <- Trait <- Modality <- Affinity <- Phylum <- Subspecies <-
