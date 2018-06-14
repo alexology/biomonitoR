@@ -27,6 +27,7 @@
 #' @return a table with the CSI values for each trait
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
+#'   n_distinct
 #' @importFrom tidyr gather spread
 #'
 #' @examples
