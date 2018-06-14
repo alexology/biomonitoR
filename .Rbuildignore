@@ -1,4 +1,3 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-temp
-biomonitoR.pdf
+^\.travis\.yml$
