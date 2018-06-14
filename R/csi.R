@@ -64,8 +64,8 @@ csi <- function(x, traitDB, taxLev = "Taxa", trans = log1p) {
 
   # create dummy variables to avoid R CMD check NOTES
   Taxa <- Trait <- Modality <- Affinity <- Phylum <- Subspecies <-
-    Abundance <- Sample <- Weight <- totWeight <-
-    weightedAffinity <- TSI <- CSI <- . <- NULL
+    Abundance <- Sample <- Weight <- totWeight <- k <-
+    TSI <- CSI <- weightedTSI <-  . <- NULL
 
   # check if the object x is of class "biomonitoR"
   if (class(x) != "biomonitoR") {
