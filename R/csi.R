@@ -27,6 +27,7 @@
 #' @return a table with the CSI values for each trait
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
+#'   n_distinct
 #' @importFrom tidyr gather spread
 #'
 #' @examples
@@ -59,12 +60,18 @@
 #'
 #' @export
 
-csi <- function(x, traitDB, taxLev = "Taxa", trans = log1p) {
+csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
+
+  if( is.null( traitDB )){
+    traitDB = traitsTachet
+  } else {
+    traitDB = traitDB
+  }
 
   # create dummy variables to avoid R CMD check NOTES
   Taxa <- Trait <- Modality <- Affinity <- Phylum <- Subspecies <-
-    Abundance <- Sample <- Weight <- totWeight <-
-    weightedAffinity <- TSI <- CSI <- . <- NULL
+    Abundance <- Sample <- Weight <- totWeight <- k <-
+    TSI <- CSI <- weightedTSI <-  . <- NULL
 
   # check if the object x is of class "biomonitoR"
   if (class(x) != "biomonitoR") {

@@ -60,7 +60,7 @@
 
 cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
 
-  if( is.null( traitDB ) == T){
+  if( is.null( traitDB )){
     traitDB = traitsTachet
   } else {
     traitDB = traitDB
