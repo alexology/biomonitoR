@@ -4,7 +4,7 @@
 #' @aliases  shannon simpson margalef menhinick pielou
 #' @param x results of function aggregatoR
 #' @param base the base of the logarithm
-#' @param taxaLev taxonimc level on which the calculation has to be made.
+#' @param taxLev taxonimc level on which the calculation has to be made.
 #' @keywords shannon, simpson, margalef, menhinick, pielou
 #' @export
 #' @seealso \code{\link{aggregatoR}}

@@ -9,9 +9,9 @@ asBiomonitor(x, dfref = NULL, overwrite = F)
 \arguments{
 \item{x}{a data.frame as specified in details}
 
-\item{overwrite}{if set to T replace the reference database with the one provided by the user}
+\item{dfref}{allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database}
 
-\item{dref}{allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database}
+\item{overwrite}{if set to T replace the reference database with the one provided by the user}
 }
 \description{
 This function merge the user dataframe with the reference database. Options to improve or replace the reference database are provided.

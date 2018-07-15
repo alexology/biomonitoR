@@ -12,7 +12,6 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #' abuTax(data.agR, taxa = "Ephemeroptera")
-#' abuTax(data.agR, taxa = c("Plecopotera", "Ephemeroptera"))
 
 abuTax <- function(x, taxa = NULL, rel = FALSE){
 
@@ -50,7 +49,7 @@ abuTax <- function(x, taxa = NULL, rel = FALSE){
   for(i in 1:length(taxa)){
     ctrl <- which(df == taxa[i], arr.ind=T)
     if(nrow(ctrl) == 0){
-      stop("Please provide a valid taxon name")
+      stop("Please provide a valid taxon name. Names provided are probably not present in your database.")
     }
   }
 

@@ -15,7 +15,7 @@ shannon(x, base = 2, taxLev = "Family")
 
 \item{base}{the base of the logarithm}
 
-\item{taxaLev}{taxonimc level on which the calculation has to be made.}
+\item{taxLev}{taxonimc level on which the calculation has to be made.}
 }
 \description{
 Functions for calculating shannon, simpson, margalef, menhinick and pielou indices.
