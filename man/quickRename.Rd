@@ -4,10 +4,14 @@
 \alias{quickRename}
 \title{quickRename}
 \usage{
-quickRename(x, write.table = F)
+quickRename(x, group = "mi", write.table = F)
 }
 \arguments{
 \item{x}{a data.frame as specified in details}
+
+\item{group}{otic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes.}
+
+\item{write.table}{if T quickRename will save a csv file with changes provided by the user}
 }
 \description{
 This function allow the user to change the wron taxa names.

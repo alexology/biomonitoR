@@ -34,7 +34,7 @@ data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 bmwp(data.agR)
-bmwp(data.agR, method = "i")
+bmwp(data.agR, method = "spa")
 }
 \references{
 Armitage, P. D., Moss, D., Wright, J. F., & Furse, M. T. (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. Water research, 17(3), 333-347.

@@ -28,7 +28,7 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #' bmwp(data.agR)
-#' bmwp(data.agR, method = "i")
+#' bmwp(data.agR, method = "spa")
 
 
 

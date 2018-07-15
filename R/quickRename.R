@@ -2,6 +2,8 @@
 #'
 #' This function allow the user to change the wron taxa names.
 #' @param x a data.frame as specified in details
+#' @param group otic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes.
+#' @param write.table if T quickRename will save a csv file with changes provided by the user
 #' @keywords asBiomonitor
 #' @details data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
 #' The function rename will suggest correct name and allow the user to insert a name (Enter taxon name).
@@ -13,9 +15,9 @@
 
 
 
-quickRename <- function(x, write.table=F){
+quickRename <- function(x, group = "mi", write.table=F){
   dfName <- deparse(substitute(x))
-  tempNames <- suggestUserNames(x)
+  tempNames <- suggestUserNames(x, groups = group)
   if(length(tempNames) == 0){
     message("All names are correct")
     return(x)
