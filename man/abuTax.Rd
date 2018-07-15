@@ -20,8 +20,8 @@ This function calculates the absolute or relative abundance of a Taxon or of a s
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-abuTax(data.agr, taxa = "Ephemeroptera")
-abuTax(data.agr, taxa = c("Plecopotera", "Ephemeroptera"))
+abuTax(data.agR, taxa = "Ephemeroptera")
+abuTax(data.agR, taxa = c("Plecopotera", "Ephemeroptera"))
 }
 \seealso{
 \code{\link{aggregatoR}}
