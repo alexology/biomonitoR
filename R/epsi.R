@@ -24,7 +24,7 @@
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' data.psi <- epsi(data.agR, taxLev = "Family", composite = F)
+#' data.psi <- epsi(data.agR, taxLev = "Family")
 
 epsi <- function(x, taxLev = "Family", abucl = c(0,9,99,999), composite = F){
 
