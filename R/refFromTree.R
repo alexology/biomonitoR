@@ -44,12 +44,29 @@ refFromTree <- function(x){
     # remove rows with empty cells
     temp <- temp[ which(temp[ , temp.name] != ""), , drop = F]
     temp.un <- unique(temp)
-    empty.df <- merge(empty.df, temp.un, all.y  = T, sort = T)
+    empty.df <- merge(empty.df, temp.un, all.y  = T, sort = F)
     empty.df$Taxa <- temp.un[ , temp.name]
     df <- rbind.data.frame(df, empty.df)
   }
   
   df[is.na(df)] <- ""
   df <- as.data.frame( unclass( df ) )
+  
+  # remove leading and final spaces
+  df <- sapply(df, trim, USE.NAMES = F)
+  
+  # remove NA originating from empty columns
+  if(length(df[is.na(df)]) > 0){
+    df[is.na(df)] <- ""
+  }
+  
+  # check for duplicates or errors
+  
+  df <- as.data.frame( df )
+  
+  s.mes <- checkTree(df)
+  if(is.null(s.mes) == T){
+    stop(mes)
+  }
   return( df )
 }
