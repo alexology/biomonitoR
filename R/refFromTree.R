@@ -65,7 +65,7 @@ refFromTree <- function(x){
   df <- as.data.frame( df )
   
   s.mes <- checkTree(df)
-  if(is.null(s.mes) == T){
+  if(is.null(s.mes) == F){
     stop(mes)
   }
   return( df )
