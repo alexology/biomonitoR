@@ -29,7 +29,7 @@ indNumb <- function( d , method = "a") {
   x <- d[-numb, drop = F]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
-  if(method == "b") {y <- aspt_b_fam}
+  if(method == "b") {y <- aspt_b}
 
   for(i in 1:length(x)){
     colnames(x[[i]])[1] <- "Taxon"
