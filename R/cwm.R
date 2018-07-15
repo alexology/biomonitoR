@@ -39,12 +39,12 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #'
-#' cwm(x = data.agR, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p)
-#' cwm(x = data.agR, traitDB = traitsTachet, taxLev = "Taxa",
+#' cwm(x = data.agR, taxLev = "Taxa", trans = log1p)
+#' cwm(x = data.agR, taxLev = "Taxa",
 #'     trans = function(x) {
 #'         ifelse(x > 0, 1, 0)
 #'     })
-#' cwm(x = data.agR, traitDB = traitsTachet, taxLev = "Genus", trans = log1p)
+#' cwm(x = data.agR, taxLev = "Genus", trans = log1p)
 #'
 #' @seealso [aggregatoR]
 #'
