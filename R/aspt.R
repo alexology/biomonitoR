@@ -28,7 +28,7 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #' aspt(data.agR)
-#' aspt(data.agR, method = "i")
+#' aspt(data.agR, method = "spa")
 
 aspt <- function( d , method = "a") {
 
