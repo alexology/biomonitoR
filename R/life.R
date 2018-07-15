@@ -4,7 +4,7 @@
 #' @param x results of function aggregatoR function
 #' @param taxLev currently only the option "Family" is enabled
 #' @param version possible choices are "extence" and "life_2017"
-#' @param composite if T composite families as listed in the details section are used
+#' @param composite if TRUE composite families as listed in the details section are used
 #' @param abucl abundance threshold. Default 0, 9, 99, 999, 9999
 #' @keywords life
 #' @details Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the Extence et al. (1999) version called "extence" and the version currently used in UK called "life_2017".
@@ -28,7 +28,7 @@
 #' Scores used for life calculation can be explored with the function code{\link{showscores}}.
 #'
 #' @references Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.
-#' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated WHPT scores and algorithms.
+#' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated LIFE scores and algorithms.
 #' @importFrom stats aggregate reshape
 #' @export
 #' @seealso \code{\link{asBiomonitor}}
@@ -36,9 +36,9 @@
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' data.life <- life(data.agR, taxLev = "Family", composite = F)
+#' data.life <- life(data.agR, taxLev = "Family", composite = FALSE)
 
-life <- function(x, taxLev = "Family", version = "extence", composite = F, abucl = c(0,9,99,999,9999)){
+life <- function(x, taxLev = "Family", version = "extence", composite = FALSE, abucl = c(0,9,99,999,9999)){
 
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
@@ -63,19 +63,19 @@ life <- function(x, taxLev = "Family", version = "extence", composite = F, abucl
 
 
   numb <- c(which(names(x)=="Tree"), which(names(x)=="Taxa")) # position of the Tree element in the list to remove
-  fam <- x[-numb, drop = F]
+  fam <- x[-numb, drop = FALSE]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
 
   # composite default families
 
   # take into account composite families
-  if(composite == T & taxLev == "Family" & version == "extence"){
+  if(composite == TRUE & taxLev == "Family" & version == "extence"){
     fam <- checkBmwpFam(df=fam, famNames=life_fam_acc, stNames=st.names)
   }
 
   # take into account composite families
-  if(composite == T & taxLev == "Family" & version == "life_2017"){
+  if(composite == TRUE & taxLev == "Family" & version == "life_2017"){
     fam <- checkBmwpFam(df=fam, famNames=life_fam_acc_2017, stNames=st.names)
   }
 
@@ -93,7 +93,7 @@ life <- function(x, taxLev = "Family", version = "extence", composite = F, abucl
   rownames(fam.long) <- NULL
 
   # keep only numeric columns
-  temp <- fam.long[, 3, drop = F]
+  temp <- fam.long[, 3, drop = FALSE]
 
   A <- abucl[1]
   B <- abucl[2]

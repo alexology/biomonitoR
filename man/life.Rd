@@ -4,7 +4,7 @@
 \alias{life}
 \title{life}
 \usage{
-life(x, taxLev = "Family", version = "extence", composite = F,
+life(x, taxLev = "Family", version = "extence", composite = FALSE,
   abucl = c(0, 9, 99, 999, 9999))
 }
 \arguments{
@@ -14,7 +14,7 @@ life(x, taxLev = "Family", version = "extence", composite = F,
 
 \item{version}{possible choices are "extence" and "life_2017"}
 
-\item{composite}{if T composite families as listed in the details section are used}
+\item{composite}{if TRUE composite families as listed in the details section are used}
 
 \item{abucl}{abundance threshold. Default 0, 9, 99, 999, 9999}
 }
@@ -43,14 +43,14 @@ while for "life_2017" the following are used:
 Scores used for life calculation can be explored with the function code{\link{showscores}}.
 }
 \section{Acknowledgements}{
- We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated WHPT scores and algorithms.
+ We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated LIFE scores and algorithms.
 }
 
 \examples{
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-data.life <- life(data.agR, taxLev = "Family", composite = F)
+data.life <- life(data.agR, taxLev = "Family", composite = FALSE)
 }
 \references{
 Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.
