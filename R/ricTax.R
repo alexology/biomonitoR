@@ -3,7 +3,7 @@
 #' This function calculates the absolute richness of a Taxon or of a set Taxa at a user provided taxonomic level.
 #' @param x results of function aggregatoR.
 #' @param taxa a Taxon or a vector of taxa.
-#' @param taxLev taxonomic level at which the richness has to be calculated.
+#' @param taxLev taxonomic level at which the richness has to be calculated. It could be also a vector of taxnomici levels.
 #' @keywords aggregatoR
 #' @export
 #' @seealso \code{\link{aggregatoR}}
@@ -12,7 +12,6 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #' ricTax(data.agR, taxa = "Ephemeroptera", taxLev = "Family")
-#' ricTax(data.agR, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = "Family")
 
 ricTax <-  function(x , taxa = NULL, taxLev = NULL){
 
@@ -72,7 +71,6 @@ ricTax <-  function(x , taxa = NULL, taxLev = NULL){
 
     ntax <- apply(df.sel[, -1, drop = FALSE], 2, FUN = function(x) { length( x[x>0] ) } )
     taxind <- taxind + ntax
-
   }
 
  return(taxind)
