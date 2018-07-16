@@ -1,8 +1,8 @@
 #' Community trait specialization
 #'
 #' This function calculates the community trait specialization.
-#'
-#' This function first takes the abundance table corresponding to the desired
+#' @inheritParams cwm
+#' @details This function first takes the abundance table corresponding to the desired
 #' taxonomic level from the `x` aggregatoR object.
 #'
 #' Then it searches from the trait data base all the information available at
@@ -22,7 +22,6 @@
 #' averaging the TSIs using the transformed abundances (using the `trans`
 #' function) as weigths.
 #'
-#' @inheritParams cwm
 #'
 #' @return a table with the CSI values for each trait
 #'
