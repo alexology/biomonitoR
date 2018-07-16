@@ -28,7 +28,7 @@ see Clarke and Warwick (1998) an Clarke and Warwick (2001).
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-eptd(data.agR)
+dness(data.agR, complete = TRUE)
 }
 \references{
 Clarke, K. R., & Warwick, R. M. (1998). A taxonomic distinctness index and its statistical properties. Journal of applied ecology, 35(4), 523-531.

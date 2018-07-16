@@ -1,9 +1,9 @@
 #' speNumb
 #'
 #' Functions for calculating species, genus, family richness and abundance
-#' @aliases  speNumb  genNumb famNumb abu
+#' @aliases  speNumb  genNumb famNumb taxNumb abu
 #' @param x results of function aggregatoR
-#' @keywords speNumb, genNumb, famNumb, ordNumb
+#' @keywords speNumb, genNumb, famNumb, ordNumb, taxNumb, abu
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
@@ -14,6 +14,7 @@
 #' @export taxNumb
 #' @export genNumb
 #' @export famNumb
+#' @export taxNumb
 #' @export abu
 
 

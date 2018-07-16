@@ -16,7 +16,7 @@
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' eptd(data.agR)
+#' dness(data.agR, complete = TRUE)
 
 
 
