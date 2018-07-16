@@ -26,9 +26,9 @@
 #' For each taxon and each trait, a taxon specialization index is calculated
 #' using the following formula:
 #'
-#' \deqn{TSI = (sum(c²_tik) - 1/K) / (1 - 1/K)}
+#' TSI = (sum(c²_tik) - 1/K) / (1 - 1/K)
 #'
-#' with \eqn{c²_tik`} being the affinity of taxon `t` for the modality `k` (among
+#' with c²_tik` being the affinity of taxon `t` for the modality `k` (among
 #' `K`) of trait `i`.
 #'
 #' Finally, the community trait specialization is calculated for each trait by
@@ -48,12 +48,12 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #'
-#' csi(x = data.agR, traitDB = NULL, taxLev = "Taxa", trans = log1p)
-#' csi(x = data.agR, traitDB = NULL, taxLev = "Taxa",
+#' csindex(x = data.agR, traitDB = NULL, taxLev = "Taxa", trans = log1p)
+#' csindex(x = data.agR, traitDB = NULL, taxLev = "Taxa",
 #'     trans = function(x) {
 #'         ifelse(x > 0, 1, 0)
 #'     })
-#' csi(x = data.agR, traitDB = NULL, taxLev = "Genus", trans = log1p)
+#' csindex(x = data.agR, traitDB = NULL, taxLev = "Genus", trans = log1p)
 #'
 #' @seealso [aggregatoR]
 #'
@@ -71,7 +71,7 @@
 #'
 #' @export
 
-csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
+csindex <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
 
   if( is.null( traitDB )){
     traitDB = traitsTachet
