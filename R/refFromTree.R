@@ -30,7 +30,7 @@ refFromTree <- function(x){
   cref.name <- colnames(x)
 
   # transform to capital letter
-  cref.name <- sapply(cref.name, capWords, USE.NAMES = F)
+  cref.name <- sapply(cref.name, capWords, USE.NAMES = FALSE)
 
   # test if cref.name are different from colnames accepted by biomonitoR
   if(sum(! cref.name %in% taxa.col ) != 0 ){
@@ -38,13 +38,13 @@ refFromTree <- function(x){
   }
 
   for(i in 1:n){
-    temp.name <- colnames( x[ , i, drop = F] )
+    temp.name <- colnames( x[ , i, drop = FALSE] )
     temp.pos <- which(cref.name == temp.name)
-    temp <- x [ , 1:temp.pos, drop = F]
+    temp <- x [ , 1:temp.pos, drop = FALSE]
     # remove rows with empty cells
-    temp <- temp[ which(temp[ , temp.name] != ""), , drop = F]
+    temp <- temp[ which(temp[ , temp.name] != ""), , drop = FALSE]
     temp.un <- unique(temp)
-    empty.df <- merge(empty.df, temp.un, all.y  = T, sort = F)
+    empty.df <- merge(empty.df, temp.un, all.y  = TRUE, sort = FALSE)
     empty.df$Taxa <- temp.un[ , temp.name]
     df <- rbind.data.frame(df, empty.df)
   }
@@ -53,7 +53,7 @@ refFromTree <- function(x){
   df <- as.data.frame( unclass( df ) )
 
   # remove leading and final spaces
-  df <- sapply(df, trim, USE.NAMES = F)
+  df <- sapply(df, trim, USE.NAMES = FALSE)
 
   # remove NA originating from empty columns
   if(length(df[is.na(df)]) > 0){
@@ -65,7 +65,7 @@ refFromTree <- function(x){
   df <- as.data.frame( df )
 
   s.mes <- checkTree(df)
-  if(is.null(s.mes) == F){
+  if(is.null(s.mes) == FALSE){
     stop(s.mes)
   }
   return( df )

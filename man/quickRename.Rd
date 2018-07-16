@@ -4,7 +4,7 @@
 \alias{quickRename}
 \title{quickRename}
 \usage{
-quickRename(x, group = NULL, write.table = F)
+quickRename(x, group = NULL, write.table = FALSE)
 }
 \arguments{
 \item{x}{a data.frame as specified in details}
@@ -22,7 +22,7 @@ The function rename will suggest correct name and allow the user to insert a nam
 }
 \examples{
 data(macro_ex)
-macro_ex.mod <- quickRename(macro_ex)
+macro_ex.mod <- quickRename(macro_ex, group = "mi")
 }
 \seealso{
 \code{\link{asBiomonitor}}

@@ -11,16 +11,16 @@
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
 #' data(macro_ex)
-#' macro_ex.mod <- quickRename(macro_ex)
+#' macro_ex.mod <- quickRename(macro_ex, group = "mi")
 
 
 
-quickRename <- function(x, group = NULL, write.table=F){
-  
-  if(is.null(group) == T){
+quickRename <- function(x, group = NULL, write.table=FALSE){
+
+  if(is.null(group) == TRUE){
     stop("Please provide a valid group")
   }
-  
+
   dfName <- deparse(substitute(x))
   tempNames <- suggestUserNames(x, groups = group)
   if(length(tempNames) == 0){
@@ -39,9 +39,9 @@ quickRename <- function(x, group = NULL, write.table=F){
     result[which(result == wrong[i])] <- correct[i]
   }
   x$Taxa <- result
-  if(write.table==T){
+  if(write.table == TRUE){
     dfNameChange <- paste0(dfName, "_mod",".txt")
-    write.table(x, file=dfNameChange, quote=F, append=F)
+    write.table(x, file=dfNameChange, quote = FALSE, append = FALSE)
   }
   x$Taxa <- factor(sub("_", " ", x$Taxa))
   return(x)

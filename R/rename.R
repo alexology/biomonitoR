@@ -1,11 +1,10 @@
-rename <- function(x, write.table=F, customx = F){
+rename <- function(x, write.table = FALSE, customx = FALSE){
   dfName <- deparse(substitute(x))
-  if(customx == F){
+  if(customx == FALSE){
     tempNames <- suggestNames(x)
   } else {
-    tempNames <- suggestNames(x, custom = T)
   }
-  
+
   if(length(tempNames) == 0){
     message("All names are correct")
     return(x)
@@ -22,9 +21,9 @@ rename <- function(x, write.table=F, customx = F){
     result <- gsub(wrong[i],correct[i],result)
   }
   x$Taxa <- result
-  if(write.table==T){
+  if(write.table == TRUE){
     dfNameChange <- paste0(dfName, "_mod",".txt")
-    write.table(x, file=dfNameChange, quote=F, append=F)
+    write.table(x, file=dfNameChange, quote=FALSE, append=FALSE)
   }
   x$Taxa <- sub("_", " ", x$Taxa)
   return(x)

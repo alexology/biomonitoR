@@ -38,7 +38,7 @@ psi <- function(x, taxLev = "Family", abucl = c(0,9,99,999)){
   }
 
   numb <- c(which(names(x)=="Tree"), which(names(x)=="Taxa")) # position of the Tree element in the list to remove
-  fam <- x[-numb, drop = F]
+  fam <- x[-numb, drop = FALSE]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
 
@@ -57,7 +57,7 @@ psi <- function(x, taxLev = "Family", abucl = c(0,9,99,999)){
 
 
   # keep only numeric columns
-  temp <- fam.long[, 3, drop = F]
+  temp <- fam.long[, 3, drop = FALSE]
 
   A <- abucl[1]
   B <- abucl[2]
@@ -85,7 +85,7 @@ psi <- function(x, taxLev = "Family", abucl = c(0,9,99,999)){
   psi.abcd <- aggregate(. ~ Site, fam.sub, FUN = sum)
 
   # the next two lines ot overcome the problem of having 0 organisms belonign to 1 and 2 FSSR
-  psi.mer <- merge(psi.ab, psi.abcd, by = "Site", all.x = T, all.y = T)
+  psi.mer <- merge(psi.ab, psi.abcd, by = "Site", all.x = TRUE, all.y = TRUE)
   psi.mer[is.na(psi.mer)] <- 0
 
   res <- psi.mer$SCORE.x/ psi.mer$SCORE.y
