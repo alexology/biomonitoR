@@ -13,8 +13,6 @@
 #' data.agR <- aggregatoR(data.bio)
 #' ricTax(data.agR, taxa = "Ephemeroptera", taxLev = "Family")
 #' ricTax(data.agR, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = "Family")
-#' # The following line give the same result
-#' ricTax(data.agR, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = c("Family", "Family"))
 
 ricTax <-  function(x , taxa = NULL, taxLev = NULL){
 
@@ -48,7 +46,7 @@ ricTax <-  function(x , taxa = NULL, taxLev = NULL){
   for(i in 1:length(taxa)){
     ctrl <- which(df == taxa[i], arr.ind = TRUE)
     if(nrow(ctrl) == 0){
-      stop("Please provide a valid taxon name")
+      stop("Please provide a valid taxon name. Names provided can also be absent in your database.")
     }
   }
 

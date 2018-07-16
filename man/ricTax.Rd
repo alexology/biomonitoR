@@ -22,8 +22,6 @@ data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 ricTax(data.agR, taxa = "Ephemeroptera", taxLev = "Family")
 ricTax(data.agR, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = "Family")
-# The following line give the same result
-ricTax(data.agR, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = c("Family", "Family"))
 }
 \seealso{
 \code{\link{aggregatoR}}
