@@ -15,6 +15,5 @@ macro_ex
 }
 \description{
 A toy axample to illustrate the biomonitoR package use
-diamonds.
 }
 \keyword{datasets}

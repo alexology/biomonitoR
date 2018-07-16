@@ -13,9 +13,9 @@
 #' For each taxon and each trait, a taxon specialization index is calculated
 #' using the following formula:
 #'
-#' `TSI = (sum(c²_tik) - 1/K) / (1 - 1/K)`
+#' \deqn{TSI = (sum(c²_tik) - 1/K) / (1 - 1/K)}
 #'
-#' with `c²_tik` being the affinity of taxon `t` for the modality `k` (among
+#' with \eqn{c²_tik`} being the affinity of taxon `t` for the modality `k` (among
 #' `K`) of trait `i`.
 #'
 #' Finally, the community trait specialization is calculated for each trait by

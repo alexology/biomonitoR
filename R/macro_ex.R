@@ -1,7 +1,6 @@
 #' Ephemeroptera toy example
 #'
 #' A toy axample to illustrate the biomonitoR package use
-#' diamonds.
 #'
 #' @format A data frame with 4 rows and 3 variables:
 #' \describe{
