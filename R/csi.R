@@ -36,12 +36,12 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #'
-#' csi(x = data.agR, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p)
-#' csi(x = data.agR, traitDB = traitsTachet, taxLev = "Taxa",
+#' csi(x = data.agR, traitDB = NULL, taxLev = "Taxa", trans = log1p)
+#' csi(x = data.agR, traitDB = NULL, taxLev = "Taxa",
 #'     trans = function(x) {
 #'         ifelse(x > 0, 1, 0)
 #'     })
-#' csi(x = data.agR, traitDB = traitsTachet, taxLev = "Genus", trans = log1p)
+#' csi(x = data.agR, traitDB = NULL, taxLev = "Genus", trans = log1p)
 #'
 #' @seealso [aggregatoR]
 #'
