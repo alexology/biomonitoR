@@ -1,6 +1,6 @@
 #' quickRename
 #'
-#' This function allow the user to change the wron taxa names.
+#' This function allow the user to change the wrong taxa names.
 #' @param x a data.frame as specified in details
 #' @param group otic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes.
 #' @param write.table if T quickRename will save a csv file with changes provided by the user

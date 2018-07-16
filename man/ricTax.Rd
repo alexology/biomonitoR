@@ -20,10 +20,10 @@ This function calculates the absolute richness of a Taxon or of a set Taxa at a 
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-ricTax(data.agr, taxa = "Ephemeroptera", taxLev = "Family")
-ricTax(data.agr, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = "Family")
-# The followin line give the same result
-ricTax(data.agr, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = c("Family", "Family"))
+ricTax(data.agR, taxa = "Ephemeroptera", taxLev = "Family")
+ricTax(data.agR, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = "Family")
+# The following line give the same result
+ricTax(data.agR, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = c("Family", "Family"))
 }
 \seealso{
 \code{\link{aggregatoR}}

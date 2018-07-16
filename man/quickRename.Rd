@@ -14,7 +14,7 @@ quickRename(x, group = NULL, write.table = FALSE)
 \item{write.table}{if T quickRename will save a csv file with changes provided by the user}
 }
 \description{
-This function allow the user to change the wron taxa names.
+This function allow the user to change the wrong taxa names.
 }
 \details{
 data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
