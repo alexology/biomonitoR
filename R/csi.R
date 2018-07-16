@@ -1,8 +1,8 @@
-#' Community trait specialization
+#' Community Specialization index
 #'
-#' This function calculates the community trait specialization.
-#' @inheritParams cwm
-#' @details This function first takes the abundance table corresponding to the desired
+#' This function calculates the community-weighted means of trait categories.
+#'
+#' This function first takes the abundance table corresponding to the desired
 #' taxonomic level from the `x` aggregatoR object.
 #'
 #' Then it searches from the trait data base all the information available at
@@ -10,45 +10,44 @@
 #' trait values (e.g. the family trait values are obtained by averaging all the
 #' trait values from taxa with trait information within this family).
 #'
-#' For each taxon and each trait, a taxon specialization index is calculated
-#' using the following formula:
+#' Finally, the community mean trait values are calculated using the transformed
+#' abundances (using the `trans` function) as weigths
 #'
-#' \deqn{TSI = (sum(c²_tik) - 1/K) / (1 - 1/K)}
+#' @param x results of function aggregatoR
+#' @param traitDB a trait data base with a column `Taxa` and the other columns
+#'   containing the traits. If a trait has several modalities they should be
+#'   named as follow: TRAIT_MODALITY.
 #'
-#' with \eqn{c²_tik`} being the affinity of taxon `t` for the modality `k` (among
-#' `K`) of trait `i`.
+#'   By default, the data base used is the one from Tachet *et al* (2010) that
+#'   can be retrieved from
+#'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
+#'   (Schmidt-Kloiber & Hering, 2015).
+#' @param taxLev character string giving the taxonomic level used to retrieve
+#'   trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
+#'   `"Family"` as returned by the [aggregatoR] function.
+#' @param trans the function used to transform the abundances, by default
+#'   [log1p]
 #'
-#' Finally, the community trait specialization is calculated for each trait by
-#' averaging the TSIs using the transformed abundances (using the `trans`
-#' function) as weigths.
-#'
-#'
-#' @return a table with the CSI values for each trait
+#' @return a table with the CWM values of each trait (trait modality)
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
-#'   n_distinct
 #' @importFrom tidyr gather spread
 #'
 #' @examples
 #' data(macro_ex)
-#' data(traitsTachet)
 #'
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #'
-#' csi(x = data.agR, traitDB = NULL, taxLev = "Taxa", trans = log1p)
-#' csi(x = data.agR, traitDB = NULL, taxLev = "Taxa",
+#' csi(x = data.agR, taxLev = "Taxa", trans = log1p)
+#' csi(x = data.agR, taxLev = "Taxa",
 #'     trans = function(x) {
 #'         ifelse(x > 0, 1, 0)
 #'     })
-#' csi(x = data.agR, traitDB = NULL, taxLev = "Genus", trans = log1p)
+#' csi(x = data.agR, taxLev = "Genus", trans = log1p)
 #'
 #' @seealso [aggregatoR]
 #'
-#' @references Mondy, C. P., & Usseglio‐Polatera P. (2013) Using Fuzzy-Coded
-#'   Traits to Elucidate the Non-Random Role of Anthropogenic Stress in the
-#'   Functional Homogenisation of Invertebrate Assemblages. Freshwater Biology,
-#'   59 (3), 584‑600. https://doi.org/10.1111/fwb.12289.
 #' @references Tachet, H., Richoux, P., Bournaud, M., & Usseglio-Polatera, P.
 #'   (2010). Invertébrés d'eau douce: systématique, biologie, écologie. Paris:
 #'   CNRS editions.
