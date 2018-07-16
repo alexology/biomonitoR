@@ -8,9 +8,9 @@
 #' @export
 #' @seealso \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}
 #' @examples
-#' showscores("aspt_i", writecsv = F)
+#' showscores("aspt_i", writecsv = FALSE)
 
-showscores <- function(x, writecsv = F){
+showscores <- function(x, writecsv = FALSE){
   # list of allowed scores
   score.list <- c("aspt_b", "aspt_i", "aspt_h", "life_scores_fam", "whpt_scores_fam", "psi_scores_fam", "epsi_scores_fam")
   if(!x %in% score.list){
@@ -19,7 +19,7 @@ showscores <- function(x, writecsv = F){
 
   else {
     score.obj <- get(x)
-    if(writecsv == F){
+    if(writecsv == FALSE){
       return(score.obj)
     } else {
       write.csv(score.obj, paste(x, ".csv", sep =""))
