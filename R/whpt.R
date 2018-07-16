@@ -29,9 +29,9 @@
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' data.whpt <- whpt(data.agR, taxLev = "Family", composite = F)
+#' data.whpt <- whpt(data.agR, taxLev = "Family", composite = FALSE)
 
-whpt <- function(x, taxLev = "Family", type = "ab", method = "aspt", composite = F, abucl = c(0,9,99,999)){
+whpt <- function(x, taxLev = "Family", type = "ab", method = "aspt", composite = FALSE, abucl = c(0,9,99,999)){
 
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
@@ -58,14 +58,14 @@ whpt <- function(x, taxLev = "Family", type = "ab", method = "aspt", composite =
 
 
   numb <- c(which(names(x)=="Tree"), which(names(x)=="Taxa")) # position of the Tree element in the list to remove
-  fam <- x[-numb, drop = F]
+  fam <- x[-numb, drop = FALSE]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
 
   # composite default families
 
   # take into account composite families
-  if(composite == T & taxLev == "Family"){
+  if(composite == TRUE & taxLev == "Family"){
     fam <- checkBmwpFam(df=fam, famNames=whpt_fam_acc, stNames=st.names)
   }
 
@@ -96,7 +96,7 @@ whpt <- function(x, taxLev = "Family", type = "ab", method = "aspt", composite =
     whpt_scores_use <- whpt_scores_use[ which( whpt_scores_use$ABU_NUM != 1) , ] # exclude the po scores
 
     # keep only numeric columns
-    temp <- fam.long[, 3, drop = F]
+    temp <- fam.long[, 3, drop = FALSE]
 
     A <- abucl[1]
     B <- abucl[2]
