@@ -1,5 +1,6 @@
 #' Ephemeroptera toy example
 #'
+#'
 #' A toy axample to illustrate the biomonitoR package use
 #'
 #'
