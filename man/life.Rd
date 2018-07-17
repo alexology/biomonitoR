@@ -53,7 +53,7 @@ data.agR <- aggregatoR(data.bio)
 data.life <- life(data.agR, taxLev = "Family", composite = FALSE)
 }
 \references{
-Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543–574.
+Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543-574.
 }
 \seealso{
 \code{\link{asBiomonitor}}

@@ -59,11 +59,11 @@ cwm(x = data.agR, taxLev = "Genus", trans = log1p)
 }
 \references{
 Tachet, H., Richoux, P., Bournaud, M., & Usseglio-Polatera, P.
-(2010). Invertébrés d'eau douce: systématique, biologie, écologie. Paris:
+(2010). Invertebres d'eau douce: systematique, biologie, ecologie. Paris:
 CNRS editions.
 
 Schmidt-Kloiber, A., & Hering, D. (2015). www. freshwaterecology.
-info–An online tool that unifies, standardises and codifies more than
+info-An online tool that unifies, standardises and codifies more than
 20,000 European freshwater organisms and their ecological preferences.
 Ecological indicators, 53, 271-282.
 }
