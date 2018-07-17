@@ -48,12 +48,12 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #'
-#' csindex(x = data.agR, traitDB = NULL, taxLev = "Taxa", trans = log1p)
-#' csindex(x = data.agR, traitDB = NULL, taxLev = "Taxa",
+#' csi(x = data.agR, traitDB = NULL, taxLev = "Taxa", trans = log1p)
+#' csi(x = data.agR, traitDB = NULL, taxLev = "Taxa",
 #'     trans = function(x) {
 #'         ifelse(x > 0, 1, 0)
 #'     })
-#' csindex(x = data.agR, traitDB = NULL, taxLev = "Genus", trans = log1p)
+#' csi(x = data.agR, traitDB = NULL, taxLev = "Genus", trans = log1p)
 #'
 #' @seealso [aggregatoR]
 #'
@@ -71,7 +71,7 @@
 #'
 #' @export
 
-csindex <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
+csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
 
   if( is.null( traitDB )){
     traitDB = traitsTachet
