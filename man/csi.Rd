@@ -43,9 +43,10 @@ trait values from taxa with trait information within this family).
 For each taxon and each trait, a taxon specialization index is calculated
 using the following formula:
 
-TSI = (sum(c²_tik) - 1/K) / (1 - 1/K)
+\deqn{TSI = (sum(c^{2}_tik) - 1/K) / (1 - 1/K)}
 
-with c²_tik\code{being the affinity of taxon}t\code{for the modality}k\code{(among}K\code{) of trait}i`.
+with \eqn{c^{2}_tik} being the affinity of taxon \code{t} for the modality \code{k} (among
+\code{K}) of trait \code{i}.
 
 Finally, the community trait specialization is calculated for each trait by
 averaging the TSIs using the transformed abundances (using the \code{trans}
@@ -67,17 +68,17 @@ csi(x = data.agR, traitDB = NULL, taxLev = "Genus", trans = log1p)
 
 }
 \references{
-Mondy, C. P., & Usseglio‐Polatera P. (2013) Using Fuzzy-Coded
+Mondy, C. P., & Usseglio-Polatera P. (2013) Using Fuzzy-Coded
 Traits to Elucidate the Non-Random Role of Anthropogenic Stress in the
 Functional Homogenisation of Invertebrate Assemblages. Freshwater Biology,
-59 (3), 584‑600. https://doi.org/10.1111/fwb.12289.
+59 (3), 584-600. https://doi.org/10.1111/fwb.12289.
 
 Tachet, H., Richoux, P., Bournaud, M., & Usseglio-Polatera, P.
-(2010). Invertébrés d'eau douce: systématique, biologie, écologie. Paris:
+(2010). Invertebres d'eau douce: systematique, biologie, ecologie. Paris:
 CNRS editions.
 
 Schmidt-Kloiber, A., & Hering, D. (2015). www. freshwaterecology.
-info–An online tool that unifies, standardises and codifies more than
+info-An online tool that unifies, standardises and codifies more than
 20,000 European freshwater organisms and their ecological preferences.
 Ecological indicators, 53, 271-282.
 }
