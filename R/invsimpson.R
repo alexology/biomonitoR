@@ -1,4 +1,4 @@
-simpson <- function(x, taxLev = "Family"){
+invsimpson <- function(x, taxLev = "Family"){
   
   # check if the object d is of class "biomonitoR"
   
@@ -12,7 +12,7 @@ simpson <- function(x, taxLev = "Family"){
     df<- df[ -z ,] # remove unassigned row from the species count
   }
 
-  res <- apply(df[ , -1, drop = FALSE ], 2, FUN = function(x){Pi( x, index = "Simpson")})
+  res <- apply(df[ , -1, drop = FALSE ], 2, FUN = function(x){Pi( x, index = "Invsimpson")})
 
   return( res )
 }

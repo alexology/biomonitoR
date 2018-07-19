@@ -6,6 +6,13 @@
 \alias{margalef}
 \alias{menhinick}
 \alias{pielou}
+\alias{berpar}
+\alias{brill}
+\alias{esimpson}
+\alias{invberpar}
+\alias{invsimpson}
+\alias{mcintosh}
+\alias{odum}
 \title{shannon}
 \usage{
 shannon(x, base = 2, taxLev = "Family")
@@ -18,7 +25,7 @@ shannon(x, base = 2, taxLev = "Family")
 \item{taxLev}{taxonimc level on which the calculation has to be made.}
 }
 \description{
-Functions for calculating shannon, simpson, margalef, menhinick and pielou indices.
+Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
 }
 \examples{
 data(macro_ex)
