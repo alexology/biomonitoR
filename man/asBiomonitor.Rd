@@ -24,7 +24,7 @@ asBiomonitor checks the correctness of taxa names in the data.frame provided by 
 }
 \examples{
 data(macro_ex)
-asBiomonitor(macro_ex)
+asBiomonitor(macro_ex, group = "mi")
 }
 \seealso{
 \code{\link{quickRename}}
