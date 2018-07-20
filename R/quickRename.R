@@ -15,7 +15,7 @@
 
 
 
-quickRename <- function(x, group = NULL, write.table=FALSE){
+quickRename <- function(x, group = "mi", write.table=FALSE){
 
   if(is.null(group) == TRUE){
     stop("Please provide a valid group")

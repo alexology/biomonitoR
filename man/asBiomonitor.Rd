@@ -11,9 +11,9 @@ asBiomonitor(x, group = "mi", dfref = NULL, overwrite = F)
 
 \item{group}{biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. It overwrite = F group will not be considered}
 
-\item{overwrite}{if set to T replace the reference database with the one provided by the user}
+\item{dfref}{allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database}
 
-\item{dref}{allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database}
+\item{overwrite}{if set to T replace the reference database with the one provided by the user}
 }
 \description{
 This function merge the user dataframe with the reference database. Options to improve or replace the reference database are provided.

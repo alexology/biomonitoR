@@ -1,9 +1,10 @@
-rename <- function(x, write.table = FALSE, customx = FALSE){
+rename <- function(x, write.table = FALSE, customx = FALSE, groups = group){
+
   dfName <- deparse(substitute(x))
-  if(customx == FALSE){
-    tempNames <- suggestNames(x)
+  if(customx == F){
+    tempNames <- suggestNames(x, groups = groups)
   } else {
-    tempNames <- suggestNames(x, custom = T)
+    tempNames <- suggestNames(x, custom = T, groups = groups)
   }
 
   if(length(tempNames) == 0){

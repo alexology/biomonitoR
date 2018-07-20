@@ -3,7 +3,7 @@
 #' This function merge the user dataframe with the reference database. Options to improve or replace the reference database are provided.
 #' @param x a data.frame as specified in details
 #' @param group biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. It overwrite = F group will not be considered
-#' @param dref allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database
+#' @param dfref allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database
 #' @param overwrite if set to T replace the reference database with the one provided by the user
 #' @keywords asBiomonitor
 #' @details data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
@@ -76,8 +76,6 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
   if(length(which(hydrac_temp == T)) != 0){
     userTaxaCap[which(hydrac_temp)] <- "Trombidiformes"
   }
-
-  group <- group
 
   x$Taxa <- userTaxaCap
   if(is.null(dfref) == T){
