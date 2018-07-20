@@ -36,7 +36,7 @@ Scores used for epsi calculation can be explored with the function code{\link{sh
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-data.psi <- epsi(data.agR, taxLev = "Family", composite = F)
+data.psi <- epsi(data.agR, taxLev = "Family")
 }
 \references{
 Turley MD, Bilotta GS, Chadd RP, Extence CA, Brazier RE, Burnside NG, Pickwell AG. 2016. A sediment-specific family-level biomonitoring tool to identify the impacts of fine sediment in temperate rivers and streams. Ecological Indicators 70, 151-165.

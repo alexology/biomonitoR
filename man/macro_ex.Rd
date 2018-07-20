@@ -8,13 +8,12 @@
 \describe{
 \item{Taxa}{name of ephemeroptera taxa}
 \item{ST1}{abundance in site 1}
-\item{ST2}{abundance in site 2}
+\item{ST3}{abundance in site 3}
 }}
 \usage{
 macro_ex
 }
 \description{
 A toy axample to illustrate the biomonitoR package use
-diamonds.
 }
 \keyword{datasets}

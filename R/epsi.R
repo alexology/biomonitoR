@@ -24,15 +24,12 @@
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' data.psi <- epsi(data.agR, taxLev = "Family", composite = F)
+#' data.psi <- epsi(data.agR, taxLev = "Family")
 
 epsi <- function(x, taxLev = "Family", abucl = c(0,9,99,999), composite = F){
 
-  if (class(x) != "biomonitoR") {
-    opt <- options(show.error.messages = FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
+  # check if the object x is of class "biomonitoR"
+  classCheck(x, group = "mi")
 
   if(taxLev != "Family"){
     stop("Currently only family level is implemented!")

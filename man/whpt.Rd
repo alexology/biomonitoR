@@ -4,8 +4,8 @@
 \alias{whpt}
 \title{whpt}
 \usage{
-whpt(x, taxLev = "Family", type = "ab", method = "aspt", composite = F,
-  abucl = c(0, 9, 99, 999))
+whpt(x, taxLev = "Family", type = "ab", method = "aspt",
+  composite = FALSE, abucl = c(0, 9, 99, 999))
 }
 \arguments{
 \item{x}{results of aggregatoR function}
@@ -45,7 +45,7 @@ Scores used for whpt calculation can be explored with the function code{\link{sh
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-data.whpt <- whpt(data.agR, taxLev = "Family", composite = F)
+data.whpt <- whpt(data.agR, taxLev = "Family", composite = FALSE)
 }
 \seealso{
 \code{\link{asBiomonitor}}

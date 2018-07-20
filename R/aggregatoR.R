@@ -1,7 +1,7 @@
 #' aggregatoR
 #'
 #' This function prepares data for further calculations.
-#' @param z results of function asBiomonitoR
+#' @param x results of function asBiomonitoR
 #' @keywords aggregatoR
 #' @importFrom stats aggregate
 #' @export
@@ -11,14 +11,12 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 
-aggregatoR <- function (z)
+aggregatoR <- function (x)
 {
-  if (class(z) != "biomonitoR") {
-    opt <- options(show.error.messages = FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
-  x <- z
+  
+  # check if the object x is of class "biomonitoR"
+  classCheck(x)
+  
   tx <- c("Phylum", "Class", "Subclass", "Order", "Family", "Subfamily", "Tribus", "Genus", "Species", "Subspecies", "Taxa")
   stz <- x[!(names(x) %in% tx)]
   stz_n <- names(stz)

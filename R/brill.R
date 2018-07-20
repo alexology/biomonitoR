@@ -1,7 +1,7 @@
-menhinick <- function(x, taxLev = "Family"){
+brill <- function(x, taxLev = "Family"){
   
   # check if the object x is of class "biomonitoR"
-  classCheck(x)
+    classCheck(x)
   
   df <-  x[[taxLev]]
   if("unassigned" %in% df[ , 1]){
@@ -9,7 +9,7 @@ menhinick <- function(x, taxLev = "Family"){
     df<- df[ -z ,] # remove unassigned row from the species count
   }
 
-  res <- apply(df[ , -1, drop = FALSE ], 2, FUN = function(x){Pi( x, index = "Menhinick")})
+  res <- apply(df[ , -1, drop = FALSE ], 2, FUN = function(x){Pi( x, index = "Brillouin")})
 
   return( res )
 }

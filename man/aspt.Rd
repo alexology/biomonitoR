@@ -4,10 +4,10 @@
 \alias{aspt}
 \title{aspt}
 \usage{
-aspt(d, method = "a")
+aspt(x, method = "a")
 }
 \arguments{
-\item{d}{results of function aggregatoR}
+\item{x}{results of function aggregatoR}
 
 \item{method}{the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "uk" (Davy-Bowker et al. 2010), "spa" (MAGRAMA 2011), "ita" (Buffagni et al . 2014). Methods "uk_agg"and "ita_agg" implement the composite family approach.}
 }
@@ -34,14 +34,14 @@ data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 aspt(data.agR)
-aspt(data.agR, method = "i")
+aspt(data.agR, method = "spa")
 }
 \references{
 Armitage, P. D., Moss, D., Wright, J. F., & Furse, M. T. (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. Water research, 17(3), 333-347.
 
 Davy-Bowker J., Clarke R., Corbin T., Vincent H, Pretty J., Hawczak A., Blackburn J., Murphy J., Jones I., 2008. River Invertebrate Classification Tool. Final report. WFD72C. SNIFFER. 276 pp
 
-MAGRAMA-Ministerio de Agricultura y medio Ambiente (2011) Protocolo de muestreo y laboratorio de fauna bentónica de invertebrados en ríos vadeables. ML-Rv-I-2011, Cód, 23 pp.
+MAGRAMA-Ministerio de Agricultura y medio Ambiente (2011) Protocolo de muestreo y laboratorio de fauna bentonica de invertebrados en rios vadeables. ML-Rv-I-2011, Cod, 23 pp.
 }
 \seealso{
 \code{\link{aggregatoR}}

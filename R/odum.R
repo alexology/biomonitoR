@@ -1,4 +1,4 @@
-menhinick <- function(x, taxLev = "Family"){
+odum <- function(x, base = 2,taxLev = "Family"){
   
   # check if the object x is of class "biomonitoR"
   classCheck(x)
@@ -9,7 +9,7 @@ menhinick <- function(x, taxLev = "Family"){
     df<- df[ -z ,] # remove unassigned row from the species count
   }
 
-  res <- apply(df[ , -1, drop = FALSE ], 2, FUN = function(x){Pi( x, index = "Menhinick")})
+  res <- apply(df[ , -1, drop = FALSE ], 2, FUN = function(x){Pi( x, index = "Odum")})
 
   return( res )
 }

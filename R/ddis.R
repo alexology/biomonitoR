@@ -1,3 +1,5 @@
+#' @importFrom stats as.dist
+
 ddis <- function(x, st.names){
   com <- x[ , -which(names(x) %in% st.names)]
   n <- nrow(com)

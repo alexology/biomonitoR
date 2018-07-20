@@ -1,10 +1,10 @@
 #' shannon
 #'
-#' Functions for calculating shannon, simpson, margalef, menhinick and pielou indices.
-#' @aliases  shannon simpson margalef menhinick pielou
+#' Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
+#' @aliases  shannon simpson margalef menhinick pielou berpar brill esimpson invberpar invsimpson mcintosh odum
 #' @param x results of function aggregatoR
 #' @param base the base of the logarithm
-#' @param taxaLev taxonimc level on which the calculation has to be made.
+#' @param taxLev taxonimc level on which the calculation has to be made.
 #' @keywords shannon, simpson, margalef, menhinick, pielou
 #' @export
 #' @seealso \code{\link{aggregatoR}}
@@ -17,19 +17,21 @@
 #' # natural logarithm
 #' shannon(data.agR, base=exp(1))
 #' @export simpson
+#' @export esimpson
+#' @export invsimpson
 #' @export margalef
 #' @export menhinick
 #' @export pielou
+#' @export berpar
+#' @export invberpar
+#' @export brill
+#' @export mcintosh
+#' @export odum
 
 shannon <- function(x, base=2, taxLev="Family"){
 
-  # check if the object d is of class "biomonitoR"
-
-    if (class(x) != "biomonitoR") {
-      opt <- options(show.error.messages = FALSE)
-      on.exit(options(opt))
-      return("Object x is not an object of class biomonitoR")
-    }
+  # check if the object x is of class "biomonitoR"
+  classCheck(x)
 
   if(class(x)!="biomonitoR"){
     opt <- options(show.error.messages=FALSE)

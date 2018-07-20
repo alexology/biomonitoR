@@ -4,13 +4,17 @@
 \alias{quickRename}
 \title{quickRename}
 \usage{
-quickRename(x, write.table = F)
+quickRename(x, group = NULL, write.table = FALSE)
 }
 \arguments{
 \item{x}{a data.frame as specified in details}
+
+\item{group}{otic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes.}
+
+\item{write.table}{if T quickRename will save a csv file with changes provided by the user}
 }
 \description{
-This function allow the user to change the wron taxa names.
+This function allow the user to change the wrong taxa names.
 }
 \details{
 data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
@@ -18,7 +22,7 @@ The function rename will suggest correct name and allow the user to insert a nam
 }
 \examples{
 data(macro_ex)
-macro_ex.mod <- quickRename(macro_ex)
+macro_ex.mod <- quickRename(macro_ex, group = "mi")
 }
 \seealso{
 \code{\link{asBiomonitor}}

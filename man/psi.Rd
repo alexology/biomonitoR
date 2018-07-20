@@ -30,7 +30,7 @@ data.agR <- aggregatoR(data.bio)
 data.psi <- psi(data.agR, taxLev = "Family")
 }
 \references{
-Extence CA, Chadd RP, England J, Dunbar MJ, Wood PJ, Taylor ED. 2013. The assessment of fine sediment accumulation in rivers using macro-invertebrate community response. River Research and Applications 29, 17–55.
+Extence CA, Chadd RP, England J, Dunbar MJ, Wood PJ, Taylor ED. 2013. The assessment of fine sediment accumulation in rivers using macro-invertebrate community response. River Research and Applications 29, 17-55.
 }
 \seealso{
 \code{\link{asBiomonitor}}

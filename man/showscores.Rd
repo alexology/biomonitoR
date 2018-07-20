@@ -4,7 +4,7 @@
 \alias{showscores}
 \title{showscores}
 \usage{
-showscores(x, writecsv = F)
+showscores(x, writecsv = FALSE)
 }
 \arguments{
 \item{x}{name of the scores to print. Allowed names are "aspt_b", "aspt_i", "aspt_h", "life_scores_fam", "whpt_scores_fam", "psi_scores_fam" and "psi_scores_fam"}
@@ -15,7 +15,7 @@ showscores(x, writecsv = F)
 This function print the scores used for the calculation of several indices in biomonitoR.
 }
 \examples{
-showscores("aspt_i", writecsv = F)
+showscores("aspt_i", writecsv = FALSE)
 }
 \seealso{
 \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}

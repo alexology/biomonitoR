@@ -1,18 +1,6 @@
-#' Community-Weighted Mean values of traits
+#' Community trait specialization
 #'
-#' This function calculates the community-weighted means of trait categories.
-#'
-#' This function first takes the abundance table corresponding to the desired
-#' taxonomic level from the `x` aggregatoR object.
-#'
-#' Then it searches from the trait data base all the information available at
-#' the desired level and, if required, calculates the corresponding averaged
-#' trait values (e.g. the family trait values are obtained by averaging all the
-#' trait values from taxa with trait information within this family).
-#'
-#' Finally, the community mean trait values are calculated using the transformed
-#' abundances (using the `trans` function) as weigths
-#'
+#' This function calculates the community trait specialization.
 #' @param x results of function aggregatoR
 #' @param traitDB a trait data base with a column `Taxa` and the other columns
 #'   containing the traits. If a trait has several modalities they should be
@@ -27,27 +15,52 @@
 #'   `"Family"` as returned by the [aggregatoR] function.
 #' @param trans the function used to transform the abundances, by default
 #'   [log1p]
+#' @details This function first takes the abundance table corresponding to the desired
+#' taxonomic level from the `x` aggregatoR object.
 #'
-#' @return a table with the CWM values of each trait (trait modality)
+#' Then it searches from the trait data base all the information available at
+#' the desired level and, if required, calculates the corresponding averaged
+#' trait values (e.g. the family trait values are obtained by averaging all the
+#' trait values from taxa with trait information within this family).
 #'
-#' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
+#' For each taxon and each trait, a taxon specialization index is calculated
+#' using the following formula:
+#'
+#' \deqn{TSI = (sum(c^{2}_tik) - 1/K) / (1 - 1/K)}
+#'
+#' with \eqn{c^{2}_tik} being the affinity of taxon `t` for the modality `k` (among
+#' `K`) of trait `i`.
+#'
+#' Finally, the community trait specialization is calculated for each trait by
+#' averaging the TSIs using the transformed abundances (using the `trans`
+#' function) as weigths.
+#'
+#'
+#' @return a table with the CSI values for each trait
+#'
+#' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup n_distinct
 #' @importFrom tidyr gather spread
 #'
 #' @examples
 #' data(macro_ex)
+#' data(traitsTachet)
 #'
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #'
-#' cwm(x = data.agR, taxLev = "Taxa", trans = log1p)
-#' cwm(x = data.agR, taxLev = "Taxa",
+#' csi(x = data.agR, traitDB = NULL, taxLev = "Taxa", trans = log1p)
+#' csi(x = data.agR, traitDB = NULL, taxLev = "Taxa",
 #'     trans = function(x) {
 #'         ifelse(x > 0, 1, 0)
 #'     })
-#' cwm(x = data.agR, taxLev = "Genus", trans = log1p)
+#' csi(x = data.agR, traitDB = NULL, taxLev = "Genus", trans = log1p)
 #'
 #' @seealso [aggregatoR]
 #'
+#' @references Mondy, C. P., & Usseglio-Polatera P. (2013) Using Fuzzy-Coded
+#'   Traits to Elucidate the Non-Random Role of Anthropogenic Stress in the
+#'   Functional Homogenisation of Invertebrate Assemblages. Freshwater Biology,
+#'   59 (3), 584-600. https://doi.org/10.1111/fwb.12289.
 #' @references Tachet, H., Richoux, P., Bournaud, M., & Usseglio-Polatera, P.
 #'   (2010). Invertebres d'eau douce: systematique, biologie, ecologie. Paris:
 #'   CNRS editions.
@@ -58,7 +71,7 @@
 #'
 #' @export
 
-cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
+csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
 
   if( is.null( traitDB )){
     traitDB = traitsTachet
@@ -67,9 +80,9 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
   }
 
   # create dummy variables to avoid R CMD check NOTES
-  traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
-    Abundance <- Sample <- Weight <- Affinity <- totWeight <-
-    weightedAffinity <- Category <- . <- NULL
+  Taxa <- Trait <- Modality <- Affinity <- Phylum <- Subspecies <-
+    Abundance <- Sample <- Weight <- totWeight <- k <-
+    TSI <- CSI <- weightedTSI <-  . <- NULL
 
   # check if the object x is of class "biomonitoR"
   classCheck(x, group = "mi")
@@ -78,18 +91,17 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
     return("taxLev should be one of the following: Family, Genus, Species or Taxa")
   }
 
-
   trait_db <- traitDB                               %>%
     (function(df) {
       mutate(df,
              Taxa = gsub(pattern     = " sp.",
-                          replacement = "",
-                          x           = Taxa))
+                         replacement = "",
+                         x           = Taxa))
     })                                              %>%
-    gather(key = modality, value = affinity, -Taxa) %>%
-    group_by(Taxa, modality)                        %>%
-    summarise(affinity = mean(affinity))            %>%
-    spread(key = modality, value = affinity)        %>%
+    gather(key = Modality, value = Affinity, -Taxa) %>%
+    group_by(Taxa, Modality)                        %>%
+    summarise(Affinity = mean(Affinity))            %>%
+    spread(key = Modality, value = Affinity)        %>%
     ungroup()
 
   abundances <- x[[taxLev]]
@@ -113,7 +125,7 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
     level <- rep(taxLev, length(taxa))
   }
 
-  taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
+  tsi <- mutate(ref, Taxa = as.character(Taxa))         %>%
     left_join(mutate(trait_db, Taxa = as.character(Taxa)),
               by = "Taxa")                              %>%
     (function(df) {
@@ -125,28 +137,31 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
              })               %>%
         do.call(what = rbind) %>%
         data.frame(Taxa = taxa, ., stringsAsFactors = FALSE)
-    })
+    })                                                  %>%
+    gather(key = Modality, value = Affinity, -Taxa)     %>%
+    mutate(Trait = strsplit(Modality, split = "_")      %>%
+             sapply(FUN = '[[', 1))                     %>%
+    group_by(Taxa, Trait)                               %>%
+    mutate(k = n_distinct(Modality))                    %>%
+    summarise(TSI = (sum(Affinity^2) - 1 / unique(k)) /
+                (1 - 1 / unique(k)))
 
-
-  abundances                                       %>%
-    gather(key = Sample, value = Abundance, -Taxa) %>%
+  abundances                                        %>%
+    gather(key = Sample, value = Abundance, -Taxa)  %>%
     mutate(Sample = factor(Sample,
                            levels = colnames(abundances)[-1]),
            Taxa   = as.character(Taxa),
-           Weight = trans(Abundance))              %>%
-    left_join(group_by(., Sample)                  %>%
+           Weight = trans(Abundance))               %>%
+    left_join(group_by(., Sample)                   %>%
                 summarise(totWeight = sum(Weight)),
-              by = "Sample")                       %>%
-    left_join(gather(taxa_traits,
-                     key   = Category,
-                     value = Affinity, -Taxa),
-              by = "Taxa")                         %>%
-    mutate(weightedAffinity = (Weight * Affinity) /
-             totWeight)                            %>%
-    group_by(Sample, Category)                     %>%
-    summarise(Affinity = sum(weightedAffinity,
-                             na.rm = TRUE))        %>%
-    spread(key = Category, value = Affinity)       %>%
+              by = "Sample")                        %>%
+    left_join(tsi,
+              by = "Taxa")                          %>%
+    mutate(weightedTSI = (Weight * TSI) /
+             totWeight)                             %>%
+    group_by(Sample, Trait)                         %>%
+    summarise(CSI = sum(weightedTSI, na.rm = TRUE)) %>%
+    spread(key = Trait, value = CSI)                %>%
     as.data.frame()
 
 }

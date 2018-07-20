@@ -4,10 +4,12 @@
 \alias{asBiomonitor}
 \title{asBiomonitor}
 \usage{
-asBiomonitor(x, dfref = NULL, overwrite = F)
+asBiomonitor(x, group = "mi", dfref = NULL, overwrite = F)
 }
 \arguments{
 \item{x}{a data.frame as specified in details}
+
+\item{group}{biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. It overwrite = F group will not be considered}
 
 \item{overwrite}{if set to T replace the reference database with the one provided by the user}
 

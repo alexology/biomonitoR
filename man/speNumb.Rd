@@ -4,6 +4,7 @@
 \alias{speNumb}
 \alias{genNumb}
 \alias{famNumb}
+\alias{taxNumb}
 \alias{abu}
 \title{speNumb}
 \usage{
@@ -24,7 +25,9 @@ genNumb(data.agR)
 \seealso{
 \code{\link{aggregatoR}}
 }
+\keyword{abu}
 \keyword{famNumb,}
 \keyword{genNumb,}
-\keyword{ordNumb}
+\keyword{ordNumb,}
 \keyword{speNumb,}
+\keyword{taxNumb,}

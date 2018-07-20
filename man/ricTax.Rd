@@ -11,7 +11,7 @@ ricTax(x, taxa = NULL, taxLev = NULL)
 
 \item{taxa}{a Taxon or a vector of taxa.}
 
-\item{taxLev}{taxonomic level at which the richness has to be calculated.}
+\item{taxLev}{taxonomic level at which the richness has to be calculated. It could be also a vector of taxnomici levels.}
 }
 \description{
 This function calculates the absolute richness of a Taxon or of a set Taxa at a user provided taxonomic level.
@@ -20,10 +20,7 @@ This function calculates the absolute richness of a Taxon or of a set Taxa at a 
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-ricTax(data.agr, taxa = "Ephemeroptera", taxLev = "Family")
-ricTax(data.agr, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = "Family")
-# The followin line give the same result
-ricTax(data.agr, taxa = c("Plecopotera", "Ephemeroptera"), taxLev = c("Family", "Family"))
+ricTax(data.agR, taxa = "Ephemeroptera", taxLev = "Family")
 }
 \seealso{
 \code{\link{aggregatoR}}
