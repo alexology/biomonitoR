@@ -17,7 +17,7 @@
 gold <- function (x){
 
   # check if the object x is of class "biomonitoR"
-  classCheck(x, froup = "mi")
+  classCheck(x, group = "mi")
 
 
   x_gold <- x[["Tree"]]
