@@ -77,6 +77,8 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
     userTaxaCap[which(hydrac_temp)] <- "Trombidiformes"
   }
 
+  group <- group
+
   x$Taxa <- userTaxaCap
   if(is.null(dfref) == T){
     x <- rename(x, groups = group)
