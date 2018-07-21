@@ -1,13 +1,14 @@
 #' @importFrom utils select.list
 #' @importFrom hunspell hunspell_check hunspell_suggest
-suggestUserNames <- function(x, groups = "mi"){
-  if(groups == "mi"){
+suggestUserNames <- function(x, groupsx = "mi"){
+  groupsx <- groups
+  if(groupsx == "mi"){
     dic.path <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
-    dictio <- dictionary(dic.path, cache = F)      
+    dictio <- dictionary(dic.path, cache = F)
   }
-  if(groups == "mf"){
+  if(groupsx == "mf"){
     dic.path <- system.file("dict", "mf_dictionary.txt", package="biomonitoR")
-    dictio <- dictionary(dic.path, cache = F)      
+    dictio <- dictionary(dic.path, cache = F)
   }
   taxaCar <- as.character(x$Taxa)
   taxaCar <- sapply(taxaCar, capWords, USE.NAMES = F)
