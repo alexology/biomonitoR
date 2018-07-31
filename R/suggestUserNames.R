@@ -1,7 +1,7 @@
 #' @importFrom utils select.list
 #' @importFrom hunspell hunspell_check hunspell_suggest
 suggestUserNames <- function(x, group = "mi"){
-  groupsx <- groups
+
   if(group == "mi"){
     dic.path <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
     dictio <- dictionary(dic.path, cache = F)
