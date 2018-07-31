@@ -1,0 +1,1846 @@
+1845
+Rhodophyta
+Florideophyceae
+Nemaliophycidae
+Acrochaetiales
+Acrochaetiaceae
+Audouinella
+Audouinella hermannii
+Bangiophyceae
+Bangiophycidae
+Bangiales
+Bangiaceae
+Bangia
+Chlorophyta
+Ulvophyceae
+Ulotrichales
+Binucleariaceae
+Binuclearia
+Cyanobacteria
+Cyanophyceae
+Synechococcophycidae
+Synechococcales
+Chamaesiphonaceae
+Chamaesiphon
+Ulotrichaceae
+Chlorhormidium
+Chlorophyceae
+Chaetophorales
+Chaetophoraceae
+Chlorotylium
+Compsopogonophyceae
+Compsopogonales
+Compsopogonaceae
+Compsopogon
+Nostocophycidae
+Nostocales
+Nostocaceae
+Cylindrospermum
+Bacillariophyta
+Bacillariophyceae
+Bacillariophycidae
+Cymbellales
+Cymbellaceae
+Didymosphenia
+Didymosphenia geminata
+Draparnaldia
+Gongrosira
+Gongrosira incrustans
+Chlamydomonadales
+Haematococcaceae
+Haematococcus
+Haematococcus pluvialis
+Ochrophyta
+Phaeophyceae
+Dictyotophycidae
+Sphacelariales
+Lithodermataceae
+Heribaudiella
+Heribaudiella fluviatilis
+Hildenbrandiophycidae
+Hildenbrandiales
+Hildenbrandiaceae
+Hildenbrandia
+Hildenbrandia rivularis
+Oscillatoriophycidae
+Oscillatoriales
+Homoeotrichaceae
+Homeothrix
+Sphaeropleales
+Hydrodictyaceae
+Hydrodictyon
+Hydrodictyon reticulatum
+Chrysophyceae
+Hydrurales
+Hydruraceae
+Hydrurus
+Hydrurus foetidus
+Batrachospermales
+Lemaneaceae
+Lemanea
+Lemanea fluviatilis
+Oscillatoriaceae
+Lyngbya
+Coscinodiscophyceae
+Melosirophycidae
+Melosirales
+Melosiraceae
+Melosira
+Melosira varians
+Merismopediaceae
+Merismopedia
+Microcoleaceae
+Microcoleus
+Microsporaceae
+Microspora
+Monostromataceae
+Monostroma
+Charophyta
+Conjugatophyceae
+Zygnematales
+Zygnemataceae
+Mougeotia
+Oedogoniales
+Oedogoniaceae
+Oedogonium
+Oscillatoria
+Phormidium
+Plectonema
+Pseudanabaenaceae
+Pseudanabaena
+Ulvales
+Kornmanniaceae
+Pseudendoclonium
+Florideophyceae incertae sedis
+Pseudochantransia
+Pseudochantransia pygmaea
+Sphaeropleaceae
+Radiofilum
+Cladophorales
+Cladophoraceae
+Rhizoclonium
+Rhodochorton
+Rivulariaceae
+Rivularia
+Schizomeridaceae
+Schizomeris
+Pseudanabaenales
+Schizotrichaceae
+Schizothrix
+Scytonemataceae
+Scytonema
+Sirogonium
+Sphaerocystidaceae
+Sphaerocystis
+Spirogyra
+Spirulinales
+Spirulinaceae
+Spirulina
+Stigonemataceae
+Stigonema
+Tetrasporaceae
+Tetraspora
+Tolypothrichaceae
+Tolypothrix
+Xanthophyceae
+Tribonematales
+Tribonemataceae
+Tribonema
+Ulothrix
+Vaucheriales
+Vaucheriaceae
+Vaucheria
+Zygnema
+Bryophyta
+Porifera
+Demospongiae
+Monaxonida
+Leptomitidae
+Leptomitus
+Proteobacteria
+Betaproteobacteria
+Burkholderiales
+Comamonadaceae
+Sphaerotilus
+Sphaerotilus natans
+Magnoliophyta
+Magnoliopsida
+Scrophulariales
+Hygrophila
+Hygrophila polysperma
+Liliopsida
+Alismatales
+Alismataceae
+Alisma
+Alisma gramineum
+Alisma lanceolatum
+Alisma plantago-aquatica
+Alisma wahlenbergii
+Baldellia
+Baldellia alpestris
+Baldellia ranunculoides
+Baldellia ranunculoides ranunculoides
+Baldellia ranunculoides repens
+Baldellia repens
+Caldesia
+Caldesia parnassifolia
+Damasonium
+Damasonium alisma
+Damasonium bourgaei
+Damasonium polyspermum
+Luronium
+Luronium natans
+Sagittaria
+Sagittaria latifolia
+Sagittaria natans
+Sagittaria rigida
+Sagittaria sagittifolia
+Sagittaria subulata
+Sagittaria x lunata
+Caryophyllales
+Amaranthaceae
+Amaranthus
+Bryopsida
+Bryidae
+Hypnales
+Amblystegiaceae
+Amblystegium
+Amblystegium fluviatile
+Amblystegium humile
+Amblystegium riparium
+Amblystegium serpens
+Amblystegium tenax
+Amblystegium varium
+Calliergonaceae
+Calliergon
+Calliergon cordifolium
+Calliergon giganteum
+Calliergon megalophyllum
+Calliergon richardsonii
+Calliergon sarmentosum
+Calliergon stramineum
+Hypnaceae
+Calliergonella
+Calliergonella cuspidata
+Campylium
+Campylium stellatum
+Cratoneuron
+Cratoneuron commutatum
+Cratoneuron filicinum
+Drepanocladus
+Drepanocladus aduncus
+Drepanocladus exannulatus
+Drepanocladus fluitans
+Drepanocladus longifolius
+Drepanocladus revolvens
+Drepanocladus sendtneri
+Drepanocladus sordidus
+Hamatocaulis
+Hamatocaulis lapponicus
+Hygrohypnum
+Hygrohypnum alpestre
+Hygrohypnum durisculum
+Hygrohypnum eugyrium
+Hygrohypnum luridum
+Hygrohypnum molle
+Hygrohypnum ochraceum
+Hygrohypnum polare
+Hygrohypnum smithii
+Leptodictyum
+Leptodictyum riparium
+Warnstorfia
+Warnstorfia exannulata
+Warnstorfia fluitans
+Warnstorfia procera
+Warnstorfia trichophylla
+Warnstorfia tundrae
+Marchantiophyta
+Jungermanniopsida
+Metzgeriidae
+Metzgeriales
+Aneuraceae
+Aneura
+Aneura pinguis
+Jungermanniidae
+Jungermanniales
+Jungermanniaceae
+Jungermannia
+Jungermannia atrovirens
+Jungermannia exsertifolia
+Jungermannia exsertifolia cordifolia
+Jungermannia gracillima
+Jungermannia obovata
+Jungermannia paroica
+Jungermannia pumila
+Jungermannia sphaerocarpa
+Riccardia
+Riccardia chamaedryfolia
+Riccardia multifida
+Antheliaceae
+Anthelia
+Anthelia julacea
+Apiales
+Apiaceae
+Anthriscus
+Anthriscus sylvestris
+Carum
+Carum verticillatum
+Cicuta
+Cicuta virosa
+Eryngium
+Eryngium corniculatum
+Eryngium galioides
+Eryngium viviparum
+Heracleum
+Heracleum mantegazzianum
+Heracleum sphondylium
+Hydrocotyle
+Hydrocotyle ranunculoides
+Hydrocotyle vulgaris
+Lilaeopsis
+Lilaeopsis attenuata
+Peucedanum
+Peucedanum palustre
+Sium
+Sium latifolium
+Thorella
+Thorella verticillatinundata
+Aponogetonaceae
+Aponogeton
+Aponogeton distachyos
+Acorales
+Araceae
+Acoraceae
+Acorus
+Acorus calamus
+Acorus gramineus
+Calla
+Calla palustris
+Pistia
+Pistia stratiotes
+Araliaceae
+Angelica
+Angelica archangelica
+Angelica sylvestris
+Apium
+Apium graveolens
+Apium inundatum
+Apium nodiflorum
+Apium repens
+Apium x moorei
+Berula
+Berula erecta
+Oenanthe
+Oenanthe aquatica
+Oenanthe crocata
+Oenanthe fistulosa
+Oenanthe fluviatilis
+Asterales
+Asteraceae
+Artemisia
+Bellis
+Bellis perennis
+Cirsium
+Cirsium arvense
+Cirsium oleraceum
+Cirsium palustre
+Cotula
+Cotula coronopifolia
+Crepis
+Crepis paludosa
+Eclipta
+Eclipta prostrata
+Eupatorium
+Eupatorium cannabinum
+Petasites
+Petasites hybridus
+Petasites japonicus
+Pulicaria
+Pulicaria dysenterica
+Shinnersia
+Shinnersia rivularis
+Sonchus
+Sonchus arvensis
+Sonchus asper
+Sonchus palustris
+Taraxacum
+Taraxacum officinale
+Tussilago
+Tussilago farfara
+Xanthium
+Xanthium strumarium
+Xanthium orientale
+Rhizogoniales
+Aulacomniaceae
+Aulacomnium
+Aulacomnium palustre
+Pteridophyta
+Polypodiopsida
+Salviniales
+Salviniaceae
+Azolla
+Azolla caroliniana
+Azolla filiculoides
+Geraniales
+Balsaminaceae
+Impatiens
+Impatiens capensis
+Impatiens glandulifera
+Impatiens noli-tangere
+Bartramiales
+Bartramiaceae
+Philonotis
+Philonotis caespitosa
+Philonotis calcarea
+Philonotis fontana
+Philonotis seriata
+Philonotis tomentella
+Batrachospermaceae
+Batrachospermum
+Fagales
+Betulaceae
+Alnus
+Alnus glutinosa
+Alnus incana
+Polypodiales
+Blechnaceae
+Blechnum
+Blechnum spicant
+Lamiales
+Boraginaceae
+Myosotis
+Myosotis cespitosa
+Myosotis laxa
+Myosotis laxa cespitosa
+Myosotis scorpioides
+Myosotis secunda
+Myosotis stolonifera
+Symphytum
+Symphytum officinale
+Brachytheciaceae
+Brachythecium
+Brachythecium plumosum
+Brachythecium rivulare
+Brachythecium rutabulum
+Eurhynchium
+Eurhynchium hians
+Eurhynchium praelongum
+Eurhynchium speciosum
+Isothecium
+Isothecium holtii
+Platyhypnidium
+Platyhypnidium riparioides
+Rhynchostegium
+Rhynchostegium alopecuroides
+Rhynchostegium riparioides
+Scleropodium
+Scleropodium cespitans
+Scleropodium touretii
+Capparales
+Brassicaceae
+Barbarea
+Barbarea intermedia
+Barbarea stricta
+Barbarea vulgaris
+Nasturtium
+Nasturtium officinale
+Subularia
+Subularia aquatica
+Bryales
+Bryaceae
+Bryum
+Bryum alpinum
+Bryum argenteum
+Bryum bicolor
+Bryum pallens
+Bryum pallescens
+Bryum pseudotriquetrum
+Bryum schleicheri
+Bryum turbinatum
+Bryum weigelii
+Rhodobryum
+Rhodobryum roseum
+Butomaceae
+Butomus
+Butomus umbellatus
+Nymphaeales
+Cabombaceae
+Cabomba
+Cabomba caroliniana
+Plantaginaceae
+Callitriche
+Callitriche brutia
+Callitriche cophocarpa
+Callitriche cribrosa
+Callitriche hamulata
+Callitriche hermaphroditica
+Callitriche lenisulca
+Callitriche lusitanica
+Callitriche obtusangula
+Callitriche palustris
+Callitriche pedunculata
+Callitriche platycarpa
+Callitriche pulchra
+Callitriche regis-jubae
+Callitriche stagnalis
+Callitriche truncata
+Callitriche truncata fimbriata
+Callitriche truncata occidentalis
+Callitriche truncata truncata
+Callitriche x vigens
+Calypogeiaceae
+Calypogeia
+Calypogeia arguta
+Calypogeia fissa
+Campanulaceae
+Achillea
+Achillea ptarmica
+Bidens
+Bidens cernua
+Bidens connata
+Bidens frondosa
+Bidens radiata
+Bidens tripartita
+Gnaphalium
+Gnaphalium uliginosum
+Hypochoeris
+Hypochoeris radiata
+Leontodon
+Leontodon autumnalis
+Senecio
+Senecio aquaticus
+Senecio congestus
+Senecio paludosus
+Senecio sarracenicus
+Campyliaceae
+Scorpidium
+Scorpidium scorpioides
+Urticales
+Cannabaceae
+Humulus
+Humulus lupulus
+Humulus japonicus
+Dipsacales
+Caprifoliaceae
+Adoxaceae
+Viburnum
+Viburnum opulus
+Caryophyllaceae
+Corrigiola
+Corrigiola litoralis
+Lychnis
+Lychnis flos-cuculi
+Moehringia
+Moehringia trinervia
+Myosoton
+Myosoton aquaticum
+Sagina
+Sagina nodosa
+Sagina procumbens
+Silene
+Silene dioca
+Stellaria
+Stellaria alsine
+Stellaria nemorum
+Stellaria palustris
+Stellaria uliginosa
+Cephaloziaceae
+Hygrobiella
+Hygrobiella laxifolia
+Ceratophyllales
+Ceratophyllaceae
+Ceratophyllum
+Ceratophyllum demersum
+Ceratophyllum muricatum
+Ceratophyllum platyacanthum
+Ceratophyllum submersum
+Chaetophora
+Chaetophora incrassata
+Stigeoclonium
+Stigeoclonium tenue
+Charophyceae
+Charales
+Characeae
+Chara
+Chara aculeolata
+Chara aspera
+Chara baltica
+Chara braunii
+Chara canescens
+Chara connivens
+Chara contraria
+Chara curta
+Chara delicatula
+Chara denudata
+Chara filiformis
+Chara fragifera
+Chara fragilis
+Chara globularis
+Chara gymnophylla
+Chara hispida
+Chara intermedia
+Chara muscosa
+Chara polyacantha
+Chara rudis
+Chara socotrensis
+Chara strigosa
+Chara tomentosa
+Chara virgata
+Chara vulgaris
+Lamprothamnium
+Lamprothamnium papulosum
+Lychnothamnus
+Lychnothamnus barbatus
+Nitella
+Nitella batrachosperma
+Nitella capillaris
+Nitella confervacea
+Nitella flexilis
+Nitella gracilis
+Nitella hyalina
+Nitella mucronata
+Nitella opaca
+Nitella spanioclema
+Nitella syncarpa
+Nitella tenuissima
+Nitella translucens
+Nitella wahlbergiana
+Feistiellaceae
+Nitellopsis
+Nitellopsis obtusa
+Tolypella
+Tolypella canadensis
+Tolypella glomerata
+Tolypella intricata
+Tolypella nidifica
+Tolypella prolifera
+Chenopodiaceae
+Atriplex
+Atriplex calotheca
+Atriplex prostrata
+Dicranidae
+Pottiales
+Cinclidotaceae
+Cinclidotus
+Cinclidotus aquaticus
+Cinclidotus danubicus
+Cinclidotus fontinaloides
+Cinclidotus mucronatus
+Cinclidotus riparius
+Cladophora
+Cladophora aegagropila
+Cladophora glomerata
+Climaciaceae
+Climacium
+Climacium dendroides
+Ascomycota
+Lecanoromycetes
+Lecanorales
+Collemataceae
+Collema
+Collema fluviatile
+Commelinales
+Commelinaceae
+Murdannia
+Murdannia blumei
+Marchantiopsida
+Marchantiales
+Conocephalaceae
+Conocephalum
+Conocephalum conicum
+Solanales
+Convolvulaceae
+Calystegia
+Calystegia sepium
+Rosales
+Crassulaceae
+Crassula
+Crassula aquatica
+Crassula helmsii
+Cryphaeaceae
+Cryphae
+Cryphae lamyana
+Ctenidiaceae
+Hyocomium
+Hyocomium armoricum
+Cucurbitales
+Cucurbitaceae
+Bryonia
+Bryonia dioica
+Poales
+Cyperaceae
+Blysmus
+Blysmus compressus
+Bolboschoenus
+Bolboschoenus laticarpus
+Bolboschoenus maritimus
+Carex
+Carex acuta
+Carex acutiformis
+Carex appropinquata
+Carex aquatilis
+Carex broteriana
+Carex buekii
+Carex canescens
+Carex curta
+Carex demissa
+Carex diandra
+Carex disticha
+Carex echinata
+Carex elata
+Carex elata elata
+Carex elata omskiana
+Carex elongata
+Carex flacca
+Carex flava
+Carex gracilis
+Carex halophila
+Carex hirta
+Carex hostiana
+Carex lasiocarpa
+Carex lepidocarpa
+Carex limosa
+Carex nigra
+Carex otrubae
+Carex ovalis
+Carex panicea
+Carex paniculata
+Carex pauciflora
+Carex pendula
+Carex pseudocyperus
+Carex recta
+Carex remota
+Carex riparia
+Carex rostrata
+Carex spicata
+Carex strigosa
+Carex verticillatum
+Carex vesicaria
+Carex viridula
+Carex viridula oedocarpa
+Carex viridula viridula
+Carex vulpina
+Cladium
+Cladium mariscus
+Cyperus
+Cyperus eragrostis
+Cyperus flavescens
+Cyperus fuscus
+Cyperus glomeratus
+Cyperus longus
+Cyperus serotinus
+Cyperus strigosus
+Eleocharis
+Eleocharis acicularis
+Eleocharis austriaca
+Eleocharis mamillata
+Eleocharis multicaulis
+Eleocharis ovata
+Eleocharis palustris
+Eleocharis palustris palustris
+Eleocharis palustris vulgaris
+Eleocharis parvula
+Eleocharis quinqueflora
+Eleocharis striatulus
+Eleocharis uniglumis
+Eleogiton
+Eleogiton fluitans
+Eriophorum
+Eriophorum angustifolium
+Eriophorum polystachion
+Eriophorum vaginatum
+Fimbristylis
+Fimbristylis annua
+Fimbristylis bisumbellata
+Fimbristylis squarrosa
+Fuirena
+Fuirena pubescens
+Isolepis
+Isolepis cernua
+Isolepis fluitans
+Isolepis setacea
+Rhynchospora
+Rhynchospora alba
+Rhynchospora rugosa
+Schoenoplectus
+Schoenoplectus lacustris
+Schoenoplectus pungens
+Schoenoplectus supinus
+Schoenoplectus tabernaemontani
+Schoenoplectus x carinatus
+Scirpoides
+Scirpoides holoschoenus
+Scirpus
+Scirpus fluitans
+Scirpus lacustris
+Scirpus maritimus
+Scirpus radicans
+Scirpus sylvaticus
+Scirpus tabernaemontani
+Scirpus triqueter
+Trichophorum
+Trichophorum cespitosum
+Trichophorum alpinum
+Dennstaedtiaceae
+Pteridium
+Pteridium aquilinum
+Dicranales
+Rhabdoweisiaceae
+Dichodontium
+Dichodontium flavescens
+Dichodontium pellucidum
+Dicranaceae
+Dicranella
+Dicranella palustris
+Dicranum
+Dicranum scottianum
+Succisa
+Succisa pratensis
+Knautia
+Droseraceae
+Drosera
+Drosera rotundifolia
+Aldrovanda
+Aldrovanda vesiculosa
+Dryopteridaceae
+Athyrium
+Athyrium filix-femina
+Malpighiales
+Elatinaceae
+Bergia
+Bergia capensis
+Elatine
+Elatine alsinastrum
+Elatine ambigua
+Elatine brochonii
+Elatine hexandra
+Elatine hungarica
+Elatine hydropiper
+Elatine macropoda
+Elatine orthosperma
+Elatine triandra
+Ericales
+Ericaceae
+Empetrum
+Empetrum nigrum
+Equisetopsida
+Equisetales
+Equisetaceae
+Equisetum
+Equisetum arvense
+Equisetum fluviatile
+Equisetum maximum
+Equisetum palustre
+Equisetum pratense
+Equisetum sylvaticus
+Equisetum x litorale
+Andromeda
+Andromeda polifolia
+Calluna
+Calluna vulgaris
+Erica
+Erica cinerea
+Erica tetralix
+Vaccinium
+Vaccinium myrtillus
+Eriocaulaceae
+Eriocaulon
+Eriocaulon aquaticum
+Eriocaulon cinereum
+Euphorbiaceae
+Euphorbia
+Euphorbia glyptosperma
+Euphorbia palustris
+Fabales
+Fabaceae
+Lotus
+Lotus pedunculatus
+Lupinus
+Lupinus nootkatensis
+Trifolium
+Trifolium fragiferum
+Fissidentaceae
+Fissidens
+Fissidens adianthoides
+Fissidens arnoldii
+Fissidens bryoides
+Fissidens crassipes
+Fissidens curnovii
+Fissidens gracilifolius
+Fissidens grandifrons
+Fissidens gymnandrus
+Fissidens monguillonii
+Fissidens osmundoides
+Fissidens polyphyllus
+Fissidens pusillus
+Fissidens rivularis
+Fissidens rufulus
+Fissidens serrulatus
+Fissidens taxifolius
+Fissidens viridulus
+Octodiceras
+Octodiceras fontanum
+Fontinalaceae
+Dichelyma
+Dichelyma capillaceum
+Dichelyma falcatum
+Fontinalis
+Fontinalis antipyretica
+Fontinalis dalecarlica
+Fontinalis dichelymoides
+Fontinalis hypnoides
+Fontinalis squamosa
+Fragilariophycidae
+Tabellariales
+Tabellariaceae
+Diatoma
+Fragilariales
+Fragilariaceae
+Funariidae
+Funariales
+Funariaceae
+Funaria
+Funaria hygrometrica
+Gentianales
+Gentianaceae
+Blackstonia
+Blackstonia perfoliata
+Geocalycaceae
+Harpanthus
+Harpanthus flotovianus
+Saccogyna
+Saccogyna viticulosa
+Grimmiales
+Grimmiaceae
+Racomitrium
+Racomitrium aciculare
+Racomitrium aquaticum
+Racomitrium languniosum
+Schistidium
+Schistidium agassizii
+Schistidium apocarpum
+Schistidium platyphyllum
+Schistidium rivulare
+Saxifragales
+Grossulariaceae
+Ribes
+Ribes rubrum
+Gymnomitriaceae
+Marsupella
+Marsupella aquatica
+Marsupella emarginata
+Marsupella sparsifolia
+Marsupella sphacelata
+Haloragaceae
+Myriophyllum
+Myriophyllum alterniflorum
+Myriophyllum aquaticum
+Myriophyllum exalbescens
+Myriophyllum heterophyllum
+Myriophyllum sibiricum
+Myriophyllum spicatum
+Myriophyllum verrucosum
+Myriophyllum verticillatum
+Helodiaceae
+Palustriella
+Palustriella commutata
+Palustriella decipiens
+Hippuris
+Hippuris tetraphylla
+Hippuris vulgaris
+Hookeriales
+Hookeriaceae
+Hookeria
+Hookeria lucens
+Hydrocharitaceae
+Egeria
+Egeria densa
+Elodea
+Elodea callitrichoides
+Elodea canadensis
+Elodea ernstiae
+Elodea nuttallii
+Hydrilla
+Hydrilla verticillata
+Hydrocharis
+Hydrocharis morsus-ranae
+Lagarosiphon
+Lagarosiphon major
+Ottelia
+Ottelia alismoides
+Stratiotes
+Stratiotes aloides
+Vallisneria
+Vallisneria spiralis
+Vallisneria americana
+Hylocomiaceae
+Hylocomium
+Hylocomium splendens
+Rhytidiadelphus
+Rhytidiadelphus squarrosus
+Hypericaceae
+Helodes
+Helodes palustris
+Hypericum
+Hypericum elodes
+Hypericum maculatum
+Hypericum tetrapterum
+Ctenidium
+Ctenidium molluscum
+Asparagales
+Iridaceae
+Crocosmia
+Crocosmia crocosmiiflora
+Iris
+Iris pseudacorus
+Iris sintenisii
+Iris sintenisii brandzae
+Iris spuria
+Iris versicolor
+Juncaceae
+Juncus
+Juncus acutiflorus
+Juncus alpinoarticulatus
+Juncus ambiguus
+Juncus articulatus
+Juncus atratus
+Juncus bufonius
+Juncus bulbosus
+Juncus compressus
+Juncus conglomeratus
+Juncus effusus
+Juncus filiformis
+Juncus heterophyllus
+Juncus inflexus
+Juncus maritimus
+Juncus squarrosus
+Juncus subnodulosus
+Juncus supinus
+Luzula
+Luzula multiflora
+Juncaginaceae
+Lilaea
+Lilaea scilloides
+Triglochin
+Triglochin maritimum
+Triglochin palustre
+Nardia
+Nardia compressa
+Nardia scalaris
+Lamiaceae
+Glechoma
+Glechoma hederacea
+Lamium
+Lamium album
+Lamium maculatum
+Lycopus
+Lycopus europaeus
+Mentha
+Mentha aquatica
+Mentha arvensis
+Mentha longifolia
+Mentha x rotundifolia
+Mentha x verticillata
+Prunella
+Prunella vulgaris
+Scutellaria
+Scutellaria galericulata
+Stachys
+Stachys palustris
+Stachys sylvatica
+Teucrium
+Teucrium scordium
+Thymus
+Thymus polytrichus
+Lejeuneaceae
+Lejeunea
+Lemnaceae
+Lemna
+Lemna aequinoctialis
+Lemna gibba
+Lemna minor
+Lemna minuscula
+Lemna minuta
+Lemna polyrrhiza
+Lemna trisulca
+Lemna turionifera
+Spirodela
+Spirodela polyrhiza
+Wolffia
+Wolffia arhiza
+Lentibulariaceae
+Pinguicula
+Pinguicula vulgaris
+Plantago
+Plantago lanceolata
+Plantago maritima
+Plantago uniflora
+Utricularia
+Utricularia australis
+Utricularia bremii
+Utricularia gibba
+Utricularia intermedia
+Utricularia minor
+Utricularia ochroleuca
+Utricularia stygia
+Utricularia vulgaris
+Leskeaceae
+Leskea
+Leskea polycarpa
+Amaryllidaceae
+Liliaceae
+Leucojum
+Leucojum aestivum
+Narthecium
+Narthecium ossifragum
+Lobelia
+Lobeliaceae
+Lobelia dortmanna
+Lobelia uniflora
+Lophocoleaceae
+Chiloscyphus
+Chiloscyphus coadunatus
+Chiloscyphus pallescens
+Chiloscyphus polyanthos
+Lunulariales
+Lunulariaceae
+Lunularia
+Lunularia cruciata
+Lycophyta
+Lycopodiopsida
+Lycopodiales
+Lycopodiaceae
+Isoetopsida
+Isoetales
+Isoetaceae
+Isoetes
+Isoetes azorica
+Isoetes boryana
+Isoetes brochonii
+Isoetes durieui
+Isoetes echinospora
+Isoetes lacustris
+Isoetes longissima
+Isoetes malinverniana
+Isoetes velata
+Isoetes velata asturicense
+Isoetes velata tegulensis
+Isoetes velata tenuissima
+Isoetes velata velata
+Isoetes x brochonii
+Myrtales
+Lythraceae
+Lythrum
+Lythrum hyssopifolia
+Lythrum portula
+Lythrum portula longidentata
+Lythrum portula portula
+Lythrum salicaria
+Rotala
+Rotala filiformis
+Rotala indica
+Malvales
+Malvaceae
+Abutilon
+Abutilon theophrasti
+Marchantiaceae
+Dumortieraceae
+Dumortiera
+Dumortiera hirsuta
+Marchantia
+Marchantia paleacea
+Marchantia polymorpha
+Preissia
+Preissia quadrata
+Marsileaceae
+Marsilea
+Marsilea aegyptiaca
+Marsilea azorica
+Marsilea quadrifolia
+Marsilea strigosa
+Pilularia
+Pilularia globulifera
+Pilularia minuta
+Menyanthaceae
+Menyanthes
+Menyanthes trifoliata
+Nymphoides
+Nymphoides peltata
+Pelliaceace
+Pellia
+Pellia endiviifolia
+Pellia epiphylla
+Pellia neesiana
+Chroococcales
+Microcystaceae
+Microscystis
+Microscystis aeruginosa
+Mniaceae
+Mnium
+Mnium hornum
+Plagiomnium
+Plagiomnium affine
+Plagiomnium elatum
+Plagiomnium medium
+Plagiomnium rostratum
+Plagiomnium undulatum
+Pohlia
+Pohlia ludwigii
+Pohlia wahlenbergii
+Rhizomnium
+Rhizomnium magnifolium
+Rhizomnium pseudopunctatum
+Rhizomnium punctatum
+Myricaceae
+Myrica
+Myrica gale
+Najas
+Najadaceae
+Najas flexilis
+Najas gracillima
+Najas graminea
+Najas marina
+Najas marina armata
+Najas marina intermedia
+Najas marina marina
+Najas minor
+Najas orientalis
+Najas tenuissima
+Neckeraceae
+Homalia
+Homalia trichomanoides
+Neckera
+Neckera crispa
+Nostoc
+Nostoc commune
+Nostoc parmelioides
+Nostoc verrucosum
+Nostoc zetterstedtii
+Pseudocalliergon
+Pseudocalliergon lycopodioides
+Anabaena
+Aphanizomenonaceae
+Aphanizomenon
+Proteales
+Nelumbonaceae
+Nelumbo
+Nelumbo nucifera
+Nymphaeaceae
+Nuphar
+Nuphar advena
+Nuphar lutea
+Nuphar pumila
+Nuphar x spenneriana
+Nymphaea
+Nymphaea alba
+Nymphaea alba alba
+Nymphaea alba candida
+Nymphaea alba x candida
+Nymphaea candida
+Nymphaea candida x tetragona
+Nymphaea lotus
+Nymphaea rubra
+Nymphaea tetragona
+Nymphaea x marliacea
+Onagraceae
+Circaea
+Circaea lutetiana
+Epilobium
+Epilobium ciliatum
+Epilobium hirsutum
+Epilobium lanceolatum
+Epilobium montanum
+Epilobium obscurum
+Epilobium palustre
+Epilobium paviflorum
+Epilobium roseum
+Epilobium tetragonum
+Ludwigia
+Ludwigia grandiflora
+Ludwigia palustris
+Ludwigia peploides
+Orthotrichales 
+Orthotrichaceae
+Orthotrichum
+Orthotrichum affine
+Orthotrichum cupulatum
+Orthotrichum rivulare
+Osmundales
+Osmundaceae
+Osmunda
+Osmunda regalis
+Oxalidales
+Oxalidaceae
+Oxalis
+Oxalis acetosella
+Ranunculales
+Papaveraceae
+Brassicales
+Cardamine
+Cardamine amara
+Cardamine flexuosa
+Cardamine hirsuta
+Cardamine latifolia
+Cardamine pratensis
+Cardamine resedifolia
+Rorippa
+Rorippa amphibia
+Rorippa islandica
+Rorippa microphylla
+Rorippa nasturtium-aquaticum
+Rorippa palustris
+Rorippa sylvestris
+Rorippa x anceps
+Rorippa x sterilis
+Parkeriaceae
+Ceratopteris
+Ceratopteris thalictroides
+Plagiochilaceae
+Plagiochila
+Plagiochila asplenioides
+Plagiotheciaceae
+Plagiothecium
+Plagiothecium succulentum
+Plagiothecium denticulatum
+Plagiothecium nemorale
+Plagiothecium platyphyllum
+Plagiothecium undulatum
+Littorella
+Littorella uniflora
+Poaceae
+Agropyrum
+Agropyrum repens
+Agrostis
+Agrostis canina
+Agrostis gigantea
+Agrostis stolonifera
+Agrostis vulgaris
+Alopecurus
+Alopecurus aequalis
+Alopecurus geniculatus
+Alopecurus pratensis
+Anthoxanthum
+Anthoxanthum odoratum
+Antinoria
+Antinoria agrostidea
+Arctophila
+Arctophila fulva
+Arundo
+Arundo donax
+Beckmannia
+Beckmannia eruciformis
+Beckmannia syzigachne
+Brachiaria
+Brachiaria eruciformis
+Calamagrostis
+Calamagrostis canescens
+Calamagrostis stricta
+Catabrosa
+Catabrosa aquatica
+Coix
+Coix lacryma-jobi
+Deschampsia
+Deschampsia caespitosa
+Deschampsia flexuosa
+Deschampsia setacea
+Echinochloa
+Echinochloa crus-galli
+Echinochloa oryzoides
+Festuca
+Festuca arundinacea
+Festuca rubra
+Festuca vivipara
+Glyceria
+Glyceria aquatica
+Glyceria declinata
+Glyceria fluitans
+Glyceria maxima
+Glyceria notata
+Glyceria x pedicellata
+Hemarthria
+Hemarthria altissima
+Holcus
+Holcus lanatus
+Leersia
+Leersia aquatica
+Leersia oryzoides
+Molinia
+Molinia arundinacea
+Molinia caerulea
+Nardus
+Nardus stricta
+Oryza
+Oryza sativa
+Paspalum
+Paspalum dilatatum
+Paspalum paspaloides
+Paspalum urvillei
+Paspalum vaginatum
+Phalaris
+Phacelurus digitatus
+Phalaris arundinacea
+Phragmites
+Phragmites australis
+Pleuropogon
+Pleuropogon sabinei
+Poa
+Poa annua
+Poa palustris
+Poa pratensis
+Poa trivialis
+Saccharum
+Saccharum ravennae
+Saccharum spontaneum
+Scolochloa
+Scolochloa festucacea
+Thoreales
+Thoreaceae
+Thorea
+Zizania
+Zizania aquatica
+Zizania latifolia
+Polygalaceae
+Polygala
+Polygala serpyllifolia
+Polygonaceae
+Fallopia
+Fallopia dumetorum
+Fallopia japonica
+Persicaria
+Persicaria amphibia
+Persicaria foliosa
+Persicaria hydropiper
+Persicaria maculosa
+Persicaria minor
+Polygonum
+Polygonum amphibium
+Polygonum cuspidatum
+Polygonum foliosa
+Polygonum hydropiper
+Polygonum lapathifolium
+Polygonum minus
+Polygonum mite
+Polygonum persicaria
+Reynoutria
+Reynoutria japonica
+Rumex
+Rumex acetosa
+Rumex aquaticus
+Rumex conglomeratus
+Rumex crispus
+Rumex hydrolaphatum
+Rumex maritimus
+Rumex obtusifolius
+Rumex palustris
+Rumex sanguineus
+Polytrichopsida
+Polytrichales
+Polytrichaceae
+Atrichum
+Atrichum undulatum
+Polytrichum
+Polytrichum commune
+Pontederiaceae
+Eichhornia
+Eichhornia crassipes
+Heteranthera
+Heteranthera reniformis
+Monochoria
+Monochoria korsakowii
+Pontederia
+Pontederia cordata
+Porellaceae
+Porella
+Porella cordeana
+Porella pinnata
+Portulacaceae
+Montiaceae
+Montia
+Montia fontana
+Montia fontana fontana
+Montia fontana amporitana
+Montia fontana minor
+Montia fontana variabilis
+Potamogetonaceae
+Groenlandia
+Groenlandia densa
+Potamogeton
+Potamogeton acutifolius
+Potamogeton alpinus
+Potamogeton bambergensis
+Potamogeton berchtoldii
+Potamogeton berchtoldii x obtusifolius
+Potamogeton coloratus
+Potamogeton compressus
+Potamogeton crispus
+Potamogeton epihydrus
+Potamogeton filiformis
+Potamogeton friesii
+Potamogeton gramineus
+Potamogeton helveticus
+Potamogeton lucens
+Potamogeton natans
+Potamogeton nodosus
+Potamogeton obtusifolius
+Potamogeton panormitanus
+Potamogeton pectinatus
+Potamogeton perfoliatus
+Potamogeton polygonifolius
+Potamogeton praelongus
+Potamogeton pusillus
+Potamogeton rutilus
+Potamogeton schweinfurthii
+Potamogeton siculus
+Potamogeton trichoides
+Potamogeton vaginatus
+Potamogeton x angustifolius
+Potamogeton x bennettii
+Potamogeton x billupsii
+Potamogeton x bottnicus
+Potamogeton x cognatus
+Potamogeton x cooperi
+Potamogeton x fennicus
+Potamogeton x fluitans
+Potamogeton x gessnacencis
+Potamogeton x griffithii
+Potamogeton x lanceolatus
+Potamogeton x lintonii
+Potamogeton x meinshausenii
+Potamogeton x nericius
+Potamogeton x nerviger
+Potamogeton x nitens
+Potamogeton x olivaceus
+Potamogeton x saliciifolius
+Potamogeton x schreberi
+Potamogeton x semifructus
+Potamogeton x sparganiifolius
+Potamogeton x spathulatus
+Potamogeton x sudermanicus
+Potamogeton x suecicus
+Potamogeton x undulatus
+Potamogeton x variifolius
+Potamogeton x zizii
+Potamogeton zosterifolius
+Pottiaceae
+Dialytrichia
+Dialytrichia mucronata
+Didymodon
+Didymodon nicholsonii
+Didymodon sinuosus
+Didymodon spadiceum
+Didymodon tophaceus
+Eucladium
+Eucladium verticillatum
+Hymenostylium
+Hymenostylium recurvirostre
+Hyophila
+Hyophila involuta
+Tortula
+Tortula latifolia
+Tortula subulata
+Primulaceae
+Anagallis
+Anagallis tenella
+Glaux
+Glaux maritima
+Hottonia
+Hottonia palustris
+Lysimachia
+Lysimachia nemorum
+Lysimachia nummularia
+Lysimachia thyrsiflora
+Lysimachia vulgaris
+Primula
+Primula vulgaris
+Samolus
+Samolus valerandi
+Pseudolepicoleaceae
+Blepharostoma
+Blepharostoma trichophyllum
+Pteridaceae
+Adiantum
+Adiantum capillus-veneris
+Pterigynandraceae
+Heterocladium
+Heterocladium heteropterum
+Radulaceae
+Radula
+Radula lindenbergiana
+Ranunculaceae
+Batrachium
+Batrachium baudotii
+Batrachium hederaceum
+Batrachium peltatum
+Batrachium trichophyllum
+Caltha
+Caltha minor
+Caltha palustris
+Caltha palustris araneosa
+Ranunculus
+Ranunculus acris
+Ranunculus aquatilis
+Ranunculus batrachoides
+Ranunculus baudotii
+Ranunculus circinatus
+Ranunculus confervoides
+Ranunculus confervoides x peltatus
+Ranunculus flammula
+Ranunculus flammula flammula
+Ranunculus flammula minimus
+Ranunculus flammula scoticus
+Ranunculus fluitans
+Ranunculus fluitans x aquatilis
+Ranunculus hederaceus
+Ranunculus hyperboreus
+Ranunculus lingua
+Ranunculus ololeucos
+Ranunculus omiophyllus
+Ranunculus peltatus
+Ranunculus peltatus baudottii
+Ranunculus peltatus fucoides
+Ranunculus peltatus peltatus
+Ranunculus penicillatus
+Ranunculus penicillatus penicillatus
+Ranunculus penicillatus pseudofluitans
+Ranunculus penicillatus vertumnus
+Ranunculus polyphyllus
+Ranunculus repens
+Ranunculus reptabundus
+Ranunculus reptans
+Ranunculus rionii
+Ranunculus sardous
+Ranunculus sceleratus
+Ranunculus sphaerosphermus
+Ranunculus trichophyllus
+Ranunculus trichophyllus eradicatus
+Ranunculus trichophyllus lutulentus
+Ranunculus trichophyllus trichophyllus
+Ranunculus trichophyllus x baudotii
+Ranunculus tripartitus
+Ranunculus x bachii
+Ranunculus x cookii
+Ranunculus x glueckii
+Ranunculus x kelchoensis
+Ranunculus x levenensis
+Ranunculus x novae-forestae
+Thalictrum
+Thalictrum flavum
+Trollius
+Trollius europaeus
+Ricciaceae
+Riccia
+Riccia fluitans
+Riccia huebeneriana
+Riccia rhenana
+Ricciocarpos
+Ricciocarpos natans
+Ricciocarpus natans
+Rosaceae
+Comarum
+Comarum palustre
+Filipendula
+Filipendula ulmaria
+Potentilla
+Potentilla anserina
+Potentilla erecta
+Potentilla palustris
+Potentilla supina
+Sorbus
+Sorbus aucuparia
+Vicia
+Rubiaceae
+Galium
+Galium aparine
+Galium mollugo
+Galium neglectum
+Galium palustre
+Galium saxatile
+Galium trifidum
+Galium uliginosum
+Ruppiaceae
+Ruppia
+Ruppia cirrhosa
+Ruppia drepanensis
+Ruppia maritima
+Salicaceae
+Salix
+Salix alba
+Salix aurita
+Salix cinerea
+Salix fragilis
+Salix pentandra
+Salix purpurea
+Salix triandra
+Salix viminalis
+Salvinia
+Salvinia natans
+Saxifragaceae
+Chrysosplenium
+Chrysosplenium alternifolium
+Chrysosplenium oppositifolium
+Parnassia
+Parnassia palustris
+Saxifraga
+Saxifraga stellaris
+Scapaniaceae
+Scapania
+Scapania nemorea
+Scapania paludicola
+Scapania paludosa
+Scapania subalpina
+Scapania uliginosa
+Scapania undulata
+Scheuchzeriaceae
+Scheuchzeria
+Scheuchzeria palustris
+Scrophulariaceae
+Bacopa
+Bacopa monnieri
+Orobancaceae
+Euphrasia
+Euphrasia nemorosa
+Gratiola
+Gratiola linifolia
+Gratiola neglecta
+Gratiola officinalis
+Limosella
+Limosella aquatica
+Limosella australis
+Lindernia dubia
+Linderniaceae
+Lindernia
+Lindernia procumbens
+Phrymaceae
+Mimulus
+Mimulus guttatus
+Mimulus guttatus x luteus
+Mimulus moschatus
+Pedicularis
+Pedicularis palustris
+Pedicularis sylvatica
+Rhinanthus
+Rhinanthus minor
+Scrophularia
+Scrophularia auriculata
+Scrophularia nodosa
+Scrophularia umbrosa
+Sibthorpia
+Sibthorpia europaea
+Veronica
+Veronica anagallis-aquatica
+Veronica anagalloides
+Veronica beccabunga
+Veronica catenata
+Veronica filiformis
+Veronica longifolia
+Veronica scutellata
+Veronica x lackschewitzii
+Seligeriaceae
+Blindia
+Blindia acuta
+Solanaceae
+Lycopersicon
+Lycopersicon esculentum
+Solanum
+Solanum dulcamara
+Sparganiaceae
+Typhaceae
+Sparganium
+Sparganium angustifolium
+Sparganium angustifolium x emersum
+Sparganium angustifolium x gramineum
+Sparganium emersum
+Sparganium emersum x natans
+Sparganium erectum
+Sparganium erectum erectum
+Sparganium erectum microcarpum
+Sparganium erectum neglectum
+Sparganium erectum oocarpum
+Sparganium glomeratum
+Sparganium gramineum
+Sparganium hyperboreum
+Sparganium microcarpum
+Sparganium minimum
+Sparganium natans
+Sparganium neglectum
+Sphagnopsida
+Sphagnales
+Sphagnaceae
+Sphagnum
+Sphagnum angustifolium
+Sphagnum auriculatum
+Sphagnum capillifolium
+Sphagnum cuspidatum
+Sphagnum denticulatum
+Sphagnum fallax
+Sphagnum fimbriatum
+Sphagnum flexuosum
+Sphagnum palustre
+Sphagnum papillosum
+Sphagnum platyphyllum
+Sphagnum riparium
+Sphagnum subsecundum
+Tamaricaceae
+Tamarix
+Tamarix ramosissima
+Thamnobryaceae
+Thamnobryum
+Thamnobryum alopecurum
+Thelypteridaceae
+Thelypteris
+Thelypteris palustris
+Dryopteris
+Dryopteris carthusiana
+Dryopteris cristata
+Trapaceae
+Trapa
+Trapa natans
+Trichocoleaceae
+Trichocolea
+Trichocolea tomentella
+Typha
+Typha angustifolia
+Typha domingensis
+Typha latifolia
+Typha laxmannii
+Typha minima
+Typha shuttleworthii
+Typha x glauca
+Ulvaceae
+Enteromorpha
+Enteromorpha intestinalis
+Ulva
+Urticaceae
+Urtica
+Urtica dioica
+Valerianaceae
+Valeriana
+Valeriana officinalis
+Valeriana officinalis repens
+Verrucariales
+Verrucariaceae
+Dermatocarpon
+Dermatocarpon luridum
+Verrucaria
+Verrucaria praetermissa
+Violaceae
+Viola
+Viola palustris
+Zannichelliaceae
+Althenia
+Althenia filiformis
+Althenia orientalis
+Zannichellia
+Zannichellia contorta
+Zannichellia major
+Zannichellia obtusifolia
+Zannichellia palustris
+Zannichellia palustris polycarpa
+Zannichellia palustris palustris
+Zannichellia palustris pedicellata
+Zannichellia pedunculata
+Zannichellia peltata
+Zosteraceae
+Zostera
+Zostera marina
+Zostera noltii
