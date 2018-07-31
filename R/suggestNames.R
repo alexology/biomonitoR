@@ -3,11 +3,11 @@
 
 suggestNames <- function(x, custom = F, group = group, ...){
   if(custom == F){
-    if(groups == "mi"){
+    if(group == "mi"){
       dic.path <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
       dictio <- dictionary(dic.path, cache = F)
     }
-    if(groups == "mf"){
+    if(group == "mf"){
       dic.path <- system.file("dict", "mf_dictionary.txt", package="biomonitoR")
       dictio <- dictionary(dic.path, cache = F)
     }

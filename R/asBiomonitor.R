@@ -79,12 +79,12 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
 
   x$Taxa <- userTaxaCap
   if(is.null(dfref) == T){
-    x <- rename(x, groups = group)
+    x <- rename(x, group = group)
   }
 
   if(is.null(dfref) == F & overwrite == F){
     newDictio(ref)
-    x <- rename(x, customx = T, groups = group)
+    x <- rename(x, customx = T, group = group)
   }
 
   if(is.null(dfref) == F & overwrite == T) {
