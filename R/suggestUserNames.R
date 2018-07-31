@@ -1,12 +1,12 @@
 #' @importFrom utils select.list
 #' @importFrom hunspell hunspell_check hunspell_suggest
-suggestUserNames <- function(x, groupsx = "mi"){
+suggestUserNames <- function(x, group = "mi"){
   groupsx <- groups
-  if(groupsx == "mi"){
+  if(group == "mi"){
     dic.path <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
     dictio <- dictionary(dic.path, cache = F)
   }
-  if(groupsx == "mf"){
+  if(group == "mf"){
     dic.path <- system.file("dict", "mf_dictionary.txt", package="biomonitoR")
     dictio <- dictionary(dic.path, cache = F)
   }
@@ -42,7 +42,6 @@ suggestUserNames <- function(x, groupsx = "mi"){
       temp[i] <- temp[i]
     }
   }
-  # Remove hashtag for a standalone function
   return(list("wrongNames" = wrongName, "correctNames" = temp))
   }
 }
