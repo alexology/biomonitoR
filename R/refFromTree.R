@@ -2,7 +2,7 @@
 #'
 #' This function transforms a taxonomic tree to a reference database suitable for biomonitoR.
 #' @param x taxonomic tree
-#' @param group merge the user database with biomonitoR reference databases. Currently only choice "mi" is available, default  to "none". If duplicated Taxa name are present this function keeps the name provided by the user.
+#' @param group merge the user database with biomonitoR reference databases, default to "none". If duplicated Taxa names are present this function keeps the name provided by the user. Check the reliability of results when usin group = "mi" or group = "mf"
 #' @keywords refFromTree
 #' @export
 #' @examples
@@ -71,7 +71,12 @@ refFromTree <- function(x, group = "none"){
   }
 
   if(group == "mi"){
-    df <- rbind(df, ref)
+    df <- rbind(df, mi_ref)
+    df <- df[ !duplicated(df$Taxa) ,]
+  }
+
+  if(group == "mi"){
+    df <- rbind(df, mf_ref)
     df <- df[ !duplicated(df$Taxa) ,]
   }
 
