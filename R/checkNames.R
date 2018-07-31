@@ -1,7 +1,7 @@
 checkNames <- function(x){
 
   if(group == "mi"){
-    dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
+    dictio <- system.file("dict", "mi_dictionary.txt", package="biomonitoR")
   }
   if(group == "mf"){
     dictio <- system.file("dict", "mf_dictionary.txt", package="biomonitoR")
