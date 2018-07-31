@@ -107,10 +107,12 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
     class(taxa_def) <- c("biomonitoR", "custom")
   }
 
-  if(length(which(hydrac_temp == T)) != 0 ){
+  if(group == "mi"){
+    if(length(which(hydrac_temp == T)) != 0 ){
     message("Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes")
     taxa_def
+    }
   }
-
+  
   else{ taxa_def }
 }
