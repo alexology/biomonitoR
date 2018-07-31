@@ -69,13 +69,16 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
 
   # change the name of taxa to lowercase and capital letter
   userTaxaCap <- sapply(userTaxa, capWords, USE.NAMES = F)
-
-  # changes various flavours of Hydracarina to Trombidiformes
-  hydrac <- c("Hydracarina", "Hydracnidia", "Acariformes")
-  hydrac_temp <- userTaxaCap %in% hydrac
-  if(length(which(hydrac_temp == T)) != 0){
-    userTaxaCap[which(hydrac_temp)] <- "Trombidiformes"
+  
+  if(group == "mi"){
+    # changes various flavours of Hydracarina to Trombidiformes
+    hydrac <- c("Hydracarina", "Hydracnidia", "Acariformes")
+    hydrac_temp <- userTaxaCap %in% hydrac
+    if(length(which(hydrac_temp == T)) != 0){
+      userTaxaCap[which(hydrac_temp)] <- "Trombidiformes"
+    }    
   }
+
 
   x$Taxa <- userTaxaCap
   if(is.null(dfref) == T){
@@ -103,8 +106,6 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
   if(overwrite == T){
     class(taxa_def) <- c("biomonitoR", "custom")
   }
-
-
 
   if(length(which(hydrac_temp == T)) != 0 ){
     message("Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes")

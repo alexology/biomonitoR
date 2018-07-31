@@ -59,6 +59,6 @@ aggregatoR <- function (x)
   temp <- list(phy.agg, cla.agg, scla.agg, ord.agg, fam.agg, sfam.agg, tri.agg, gen.agg, spe.agg,
                sspe.agg, tax.agg, tree.agg)
   names(temp) <- c("Phylum", "Class", "Subclass", "Order", "Family", "Subfamily", "Tribus", "Genus", "Species", "Subspecies", "Taxa", "Tree")
-  class(temp) <- "biomonitoR"
+  class(temp) <- class(x)
   return(temp)
 }
