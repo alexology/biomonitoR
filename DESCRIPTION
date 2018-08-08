@@ -11,6 +11,8 @@ Encoding: UTF-8
 Depends: R (>= 3.00)
 Imports: hunspell,
     dplyr,
-    tidyr
+    tidyr,
+    FD,
+    geometry
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
