@@ -62,7 +62,7 @@ qfs <- function(x, nbdim = nbdim, metric = metric, corr_method = corr_method){
 fric_3d <- function( taxa , fpc , m){
   fric.3d <- rep( NA , nrow( taxa ) )
   convhulln( fpc[ , 1:m ], "FA" )$vol-> fric.3d.max
-  specnumber(taxa) -> ric
+  apply( taxa > 0, 1, sum ) -> ric
   for ( com in 1:nrow( taxa ) ){
     fpc[ which( unlist( rep( taxa[ com ,] ) ) > 0 ), 1:m ] -> tr.com
     if (ric[ com ]> m + 1 ) convhulln( tr.com , "FA" )$vol/fric.3d.max -> fric.3d[ com ] else NA -> fric.3d[ com ]
