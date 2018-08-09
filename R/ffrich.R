@@ -24,8 +24,8 @@
 #'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffrich will aggregate traits value if ADD = TRUE.
 #' @param traitSel interactively select traits.
 #' @param taxLev character string giving the taxonomic level used to retrieve
-#'   trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
-#'   `"Family"` as returned by the [aggregatoR] function.
+#' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
+#' `"Family"` as returned by the [aggregatoR] function.
 #' @param traceB if TRUE ffrich will return a list with 2 elements, the first being the ffrich values and the second the database used for the calculation. Useful to check missing taxa.
 #' @param nbdim maximum number of dimensions for multidimensional functional spaces. By default, nbdim=7                   ##
 #'      		Final number of dimensions depends on the number of positive eigenvalues (after correction) obtained with PCoA
@@ -36,6 +36,7 @@
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread
+#' @importFrom stats complete.cases
 #'
 #' @examples
 #' data(macro_ex)
