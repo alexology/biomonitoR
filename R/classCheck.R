@@ -7,20 +7,25 @@ classCheck <- function(x, group = "none"){
   
   res <- "Maybe you have chosen the wrong taxonomic group"
   
-  # check if the object is of class mi (macroinvertebrates)
+  if( !"custom" %in% class( x ) ) {
+    
+    # check if the object is of class mi (macroinvertebrates)
     if(group == "mi"){
-    if( ! "mi" %in% class( x ) ) stop( ( res ) )
+      if( ! "mi" %in% class( x ) ) stop( ( res ) )
+    }
+    
+    # check if the object is of class mf (macrophytes)
+    if(group == "mf"){
+      if( ! "mf" %in% class( x ) ) stop( ( res ) )
+    }
+    
+    # check if the object is of class fi (fish)
+    if(group == "fi"){
+      if( ! "fi" %in% class( x ) ) stop( ( res ) )
+    }
   }
   
-  # check if the object is of class mf (macrophytes)
-  if(group == "mf"){
-    if( ! "mf" %in% class( x ) ) stop( ( res ) )
-  }
   
-  # check if the object is of class fi (fish)
-  if(group == "fi"){
-    if( ! "fi" %in% class( x ) ) stop( ( res ) )
-  }
 }
 
 
