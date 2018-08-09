@@ -78,7 +78,7 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, taxLev = "F
   }
   
   if( traitSel == TRUE){
-    rma <- select.list( names( traitDB[ -which( names( traitDB ) %in% "Taxa")] , title = "Traits selection"  ), graphics = TRUE , multiple = T )
+    rma <- select.list( names( traitDB[ -which( names( traitDB ) %in% "Taxa")] ) , title = "Traits selection"  , graphics = TRUE , multiple = T )
     traitDB <- traitDB %>% 
       select( c("Taxa", rma) )
     # trim and capitalise the column Taxa of the user' trait database
