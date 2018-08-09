@@ -21,7 +21,8 @@
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
 #' @param agg should ffrich aggregate user's traitDB of higher taxonomic level? TRUE to aggregate, otherwise FALSE.
-#' For instance, if user's traitDB has both Halesus and Limnephilidae, ffrich will aggregate traits value if ADD = TRUE.
+#'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffrich will aggregate traits value if ADD = TRUE.
+#' @param traitSel interactively select traits.
 #' @param taxLev character string giving the taxonomic level used to retrieve
 #'   trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #'   `"Family"` as returned by the [aggregatoR] function.
@@ -56,7 +57,7 @@
 #'
 #' @export
 
-ffrich <- function(x, traitDB = NULL, agg = FALSE, taxLev = "Family", traceB = FALSE, nbdim = 7, metric = "Gower", corr_method = FALSE){
+ffrich <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, taxLev = "Family", traceB = FALSE, nbdim = 7, metric = "Gower", corr_method = FALSE){
   
   # check if user provided a trait database, otherwise use traitsTachet
   # if traitsTachet has to be used check for class biomonitoR and "mi"
@@ -73,6 +74,12 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE, taxLev = "Family", traceB = F
     # trim and capitalise the first letter in the DB provided by the user
     traitDB[ , "Taxa"] <- as.factor( sapply( trim( traitDB[ , "Taxa"] ), capWords, USE.NAMES = F ) )
     mes <- FALSE
+  }
+  
+  if( traitSel == TRUE){
+    rma <- select.list( names( traitDB[ -which( names( traitDB ) %in% "Taxa")] ), graphics = TRUE , multiple = T )
+    traitDB <- traitDB %>% 
+      select( c("Taxa", rma) )
   }
   
   abundances <- x[[taxLev]]
