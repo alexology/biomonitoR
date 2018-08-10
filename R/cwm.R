@@ -91,6 +91,7 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
     summarise(affinity = mean(affinity))            %>%
     spread(key = modality, value = affinity)        %>%
     ungroup()
+    trait_db$Taxa <- trimws(trait_db$Taxa)
 
   abundances <- x[[taxLev]]
   colnames(abundances)[1] <- "Taxa"

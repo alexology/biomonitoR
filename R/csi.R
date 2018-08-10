@@ -103,6 +103,7 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
     summarise(Affinity = mean(Affinity))            %>%
     spread(key = Modality, value = Affinity)        %>%
     ungroup()
+    trait_db$Taxa <- trimws(trait_db$Taxa)
 
   abundances <- x[[taxLev]]
   colnames(abundances)[1] <- "Taxa"

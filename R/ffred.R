@@ -131,7 +131,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
       summarise(affinity = mean(affinity))            %>%
       spread(key = modality, value = affinity)        %>%
       ungroup()
-    trait_db$Taxa <- trimws(trait_db$Taxa)
+      trait_db$Taxa <- trimws(trait_db$Taxa)
 
 
     if (length(taxa[taxa != "unassigned"]) == 0) {
@@ -149,7 +149,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
     } else {
       level <- rep(taxLev, length(taxa))
     }
-    
+
     ref <- select(x$Tree, Phylum:Taxa)
 
     taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
