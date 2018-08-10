@@ -23,6 +23,7 @@
 #' @param agg should ffrich aggregate user's traitDB of higher taxonomic level? TRUE to aggregate, otherwise FALSE.
 #'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffrich will aggregate traits value if ADD = TRUE.
 #' @param traitSel interactively select traits.
+#' @param colB A vector that contains the number of modalities for each trait
 #' @param taxLev character string giving the taxonomic level used to retrieve
 #' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #' `"Family"` as returned by the [aggregatoR] function.
@@ -30,12 +31,12 @@
 #'
 #' @details Taxa with no traits are removed from both the trait and abundance databases.
 #'
-#' @return a vector with fuzzy functional redundancy results.
+#' @return a data.frame with 3 columns: Gini-Simpson richness, rao quadratic entropy and functional redundancy.
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread
 #' @importFrom stats complete.cases
-#' @importFrom ade4 ktab.list.df dist.ktab prep.fuzzy divc
+#' @importFrom ade4 ktab.list.df dist.ktab prep.fuzzy divc quasieuclid
 #'
 #' @examples
 #' data(macro_ex)
@@ -148,6 +149,8 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
     } else {
       level <- rep(taxLev, length(taxa))
     }
+    
+    ref <- select(x$Tree, Phylum:Taxa)
 
     taxa_traits <- mutate(mi_ref, Taxa = as.character(Taxa)) %>%
       left_join(mutate(trait_db, Taxa = as.character(Taxa)),

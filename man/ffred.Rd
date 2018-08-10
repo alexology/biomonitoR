@@ -24,6 +24,8 @@ For instance, if user's traitDB has both Halesus and Limnephilidae, ffrich will 
 
 \item{traitSel}{interactively select traits.}
 
+\item{colB}{A vector that contains the number of modalities for each trait}
+
 \item{taxLev}{character string giving the taxonomic level used to retrieve
 trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
 \code{"Family"} as returned by the \link{aggregatoR} function.}
@@ -31,7 +33,7 @@ trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"G
 \item{traceB}{if TRUE ffrich will return a list with 2 elements, the first being the ffrich values and the second the database used for the calculation. Useful to check missing taxa.}
 }
 \value{
-a vector with fuzzy functional redundancy results.
+a data.frame with 3 columns: Gini-Simpson richness, rao quadratic entropy and functional redundancy.
 }
 \description{
 This function calculates the functional richness based on trait category.
