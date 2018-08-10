@@ -94,7 +94,7 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
   trait_db <- traitDB                               %>%
     (function(df) {
       mutate(df,
-             Taxa = gsub(pattern     = " sp.",
+             Taxa = gsub(pattern     = "sp.|Ad.|Lv.|Gen.",
                          replacement = "",
                          x           = Taxa))
     })                                              %>%
