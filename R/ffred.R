@@ -35,7 +35,7 @@
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread
 #' @importFrom stats complete.cases
-#' @importFrom ade4 ktab.list.df dist.ktab prep.fuzzy
+#' @importFrom ade4 ktab.list.df dist.ktab prep.fuzzy divc
 #'
 #' @examples
 #' data(macro_ex)
