@@ -152,7 +152,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
     
     ref <- select(x$Tree, Phylum:Taxa)
 
-    taxa_traits <- mutate(mi_ref, Taxa = as.character(Taxa)) %>%
+    taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
       left_join(mutate(trait_db, Taxa = as.character(Taxa)),
                 by = "Taxa")                              %>%
       (function(df) {
