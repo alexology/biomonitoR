@@ -33,12 +33,12 @@ famNumb(data.agR)
 shannon(data.agR, taxLev = "Family")
 
 # calculate italian bmwp and aspt
-bmwp(data.agR, method="b")
-aspt(data.agR, method="b")
+bmwp(data.agR, method="ita_agg")
+aspt(data.agR, method="ita_agg")
 
 # calculate iberian bmwp and aspt
-bmwp(data.agR, method="i")
-aspt(data.agR, method="i")
+bmwp(data.agR, method="spa")
+aspt(data.agR, method="spa")
 
 ```
 
