@@ -4,10 +4,10 @@
 \alias{aggregatoR}
 \title{aggregatoR}
 \usage{
-aggregatoR(z)
+aggregatoR(x)
 }
 \arguments{
-\item{z}{results of function asBiomonitoR}
+\item{x}{results of function asBiomonitoR}
 }
 \description{
 This function prepares data for further calculations.

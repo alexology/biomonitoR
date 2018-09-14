@@ -85,11 +85,7 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
     TSI <- CSI <- weightedTSI <-  . <- NULL
 
   # check if the object x is of class "biomonitoR"
-  if (class(x) != "biomonitoR") {
-    opt <- options(show.error.messages = FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
+  classCheck(x, group = "mi")
 
   if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
     return("taxLev should be one of the following: Family, Genus, Species or Taxa")
@@ -98,7 +94,7 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
   trait_db <- traitDB                               %>%
     (function(df) {
       mutate(df,
-             Taxa = gsub(pattern     = " sp.",
+             Taxa = gsub(pattern     = "sp.|Ad.|Lv.|Gen.",
                          replacement = "",
                          x           = Taxa))
     })                                              %>%
@@ -107,6 +103,7 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
     summarise(Affinity = mean(Affinity))            %>%
     spread(key = Modality, value = Affinity)        %>%
     ungroup()
+    trait_db$Taxa <- trimws(trait_db$Taxa)
 
   abundances <- x[[taxLev]]
   colnames(abundances)[1] <- "Taxa"
@@ -128,6 +125,8 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
   } else {
     level <- rep(taxLev, length(taxa))
   }
+
+  ref <- select(x$Tree, Phylum:Taxa)
 
   tsi <- mutate(ref, Taxa = as.character(Taxa))         %>%
     left_join(mutate(trait_db, Taxa = as.character(Taxa)),

@@ -4,10 +4,12 @@
 \alias{asBiomonitor}
 \title{asBiomonitor}
 \usage{
-asBiomonitor(x, dfref = NULL, overwrite = F)
+asBiomonitor(x, group = "mi", dfref = NULL, overwrite = F)
 }
 \arguments{
 \item{x}{a data.frame as specified in details}
+
+\item{group}{biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. It overwrite = F group will not be considered}
 
 \item{dfref}{allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database}
 
@@ -22,7 +24,7 @@ asBiomonitor checks the correctness of taxa names in the data.frame provided by 
 }
 \examples{
 data(macro_ex)
-asBiomonitor(macro_ex)
+asBiomonitor(macro_ex, group = "mi")
 }
 \seealso{
 \code{\link{quickRename}}

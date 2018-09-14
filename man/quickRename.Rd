@@ -4,7 +4,8 @@
 \alias{quickRename}
 \title{quickRename}
 \usage{
-quickRename(x, group = NULL, write.table = FALSE)
+
+quickRename(x, group = "mi", write.table = FALSE)
 }
 \arguments{
 \item{x}{a data.frame as specified in details}

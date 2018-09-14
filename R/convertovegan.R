@@ -14,11 +14,9 @@
 
 
 convertovegan <- function(x, taxLev = "Family"){
-  if (class(x) != "biomonitoR") {
-    opt <- options(show.error.messages = FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
+
+  # check if the object x is of class "biomonitoR"
+  classCheck(x)
 
   # vector of possible taxonomic levels
   taxa.vec <- c("Phylum",	"Class",	"Subclass",	"Order",	"Family",	"Subfamily",	"Tribus",

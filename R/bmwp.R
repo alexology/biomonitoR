@@ -1,7 +1,7 @@
 #' bmwp
 #'
 #' This function calculates the Biological Monitoring Working Party following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
-#' @param d results of function aggregatoR
+#' @param x results of function aggregatoR
 #' @param method the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "uk" (Davy-Bowker et al. 2010), "spa" (MAGRAMA 2011), "ita" (Buffagni et al . 2014). Methods "uk_agg"and "ita_agg" implement the composite family approach.
 #' @keywords aggregatoR
 #' @details BMWP is calculated as the sum of scores of the sensitive taxa present in a fiven sample. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker implementation take into account composite taxa as follow:
@@ -32,20 +32,13 @@
 
 
 
-bmwp <- function( d , method = "a") {
+bmwp <- function( x , method = "a") {
 
-  # check if the object d is of class "biomonitoR"
-
-
-    if (class(d) != "biomonitoR") {
-      opt <- options(show.error.messages = FALSE)
-      on.exit(options(opt))
-      return("Object x is not an object of class biomonitoR")
-    }
-
-
-  numb <- c(which(names(d)=="Tree"), which(names(d)=="Taxa")) # position of the Tree element in the list to remove
-  x <- d[-numb, drop = F]
+  # check if the object x is of class "biomonitoR"
+  classCheck(x, group = "mi")
+  
+  numb <- c(which(names(x)=="Tree"), which(names(x)=="Taxa")) # position of the Tree element in the list to remove
+  x <- x[-numb, drop = F]
   # y is the reference data.set for bmwp calculation
   st.names <- names(x[[1]][-1]) # names of sampled sites
 

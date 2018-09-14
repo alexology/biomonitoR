@@ -15,11 +15,8 @@
 
 ricTax <-  function(x , taxa = NULL, taxLev = NULL){
 
-  if (class(x) != "biomonitoR") {
-    opt <- options(show.error.messages = FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
+  # check if the object x is of class "biomonitoR"
+  classCheck(x)
 
   # stop if user does not provide a taxon name
   if(is.null(taxa) == TRUE || taxa == "" || is.null(taxLev) == TRUE || taxLev == ""){

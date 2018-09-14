@@ -9,7 +9,7 @@ refFromTree(x, group = "none")
 \arguments{
 \item{x}{taxonomic tree}
 
-\item{group}{merge the user database with biomonitoR reference databases. Currently only choice "mi" is available, default  to "none". If duplicated Taxa name are present this function keeps the name provided by the user.}
+\item{group}{merge the user database with biomonitoR reference databases, default to "none". If duplicated Taxa names are present this function keeps the name provided by the user. Check the reliability of results when usin group = "mi" or group = "mf"}
 }
 \description{
 This function transforms a taxonomic tree to a reference database suitable for biomonitoR.

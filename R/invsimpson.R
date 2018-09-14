@@ -1,10 +1,7 @@
 invsimpson <- function(x, taxLev = "Family"){
   
-  # check if the object d is of class "biomonitoR"
-  
-  if (class(x) != "biomonitoR") {
-    stop("Object x is not an object of class biomonitoR")
-  }
+  # check if the object x is of class "biomonitoR"
+  classCheck(x)
   
   df <-  x[[taxLev]]
   if("unassigned" %in% df[ , 1]){

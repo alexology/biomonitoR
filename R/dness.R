@@ -21,24 +21,21 @@
 
 
 
-dness <- function(d, complete = FALSE, taxLev = "Genus", method = "delta", taxatree = FALSE) {
-  # check if the object d is of class "biomonitoR"
+dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxatree = FALSE) {
 
-  if (class(d) != "biomonitoR") {
-    opt <- options(show.error.messages = FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
+  # check if the object x is of class "biomonitoR"
+  classCheck(x)
 
   # check if there are unassigned taxon in the taxonomic tree
   # if present stop the function, unless the user specify unassigned = T
 
 
-  df <- d[[taxLev]]
+  df <- x[[taxLev]]
+
   st.names <- names(df[, -which(names(df) %in% c(taxLev)), drop = FALSE])   # sites name
   tax <- df[ , taxLev]    # taxa names at the desired taxonomic level taxLev
   che.ck <- "unassigned" %in% tax   # check if unassigned is present at the desired taxonomic level
-  tree.c <- d[["Tree"]]
+  tree.c <- x[["Tree"]]
   # exclude taxonomic levels with missing information. This feature could be improved in the next future
   exclude <- -which(names(tree.c) %in% c("Taxa", "Subclass", "Subfamily", "Tribus", "Subspecies"))
   tree <- tree.c[ , exclude, drop = FALSE]

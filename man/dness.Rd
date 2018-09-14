@@ -4,11 +4,12 @@
 \alias{dness}
 \title{dness}
 \usage{
-dness(d, complete = FALSE, taxLev = "Genus", method = "delta",
+
+dness(x, complete = FALSE, taxLev = "Genus", method = "delta",
   taxatree = FALSE)
 }
 \arguments{
-\item{d}{results of function aggregatoR}
+\item{x}{results of function aggregatoR}
 
 \item{complete}{if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with taxLev}
 

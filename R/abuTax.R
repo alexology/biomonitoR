@@ -16,12 +16,7 @@
 abuTax <- function(x, taxa = NULL, rel = FALSE){
 
   # check if the object d is of class "biomonitoR"
-
-  if (class(x) != "biomonitoR") {
-    opt <- options(show.error.messages = FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
+  classCheck(x)
 
   # stop if user does not provide a taxon name
   if(is.null(taxa) == T || taxa == ""){
@@ -30,7 +25,7 @@ abuTax <- function(x, taxa = NULL, rel = FALSE){
 
 
   # extract taxonomic information from the element Tree in aggregatoR output
-  df <- x[["Tree"]][,1:10]
+  df <- x[["Tree"]][ , 1:10 ]
 
   # Position of taxon in the df data.frame
   taxind <- data.frame(row = numeric(), col = numeric())

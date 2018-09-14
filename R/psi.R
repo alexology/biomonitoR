@@ -21,11 +21,8 @@
 
 psi <- function(x, taxLev = "Family", abucl = c(0,9,99,999)){
 
-  if (class(x) != "biomonitoR") {
-    opt <- options(show.error.messages = FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
+  # check if the object x is of class "biomonitoR"
+  classCheck(x, group = "mi")
 
   if(taxLev != "Family"){
     stop("Currently only family level is implemented!")

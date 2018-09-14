@@ -2,6 +2,7 @@
 #'
 #' This function merge the user dataframe with the reference database. Options to improve or replace the reference database are provided.
 #' @param x a data.frame as specified in details
+#' @param group biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. It overwrite = F group will not be considered
 #' @param dfref allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database
 #' @param overwrite if set to T replace the reference database with the one provided by the user
 #' @keywords asBiomonitor
@@ -12,15 +13,16 @@
 #' @seealso \code{\link{quickRename}}
 #' @examples
 #' data(macro_ex)
-#' asBiomonitor(macro_ex)
+#' asBiomonitor(macro_ex, group = "mi")
 
 
-asBiomonitor <- function (x, dfref = NULL, overwrite = F )
+asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
 {
   # check if user database contains a column called Taxa
   if(!"Taxa" %in% names(x)){
     stop("Column called Taxa needed")
   }
+
 
   # check if columns other than Taxa are numeric
   # position of column Taxa
@@ -30,15 +32,21 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
     stop("Non-numeric columns are not allowed")
   }
 
+  if(group == "mi"){
+    ref <- mi_ref
+  }
+
+  if(group == "mf"){
+    ref <- mf_ref
+  }
+
   # check if user database contains taxa of the reference database
   if(is.null(dfref) == F & overwrite == F){
     temp.ref <- ref$Taxa
     temp.dfref <- dfref$Taxa
     both <- temp.ref[which(temp.dfref %in% temp.ref)]
     if(length(both) > 0){
-      opt <- options(show.error.messages = FALSE)
-      on.exit(options(opt))
-      return("user reference database contains taxa of the default reference database, please consider overwrite = T")
+      stop("user reference database contains taxa of the default reference database, please consider overwrite = T")
     }
 
   }
@@ -61,34 +69,50 @@ asBiomonitor <- function (x, dfref = NULL, overwrite = F )
 
   # change the name of taxa to lowercase and capital letter
   userTaxaCap <- sapply(userTaxa, capWords, USE.NAMES = F)
-
-  # changes various flavours of Hydracarina to Trombidiformes
-  hydrac <- c("Hydracarina", "Hydracnidia", "Acariformes")
-  hydrac_temp <- userTaxaCap %in% hydrac
-  if(length(which(hydrac_temp == T)) != 0){
-    userTaxaCap[which(hydrac_temp)] <- "Trombidiformes"
+  
+  # initialize message for Trombidiformes
+  mes <- NULL
+  
+  if(group == "mi"){
+    # changes various flavours of Hydracarina to Trombidiformes
+    hydrac <- c("Hydracarina", "Hydracnidia", "Acariformes")
+    hydrac_temp <- userTaxaCap %in% hydrac
+    if(length(which(hydrac_temp == T)) != 0){
+      userTaxaCap[which(hydrac_temp)] <- "Trombidiformes"
+      mes <- "Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes"
+    }    
   }
+
 
   x$Taxa <- userTaxaCap
   if(is.null(dfref) == T){
-    x <- rename(x)
+    x <- rename(x, group = group)
   }
 
   if(is.null(dfref) == F & overwrite == F){
     newDictio(ref)
-    x <- rename(x, customx = T)
+    x <- rename(x, customx = T, group = group)
   }
 
   if(is.null(dfref) == F & overwrite == T) {
-      newDictio(ref)
-      x <- rename(x, customx = T)
+    newDictio(ref)
+    x <- rename(x, customx = T)
   }
 
   taxa_def <- merge(ref, x, by = "Taxa", all = F)
-  class(taxa_def) <- "biomonitoR"
 
-  if(length(which(hydrac_temp == T)) != 0 ){
-    message("Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes")
+  if(group == "mi" & overwrite == F){
+    class(taxa_def) <- c("biomonitoR", "mi")
+  }
+  if(group == "mf" & overwrite == F){
+    class(taxa_def) <- c("biomonitoR", "mf")
+  }
+  if(overwrite == T){
+    class(taxa_def) <- c("biomonitoR", "custom")
+  }
+
+  if( is.null(mes) == F ){
+    message( mes )
     taxa_def
   }
 

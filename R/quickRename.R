@@ -15,14 +15,15 @@
 
 
 
-quickRename <- function(x, group = NULL, write.table=FALSE){
+quickRename <- function(x, group = "mi", write.table=FALSE){
 
   if(is.null(group) == TRUE){
     stop("Please provide a valid group")
   }
 
   dfName <- deparse(substitute(x))
-  tempNames <- suggestUserNames(x, groups = group)
+  tempNames <- suggestUserNames(x, group = group)
+
   if(length(tempNames) == 0){
     message("All names are correct")
     return(x)

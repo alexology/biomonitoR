@@ -4,10 +4,10 @@
 \alias{aspt}
 \title{aspt}
 \usage{
-aspt(d, method = "a")
+aspt(x, method = "a")
 }
 \arguments{
-\item{d}{results of function aggregatoR}
+\item{x}{results of function aggregatoR}
 
 \item{method}{the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "uk" (Davy-Bowker et al. 2010), "spa" (MAGRAMA 2011), "ita" (Buffagni et al . 2014). Methods "uk_agg"and "ita_agg" implement the composite family approach.}
 }

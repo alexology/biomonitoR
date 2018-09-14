@@ -1,5 +1,11 @@
 checkNames <- function(x){
-  dictio <- system.file("dict", "macro_dictionary.txt", package="biomonitoR")
+
+  if(group == "mi"){
+    dictio <- system.file("dict", "mi_dictionary.txt", package="biomonitoR")
+  }
+  if(group == "mf"){
+    dictio <- system.file("dict", "mf_dictionary.txt", package="biomonitoR")
+  }
   taxaCar <- as.character(x$Taxa)
 
   # nameCheck and nameSuggest check for the wrong names and suggest for correct names.
