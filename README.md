@@ -2,6 +2,7 @@
 A package for calculating indices for biomonitoring of running water with a focus on macroinvertebrate community. 
 Still in development. See www.biomonitor.it for tips.
 
+[![Build Status](https://travis-ci.org/alexology/biomonitoR.svg?branch=master)](https://travis-ci.org/alexology/biomonitoR.svg?branch=master)
 
 # Installation
 

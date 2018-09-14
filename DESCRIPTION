@@ -1,6 +1,6 @@
 Package: biomonitoR
 Type: Package
-Title: calculates indices for biomonitoring of running waters
+Title: Calculates Indices for Biomonitoring of Running Waters
 Version: 0.0.0.9000
 Author: Alex Laini, Tommaso Cancellario, Cédric Mondy
 Maintainer: Alex Laini <alex.laini@gmail.com>

@@ -4,6 +4,7 @@
 \alias{dness}
 \title{dness}
 \usage{
+
 dness(x, complete = FALSE, taxLev = "Genus", method = "delta",
   taxatree = FALSE)
 }

@@ -1,7 +1,7 @@
 #' dness
 #'
 #' This function calculates the taxonomic diversity, taxonomic distinctness and variation of taxonomic distinctness.
-#' @param x results of function aggregatoR
+#' @param d results of function aggregatoR
 #' @param complete if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with taxLev
 #' @param taxLev taxonomic level from which the indices are to be calculated
 #' @param method available methods are delta (taxonomic diversity), delta.st (taxonomic distinctness) and delta.bin (variation in taxonomic distinctness)
@@ -31,6 +31,7 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
 
 
   df <- x[[taxLev]]
+
   st.names <- names(df[, -which(names(df) %in% c(taxLev)), drop = FALSE])   # sites name
   tax <- df[ , taxLev]    # taxa names at the desired taxonomic level taxLev
   che.ck <- "unassigned" %in% tax   # check if unassigned is present at the desired taxonomic level

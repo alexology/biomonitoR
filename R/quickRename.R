@@ -23,6 +23,7 @@ quickRename <- function(x, group = "mi", write.table=FALSE){
 
   dfName <- deparse(substitute(x))
   tempNames <- suggestUserNames(x, group = group)
+
   if(length(tempNames) == 0){
     message("All names are correct")
     return(x)

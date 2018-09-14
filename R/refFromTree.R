@@ -75,7 +75,7 @@ refFromTree <- function(x, group = "none"){
     df <- df[ !duplicated(df$Taxa) ,]
   }
 
-  if(group == "mi"){
+  if(group == "mf"){
     df <- rbind(df, mf_ref)
     df <- df[ !duplicated(df$Taxa) ,]
   }

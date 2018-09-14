@@ -1,5 +1,6 @@
 #' @importFrom utils select.list
 #' @importFrom hunspell hunspell_check hunspell_suggest
+
 suggestUserNames <- function(x, group = "mi"){
 
   if(group == "mi"){
