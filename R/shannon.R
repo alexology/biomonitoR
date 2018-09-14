@@ -33,11 +33,6 @@ shannon <- function(x, base=2, taxLev="Family"){
   # check if the object x is of class "biomonitoR"
   classCheck(x)
 
-  if(class(x)!="biomonitoR"){
-    opt <- options(show.error.messages=FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
   df <-  x[[taxLev]]
   if("unassigned" %in% df[,1]){
     z <- which(df[,1]=="unassigned")
