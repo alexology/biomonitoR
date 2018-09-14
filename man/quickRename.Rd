@@ -4,7 +4,6 @@
 \alias{quickRename}
 \title{quickRename}
 \usage{
-
 quickRename(x, group = "mi", write.table = FALSE)
 }
 \arguments{
