@@ -39,11 +39,12 @@ shannon <- function(x, base=2, taxLev="Family"){
     df<- df[-z,] # remove unassigned row from the species count
   }
   if(ncol(df)==2){
-    sha <- Pi(df[,-1], index = "Shannon", base = base)
+    sha <- Pi(df[ , -1 ], index = "Shannon", base = base)
   }
   else{
-    sha <- apply(df[,-1], 2, FUN = function(x){Pi( x, index = "Shannon", base = base )})
+    sha <- apply(df[ , -1 ], 2, FUN = function(x){Pi( x, index = "Shannon", base = base )})
   }
+  if( ! any(dati[ , - 1] > 1) == TRUE ){warning("Do you really want to use presence-absence data?")}
   return( sha )
 }
 
