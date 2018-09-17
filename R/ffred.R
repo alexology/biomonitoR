@@ -65,6 +65,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
     # check if the object d is of class "biomonitoR" & "mi"
     classCheck(x, group = "mi")
     traitDB = traitsTachet
+    colB = c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
     # useful for the if condition later
     mes <- TRUE
   } else {
@@ -79,7 +80,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
 
   if( traitSel == TRUE){
     if( mes == TRUE){
-      if( is.null( colB ) ) { colB = c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 ) }
+      if( is.null( colB ) ) { colB = colB }
       else { stop("You must not set colB when traitDB = NULL") }
     }
     if( mes == FALSE){
@@ -182,6 +183,18 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
   taxa_traits <- taxa_traits[complete.cases(taxa_traits), ]
   # remove categories with sum = 0
   taxa_traits <- taxa_traits[ , colSums(taxa_traits) > 0 , drop = F ]
+  
+  #remove traits with incomplete cases and sum = 0
+  traitRM <- which(!names(taxa_trace[ , -1]) %in% names(taxa_traits))
+  temp <- NA
+  for(i in 1:length( colB )){
+    lab <- paste( "t" ,as.character( i + 1000 ), sep = "")
+    temp1 <- rep( lab, colB[ i ] )
+    temp <- c( temp, temp1)
+  }
+  temp <- na.omit( temp[ -traitRM ] )
+  colB <- as.vector( table( temp ) )
+  
   # remove rows also in abundances
   abundances <- abundances[ rownames(taxa_traits) , ]
 
