@@ -114,7 +114,7 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
     level <- rep(taxLev, length(taxa))
   }
 
-  ref <- select(x$Tree, Phylum:Taxa)
+  ref <- select(mi_ref, Phylum:Taxa)
 
   taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
     left_join(mutate(trait_db, Taxa = as.character(Taxa)),
