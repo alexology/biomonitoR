@@ -44,7 +44,7 @@ shannon <- function(x, base=2, taxLev="Family"){
   else{
     sha <- apply(df[ , -1 ], 2, FUN = function(x){Pi( x, index = "Shannon", base = base )})
   }
-  if( ! any(dati[ , - 1] > 1) == TRUE ){warning("Do you really want to use presence-absence data?")}
+  if( ! any(df[ , - 1] > 1) == TRUE ){warning("Do you really want to use presence-absence data?")}
   return( sha )
 }
 
