@@ -19,7 +19,7 @@ ricTax <-  function(x , taxa = NULL, taxLev = NULL){
   classCheck(x)
 
   # stop if user does not provide a taxon name
-  if(is.null(taxa) == TRUE || taxa == "" || is.null(taxLev) == TRUE || taxLev == ""){
+  if(is.null(taxa) == TRUE | is.null(taxLev) == TRUE){
     stop("Please provide a taxon name and/or a taxonomic level")
   }
 
