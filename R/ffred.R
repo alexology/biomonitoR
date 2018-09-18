@@ -35,7 +35,7 @@
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread
-#' @importFrom stats complete.cases
+#' @importFrom stats complete.cases na.omit
 #' @importFrom ade4 ktab.list.df dist.ktab prep.fuzzy divc quasieuclid
 #'
 #' @examples
@@ -183,7 +183,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
   taxa_traits <- taxa_traits[complete.cases(taxa_traits), ]
   # remove categories with sum = 0
   taxa_traits <- taxa_traits[ , colSums(taxa_traits) > 0 , drop = F ]
-  
+
   #remove traits with incomplete cases and sum = 0
   traitRM <- which(!names(taxa_trace[ , -1]) %in% names(taxa_traits))
   temp <- NA
@@ -194,7 +194,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
   }
   temp <- na.omit( temp[ -traitRM ] )
   colB <- as.vector( table( temp ) )
-  
+
   # remove rows also in abundances
   abundances <- abundances[ rownames(taxa_traits) , ]
 
