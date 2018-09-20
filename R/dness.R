@@ -5,7 +5,7 @@
 #' @param complete if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with taxLev
 #' @param taxLev taxonomic level from which the indices are to be calculated
 #' @param method available methods are delta (taxonomic diversity), delta.st (taxonomic distinctness) and delta.bin (variation in taxonomic distinctness)
-#' @param taxatree if TRUE dness return a list with results and taxaonomic tree
+#' @param taxatree if TRUE dness return a list with results and taxonomic tree
 #' @keywords ept
 #' @references Clarke, K. R., & Warwick, R. M. (1998). A taxonomic distinctness index and its statistical properties. Journal of applied ecology, 35(4), 523-531.
 #' @references Clarke, K. R., & Warwick, R. M. (2001). A further biodiversity index applicable to species lists: variation in taxonomic distinctness. Marine ecology Progress series, 216, 265-278.
@@ -30,9 +30,11 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   # check if there are unassigned taxon in the taxonomic tree
   # if present stop the function, unless the user specify unassigned = T
 
-
   df <- x[[taxLev]]
-
+  
+  # check if the selected taxonomic level contains a least one taxa
+  if( nrow( df ) == 1 & df[ 1 , 1 ] == "unassigned" ){ stop("The selected taxonomic level is empty") }
+  
   st.names <- names(df[, -which(names(df) %in% c(taxLev)), drop = FALSE])   # sites name
   tax <- df[ , taxLev]    # taxa names at the desired taxonomic level taxLev
   che.ck <- "unassigned" %in% tax   # check if unassigned is present at the desired taxonomic level
@@ -47,7 +49,6 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   if(complete == FALSE & che.ck == TRUE) {stop("Unassigned taxon at the desired taxonomic level")}
   if(complete == FALSE & che.ck == FALSE){
     # retain only the taxonomic levels from order to taxLev and sites
-
     colnames(df)[which( names(df) == taxLev)] <- "Taxa"
     taxtree <- merge(ref.c, df, by = "Taxa", all = FALSE)
     taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = FALSE]
@@ -68,7 +69,13 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   if(sum(check.col) != length(temp)){
     taxtree <- taxtree[, - which(check.col != 1), drop = FALSE]
   }
-
+  
+  # remove columns distinct for all species or with the same taxa name for all the rows (excluding taxLev)
+  # -1 is to eclude taxLev from this computation
+  tax.pos2 <- 1:(which(names(taxtree) == taxLev) - 1)
+  tax.uniq <- apply( taxtree[ , tax.pos2 , drop = FALSE] , 2 , function(x) ( length(unique(x) ) ) )
+  taxtree <- taxtree[ , -which(tax.uniq == 1 | tax.uniq == nrow(taxtree) ), drop = FALSE ]
+  
   if(ncol(taxtree[, -which(names(taxtree) %in% c(st.names)), drop = FALSE]) == 1){
     stop("Reference database has not enough taxonomic levels to perform the analysis")
   }
