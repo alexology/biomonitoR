@@ -74,7 +74,9 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   # -1 is to eclude taxLev from this computation
   tax.pos2 <- 1:(which(names(taxtree) == taxLev) - 1)
   tax.uniq <- apply( taxtree[ , tax.pos2 , drop = FALSE] , 2 , function(x) ( length(unique(x) ) ) )
-  taxtree <- taxtree[ , -which(tax.uniq == 1 | tax.uniq == nrow(taxtree) ), drop = FALSE ]
+  col.rm <- -which(tax.uniq == 1 | tax.uniq == nrow(taxtree) )
+  if(length(col.rm) != 0) (taxtree <- taxtree[ , col.rm , drop = FALSE ])
+  
   
   if(ncol(taxtree[, -which(names(taxtree) %in% c(st.names)), drop = FALSE]) == 1){
     stop("Reference database has not enough taxonomic levels to perform the analysis")
