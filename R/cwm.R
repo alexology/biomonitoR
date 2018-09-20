@@ -28,6 +28,8 @@
 #' @param trans the function used to transform the abundances, by default
 #'   [log1p]
 #'
+#' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
+#'
 #' @return a table with the CWM values of each trait (trait modality)
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup

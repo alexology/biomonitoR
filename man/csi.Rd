@@ -52,6 +52,9 @@ Finally, the community trait specialization is calculated for each trait by
 averaging the TSIs using the transformed abundances (using the \code{trans}
 function) as weigths.
 }
+\note{
+USE WITH CAUTION, STILL IN DEVELOPMENT.
+}
 \examples{
 data(macro_ex)
 data(traitsTachet)

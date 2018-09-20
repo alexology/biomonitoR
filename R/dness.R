@@ -10,6 +10,7 @@
 #' @references Clarke, K. R., & Warwick, R. M. (1998). A taxonomic distinctness index and its statistical properties. Journal of applied ecology, 35(4), 523-531.
 #' @references Clarke, K. R., & Warwick, R. M. (2001). A further biodiversity index applicable to species lists: variation in taxonomic distinctness. Marine ecology Progress series, 216, 265-278.
 #' @details see Clarke and Warwick (1998) an Clarke and Warwick (2001).
+#' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples

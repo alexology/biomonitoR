@@ -43,6 +43,9 @@ trait values from taxa with trait information within this family).
 Finally, the community mean trait values are calculated using the transformed
 abundances (using the \code{trans} function) as weigths
 }
+\note{
+USE WITH CAUTION, STILL IN DEVELOPMENT.
+}
 \examples{
 data(macro_ex)
 

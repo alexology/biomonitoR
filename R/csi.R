@@ -35,6 +35,7 @@
 #' averaging the TSIs using the transformed abundances (using the `trans`
 #' function) as weigths.
 #'
+#' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
 #'
 #' @return a table with the CSI values for each trait
 #'

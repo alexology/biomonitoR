@@ -32,6 +32,8 @@
 #' @param metric to be used to compute functional distance, "Euclidean" or "Gower" (=default)
 #' @param corr_method TRUE will aplly the Cailliez correction.
 #'
+#' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
+#'
 #' @return a vector with fuzzy functional richness results.
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup

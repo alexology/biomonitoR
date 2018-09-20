@@ -49,6 +49,9 @@ trait values from taxa with trait information within this family).
 
 Taxa with no traits are removed from both the trait and abundance databases.
 }
+\note{
+USE WITH CAUTION, STILL IN DEVELOPMENT.
+}
 \examples{
 data(macro_ex)
 

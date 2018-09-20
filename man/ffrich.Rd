@@ -53,6 +53,9 @@ the desired level and, if required, calculates the corresponding averaged
 trait values (e.g. the family trait values are obtained by averaging all the
 trait values from taxa with trait information within this family).
 }
+\note{
+USE WITH CAUTION, STILL IN DEVELOPMENT.
+}
 \examples{
 data(macro_ex)
 

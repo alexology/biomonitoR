@@ -24,6 +24,9 @@ This function calculates the taxonomic diversity, taxonomic distinctness and var
 \details{
 see Clarke and Warwick (1998) an Clarke and Warwick (2001).
 }
+\note{
+USE WITH CAUTION, STILL IN DEVELOPMENT.
+}
 \examples{
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)

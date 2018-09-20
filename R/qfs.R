@@ -10,6 +10,9 @@ qfs <- function(x, nbdim = nbdim, metric = metric, corr_method = corr_method){
   if ( metric == "Euclidean" & ! any( apply( x , 2 , is.numeric ) ) )  { stop("using Euclidean distance requires that all traits are continuous")   }
   if ( nbdim > ncol(x) )  { stop( paste( "using", metric, "distance requires less dimensions than number of traits" ) )   }
 
+  # create dummy variables to avoid R CMD check NOTES
+  y <- NULL
+
   # computing functional dissimilarity between species given their traits values
   if (metric == "Gower") mat_dissim <- gowdis( x , ord = "classic" )
   if (metric == "Euclidean") mat_dissim <- dist( scale( x ) ) # scaling if continuous traits
@@ -46,8 +49,6 @@ qfs <- function(x, nbdim = nbdim, metric = metric, corr_method = corr_method){
 
   # for muldimensionnal spaces
   for ( k in 2:nbdim )  {
-    # create dummy variables to avoid R CMD check NOTES
-    y <- NULL
     eval( parse( text = paste( "y<-dist_" , k , "D" , sep="") ) )
     yst <- y / max( y ) * max( z )
     eval( parse( text = paste( "dist_st$m_",k , "D<-dist_" , k , "D" , sep = "" ) ) )

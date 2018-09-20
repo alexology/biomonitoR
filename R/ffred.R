@@ -30,7 +30,7 @@
 #' @param traceB if TRUE ffrich will return a list with 2 elements, the first being the ffrich values and the second the database used for the calculation. Useful to check missing taxa.
 #'
 #' @details Taxa with no traits are removed from both the trait and abundance databases.
-#'
+#' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
 #' @return a data.frame with 3 columns: Gini-Simpson richness, rao quadratic entropy and functional redundancy.
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
