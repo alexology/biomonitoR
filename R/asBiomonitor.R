@@ -62,17 +62,17 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
   }
 
   x <- aggregate(. ~ Taxa, x, FUN = sum)
-  userTaxa <- x$Taxa
+  userTaxa <- trimws(x$Taxa)
 
   # create a new dictionary to be used when user add taxa to the database
 
 
   # change the name of taxa to lowercase and capital letter
   userTaxaCap <- sapply(userTaxa, capWords, USE.NAMES = F)
-  
+
   # initialize message for Trombidiformes
   mes <- NULL
-  
+
   if(group == "mi"){
     # changes various flavours of Hydracarina to Trombidiformes
     hydrac <- c("Hydracarina", "Hydracnidia", "Acariformes")
@@ -80,7 +80,7 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
     if(length(which(hydrac_temp == T)) != 0){
       userTaxaCap[which(hydrac_temp)] <- "Trombidiformes"
       mes <- "Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes"
-    }    
+    }
   }
 
 
