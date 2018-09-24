@@ -5,11 +5,40 @@
 #' This function first takes the abundance table corresponding to the desired
 #' taxonomic level from the `x` aggregatoR object.
 #'
-#' Then it searches from the trait data base all the information available at
-#' the desired level and, if required, calculates the corresponding averaged
-#' trait values (e.g. the family trait values are obtained by averaging all the
-#' trait values from taxa with trait information within this family).
+#' Functional richness (FRic) represents the amount of functional space filled by
+#' the community (Villéger et al., 2008) and it is related to the community use of
+#' resources and productivity (Mason et al., 2005). FRic is defined by the trait
+#' extremes and thus reflects the potential maximum functional dissimilarity.
+#' FRic is calculated as the hypervolume enclosing the functional space filled
+#' by the community. For this the convex hull approach is applied (Cornwell et al.,
+#' 2006) using the Quickhull algorithm (Barber et al., 1996) that estimates the minimum
+#'  convex hull which includes all the species considered in the previously defined
+#'  functional space. Basically, this algorithm determines the taxa in the most extreme
+#'  points of the functional space, links them to build the convex hull in order to
+#'  calculate the volume inside it. In particular, the convex hull of a set of points
+#'  S in n dimensions is the intersection of all convex sets containing S.
+#'  For N points , ..., , the convex hull C is then given by the expression:
 #'
+#'  \deqn{C = $\sum_{j=1}^N$ \lambda~j~ p~j~ : \lambda~j~ $\geq$ 0 for all *j* $\sum_{j=1}^N$ \lambda~j~ = 1}
+#'
+#' The functional T dimensional space is built using a certain number of dimensions
+#' (T) determined by the axes of a principal component analysis based on the trait
+#'  dissimilarity matrix. Using a poor‐quality functional space could led to
+#'  a biased assessment of FRic and false ecological conclusions so the number of
+#'  axes retained for its estimation is case-specific and decided following the
+#'  method proposed in Maire et al., (2015): a pragmatic approach consisting of
+#'  computing all the possible functional spaces and selecting the most
+#'  parsimonious one. This method uses the mSD index (mean squared deviation
+#'  between the initial functional distance and the scaled distance in the
+#'  functional space), which accounts explicitly for the deviation between
+#'  the initial and final distance and penalizes the strong deviation. The mSD
+#'  index has been widely used in statistics to assess errors and it has been
+#'  demonstrated to work in different contexts and situations (Maire et al., 2015).
+#'  In addition, when using Gower's distance the mSD ranges from 0 and 1,
+#'  which helps to interpret quality. Finally, the resulting FRic variable
+#'  is standardized by its maximum, ranging from 0 to 1. In addition, it must
+#'  be considered that the number of taxa must be higher than the number of traits
+#'  to have reliable FRic values (Villéger et al., 2008).
 #'
 #' @param x results of function aggregatoR
 #' @param traitDB a trait data base with a column `Taxa` and the other columns

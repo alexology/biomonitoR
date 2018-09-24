@@ -60,6 +60,12 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
     taxtree <- merge(ref.c, df, by = "Taxa", all = FALSE)
     taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = FALSE]
   }
+  
+  if(complete == FALSE & che.ck == FALSE){
+    colnames(df)[which( names(df) == taxLev)] <- "Taxa"
+    taxtree <- merge(ref.c, df, by = "Taxa", all = FALSE)
+    taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = FALSE]
+  }
 
   # remove empty columns (maybe is not a necessary step)
   temp <- taxtree[ , which(names(taxtree) %in% c(tax.pos)), drop = FALSE]
