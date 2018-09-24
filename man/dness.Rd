@@ -4,7 +4,8 @@
 \alias{dness}
 \title{dness}
 \usage{
-dness(d, complete = F, taxLev = "Genus", method = "delta", taxatree = F)
+dness(d, complete = F, taxLev = "Genus", method = "delta",
+  taxatree = F)
 }
 \arguments{
 \item{complete}{if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with taxLev}
