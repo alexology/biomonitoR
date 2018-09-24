@@ -98,7 +98,10 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
     newDictio(ref)
     x <- rename(x, customx = T)
   }
-
+  
+  # aggregate another time to take into account name changes
+  x <- aggregate(. ~ Taxa, x, FUN = sum)
+  
   taxa_def <- merge(ref, x, by = "Taxa", all = F)
 
   if(group == "mi" & overwrite == F){

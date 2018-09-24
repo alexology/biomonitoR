@@ -16,7 +16,7 @@ rename <- function(x, write.table = FALSE, customx = FALSE, group = "none"){
   correct <- tempNames$correctNames
   result <- x$Taxa
   n <- length(wrong)
-  if (length(wrong)!=length(correct)) {
+  if (length(wrong) != length(correct)) {
     stop("pattern and replacement do not have the same length.")
   }
   for(i in 1:n){
