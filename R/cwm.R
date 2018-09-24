@@ -18,8 +18,8 @@
 #'   containing the traits. If a trait has several modalities they should be
 #'   named as follow: TRAIT_MODALITY.
 #'
-#'   By default, the data base used is the one from Tachet *et al* (2010) that
-#'   can be retrieved from
+#'   By default (NULL), the data base used is the one from Tachet *et al* (2010)
+#'   that can be retrieved from
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
 #' @param taxLev character string giving the taxonomic level used to retrieve
@@ -39,12 +39,12 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #'
-#' cwm(x = data.agR, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p)
-#' cwm(x = data.agR, traitDB = traitsTachet, taxLev = "Taxa",
+#' cwm(x = data.agR, taxLev = "Taxa", trans = log1p)
+#' cwm(x = data.agR, taxLev = "Taxa",
 #'     trans = function(x) {
 #'         ifelse(x > 0, 1, 0)
 #'     })
-#' cwm(x = data.agR, traitDB = traitsTachet, taxLev = "Genus", trans = log1p)
+#' cwm(x = data.agR, taxLev = "Genus", trans = log1p)
 #'
 #' @seealso [aggregatoR]
 #'
@@ -60,77 +60,14 @@
 
 cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
 
-  if( is.null( traitDB )){
-    traitDB = traitsTachet
-  } else {
-    traitDB = traitDB
-  }
-
   # create dummy variables to avoid R CMD check NOTES
-  traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
-    Abundance <- Sample <- Weight <- Affinity <- totWeight <-
+  Taxa <- Abundance <- Sample <- Weight <- Affinity <- totWeight <-
     weightedAffinity <- Category <- . <- NULL
 
-  # check if the object x is of class "biomonitoR"
-  if (class(x) != "biomonitoR") {
-    opt <- options(show.error.messages = FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
-
-  if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
-    return("taxLev should be one of the following: Family, Genus, Species or Taxa")
-  }
-
-
-  trait_db <- traitDB                               %>%
-    (function(df) {
-      mutate(df,
-             Taxa = gsub(pattern     = " sp.",
-                          replacement = "",
-                          x           = Taxa))
-    })                                              %>%
-    gather(key = modality, value = affinity, -Taxa) %>%
-    group_by(Taxa, modality)                        %>%
-    summarise(affinity = mean(affinity))            %>%
-    spread(key = modality, value = affinity)        %>%
-    ungroup()
+  taxa_traits <- assignTraits(x = x, traitDB = traitDB, taxLev = taxLev)
 
   abundances <- x[[taxLev]]
   colnames(abundances)[1] <- "Taxa"
-
-  taxa       <- as.character(abundances$Taxa)
-
-  if (length(taxa[taxa != "unassigned"]) == 0) {
-    return("At least one taxa should be identified at a level compatible with the indicated taxLev")
-  }
-
-  if (taxLev == "Taxa") {
-    level <- sapply(select(x$Tree, Phylum:Subspecies),
-                    function(i) {
-                      as.character(i) == as.character(x$Tree$Taxa)
-                    }) %>%
-      (function(df) {
-        colnames(df)[apply(df, MARGIN = 1, which)]
-      })
-  } else {
-    level <- rep(taxLev, length(taxa))
-  }
-
-  taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
-    left_join(mutate(trait_db, Taxa = as.character(Taxa)),
-              by = "Taxa")                              %>%
-    (function(df) {
-      lapply(seq(length(taxa)),
-             function(i) {
-               df[df[, level[i]] == taxa[i],] %>%
-                 select(-(Phylum:Taxa))       %>%
-                 colMeans(na.rm = TRUE)
-             })               %>%
-        do.call(what = rbind) %>%
-        data.frame(Taxa = taxa, ., stringsAsFactors = FALSE)
-    })
-
 
   abundances                                       %>%
     gather(key = Sample, value = Abundance, -Taxa) %>%

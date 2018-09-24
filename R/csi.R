@@ -37,12 +37,12 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #'
-#' csi(x = data.agR, traitDB = traitsTachet, taxLev = "Taxa", trans = log1p)
-#' csi(x = data.agR, traitDB = traitsTachet, taxLev = "Taxa",
+#' csi(x = data.agR, taxLev = "Taxa", trans = log1p)
+#' csi(x = data.agR, taxLev = "Taxa",
 #'     trans = function(x) {
 #'         ifelse(x > 0, 1, 0)
 #'     })
-#' csi(x = data.agR, traitDB = traitsTachet, taxLev = "Genus", trans = log1p)
+#' csi(x = data.agR, taxLev = "Genus", trans = log1p)
 #'
 #' @seealso [aggregatoR]
 #'
@@ -62,99 +62,37 @@
 
 csi <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
 
-  if( is.null( traitDB )){
-    traitDB = traitsTachet
-  } else {
-    traitDB = traitDB
-  }
-
   # create dummy variables to avoid R CMD check NOTES
-  Taxa <- Trait <- Modality <- Affinity <- Phylum <- Subspecies <-
-    Abundance <- Sample <- Weight <- totWeight <- k <-
-    TSI <- CSI <- weightedTSI <-  . <- NULL
+  Taxa <- Trait <- Modality <-  Abundance <- Sample <- Weight <- totWeight <-
+    k <- TSI <- CSI <- weightedTSI <-  . <- NULL
 
-  # check if the object x is of class "biomonitoR"
-  if (class(x) != "biomonitoR") {
-    opt <- options(show.error.messages = FALSE)
-    on.exit(options(opt))
-    return("Object x is not an object of class biomonitoR")
-  }
 
-  if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
-    return("taxLev should be one of the following: Family, Genus, Species or Taxa")
-  }
-
-  trait_db <- traitDB                               %>%
-    (function(df) {
-      mutate(df,
-             Taxa = gsub(pattern     = " sp.",
-                         replacement = "",
-                         x           = Taxa))
-    })                                              %>%
-    gather(key = Modality, value = Affinity, -Taxa) %>%
-    group_by(Taxa, Modality)                        %>%
-    summarise(Affinity = mean(Affinity))            %>%
-    spread(key = Modality, value = Affinity)        %>%
-    ungroup()
+  tsi <- assignTraits(x = x, traitDB = traitDB, taxLev = taxLev) %>%
+    gather(key = Modality, value = Affinity, -Taxa)              %>%
+    mutate(Trait = strsplit(Modality, split = "_")               %>%
+             sapply(FUN = '[[', 1))                              %>%
+    group_by(Taxa, Trait)                                        %>%
+    mutate(k = n_distinct(Modality))                             %>%
+    summarise(TSI = (sum(Affinity^2) - 1 / unique(k)) / (1 - 1 / unique(k)))
 
   abundances <- x[[taxLev]]
   colnames(abundances)[1] <- "Taxa"
 
-  taxa       <- as.character(abundances$Taxa)
-
-  if (length(taxa[taxa != "unassigned"]) == 0) {
-    return("At least one taxa should be identified at a level compatible with the indicated taxLev")
-  }
-
-  if (taxLev == "Taxa") {
-    level <- sapply(select(x$Tree, Phylum:Subspecies),
-                    function(i) {
-                      as.character(i) == as.character(x$Tree$Taxa)
-                    }) %>%
-      (function(df) {
-        colnames(df)[apply(df, MARGIN = 1, which)]
-      })
-  } else {
-    level <- rep(taxLev, length(taxa))
-  }
-
-  tsi <- mutate(ref, Taxa = as.character(Taxa))         %>%
-    left_join(mutate(trait_db, Taxa = as.character(Taxa)),
-              by = "Taxa")                              %>%
-    (function(df) {
-      lapply(seq(length(taxa)),
-             function(i) {
-               df[df[, level[i]] == taxa[i],] %>%
-                 select(-(Phylum:Taxa))       %>%
-                 colMeans(na.rm = TRUE)
-             })               %>%
-        do.call(what = rbind) %>%
-        data.frame(Taxa = taxa, ., stringsAsFactors = FALSE)
-    })                                                  %>%
-    gather(key = Modality, value = Affinity, -Taxa)     %>%
-    mutate(Trait = strsplit(Modality, split = "_")      %>%
-             sapply(FUN = '[[', 1))                     %>%
-    group_by(Taxa, Trait)                               %>%
-    mutate(k = n_distinct(Modality))                    %>%
-    summarise(TSI = (sum(Affinity^2) - 1 / unique(k)) /
-                (1 - 1 / unique(k)))
-
-  abundances                                        %>%
-    gather(key = Sample, value = Abundance, -Taxa)  %>%
+  abundances                                         %>%
+    gather(key = Sample, value = Abundance, -Taxa)   %>%
     mutate(Sample = factor(Sample,
                            levels = colnames(abundances)[-1]),
            Taxa   = as.character(Taxa),
-           Weight = trans(Abundance))               %>%
-    left_join(group_by(., Sample)                   %>%
+           Weight = trans(Abundance))                %>%
+    left_join(group_by(., Sample)                    %>%
                 summarise(totWeight = sum(Weight)),
-              by = "Sample")                        %>%
+              by = "Sample")                         %>%
     left_join(tsi,
-              by = "Taxa")                          %>%
-    mutate(weightedTSI = (Weight * TSI) /
-             totWeight)                             %>%
-    group_by(Sample, Trait)                         %>%
-    summarise(CSI = sum(weightedTSI, na.rm = TRUE)) %>%
-    spread(key = Trait, value = CSI)                %>%
+              by = "Taxa")                           %>%
+    mutate(weightedTSI = (Weight * TSI) / totWeight) %>%
+    group_by(Sample, Trait)                          %>%
+    summarise(CSI = sum(weightedTSI, na.rm = TRUE))  %>%
+    spread(key = Trait, value = CSI)                 %>%
     as.data.frame()
 
 }
