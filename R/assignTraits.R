@@ -9,7 +9,6 @@ assignTraits <- function(x, traitDB = NULL, taxLev = "Taxa") {
   }
 
   # check if the object x is of class "biomonitoR"
-  # check if the object x is of class "biomonitoR"
   if (class(x) != "biomonitoR") {
     opt <- options(show.error.messages = FALSE)
     on.exit(options(opt))
