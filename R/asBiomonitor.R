@@ -53,11 +53,15 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
 
   # allow the user to update the database adding taxa to reference database
   if(is.null(dfref) == F & overwrite == F){
+    dfref[ is.na( dfref ) ] <- ""
+    dfref <- as.data.frame( unclass( dfref ) )
     ref <- rbind(ref, dfref)
   }
 
   # allow the user to update the database replacing the reference database with is own reference database
   if(is.null(dfref) == F & overwrite == T){
+    dfref[ is.na( dfref ) ] <- ""
+    dfref <- as.data.frame( unclass( dfref ) )
     ref <- dfref
   }
 

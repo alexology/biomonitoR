@@ -98,7 +98,7 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p) {
   abundances <- x[[taxLev]]
   colnames(abundances)[1] <- "Taxa"
 
-  taxa       <- as.character(abundances$Taxa)
+  taxa <- as.character(abundances$Taxa)
 
   if (length(taxa[taxa != "unassigned"]) == 0) {
     return("At least one taxa should be identified at a level compatible with the indicated taxLev")
