@@ -108,13 +108,13 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
   
   taxa_def <- merge(ref, x, by = "Taxa", all = F)
 
-  if(group == "mi" & overwrite == F){
+  if(group == "mi" & is.null( dfref ) == TRUE){
     class(taxa_def) <- c("biomonitoR", "mi")
   }
-  if(group == "mf" & overwrite == F){
+  if(group == "mf" & is.null( dfref ) == TRUE){
     class(taxa_def) <- c("biomonitoR", "mf")
   }
-  if(overwrite == T){
+  if(is.null( dfref ) == FALSE){
     class(taxa_def) <- c("biomonitoR", "custom")
   }
 
