@@ -151,7 +151,7 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
 
   if(mes == "yes"){
     if(agg == TRUE){
-      if( is.null( dfref ) == TRUE) ( stop("Reference database is needed when agg = TRUE and custom reference database is used") )
+      if( is.null( dfref ) == TRUE) ( stop("Reference database is needed when agg = TRUE") )
       if (taxLev == "Taxa") {
         level <- sapply(select(x$Tree, Phylum:Subspecies),
                         function(i) {
@@ -218,6 +218,6 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
   if( traceB == FALSE ){
     res
   } else {
-    list(res, taxa_traits[ complete.cases( tsi ) , ] )
+    list(res, tsi[ complete.cases( tsi ) , ] )
   }
 }
