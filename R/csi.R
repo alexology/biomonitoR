@@ -218,6 +218,6 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
   if( traceB == FALSE ){
     res
   } else {
-    list(res, tsi[ complete.cases( tsi ) , ] )
+    list(res, as.data.frame( tsi[ complete.cases( tsi ) , ] ) )
   }
 }
