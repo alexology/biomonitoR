@@ -98,9 +98,9 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
 
   # create dummy variables to avoid R CMD check NOTES
 
-  traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
-    Abundance <- Sample <- Weight <- Affinity <- totWeight <-
-    weightedAffinity <- Category <- . <- NULL
+  Taxa <- Trait <- Modality <- Affinity <- Phylum <- Subspecies <-
+    Abundance <- Sample <- Weight <- totWeight <- k <-
+    TSI <- CSI <- weightedTSI <-  . <- NULL
 
   trait_db <- traitDB                               %>%
     (function(df) {
