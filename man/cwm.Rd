@@ -27,8 +27,7 @@ trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"G
 the user to aggregate traits at the desired taxonomic level. A custom reference
 database is needed!}
 
-\item{dfref}{reference database to be used when a custom reference database is
-used in asBiomonitor and agg is set to TRUE.}
+\item{dfref}{reference database to be used when a custom trait database is provided and agg equals to TRUE.}
 
 \item{trans}{the function used to transform the abundances, by default
 \link{log1p}}

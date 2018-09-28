@@ -4,7 +4,8 @@
 \alias{csi}
 \title{Community trait specialization}
 \usage{
-csi(x, traitDB = NULL, taxLev = "Taxa", trans = log1p)
+csi(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL,
+  trans = log1p, traceB = FALSE)
 }
 \arguments{
 \item{x}{results of function aggregatoR}
@@ -22,8 +23,17 @@ can be retrieved from
 trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
 \code{"Family"} as returned by the \link{aggregatoR} function.}
 
+\item{agg}{if custom trait and reference databases are used this option allows
+the user to aggregate traits at the desired taxonomic level. A custom reference
+database is needed!}
+
+\item{dfref}{reference database to be used when a custom trait database is provided and agg equals to TRUE.}
+
 \item{trans}{the function used to transform the abundances, by default
 \link{log1p}}
+
+\item{traceB}{when set to TRUE returns a list with the results of the cwm function
+and the traits value used for the calculation.}
 }
 \value{
 a table with the CSI values for each trait

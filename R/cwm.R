@@ -25,11 +25,10 @@
 #' @param taxLev character string giving the taxonomic level used to retrieve
 #'   trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #'   `"Family"` as returned by the [aggregatoR] function.
-#' @param agg if custom trait and reference databases are used this option allows 
-#'    the user to aggregate traits at the desired taxonomic level. A custom reference 
+#' @param agg if custom trait and reference databases are used this option allows
+#'    the user to aggregate traits at the desired taxonomic level. A custom reference
 #'    database is needed!
-#' @param dfref reference database to be used when a custom reference database is 
-#'    used in asBiomonitor and agg is set to TRUE.
+#' @param dfref reference database to be used when a custom trait database is provided and agg equals to TRUE.
 #' @param trans the function used to transform the abundances, by default
 #'   [log1p]
 #' @param traceB when set to TRUE returns a list with the results of the cwm function
@@ -68,9 +67,9 @@
 #' @export
 
 cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, trans = log1p, traceB = FALSE) {
-  
+
   classCheck(x)
-  
+
   if( is.null( traitDB )){
     traitDB = traitsTachet
     mes <- "no"
@@ -78,20 +77,18 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
     traitDB = traitDB
     mes <- "yes"
   }
-  
-  
+
+
   if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
     return("taxLev should be one of the following: Family, Genus, Species or Taxa")
   }
-  
-  if("custom" %in% class(x) & mes == "no") ( stop("Default trait database is not allowed when a custom reference database is used") )
-  
+
   # create dummy variables to avoid R CMD check NOTES
-  
+
   traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
     Abundance <- Sample <- Weight <- Affinity <- totWeight <-
     weightedAffinity <- Category <- . <- NULL
-  
+
   trait_db <- traitDB                               %>%
     (function(df) {
       mutate(df,
@@ -105,23 +102,23 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
     spread(key = modality, value = affinity)        %>%
     ungroup()
   trait_db$Taxa <- trimws(trait_db$Taxa)
-  
+
   abundances <- x[[taxLev]]
   colnames(abundances)[1] <- "Taxa"
-  
+
   # remove unassigned taxa from abundances
   if("unassigned" %in% abundances[ , "Taxa"]){
     z <- which(abundances[ , "Taxa" ] == "unassigned")
     abundances <- abundances[ -z ,] # remove unassigned row from the species count
   }
-  
+
   taxa <- as.character(abundances$Taxa)
-  
+
   if (length(taxa[taxa != "unassigned"]) == 0) {
     return("At least one taxa should be identified at a level compatible with the indicated taxLev")
   }
-  
-  if( "mi" %in% class(x) & mes == "no"){
+
+  if(mes == "no"){
     if (taxLev == "Taxa") {
       level <- sapply(select(x$Tree, Phylum:Subspecies),
                       function(i) {
@@ -133,13 +130,13 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
     } else {
       level <- rep(taxLev, length(taxa))
     }
-    
-    # merge reference database 
-    
+
+    # merge reference database
+
     ref <- select(mi_ref, Phylum:Taxa)
   }
-  
-  if("custom" %in% class(x) & mes == "yes"){
+
+  if(mes == "yes"){
     if(agg == TRUE){
       if( is.null( dfref ) == TRUE) ( stop("Reference database is needed when agg = TRUE and custom reference database is used") )
       if (taxLev == "Taxa") {
@@ -153,9 +150,9 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
       } else {
         level <- rep(taxLev, length(taxa))
       }
-      
-      # merge reference database 
-      
+
+      # merge reference database
+
       ref <- select(dfref, Phylum:Taxa)
     } else {
       ref <- select(x$Tree, Phylum:taxLev)
@@ -164,8 +161,8 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
       ref$Taxa <- ref[ , taxLev]
       level <-  rep(taxLev, nrow( ref ) )
     }
-  }      
-  
+  }
+
   taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
     left_join(mutate(trait_db, Taxa = as.character(Taxa)),
               by = "Taxa")                              %>%
@@ -179,7 +176,7 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
         do.call(what = rbind) %>%
         data.frame(Taxa = taxa, ., stringsAsFactors = FALSE)
     })
-  
+
   res <- abundances                                       %>%
     gather(key = Sample, value = Abundance, -Taxa) %>%
     mutate(Sample = factor(Sample,
@@ -200,8 +197,8 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
                              na.rm = TRUE))        %>%
     spread(key = Category, value = Affinity)       %>%
     as.data.frame()
-  
-  
+
+
   if( traceB == FALSE ){
     res
   } else {
