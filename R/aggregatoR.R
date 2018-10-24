@@ -10,6 +10,15 @@
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
+#' 
+#' # example with macrophytes
+#' data(oglio)
+#' 
+#' oglio.asb <- asBiomonitor(oglio, group = "mf")
+#' oglio.agg <- aggregatoR(oglio.asb)
+#' speNumb(oglio.agg)
+#' genNumb(oglio.agg)
+#' famNumb(oglio.agg)
 
 aggregatoR <- function (x)
 {
