@@ -6,7 +6,7 @@
 #' taxonomic level from the `x` aggregatoR object.
 #'
 #' Functional richness (FRic) represents the amount of functional space filled by
-#' the community (Villéger et al., 2008) and it is related to the community use of
+#' the community (Villeger et al., 2008) and it is related to the community use of
 #' resources and productivity (Mason et al., 2005). FRic is defined by the trait
 #' extremes and thus reflects the potential maximum functional dissimilarity.
 #' FRic is calculated as the hypervolume enclosing the functional space filled
@@ -22,7 +22,7 @@
 #'
 #' The functional T dimensional space is built using a certain number of dimensions
 #' (T) determined by the axes of a principal component analysis based on the trait
-#'  dissimilarity matrix. Using a poor‐quality functional space could led to
+#'  dissimilarity matrix. Using a poor quality functional space could led to
 #'  a biased assessment of FRic and false ecological conclusions so the number of
 #'  axes retained for its estimation is case-specific and decided following the
 #'  method proposed in Maire et al., (2015): a pragmatic approach consisting of
@@ -37,7 +37,7 @@
 #'  which helps to interpret quality. Finally, the resulting FRic variable
 #'  is standardized by its maximum, ranging from 0 to 1. In addition, it must
 #'  be considered that the number of taxa must be higher than the number of traits
-#'  to have reliable FRic values (Villéger et al., 2008).
+#'  to have reliable FRic values (Villeger et al., 2008).
 #'
 #' @param x results of function aggregatoR
 #' @param traitDB a trait data base with a column `Taxa` and the other columns
