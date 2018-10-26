@@ -62,6 +62,8 @@ calculate the volume inside it. In particular, the convex hull of a set of point
 S in n dimensions is the intersection of all convex sets containing S.
 For N points , ..., , the convex hull C is then given by the expression:
 
+\deqn{\left{ sum_{i=1}^{n} \right}}
+
 The functional T dimensional space is built using a certain number of dimensions
 (T) determined by the axes of a principal component analysis based on the trait
 dissimilarity matrix. Using a poor quality functional space could led to
