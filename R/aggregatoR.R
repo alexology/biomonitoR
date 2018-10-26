@@ -53,7 +53,7 @@ aggregatoR <- function (x)
   names(sfam.agg) <- c("Subfamily", stz_n)
   tri.agg <- aggregate(stz, by = list(x$Tribus), sum)
   levels(tri.agg$Group.1)[levels(tri.agg$Group.1) == ""] <- "unassigned"
-  if(nrow(sfam.agg) == 0){
+  if(nrow(tri.agg) == 0){
     tri.agg[1 , 1] <- "unassigned"
     tri.agg[1, -1] <- apply(phy.agg[ , -1], 2, sum)
   }
