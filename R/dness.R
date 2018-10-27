@@ -34,6 +34,8 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   
   # check if the selected taxonomic level contains a least one taxa
   if( nrow( df ) == 1 & df[ 1 , 1 ] == "unassigned" ){ stop("The selected taxonomic level is empty") }
+  if( taxLev == "Taxa"){ stop("taxLev cannot be equal to Taxa") }
+  
   
   st.names <- names(df[, -which(names(df) %in% c(taxLev)), drop = FALSE])   # sites name
   tax <- df[ , taxLev]    # taxa names at the desired taxonomic level taxLev
@@ -44,7 +46,7 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   tree <- tree.c[ , exclude, drop = FALSE]
   # taxonomic levels to retain
   tax.pos <- names(tree[, 1:which(names(tree) == taxLev)])
-  ref.c <- tree.c[ , c(which(names(tree.c) %in%  c( tax.pos, "Taxa" ) ))]
+  # ref.c <- tree.c[ , c(which(names(tree.c) %in%  c( tax.pos, "Taxa" ) ))]
   ref.c <- tree.c[ , c(which(names(tree.c) %in%  tax.pos ))]
   # remove duplicated rows
   ref.c <- ref.c[ ! duplicated( ref.c ) ,  ]
@@ -52,22 +54,19 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   if(complete == FALSE & che.ck == TRUE) {stop("Unassigned taxon at the desired taxonomic level")}
   if(complete == FALSE & che.ck == FALSE){
     # retain only the taxonomic levels from order to taxLev and sites
-    # colnames(df)[which( names(df) == taxLev)] <- "Taxa"
     taxtree <- merge(ref.c, df, by = taxLev, all = FALSE)
-    taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = FALSE]
+    taxtree <- taxtree[, c( tax.pos , st.names ), drop = FALSE]
   }
 
   if(complete == TRUE & che.ck == TRUE){
-    # colnames(df)[which( names(df) == taxLev)] <- "Taxa"
-    df <- df[-which(df$Taxa == "unassigned"),]
+    df <- df[ -which( df[ , taxLev] == "unassigned" ) , ]
     taxtree <- merge(ref.c, df, by = taxLev, all = FALSE)
-    taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = FALSE]
+    taxtree <- taxtree[, c( tax.pos , st.names ), drop = FALSE]
   }
   
-  if(complete == FALSE & che.ck == FALSE){
-    # colnames(df)[which( names(df) == taxLev)] <- "Taxa"
+  if(complete == TRUE & che.ck == FALSE){
     taxtree <- merge(ref.c, df, by = taxLev, all = FALSE)
-    taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = FALSE]
+    taxtree <- taxtree[, c( tax.pos , st.names ), drop = FALSE]
   }
 
   # remove empty columns (maybe is not a necessary step)
@@ -78,11 +77,6 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   if(sum(check.col) != length(temp)){
     taxtree <- taxtree[, - which(check.col != 1), drop = FALSE]
   }
-  
-  # order taxtree
-  taxtree.c <- taxtree[ 1 : ncol(ref.c) ]
-  taxtree[ , 1 : ncol(ref.c) ] <- taxtree.c[  , names(ref.c)]
-  names( taxtree )[ 1 : ncol(ref.c) ]  <- names(ref.c)
   
   # remove columns distinct for all species or with the same taxa name for all the rows (excluding taxLev)
   # -1 is to eclude taxLev from this computation
