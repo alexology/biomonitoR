@@ -26,7 +26,7 @@
 #' because it can deal with traits of different nature and measuring scales
 #' (continuous, nominal, binary, ordinal, etc.; see Podani 1999 for more information)
 #'
-#' \deqn{Q = \sum_{i=1}^{S} \sum_{j=1}^{S} d_i_j \ p_i \ p_j}
+#' \deqn{Q = \sum_{i=1}^{S} \sum_{j=1}^{S} d_{ij} \ p_i \ p_j}
 #'
 #' Given that the concept of FR was originally developed to represent the number
 #' of taxa contributing similarly to an ecosystem function (Walker 1992; Lawton and
