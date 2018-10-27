@@ -3,7 +3,7 @@
 #' This function calculates the absolute or relative abundance of a Taxon or of a set Taxa.
 #' @param x results of function aggregatoR.
 #' @param taxa a Taxon or a vector of taxa.
-#' @param rel if TRUE calculates relative abundance. default = F.
+#' @param rel if TRUE calculates relative abundance. Default to FALSE.
 #' @keywords aggregatoR
 #' @export
 #' @seealso \code{\link{aggregatoR}}
@@ -12,6 +12,7 @@
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
 #' abuTax(data.agR, taxa = "Ephemeroptera")
+#' abuTax(data.agR, taxa = c("Setodes", "Orthocladiinae"), rel = T)
 
 abuTax <- function(x, taxa = NULL, rel = FALSE){
 

@@ -15,7 +15,7 @@
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
 #' data(oglio)
-#' data.bio <- asBiomonitor(oglio)
+#' data.bio <- asBiomonitor(oglio, group = "mf")
 #' data.agR <- aggregatoR(oglio.bio)
 #' dness(data.agR, complete = TRUE)
 

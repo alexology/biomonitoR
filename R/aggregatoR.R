@@ -10,10 +10,10 @@
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' 
-#' # example with macrophytes
+#'
+#' # example for macrophytes
 #' data(oglio)
-#' 
+#'
 #' oglio.asb <- asBiomonitor(oglio, group = "mf")
 #' oglio.agg <- aggregatoR(oglio.asb)
 #' speNumb(oglio.agg)
@@ -22,10 +22,10 @@
 
 aggregatoR <- function (x)
 {
-  
+
   # check if the object x is of class "biomonitoR"
   classCheck(x)
-  
+
   tx <- c("Phylum", "Class", "Subclass", "Order", "Family", "Subfamily", "Tribus", "Genus", "Species", "Subspecies", "Taxa")
   stz <- x[!(names(x) %in% tx)]
   stz_n <- names(stz)
