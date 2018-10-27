@@ -2,50 +2,50 @@
 #'
 #' This function calculates the functional richness based on trait category.
 #'
-#' Functional redundancy (FR) is measured as the difference between taxonomic 
-#' diversity and functional diversity (de Bello et al., 2007). It relates positively 
-#' to ecosystem stability, resistance and resilience (Hooper et al. 2005; Guillemot 
+#' Functional redundancy (FR) is measured as the difference between taxonomic
+#' diversity and functional diversity (de Bello et al., 2007). It relates positively
+#' to ecosystem stability, resistance and resilience (Hooper et al. 2005; Guillemot
 #' et al., 2011).
-#' 
+#'
 #' \deqn{ FR = D - Q}
-#' 
-#' The Gini-Simpson index is used to quantify Taxonomic Diversity (D, which ranges 
-#' from 0 to 1) where pi is the proportion of the abundance of taxa i in a 
+#'
+#' The Gini-Simpson index is used to quantify Taxonomic Diversity (D, which ranges
+#' from 0 to 1) where pi is the proportion of the abundance of taxa i in a
 #' biological community.
-#' 
+#'
 #' \deqn{D = 1 - \sum_{i=1}^{S} p_i{2}}
-#' 
-#' Rao quadratic entropy (Q; Rao, 1982) was used to estimate Functional Diversity 
-#' because it has been considered more appropriate than other indices (Botta-Dukat, 
-#' 2005; Ricotta, 2005). In this formula (Q) dij is the dissimilarity (ranging 
-#' from 0 to 1), between species i and j based on a set of specified functional 
+#'
+#' Rao quadratic entropy (Q; Rao, 1982) was used to estimate Functional Diversity
+#' because it has been considered more appropriate than other indices (Botta-Dukat,
+#' 2005; Ricotta, 2005). In this formula (Q) dij is the dissimilarity (ranging
+#' from 0 to 1), between species i and j based on a set of specified functional
 #' traits. This index is standardized by the maximum value to constrain the values
 #' within the range of 0-1. Rao index is estimated using presence or abundance data
-#' and the Euclidean transformed version of the traits-based Gower dissimilarity 
-#' matrix. For this, Gower's dissimilarity index (which ranges from 0 to 1) is used 
-#' because it can deal with traits of different nature and measuring scales 
+#' and the Euclidean transformed version of the traits-based Gower dissimilarity
+#' matrix. For this, Gower's dissimilarity index (which ranges from 0 to 1) is used
+#' because it can deal with traits of different nature and measuring scales
 #' (continuous, nominal, binary, ordinal, etc.; see Podani 1999 for more information)
 #'
-#' \deqn{Q = \sum_{i=1}^{S} \sum_{j=1}^{S} d_ij p_i p_j}
-#' 
-#' Given that the concept of FR was originally developed to represent the number 
+#' \deqn{Q = \sum_{i=1}^{S} \sum_{j=1}^{S} d_i_j \ p_i \ p_j}
+#'
+#' Given that the concept of FR was originally developed to represent the number
 #' of taxa contributing similarly to an ecosystem function (Walker 1992; Lawton and
-#' Brown 1993; Rosenfeld, 2002), FR and therefore functional diversity should be 
-#' calculated using only effect traits. Effect traits are those biological 
-#' features that directly influence a specific function of the ecosystem 
-#' (e.g. productivity, nutrient cycling). See Schmera et al., 2017 for more 
-#' information about effect traits in aquatic invertebrate communities. Regarding 
-#' the interpretation of the results, when taxa within a community differ 
-#' completely in their functional traits, then Q = D and thus FR = 0. On the 
-#' other hand, when all taxa have identical functional traits, then Q = 0 and 
-#' FR = D, and when in addition the number of taxa is very large and they are 
+#' Brown 1993; Rosenfeld, 2002), FR and therefore functional diversity should be
+#' calculated using only effect traits. Effect traits are those biological
+#' features that directly influence a specific function of the ecosystem
+#' (e.g. productivity, nutrient cycling). See Schmera et al., 2017 for more
+#' information about effect traits in aquatic invertebrate communities. Regarding
+#' the interpretation of the results, when taxa within a community differ
+#' completely in their functional traits, then Q = D and thus FR = 0. On the
+#' other hand, when all taxa have identical functional traits, then Q = 0 and
+#' FR = D, and when in addition the number of taxa is very large and they are
 #' equally abundant, then D (and in this case FR) approaches 1 (Pillar et al., 2013).
-#' Although the concept of FR could suggest that functionally similar species may 
-#' compensate for the loss or failure of others, there is evidence that ecosystems 
-#' need such redundancy to perform their functions efficiently and stably over time 
-#' (Rosenfeld 2002; Biggs et al. 2012). In fact, a decrease in FR could be dramatic 
-#' in non-redundant communities since the loss or replacement of one species could 
-#' lead to loss of unique traits or functions (Hooper et al. 2005), increasing 
+#' Although the concept of FR could suggest that functionally similar species may
+#' compensate for the loss or failure of others, there is evidence that ecosystems
+#' need such redundancy to perform their functions efficiently and stably over time
+#' (Rosenfeld 2002; Biggs et al. 2012). In fact, a decrease in FR could be dramatic
+#' in non-redundant communities since the loss or replacement of one species could
+#' lead to loss of unique traits or functions (Hooper et al. 2005), increasing
 #' ecosystem vulnerability (Elmqvist et al. 2003).
 #'
 #' @param x results of function aggregatoR
@@ -83,44 +83,44 @@
 #'
 #' @seealso [aggregatoR]
 #'
-#' @references Biggs, R., Schluter, M., Biggs, D., Bohensky, E. L., BurnSilver, S., 
-#'   Cundill, G., ... & Leitch, A. M. (2012). Toward principles for enhancing the 
-#'   resilience of ecosystem services. Annual Review of Environment and Resources, 
+#' @references Biggs, R., Schluter, M., Biggs, D., Bohensky, E. L., BurnSilver, S.,
+#'   Cundill, G., ... & Leitch, A. M. (2012). Toward principles for enhancing the
+#'   resilience of ecosystem services. Annual Review of Environment and Resources,
 #'   37, 421-448.
-#' @references Botta-Dukat, Z. (2005). Rao's quadratic entropy as a measure of 
-#'   functional diversity based on multiple traits. Journal of Vegetation Science, 
+#' @references Botta-Dukat, Z. (2005). Rao's quadratic entropy as a measure of
+#'   functional diversity based on multiple traits. Journal of Vegetation Science,
 #'   16(5), 533-540.
-#' @referencesde de Bello, F., Leps, J., Lavorel, S., & Moretti, M. (2007).
-#'   Importance of species abundance for assessment of trait composition: 
+#' @references de Bello, F., Leps, J., Lavorel, S., & Moretti, M. (2007).
+#'   Importance of species abundance for assessment of trait composition:
 #'   an example based on pollinator communities. Community Ecology, 8(2), 163-170.
-#' @references Elmqvist, T., Folke, C., Nystrom, M., Peterson, G., 
-#'   Bengtsson, J., Walker, B., & Norberg, J. (2003). Response diversity, ecosystem 
+#' @references Elmqvist, T., Folke, C., Nystrom, M., Peterson, G.,
+#'   Bengtsson, J., Walker, B., & Norberg, J. (2003). Response diversity, ecosystem
 #'   change, and resilience. Frontiers in Ecology and the Environment, 1(9), 488-494.
-#' @references Guillemot, N., Kulbicki, M., Chabanet, P., & Vigliola, L. (2011). 
-#'   Functional redundancy patterns reveal non-random assembly rules in a 
+#' @references Guillemot, N., Kulbicki, M., Chabanet, P., & Vigliola, L. (2011).
+#'   Functional redundancy patterns reveal non-random assembly rules in a
 #'  species-rich marine assemblage. PLoS One, 6(10), e26735.
-#' @references Hooper, D. U., Chapin, F. S., Ewel, J. J., Hector, A., Inchausti, 
-#'   P., Lavorel, S., et al. (2005). Effects of biodiversity on ecosystem 
-#'   functioning: a consensus of current knowledge. Ecological Monographs, 
+#' @references Hooper, D. U., Chapin, F. S., Ewel, J. J., Hector, A., Inchausti,
+#'   P., Lavorel, S., et al. (2005). Effects of biodiversity on ecosystem
+#'   functioning: a consensus of current knowledge. Ecological Monographs,
 #'   75(1), 3-35.
-#' @references Lawton, J.H. & Brown, V.K. (1993) Redundancy in ecosystems. 
-#'   Biodiversity and Ecosystem Function (eds E.-D. Schulze & H.A. Mooney), 
+#' @references Lawton, J.H. & Brown, V.K. (1993) Redundancy in ecosystems.
+#'   Biodiversity and Ecosystem Function (eds E.-D. Schulze & H.A. Mooney),
 #'   pp. 255-270. Springer-Verlag, Berlin.
-#' @references Pillar, V. D., Blanco, C. C., Muller, S. C., Sosinski, E. E., 
-#'   Joner, F., & Duarte, L. D. (2013). Functional redundancy and stability 
+#' @references Pillar, V. D., Blanco, C. C., Muller, S. C., Sosinski, E. E.,
+#'   Joner, F., & Duarte, L. D. (2013). Functional redundancy and stability
 #'   in plant communities. Journal of Vegetation Science, 24(5), 963-974.
-#' @references Podani, J. (1999). Extending Gower's general coefficient of 
+#' @references Podani, J. (1999). Extending Gower's general coefficient of
 #'   similarity to ordinal characters. Taxon, 331-340.
-#' @references Rao, C. R. (1982). Diversity and dissimilarity coefficients: 
+#' @references Rao, C. R. (1982). Diversity and dissimilarity coefficients:
 #'   a unified approach. Theoretical population biology, 21(1), 24-43.
-#' @references Ricotta, C. (2005). A note on functional diversity measures. 
+#' @references Ricotta, C. (2005). A note on functional diversity measures.
 #'   Basic and Applied Ecology, 6(5), 479-486.
-#' @references Rosenfeld, J. S. (2002). Functional redundancy in ecology 
+#' @references Rosenfeld, J. S. (2002). Functional redundancy in ecology
 #'   and conservation. Oikos, 98(1), 156-162.
-#' @references Schmera, D., Heino, J., Podani, J., Eros, T., & Doledec, S. (2017). 
-#'   Functional diversity: a review of methodology and current knowledge in 
+#' @references Schmera, D., Heino, J., Podani, J., Eros, T., & Doledec, S. (2017).
+#'   Functional diversity: a review of methodology and current knowledge in
 #'   freshwater macroinvertebrate research. Hydrobiologia, 787(1), 27-44.
-#' @references Walker, B. H. (1992). Biodiversity and ecological redundancy. 
+#' @references Walker, B. H. (1992). Biodiversity and ecological redundancy.
 #'   Conservation biology, 6(1), 18-23.
 #'
 #' @export

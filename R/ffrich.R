@@ -77,13 +77,23 @@
 #'
 #' @seealso [aggregatoR]
 #'
-#' @references Tachet, H., Richoux, P., Bournaud, M., & Usseglio-Polatera, P.
-#'   (2010). Invertebres d'eau douce: systematique, biologie, ecologie. Paris:
-#'   CNRS editions.
-#' @references Schmidt-Kloiber, A., & Hering, D. (2015). www. freshwaterecology.
-#'   info-An online tool that unifies, standardises and codifies more than
-#'   20,000 European freshwater organisms and their ecological preferences.
-#'   Ecological indicators, 53, 271-282.
+#' @references Barber, C. B., Dobkin, D. P., & Huhdanpaa, H. (1996).
+#'   The quickhull algorithm for convex hulls. ACM Transactions on
+#'   Mathematical Software (TOMS), 22(4), 469-483.
+#' @references Cornwell, W. K., Schwilk, D. W., & Ackerly, D. D. (2006).
+#'   A trait-based test for habitat filtering: convex hull volume.
+#'   Ecology, 87(6), 1465-1471
+#' @references Maire, E., Grenouillet, G., Brosse, S., & Villeger, S. (2015).
+#'   How many dimensions are needed to accurately assess functional diversity?
+#'   A pragmatic approach for assessing the quality of functional spaces. Global
+#'   Ecology and Biogeography, 24(6), 728-740.
+#' @references Mason, N. W., Mouillot, D., Lee, W. G., and
+#'   Wilson, J. B. (2005). Functional richness, functional evenness and functional
+#'   divergence: the primary components of functional diversity. Oikos, 111(1),
+#'   112-118.
+#' @references Villeger, S., Mason, N. W., & Mouillot, D.
+#'   (2008). New multidimensional functional diversity indices for a
+#'   multifaceted framework in functional ecology. Ecology, 89(8), 2290-2301.
 #'
 #' @export
 

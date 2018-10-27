@@ -63,7 +63,7 @@ matrix. For this, Gower's dissimilarity index (which ranges from 0 to 1) is used
 because it can deal with traits of different nature and measuring scales
 (continuous, nominal, binary, ordinal, etc.; see Podani 1999 for more information)
 
-\deqn{Q = \sum_{i=1}^{S} \sum_{j=1}^{S} d_ij p_i p_j}
+\deqn{Q = \sum_{i=1}^{S} \sum_{j=1}^{S} d_i_j \ p_i \ p_j}
 
 Given that the concept of FR was originally developed to represent the number
 of taxa contributing similarly to an ecosystem function (Walker 1992; Lawton and
@@ -106,6 +106,10 @@ resilience of ecosystem services. Annual Review of Environment and Resources,
 Botta-Dukat, Z. (2005). Rao's quadratic entropy as a measure of
 functional diversity based on multiple traits. Journal of Vegetation Science,
 16(5), 533-540.
+
+de Bello, F., Leps, J., Lavorel, S., & Moretti, M. (2007).
+Importance of species abundance for assessment of trait composition:
+an example based on pollinator communities. Community Ecology, 8(2), 163-170.
 
 Elmqvist, T., Folke, C., Nystrom, M., Peterson, G.,
 Bengtsson, J., Walker, B., & Norberg, J. (2003). Response diversity, ecosystem
