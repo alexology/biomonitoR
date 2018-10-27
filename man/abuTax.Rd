@@ -21,7 +21,7 @@ data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 abuTax(data.agR, taxa = "Ephemeroptera")
-abuTax(data.agR, taxa = c("Setodes", "Orthocladiinae"), rel = T)
+abuTax(data.agR, taxa = c("Setodes", "Orthocladiinae"), rel = TRUE)
 }
 \seealso{
 \code{\link{aggregatoR}}
