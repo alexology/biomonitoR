@@ -28,9 +28,9 @@ see Clarke and Warwick (1998) an Clarke and Warwick (2001).
 USE WITH CAUTION, STILL IN DEVELOPMENT.
 }
 \examples{
-data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
+data(oglio)
+data.bio <- asBiomonitor(oglio)
+data.agR <- aggregatoR(oglio.bio)
 dness(data.agR, complete = TRUE)
 }
 \references{
