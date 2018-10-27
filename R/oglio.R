@@ -2,7 +2,7 @@
 #'
 #' These data were collected in the Oglio river, northern Italy. This data.frame consists of cover abundances on a scale from 0 to 100.
 #'
-#' @usage data(grav)
+#' @usage data(oglio)
 #'
 #' @keywords datasets
 #'
