@@ -17,7 +17,7 @@ data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 
-# example with macrophytes
+# example for macrophytes
 data(oglio)
 
 oglio.asb <- asBiomonitor(oglio, group = "mf")

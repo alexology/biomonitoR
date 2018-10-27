@@ -30,7 +30,7 @@ USE WITH CAUTION, STILL IN DEVELOPMENT.
 \examples{
 data(oglio)
 data.bio <- asBiomonitor(oglio, group = "mf")
-data.agR <- aggregatoR(oglio.bio)
+data.agR <- aggregatoR(data.bio)
 dness(data.agR, complete = TRUE)
 }
 \references{

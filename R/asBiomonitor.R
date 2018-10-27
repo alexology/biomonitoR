@@ -21,7 +21,7 @@
 #'   Ecological indicators, 53, 271-282.
 #' @examples
 #' data(macro_ex)
-#' asBiomonitor(macro_ex, group = "mi")
+#' data.bio <- asBiomonitor(macro_ex, group = "mi")
 
 
 asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )

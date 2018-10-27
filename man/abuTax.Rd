@@ -11,7 +11,7 @@ abuTax(x, taxa = NULL, rel = FALSE)
 
 \item{taxa}{a Taxon or a vector of taxa.}
 
-\item{rel}{if TRUE calculates relative abundance. default = F.}
+\item{rel}{if TRUE calculates relative abundance. Default to FALSE.}
 }
 \description{
 This function calculates the absolute or relative abundance of a Taxon or of a set Taxa.
@@ -21,7 +21,7 @@ data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 abuTax(data.agR, taxa = "Ephemeroptera")
-abuTax(data.agR, taxa = c("Setodes", "Orthocladiinae"))
+abuTax(data.agR, taxa = c("Setodes", "Orthocladiinae"), rel = T)
 }
 \seealso{
 \code{\link{aggregatoR}}

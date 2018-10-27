@@ -9,22 +9,31 @@ asBiomonitor(x, group = "mi", dfref = NULL, overwrite = F)
 \arguments{
 \item{x}{a data.frame as specified in details}
 
-\item{group}{biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. It overwrite = F group will not be considered}
+\item{group}{biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. This option will not be considered if overwrite i set to FALSE.}
 
-\item{dfref}{allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database}
+\item{dfref}{allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database.}
 
-\item{overwrite}{if set to T replace the reference database with the one provided by the user}
+\item{overwrite}{if set to T the reference database is replaced with the one provided by the user.}
 }
 \description{
-This function merge the user dataframe with the reference database. Options to improve or replace the reference database are provided.
+This function merge the user dataframe with the reference database (be retrieved from
+\href{https://www.freshwaterecology.info/}{freshwaterecology.info} website
+(Schmidt-Kloiber & Hering, 2015)). Options to improve or replace the reference database are provided.
 }
 \details{
 data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
-asBiomonitor checks the correctness of taxa names in the data.frame provided by the user. If names are correct the function will process the data.frame to a biomonitor object, otherwise it provide suggestion for correct names. If dfref = T a custom dictionary will be saved in the working directory.
+asBiomonitor checks the correctness of taxa names in the data.frame provided by the user. If names are correct the function will process the data.frame to a biomonitor object, otherwise it will provide suggestions for correct names. If dfref = T a custom dictionary will be saved in the working directory.
+When using the default database the taxa names provided by the user need to be consistent with the taxonomy of \href{https://www.freshwaterecology.info/}{freshwaterecology.info}, otherwise the user is asked to exit. This behaviour is to assure consistency with other functions implemented in biomonitoR.
 }
 \examples{
 data(macro_ex)
-asBiomonitor(macro_ex, group = "mi")
+data.bio <- asBiomonitor(macro_ex, group = "mi")
+}
+\references{
+Schmidt-Kloiber, A., & Hering, D. (2015). www. freshwaterecology.
+info-An online tool that unifies, standardises and codifies more than
+20,000 European freshwater organisms and their ecological preferences.
+Ecological indicators, 53, 271-282.
 }
 \seealso{
 \code{\link{quickRename}}
