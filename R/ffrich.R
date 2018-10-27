@@ -19,7 +19,7 @@
 #'  S in n dimensions is the intersection of all convex sets containing S.
 #'  For N points , ..., , the convex hull C is then given by the expression:
 #'
-#'  \deqn{C = \sum_{j=1}^{N} \lambda_j \ p_j  : \ \lambda_j \geq \ for \ all \ j \ and \sum_{j=1}^{N} \lambda_j = 1}
+#'  \deqn{C = \sum_{j=1}^{N} \lambda_j \ p_j  : \ \lambda_j \geq \ for \ all \ j \ and \ \sum_{j=1}^{N} \lambda_j = 1}
 #'
 #' The functional T dimensional space is built using a certain number of dimensions
 #' (T) determined by the axes of a principal component analysis based on the trait
