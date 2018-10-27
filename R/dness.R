@@ -45,25 +45,28 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   # taxonomic levels to retain
   tax.pos <- names(tree[, 1:which(names(tree) == taxLev)])
   ref.c <- tree.c[ , c(which(names(tree.c) %in%  c( tax.pos, "Taxa" ) ))]
-
+  ref.c <- tree.c[ , c(which(names(tree.c) %in%  tax.pos ))]
+  # remove duplicated rows
+  ref.c <- ref.c[ ! duplicated( ref.c ) ,  ]
+  
   if(complete == FALSE & che.ck == TRUE) {stop("Unassigned taxon at the desired taxonomic level")}
   if(complete == FALSE & che.ck == FALSE){
     # retain only the taxonomic levels from order to taxLev and sites
-    colnames(df)[which( names(df) == taxLev)] <- "Taxa"
-    taxtree <- merge(ref.c, df, by = "Taxa", all = FALSE)
+    # colnames(df)[which( names(df) == taxLev)] <- "Taxa"
+    taxtree <- merge(ref.c, df, by = taxLev, all = FALSE)
     taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = FALSE]
   }
 
   if(complete == TRUE & che.ck == TRUE){
-    colnames(df)[which( names(df) == taxLev)] <- "Taxa"
+    # colnames(df)[which( names(df) == taxLev)] <- "Taxa"
     df <- df[-which(df$Taxa == "unassigned"),]
-    taxtree <- merge(ref.c, df, by = "Taxa", all = FALSE)
+    taxtree <- merge(ref.c, df, by = taxLev, all = FALSE)
     taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = FALSE]
   }
   
   if(complete == FALSE & che.ck == FALSE){
-    colnames(df)[which( names(df) == taxLev)] <- "Taxa"
-    taxtree <- merge(ref.c, df, by = "Taxa", all = FALSE)
+    # colnames(df)[which( names(df) == taxLev)] <- "Taxa"
+    taxtree <- merge(ref.c, df, by = taxLev, all = FALSE)
     taxtree <- taxtree[, which(names(taxtree) %in% c(tax.pos, st.names)), drop = FALSE]
   }
 
@@ -75,6 +78,11 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   if(sum(check.col) != length(temp)){
     taxtree <- taxtree[, - which(check.col != 1), drop = FALSE]
   }
+  
+  # order taxtree
+  taxtree.c <- taxtree[ 1 : ncol(ref.c) ]
+  taxtree[ , 1 : ncol(ref.c) ] <- taxtree.c[  , names(ref.c)]
+  names( taxtree )[ 1 : ncol(ref.c) ]  <- names(ref.c)
   
   # remove columns distinct for all species or with the same taxa name for all the rows (excluding taxLev)
   # -1 is to eclude taxLev from this computation
