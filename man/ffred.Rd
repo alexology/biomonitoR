@@ -50,7 +50,7 @@ The Gini-Simpson index is used to quantify Taxonomic Diversity (D, which ranges
 from 0 to 1) where pi is the proportion of the abundance of taxa i in a
 biological community.
 
-\deqn{D = 1 - \sum_{i=1}^{S} p_i{2}}
+\deqn{D = 1 - \sum_{i=1}^{S} p_i^{2}}
 
 Rao quadratic entropy (Q; Rao, 1982) was used to estimate Functional Diversity
 because it has been considered more appropriate than other indices (Botta-Dukat,
