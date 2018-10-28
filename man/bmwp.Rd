@@ -4,18 +4,22 @@
 \alias{bmwp}
 \title{bmwp}
 \usage{
-bmwp(x, method = "a")
+bmwp(x, method = "ita", agg = NULL)
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{results of aggregatoR function.}
 
-\item{method}{the formulation of BMWP needed to calculate ASPT. Possible choises are "a" (Armitage et al. 1983), "uk" (Davy-Bowker et al. 2010), "spa" (MAGRAMA 2011), "ita" (Buffagni et al . 2014). Methods "uk_agg"and "ita_agg" implement the composite family approach.}
+\item{method}{the implementation of BMWP needed to calculate ASPT. Possible choices are "a" (Armitage et al. 1983), "uk" (Davy-Bowker et al. 2010), "spa" (MAGRAMA 2011), "ita" (Buffagni et al . 2014). Methods "uk_agg"and "ita_agg" implement the composite family approach.
+Users can provide their own a data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Value}.}
+
+\item{agg}{a data.frame containing the specification on how to aggregate taxa. This data.frame needs a column called \emph{Taxon}
+containing the taxon to aggregate and a column called \emph{Taxon_changed} with the aggregation specifications.}
 }
 \description{
 This function calculates the Biological Monitoring Working Party following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 }
 \details{
-BMWP is calculated as the sum of scores of the sensitive taxa present in a fiven sample. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker implementation take into account composite taxa as follow:
+BMWP is calculated as the sum of scores of the sensitive taxa present in a given sample. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker et al. (2010) and Buffagni et al. (2014) implementations take into account composite taxa as follow:
 \enumerate{
 \item Psychomyiidae (inc. Ecnomidae)
 \item Rhyachopilidae (inc. Glossomatidae)
@@ -28,6 +32,30 @@ BMWP is calculated as the sum of scores of the sensitive taxa present in a fiven
 \item Hydrobiidae (inc. Bithyniidae)
 \item Oligochaeta (all the families)
 }
+
+User provided scores data.frame needs to be formatted like following:
+\tabular{rc}{
+Taxon \tab value \cr
+Aeshnidae \tab 8 \cr
+Ancylidae \tab 6 \cr
+Aphelocheiridae \tab 10 \cr
+Asellidae \tab 3 \cr
+Astacidae \tab 8 \cr
+}
+
+User provide aggregation data.frame needs to be formatted like following:
+\tabular{rr}{
+Taxon \tab Taxon_changed \cr
+Glossomatidae \tab Rhyachopilidae \cr
+Apatanidae \tab Limnephilidae \cr
+Acroloxidae \tab Ancylidae \cr
+Crangonyctidae \tab Gammaridae \cr
+Niphargidae \tab Gammaridae \cr
+}
+}
+\note{
+Carefully check if your taxa list contains Ancylidae. Ancylidae is considered
+as family in italian and uk ASPT, while it is not considered a valid family by \href{https://www.freshwaterecology.info/}{freshwaterecology.info}.
 }
 \examples{
 data(macro_ex)

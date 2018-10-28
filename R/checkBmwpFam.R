@@ -1,17 +1,17 @@
 #' @importFrom stats aggregate
 checkBmwpFam <- function(df, famNames, stNames){
-  Family <- NULL
-  famDf <- df[["Family"]]
-  famDf$Family <- as.character(famDf$Family)
-  famCheck <- famDf[which(famDf[,"Family"] %in% famNames[,"Family"]),"Family"]
-  if(length(famCheck)>0){
-    for(i in 1:length(famCheck)){
-      taxName <- famCheck[i]
-      famDf$Family[famDf$Family == taxName] <- as.character(subset(famNames, Family==taxName)[,2])
+  Taxon <- NULL
+  df[ , "Taxon" ] <- as.character( df[ , "Taxon" ] )
+  famCheck <- df[ which( df[ , "Taxon" ] %in% famNames[ , "Taxon" ] ), "Taxon" ]
+  if( length( famCheck ) > 0 ){
+
+    for( i in 1 : length( famCheck ) ){
+      taxName <- famCheck[ i ]
+      df$Taxon[ df$Taxon == taxName ] <- as.character( subset( famNames, Taxon == taxName)[,2])
     }
-    famDf <- aggregate(. ~ Family, famDf, sum)
-    names(famDf) <- c("Family", stNames)
-    df[["Family"]] <- famDf
+
+    df <- aggregate( . ~ Taxon , df , sum )
+    names( df ) <- c( "Taxon" , stNames)
     return(df)
   }
   else{df <- df
