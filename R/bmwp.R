@@ -26,7 +26,7 @@
 #' }
 #'
 #' User provided scores data.frame needs to be formatted like following:
-#' \tabular{rc}{
+#' \tabular{lc}{
 #' Taxon \tab value \cr
 #' Aeshnidae \tab 8 \cr
 #' Ancylidae \tab 6 \cr
@@ -36,7 +36,7 @@
 #' }
 #'
 #' User provide aggregation data.frame needs to be formatted like following:
-#' \tabular{rr}{
+#' \tabular{lr}{
 #'  Taxon \tab Taxon_changed \cr
 #'  Glossomatidae \tab Rhyachopilidae \cr
 #'  Apatanidae \tab Limnephilidae \cr

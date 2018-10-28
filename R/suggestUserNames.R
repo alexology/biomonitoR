@@ -19,8 +19,8 @@ suggestUserNames <- function(x, group = "mi"){
 
   # nameCheck and nameSuggest check for the wrong names and suggest for correct names.
   # hunspell_check and hunspell_suggest are from the package hunspell
-  nameCheck <- hunspell_check(taxaCar, dict = dictio)
-  nameSuggest <- hunspell_suggest(taxaCar, dict = dictio)
+  nameCheck <- hunspell::hunspell_check(taxaCar, dict = dictio)
+  nameSuggest <- hunspell::hunspell_suggest(taxaCar, dict = dictio)
 
 
   n <- which(nameCheck==F) #number of wrong names
