@@ -44,7 +44,7 @@ Astacidae \tab 8 \cr
 }
 
 User provide aggregation data.frame needs to be formatted like following:
-\tabular{lr}{
+\tabular{ll}{
 Taxon \tab Taxon_changed \cr
 Glossomatidae \tab Rhyachopilidae \cr
 Apatanidae \tab Limnephilidae \cr

@@ -1,6 +1,6 @@
 #' Fuzzy coded functional richness
 #'
-#' This function calculates the functional richness based on trait category.
+#' This function calculates the functional richness based on trait categories.
 #'
 #'
 #' Functional richness (FRic) represents the amount of functional space filled by
@@ -126,6 +126,7 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, taxLev = "F
 
 
   abundances <- x[[taxLev]]
+  st.names <- names( abundances[ , -which( taxLev %in% names( abundances ) ), drop = F ] )
   colnames(abundances)[1] <- "Taxa"
   taxa <- as.character(abundances$Taxa)
 
@@ -215,7 +216,8 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, taxLev = "F
   m <- min( which( m == TRUE ) ) + 1
 
   fric <- fric_3d( t(abundances[, -which( names( abundances ) %in% "Taxa")]), fpc = qual_fs$fpc, m = m)
-  fric[ which( is.na( fric ) ) ]<-0
+  fric[ which( is.na( fric ) ) ] <- 0
+  names(fric) <- st.names
   if( traceB == F ){
     fric
   }

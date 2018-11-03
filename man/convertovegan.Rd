@@ -12,7 +12,7 @@ convertovegan(x, taxLev = "Family")
 \item{taxLev}{taxonomic level of interest. Possible choices are Phylum, Class, Subclass, Order, Family, Subfamily, Tribus, Genus, Species, Subspecies, Taxa}
 }
 \description{
-An utility function to export data to vegan like format
+An utility function to export data to a vegan like format, with taxa on the columns and samples on the rows.
 }
 \examples{
 data(macro_ex)

@@ -1,6 +1,6 @@
 #' convertovegan
 #'
-#' An utility function to export data to vegan like format
+#' An utility function to export data to a vegan like format, with taxa on the columns and samples on the rows.
 #' @param x results of aggregatoR function
 #' @param taxLev taxonomic level of interest. Possible choices are Phylum, Class, Subclass, Order, Family, Subfamily, Tribus, Genus, Species, Subspecies, Taxa
 #' @keywords convertovegan
@@ -27,21 +27,21 @@ convertovegan <- function(x, taxLev = "Family"){
   }
 
   x <- x[[ taxLev ]]
-  st.names <- names(x)[ -1 ]
+  st.names <- names( x )[ -1 ]
   taxa.names <- x[ , 1 ]
 
-  if("unassigned" %in% taxa.names){
+  if( "unassigned" %in% taxa.names ){
     # position of unassigned
-    un.numb <- which("unassigned" %in% taxa.names)
-    x <- x[-un.numb,]
+    un.numb <- which( "unassigned" %in% taxa.names )
+    x <- x[ -un.numb , ]
     x.t <- as.data.frame( t (x [, st.names ] ) )
-    names(x.t) <- taxa.names[-un.numb]
-    return(x.t)
+    names( x.t ) <- taxa.names[ -un.numb ]
+    return( x.t )
   }
 
   else{
     x.t <- as.data.frame( t (x [, st.names ] ) )
-    names(x.t) <- taxa.names
-    return(x.t)
+    names( x.t ) <- taxa.names
+    return( x.t )
   }
 }

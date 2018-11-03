@@ -36,7 +36,7 @@ trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"G
 a data.frame with 3 columns: Gini-Simpson richness, rao quadratic entropy and functional redundancy.
 }
 \description{
-This function calculates the functional richness based on trait category.
+This function calculates the functional richness based on trait categories.
 }
 \details{
 Functional redundancy (FR) is measured as the difference between taxonomic

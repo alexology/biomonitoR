@@ -1,6 +1,6 @@
 #' Fuzzy coded functional redundancy
 #'
-#' This function calculates the functional richness based on trait category.
+#' This function calculates the functional richness based on trait categories.
 #'
 #' Functional redundancy (FR) is measured as the difference between taxonomic
 #' diversity and functional diversity (de Bello et al., 2007). It relates positively
@@ -73,7 +73,7 @@
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread
 #' @importFrom stats complete.cases na.omit
-#' @importFrom ade4 ktab.list.df dist.ktab prep.fuzzy divc quasieuclid
+#' @importFrom ade4 ktab.list.df dist.ktab prep.fuzzy divc quasieuclid is.euclid
 #'
 #' @examples
 #' data(macro_ex)
@@ -125,9 +125,8 @@
 #'
 #' @export
 
-
 ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL, taxLev = "Family", traceB = FALSE){
-
+  
   # check if user provided a trait database, otherwise use traitsTachet
   # if traitsTachet has to be used check for class biomonitoR and "mi"
   if( is.null( traitDB )){
@@ -146,7 +145,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
     mes <- FALSE
     if( is.null( colB ) ) ( stop("Please provide colB") )
   }
-
+  
   if( traitSel == TRUE){
     if( mes == TRUE){
       if( is.null( colB ) ) { colB = colB }
@@ -156,38 +155,39 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
       if( is.null( colB ) ) { stop("You must set colB when traitDB is not NULL") }
       else { colB <- colB }
     }
-
+    
     Index <- rep( 1:length( colB ), colB)
     rma <- select.list( names( traitDB[ -which( names( traitDB ) %in% "Taxa")] ) , title = "Traits selection"  , graphics = TRUE , multiple = T )
     # new colB based on user trait selection, -1 because there is the column called Taxa
     colB <- as.vector( table( Index[ which( names( traitDB ) %in% rma ) - 1 ] ) )
-
+    
     #  trait must have at least two modalities
     if( any( colB < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
-
+    
     traitDB <- traitDB %>%
       select( c("Taxa", rma) )
     # trim and capitalise the column Taxa of the user' trait database
     traitDB$Taxa <- apply( as.data.frame( trim( traitDB$Taxa ) ) , 1 , capWords)
-
+    
   }
-
-
+  
+  
   abundances <- x[[taxLev]]
+  st.names <- names( abundances[ , -which( taxLev %in% names( abundances ) ), drop = F ] )
   colnames(abundances)[1] <- "Taxa"
   taxa <- as.character(abundances$Taxa)
-
-
+  
+  
   if( isTRUE(mes) | agg == TRUE ){
     # create dummy variables to avoid R CMD check NOTES
     traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
       Abundance <- Sample <- Weight <- Affinity <- totWeight <-
       weightedAffinity <- Category <- . <- NULL
-
+    
     if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
       return("taxLev should be one of the following: Family, Genus, Species or Taxa")
     }
-
+    
     # I included also Ad., Gen. and Lv. in gsub pattern. Currently biomonitoR does not handle adults and larvae at the same time
     trait_db <- traitDB                               %>%
       (function(df) {
@@ -201,13 +201,13 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
       summarise(affinity = mean(affinity))            %>%
       spread(key = modality, value = affinity)        %>%
       ungroup()
-      trait_db$Taxa <- trimws(trait_db$Taxa)
-
-
+    trait_db$Taxa <- trimws(trait_db$Taxa)
+    
+    
     if (length(taxa[taxa != "unassigned"]) == 0) {
       return("At least one taxa should be identified at a level compatible with the indicated taxLev")
     }
-
+    
     if (taxLev == "Taxa") {
       level <- sapply(select(x$Tree, Phylum:Subspecies),
                       function(i) {
@@ -219,9 +219,9 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
     } else {
       level <- rep(taxLev, length(taxa))
     }
-
+    
     ref <- select(mi_ref, Phylum:Taxa)
-
+    
     taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
       left_join(mutate(trait_db, Taxa = as.character(Taxa)),
                 by = "Taxa")                              %>%
@@ -235,13 +235,13 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
           do.call(what = rbind) %>%
           data.frame(Taxa = taxa, ., stringsAsFactors = FALSE)
       })
-
+    
   }
-
+  
   if( mes == FALSE & agg == FALSE ){
     taxa_traits <- traitDB
   }
-
+  
   taxa_traits <- as.data.frame(taxa_traits)
   # be sure that taxa_traits contains only the Taxa present in the user's community data
   taxa_traits <- taxa_traits[ taxa_traits[, "Taxa"]  %in% abundances[, "Taxa"] , ]
@@ -252,7 +252,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
   taxa_traits <- taxa_traits[complete.cases(taxa_traits), ]
   # remove categories with sum = 0
   taxa_traits <- taxa_traits[ , colSums(taxa_traits) > 0 , drop = F ]
-
+  
   #remove traits with incomplete cases and sum = 0
   traitRM <- which(!names(taxa_trace[ , -1]) %in% names(taxa_traits))
   temp <- NA
@@ -263,21 +263,27 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
   }
   temp <- na.omit( temp[ -traitRM ] )
   colB <- as.vector( table( temp ) )
-
+  
   # remove rows also in abundances
   abundances <- abundances[ rownames(taxa_traits) , ]
-
-
+  
+  
   tr_prep <- prep.fuzzy( taxa_traits, col.blocks = colB)
   tr_ktab <- ktab.list.df( list( tr_prep ) )
   dist_tr <- dist.ktab( tr_ktab, "F", taxa_traits )
-
+  
   abundances <- abundances[ , -which( names( abundances ) %in% "Taxa") , drop = F]
-
+  
   tax_sim <- divc( abundances )$diversity
-  raoQ <- divc( abundances, quasieuclid( dist_tr ), scale = T)$diversity
+  if( is.euclid( dist_tr ) ){
+    raoQ <- divc( abundances, dist_tr , scale = T)$diversity
+  } else {
+    raoQ <- divc( abundances, quasieuclid( dist_tr ), scale = T)$diversity
+  }
   FRed <- tax_sim - raoQ
-
-  data.frame(GS_rich = tax_sim, raoQ = raoQ, fred = FRed)
+  
+  res <- data.frame(GS_rich = tax_sim, raoQ = raoQ, fred = FRed)
+  rownames( res ) <- st.names
+  res
 }
 

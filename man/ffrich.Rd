@@ -42,7 +42,7 @@ Final number of dimensions depends on the number of positive eigenvalues (after 
 a vector with fuzzy functional richness results.
 }
 \description{
-This function calculates the functional richness based on trait category.
+This function calculates the functional richness based on trait categories.
 }
 \details{
 Functional richness (FRic) represents the amount of functional space filled by

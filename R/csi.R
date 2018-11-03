@@ -98,7 +98,7 @@ csi <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
 
   # create dummy variables to avoid R CMD check NOTES
 
-  Taxa <- Trait <- Modality <- Affinity <- Phylum <- Subspecies <-
+  Taxa <- Trait <- Modality <- modality <- affinity <- Affinity <- Phylum <- Subspecies <-
     Abundance <- Sample <- Weight <- totWeight <- k <-
     TSI <- CSI <- weightedTSI <-  . <- NULL
 
