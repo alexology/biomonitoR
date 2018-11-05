@@ -295,11 +295,9 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
   if( any( colB < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
   
   
-  # remove rows also in abundances
-  abundances <- abundances[ as.character(abundances$Taxa) %in% taxa_traits_name[ complete.cases( tr_prep ) ], ]
-  
-  
   tr_prep <- prep.fuzzy( taxa_traits, col.blocks = colB)
+  abundances <- abundances[ as.character(abundances$Taxa) %in% taxa_traits_name[ complete.cases( tr_prep ) ], ]
+  tr_prep <- tr_prep[ complete.cases( tr_prep ), ]
   tr_ktab <- ktab.list.df( list( tr_prep ) )
   dist_tr <- dist.ktab( tr_ktab, "F", taxa_traits )
   
