@@ -22,6 +22,8 @@ can be retrieved from
 \item{agg}{should ffrich aggregate user's traitDB of higher taxonomic level? TRUE to aggregate, otherwise FALSE.
 For instance, if user's traitDB has both Halesus and Limnephilidae, ffrich will aggregate traits value if ADD = TRUE.}
 
+\item{dfref}{reference database to be used when a custom trait database is provided and agg equals to TRUE.}
+
 \item{traitSel}{interactively select traits.}
 
 \item{colB}{A vector that contains the number of modalities for each trait}

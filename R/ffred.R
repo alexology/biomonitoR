@@ -64,6 +64,7 @@
 #' @param taxLev character string giving the taxonomic level used to retrieve
 #' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #' `"Family"` as returned by the [aggregatoR] function.
+#' @param dfref reference database to be used when a custom trait database is provided and agg equals to TRUE.
 #' @param traceB if TRUE ffrich will return a list with 2 elements, the first being the ffrich values and the second the database used for the calculation. Useful to check missing taxa.
 #'
 #' @details Taxa with no traits are removed from both the trait and abundance databases.
@@ -320,7 +321,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
     return( res )
   }
   if(traceB == TRUE){
-    res.list <- list( res, data.frame( Taxa = taxa_traits_name, taxa_traits ),
+    res.list <- list( res, data.frame( Taxa = taxa_traits_name, tr_prep ),
                       data.frame( Taxa = taxa_traits_name, abundances ) )
     names( res.list ) <- c( "results" , "traits" , "taxa" )
     return( res.list )
