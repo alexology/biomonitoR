@@ -127,8 +127,7 @@
 #' @export
 
 ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Family", traceB = FALSE){
-  
-  
+
   # check if user provided a trait database, otherwise use traitsTachet
   # if traitsTachet has to be used check for class biomonitoR and "mi"
   if( is.null( traitDB )){
@@ -166,6 +165,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
     traitDB$Taxa <- apply( as.data.frame( trim( traitDB$Taxa ) ) , 1 , capWords)
     
   }
+  
   
   # check for taxLev: it needs to be Taxa, Species, Genus or Family
   if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
@@ -209,6 +209,12 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
     spread(key = modality, value = affinity)        %>%
     ungroup()
   trait_db$Taxa <- trimws(trait_db$Taxa)  
+  
+  # since traitDB is sorted in alphabetical order we need to be sure that colB is sorted too
+  colB.names <- data.frame( colbN = names( traitDB[ , -1 ] ) , colB = rep( 1:length( colB ), colB) )
+  colB.temp <- colB.names[ match( names( trait_db[ , -1 ] ) , colB.names[ , "colbN" ] ), "colB" ]
+  
+  
   
   if(mes == "no"){
     if (taxLev == "Taxa") {
@@ -278,27 +284,19 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
   taxa_traits_name <- as.character(taxa_traits$Taxa)
   taxa_traits <- taxa_traits[ , -which( names( taxa_traits ) %in% "Taxa") , drop = F]
   # remove categories with sum = 0, we don't want traits equals to zero
-  taxa_traits <- taxa_traits[ , colSums(taxa_traits) > 0 , drop = F ]
+  cl.rm <- colSums(taxa_traits) > 0
+  taxa_traits <- taxa_traits[ , cl.rm , drop = F ]
   
   #remove traits with incomplete cases and sum = 0
-  traitRM <- which(!names(taxa_trace[ , -1]) %in% names(taxa_traits))
-  temp <- NA
-  for(i in 1:length( colB )){
-    lab <- paste( "t" ,as.character( i + 1000 ), sep = "")
-    temp1 <- rep( lab, colB[ i ] )
-    temp <- c( temp, temp1)
-  }
-  if( length( traitRM ) == 0  ){
-    temp <- na.omit( temp )
-  } else {
-    temp <- na.omit( temp[ -traitRM ] )
-  }
-  colB <- as.vector( table( temp ) )
+  
+  colB.table <- table( colB.temp[ cl.rm ] )
+  colB <- as.vector( colB.table[ match( unique( colB.temp ), names( colB.table ) ) ] )
+
   if( any( colB < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
   
   
   # remove rows also in abundances
-  abundances <- abundances[ as.character(abundances$Taxa) %in% taxa_traits_name, ]
+  abundances <- abundances[ as.character(abundances$Taxa) %in% taxa_traits_name[ complete.cases( tr_prep ) ], ]
   
   
   tr_prep <- prep.fuzzy( taxa_traits, col.blocks = colB)

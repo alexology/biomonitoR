@@ -4,7 +4,7 @@
 \alias{ffrich}
 \title{Fuzzy coded functional richness}
 \usage{
-ffrich(x, traitDB = NULL, agg = FALSE, traitSel = FALSE,
+ffrich(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
   taxLev = "Family", traceB = FALSE, nbdim = 7, metric = "Gower",
   corr_method = FALSE)
 }
