@@ -125,7 +125,8 @@
 #'
 #' @export
 
-ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL, taxLev = "Family", traceB = FALSE){
+ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Family", traceB = FALSE){
+  
   
   # check if user provided a trait database, otherwise use traitsTachet
   # if traitsTachet has to be used check for class biomonitoR and "mi"
@@ -133,29 +134,23 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
     # check if the object d is of class "biomonitoR" & "mi"
     classCheck(x, group = "mi")
     traitDB = traitsTachet
-    colB = c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+    if( is.null( colB ) ) { colB = c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 ) }
+    else { stop("You must not set colB when traitDB = NULL") }
     # useful for the if condition later
-    mes <- TRUE
+    mes <- "no"
   } else {
     # check if the object d is of class "biomonitoR"
     classCheck(x)
     traitDB = traitDB
     # trim and capitalise the first letter in the DB provided by the user
     traitDB[ , "Taxa"] <- as.factor( sapply( trim( traitDB[ , "Taxa"] ), capWords, USE.NAMES = F ) )
-    mes <- FALSE
+    mes <- "yes"
     if( is.null( colB ) ) ( stop("Please provide colB") )
+    # check if the number of traits in traitDB equals the sum of colB, otherwise stop
+    if( ( nrow( traitDB ) - 1 ) != sum( colB ) ) ( stop("The number of traits in traitDB is not equal to the sum of colB") )
   }
   
   if( traitSel == TRUE){
-    if( mes == TRUE){
-      if( is.null( colB ) ) { colB = colB }
-      else { stop("You must not set colB when traitDB = NULL") }
-    }
-    if( mes == FALSE){
-      if( is.null( colB ) ) { stop("You must set colB when traitDB is not NULL") }
-      else { colB <- colB }
-    }
-    
     Index <- rep( 1:length( colB ), colB)
     rma <- select.list( names( traitDB[ -which( names( traitDB ) %in% "Taxa")] ) , title = "Traits selection"  , graphics = TRUE , multiple = T )
     # new colB based on user trait selection, -1 because there is the column called Taxa
@@ -171,43 +166,50 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
     
   }
   
+  # check for taxLev: it needs to be Taxa, Species, Genus or Family
+  if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
+    return("taxLev should be one of the following: Family, Genus, Species or Taxa")
+  }
   
   abundances <- x[[taxLev]]
-  st.names <- names( abundances[ , -which( taxLev %in% names( abundances ) ), drop = F ] )
   colnames(abundances)[1] <- "Taxa"
+  st.names <- names( abundances[ , -which( "Taxa" %in% names( abundances ) ), drop = F ] )
+  
+  
+  # remove unassigned taxa from abundances
+  if("unassigned" %in% abundances[ , "Taxa"]){
+    z <- which(abundances[ , "Taxa" ] == "unassigned")
+    abundances <- abundances[ -z , ] # remove unassigned row from the species count
+  }
+  
   taxa <- as.character(abundances$Taxa)
   
+  if (length(taxa[taxa != "unassigned"]) == 0) {
+    return("At least one taxa should be identified at a level compatible with the indicated taxLev")
+  }
   
-  if( isTRUE(mes) | agg == TRUE ){
-    # create dummy variables to avoid R CMD check NOTES
-    traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
-      Abundance <- Sample <- Weight <- Affinity <- totWeight <-
-      weightedAffinity <- Category <- . <- NULL
-    
-    if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
-      return("taxLev should be one of the following: Family, Genus, Species or Taxa")
-    }
-    
-    # I included also Ad., Gen. and Lv. in gsub pattern. Currently biomonitoR does not handle adults and larvae at the same time
-    trait_db <- traitDB                               %>%
-      (function(df) {
-        mutate(df,
-               Taxa = gsub(pattern     = "sp.|Ad.|Lv.|Gen." ,
-                           replacement = "",
-                           x           = Taxa))
-      })                                              %>%
-      gather(key = modality, value = affinity, -Taxa) %>%
-      group_by(Taxa, modality)                        %>%
-      summarise(affinity = mean(affinity))            %>%
-      spread(key = modality, value = affinity)        %>%
-      ungroup()
-    trait_db$Taxa <- trimws(trait_db$Taxa)
-    
-    
-    if (length(taxa[taxa != "unassigned"]) == 0) {
-      return("At least one taxa should be identified at a level compatible with the indicated taxLev")
-    }
-    
+  
+  # create dummy variables to avoid R CMD check NOTES
+  traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
+    Abundance <- Sample <- Weight <- Affinity <- totWeight <-
+    weightedAffinity <- Category <- . <- NULL
+  
+  # prepare the taxa trait database  
+  trait_db <- traitDB                               %>%
+    (function(df) {
+      mutate(df,
+             Taxa = gsub(pattern     = "sp.|Ad.|Lv.|Gen.",
+                         replacement = "",
+                         x           = Taxa))
+    })                                              %>%
+    gather(key = modality, value = affinity, -Taxa) %>%
+    group_by(Taxa, modality)                        %>%
+    summarise(affinity = mean(affinity))            %>%
+    spread(key = modality, value = affinity)        %>%
+    ungroup()
+  trait_db$Taxa <- trimws(trait_db$Taxa)  
+  
+  if(mes == "no"){
     if (taxLev == "Taxa") {
       level <- sapply(select(x$Tree, Phylum:Subspecies),
                       function(i) {
@@ -220,37 +222,61 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
       level <- rep(taxLev, length(taxa))
     }
     
+    # merge reference database
+    
     ref <- select(mi_ref, Phylum:Taxa)
-    
-    taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
-      left_join(mutate(trait_db, Taxa = as.character(Taxa)),
-                by = "Taxa")                              %>%
-      (function(df) {
-        lapply(seq(length(taxa)),
-               function(i) {
-                 df[df[, level[i]] == taxa[i],] %>%
-                   select(-(Phylum:Taxa))       %>%
-                   colMeans(na.rm = TRUE)
-               })               %>%
-          do.call(what = rbind) %>%
-          data.frame(Taxa = taxa, ., stringsAsFactors = FALSE)
-      })
-    
   }
   
-  if( mes == FALSE & agg == FALSE ){
-    taxa_traits <- traitDB
+  if(mes == "yes"){
+    if(agg == TRUE){
+      if( is.null( dfref ) == TRUE) ( stop("Reference database is needed when agg = TRUE") )
+      if (taxLev == "Taxa") {
+        level <- sapply(select(x$Tree, Phylum:Subspecies),
+                        function(i) {
+                          as.character(i) == as.character(x$Tree$Taxa)
+                        }) %>%
+          (function(df) {
+            colnames(df)[apply(df, MARGIN = 1, which)]
+          })
+      } else {
+        level <- rep(taxLev, length(taxa))
+      }
+      
+      # merge reference database
+      
+      ref <- select(dfref, Phylum:Taxa)
+    } else {
+      ref <- select(x$Tree, Phylum:taxLev)
+      ref <- ref[ !duplicated(ref) , ]
+      ref <- ref[ref[taxLev] != "", ]
+      ref$Taxa <- ref[ , taxLev]
+      level <-  rep(taxLev, nrow( ref ) )
+    }
   }
   
+  taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
+    left_join(mutate(trait_db, Taxa = as.character(Taxa)),
+              by = "Taxa")                              %>%
+    (function(df) {
+      lapply(seq(length(taxa)),
+             function(i) {
+               df[df[, level[i]] == taxa[i],] %>%
+                 select(-(Phylum:Taxa))       %>%
+                 colMeans(na.rm = TRUE)
+             })               %>%
+        do.call(what = rbind) %>%
+        data.frame(Taxa = taxa, ., stringsAsFactors = FALSE)
+    })
   taxa_traits <- as.data.frame(taxa_traits)
+  taxa_traits_name <- as.character(taxa_traits$Taxa)
   # be sure that taxa_traits contains only the Taxa present in the user's community data
   taxa_traits <- taxa_traits[ taxa_traits[, "Taxa"]  %in% abundances[, "Taxa"] , ]
-  # remove the column called Taxa. I prefer this way and not traitDB[ , -1, drop = F] because numbers can always change
   taxa_trace <- taxa_traits
+  # remove NA from the rows. Sometimes happens that a trait for a species is set to NA
+  taxa_traits <- taxa_traits[complete.cases(taxa_traits[ , -which( names( taxa_traits ) %in% "Taxa") , drop = F]), ]
+  taxa_traits_name <- as.character(taxa_traits$Taxa)
   taxa_traits <- taxa_traits[ , -which( names( taxa_traits ) %in% "Taxa") , drop = F]
-  # remove NA
-  taxa_traits <- taxa_traits[complete.cases(taxa_traits), ]
-  # remove categories with sum = 0
+  # remove categories with sum = 0, we don't want traits equals to zero
   taxa_traits <- taxa_traits[ , colSums(taxa_traits) > 0 , drop = F ]
   
   #remove traits with incomplete cases and sum = 0
@@ -261,11 +287,17 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
     temp1 <- rep( lab, colB[ i ] )
     temp <- c( temp, temp1)
   }
-  temp <- na.omit( temp[ -traitRM ] )
+  if( length( traitRM ) == 0  ){
+    temp <- na.omit( temp )
+  } else {
+    temp <- na.omit( temp[ -traitRM ] )
+  }
   colB <- as.vector( table( temp ) )
+  if( any( colB < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
+  
   
   # remove rows also in abundances
-  abundances <- abundances[ rownames(taxa_traits) , ]
+  abundances <- abundances[ as.character(abundances$Taxa) %in% taxa_traits_name, ]
   
   
   tr_prep <- prep.fuzzy( taxa_traits, col.blocks = colB)
@@ -284,6 +316,14 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
   
   res <- data.frame(GS_rich = tax_sim, raoQ = raoQ, fred = FRed)
   rownames( res ) <- st.names
-  res
+  if( traceB == FALSE ){
+    return( res )
+  }
+  if(traceB == TRUE){
+    res.list <- list( res, data.frame( Taxa = taxa_traits_name, taxa_traits ),
+                      data.frame( Taxa = taxa_traits_name, abundances ) )
+    names( res.list ) <- c( "results" , "traits" , "taxa" )
+    return( res.list )
+  }
+  
 }
-
