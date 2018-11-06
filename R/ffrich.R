@@ -50,6 +50,7 @@
 #' @param agg should ffrich aggregate user's traitDB of higher taxonomic level? TRUE to aggregate, otherwise FALSE.
 #'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffrich will aggregate traits value if ADD = TRUE.
 #' @param traitSel interactively select traits.
+#' @param colB A vector that contains the number of modalities for each trait
 #' @param taxLev character string giving the taxonomic level used to retrieve
 #' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #' `"Family"` as returned by the [aggregatoR] function.
@@ -292,6 +293,7 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  traitSel = FALSE, colB = NUL
       tr.s <- names( tr_prep ) # trait names used for the calculation
       tr.miss <- tr.n[ ! tr.n %in% tr.s ]
     }
+    if( length( pr.tr ) == 0 ) { tr.pr <- "none" } else { tr.pr <- pr.tr }
     fric.list <- list( fric, data.frame( Taxa = abu.names, tr_prep  ) , data.frame( Taxa= abu.names, abundances ), m , ta.miss, pr.tr , tr.miss )
     names( fric.list ) <- c( "results" , "traits" , "taxa", "nbdim" , "taxa_not_used", "problematic_traits", "traits_not_used" )
     return ( fric.list )
