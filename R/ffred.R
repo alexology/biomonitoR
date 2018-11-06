@@ -72,12 +72,12 @@
 #' @return a data.frame with 3 columns: Gini-Simpson richness, rao quadratic entropy and functional redundancy.\cr
 #' If traceB is set to TRUE a list is provided with:
 #' \enumerate{
-#'  \item *results*: results of the ffred function;
-#'  \item *traits*: a data.frame containing the traits used for the calculations;
-#'  \item *taxa*: a data.frame conaining the taxa used for th calculations;
-#'  \item *taxa_not_used*: a vector conaining the names of the taxa exluded from the calculations. Taxa are excluded from the calculations if they have NA values at least in one of the trait modalities;
-#'  \item *problematic traits*: traits containing NAs for *taxa_not_used*
-#'  \item *traits_not_used*: trait modalities excluded from the calculations because they have 0 value for each species. 
+#'  \item **results**: results of the ffred function;
+#'  \item **traits**: a data.frame containing the traits used for the calculations;
+#'  \item **taxa**: a data.frame conaining the taxa used for th calculations;
+#'  \item **taxa_not_used**: a vector conaining the names of the taxa exluded from the calculations. Taxa are excluded from the calculations if they have NA values at least in one of the trait modalities;
+#'  \item **problematic traits**: traits containing NAs for *taxa_not_used*
+#'  \item **traits_not_used**: trait modalities excluded from the calculations because they have 0 value for each species.
 #' }
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
@@ -138,7 +138,7 @@
 
 ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Family", traceB = FALSE){
 
-  
+
   # check if user provided a trait database, otherwise use traitsTachet
   # if traitsTachet has to be used check for class biomonitoR and "mi"
   if( is.null( traitDB )){
@@ -160,52 +160,52 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
     # check if the number of traits in traitDB equals the sum of colB, otherwise stop
     if( ( nrow( traitDB ) - 1 ) != sum( colB ) ) ( stop("The number of traits in traitDB is not equal to the sum of colB") )
   }
-  
+
   if( traitSel == TRUE){
     Index <- rep( 1:length( colB ), colB)
     rma <- select.list( names( traitDB[ -which( names( traitDB ) %in% "Taxa")] ) , title = "Traits selection"  , graphics = TRUE , multiple = T )
     # new colB based on user trait selection, -1 because there is the column called Taxa
     colB <- as.vector( table( Index[ which( names( traitDB ) %in% rma ) - 1 ] ) )
-    
+
     #  trait must have at least two modalities
     if( any( colB < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
-    
+
     traitDB <- traitDB %>%
       select( c("Taxa", rma) )
     # trim and capitalise the column Taxa of the user' trait database
     traitDB$Taxa <- apply( as.data.frame( trim( traitDB$Taxa ) ) , 1 , capWords)
-    
+
   }
-  
-  
+
+
   # check for taxLev: it needs to be Taxa, Species, Genus or Family
   if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
     return("taxLev should be one of the following: Family, Genus, Species or Taxa")
   }
-  
+
   abundances <- x[[taxLev]]
   colnames(abundances)[1] <- "Taxa"
   st.names <- names( abundances[ , -which( "Taxa" %in% names( abundances ) ), drop = F ] )
-  
-  
+
+
   # remove unassigned taxa from abundances
   if("unassigned" %in% abundances[ , "Taxa"]){
     z <- which(abundances[ , "Taxa" ] == "unassigned")
     abundances <- abundances[ -z , ] # remove unassigned row from the species count
   }
-  
+
   taxa <- as.character(abundances$Taxa)
-  
+
   if (length(taxa[taxa != "unassigned"]) == 0) {
     return("At least one taxa should be identified at a level compatible with the indicated taxLev")
   }
-  
-  
+
+
   # create dummy variables to avoid R CMD check NOTES
   traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
     Abundance <- Sample <- Weight <- Affinity <- totWeight <-
     weightedAffinity <- Category <- . <- NULL
-  
+
   # prepare the taxa trait database
   trait_db <- traitDB                               %>%
     (function(df) {
@@ -220,7 +220,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
     spread(key = modality, value = affinity)        %>%
     ungroup()
   trait_db$Taxa <- trimws(trait_db$Taxa)
-  
+
   if(mes == "no"){
     if (taxLev == "Taxa") {
       level <- sapply(select(x$Tree, Phylum:Subspecies),
@@ -233,12 +233,12 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
     } else {
       level <- rep(taxLev, length(taxa))
     }
-    
+
     # merge reference database
-    
+
     ref <- select(mi_ref, Phylum:Taxa)
   }
-  
+
   if(mes == "yes"){
     if(agg == TRUE){
       if( is.null( dfref ) == TRUE) ( stop("Reference database is needed when agg = TRUE") )
@@ -253,9 +253,9 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
       } else {
         level <- rep(taxLev, length(taxa))
       }
-      
+
       # merge reference database
-      
+
       ref <- select(dfref, Phylum:Taxa)
     } else {
       ref <- select(x$Tree, Phylum:taxLev)
@@ -265,7 +265,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
       level <-  rep(taxLev, nrow( ref ) )
     }
   }
-  
+
   taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
     left_join(mutate(trait_db, Taxa = as.character(Taxa)),
               by = "Taxa")                              %>%
@@ -289,18 +289,18 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
   taxa_traits <- taxa_traits[complete.cases(taxa_traits[ , -which( names( taxa_traits ) %in% "Taxa") , drop = F]), ]
   taxa_traits_name <- as.character(taxa_traits$Taxa)
   taxa_traits <- taxa_traits[ , -which( names( taxa_traits ) %in% "Taxa") , drop = F]
-  
+
   # remove categories with sum = 0, we don't want traits equals to zero
   cl.rm <- colSums(taxa_traits) > 0
   taxa_traits <- taxa_traits[ , cl.rm , drop = F ]
-  
+
   #remove traits with incomplete cases and sum = 0
-  
+
   Index <- rep( 1:length( colB ), colB)
   colB <- as.vector( table( Index[ cl.rm ] ) )
-  
+
   if( any( colB < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
-  
+
   tr_prep <- prep.fuzzy( taxa_traits, col.blocks = colB)
   # check for the problematic traits
   pr.tr <- names(tr_prep[ , is.na( colSums( tr_prep ) )])
