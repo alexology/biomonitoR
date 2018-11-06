@@ -283,7 +283,7 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  traitSel = FALSE, colB = NUL
   }
   else{
     # list the organisms that have not been used for the calculation
-    if( length( abu.names ) == length( taxa ) ) { ta.miss == "none"} else {
+    if( length( abu.names ) == length( taxa ) ) { ta.miss <- "none"} else {
       ta.miss <- taxa[ ! taxa %in% abu.names ]
     }
     # list the traits that have not been used for the calculation, because they summed to 0
