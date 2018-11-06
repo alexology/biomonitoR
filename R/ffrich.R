@@ -49,6 +49,7 @@
 #'   (Schmidt-Kloiber & Hering, 2015).
 #' @param agg should ffrich aggregate user's traitDB of higher taxonomic level? TRUE to aggregate, otherwise FALSE.
 #'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffrich will aggregate traits value if ADD = TRUE.
+#' @param dfref reference database to be used when a custom trait database is provided and agg equals to TRUE.
 #' @param traitSel interactively select traits.
 #' @param colB A vector that contains the number of modalities for each trait
 #' @param taxLev character string giving the taxonomic level used to retrieve
@@ -106,7 +107,7 @@
 #'
 #' @export
 
-ffrich <- function(x, traitDB = NULL, agg = FALSE,  traitSel = FALSE, colB = NULL, taxLev = "Family", traceB = FALSE, nbdim = 7, metric = "Gower", corr_method = FALSE){
+ffrich <- function(x, traitDB = NULL, agg = FALSE,  dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Family", traceB = FALSE, nbdim = 7, metric = "Gower", corr_method = FALSE){
 
   # check if user provided a trait database, otherwise use traitsTachet
   # if traitsTachet has to be used check for class biomonitoR and "mi"

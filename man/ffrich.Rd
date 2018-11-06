@@ -4,9 +4,9 @@
 \alias{ffrich}
 \title{Fuzzy coded functional richness}
 \usage{
-ffrich(x, traitDB = NULL, agg = FALSE, traitSel = FALSE, colB = NULL,
-  taxLev = "Family", traceB = FALSE, nbdim = 7, metric = "Gower",
-  corr_method = FALSE)
+ffrich(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE,
+  colB = NULL, taxLev = "Family", traceB = FALSE, nbdim = 7,
+  metric = "Gower", corr_method = FALSE)
 }
 \arguments{
 \item{x}{results of function aggregatoR}
@@ -22,6 +22,8 @@ can be retrieved from
 
 \item{agg}{should ffrich aggregate user's traitDB of higher taxonomic level? TRUE to aggregate, otherwise FALSE.
 For instance, if user's traitDB has both Halesus and Limnephilidae, ffrich will aggregate traits value if ADD = TRUE.}
+
+\item{dfref}{reference database to be used when a custom trait database is provided and agg equals to TRUE.}
 
 \item{traitSel}{interactively select traits.}
 
