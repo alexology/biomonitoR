@@ -81,6 +81,7 @@
 #'
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
+#' ffred(data.agR)
 #'
 #' @seealso [aggregatoR]
 #'

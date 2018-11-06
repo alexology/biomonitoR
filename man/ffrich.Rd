@@ -88,8 +88,7 @@ data(macro_ex)
 
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-
-cwm(x = data.agR, taxLev = "Taxa")
+ffrich(data.agR, taxLev = "Taxa")
 
 }
 \references{

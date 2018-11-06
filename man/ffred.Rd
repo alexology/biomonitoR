@@ -97,6 +97,7 @@ data(macro_ex)
 
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
+ffred(data.agR)
 
 }
 \references{
