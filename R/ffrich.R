@@ -242,7 +242,6 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  traitSel = FALSE, colB = NUL
   # order the traits as in the original data.frame (tratiDB)
   taxa_traits <- taxa_traits[ , match( names( traitDB ), names( taxa_traits ) ) ]
   taxa_traits <- as.data.frame(taxa_traits)
-  taxa_traits_name <- as.character(taxa_traits$Taxa)
   # be sure that taxa_traits contains only the Taxa present in the user's community data
   taxa_traits <- taxa_traits[ taxa_traits[, "Taxa"]  %in% abundances[, "Taxa"] , ]
   taxa_trace <- taxa_traits
@@ -294,7 +293,7 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  traitSel = FALSE, colB = NUL
       tr.miss <- tr.n[ ! tr.n %in% tr.s ]
     }
     if( length( pr.tr ) == 0 ) { tr.pr <- "none" } else { tr.pr <- pr.tr }
-    fric.list <- list( fric, data.frame( Taxa = abu.names, tr_prep  ) , data.frame( Taxa= abu.names, abundances ), m , ta.miss, pr.tr , tr.miss )
+    fric.list <- list( fric, data.frame( Taxa = abu.names, tr_prep  ) , data.frame( Taxa= abu.names, abundances ), m , ta.miss, tr.pr , tr.miss )
     names( fric.list ) <- c( "results" , "traits" , "taxa", "nbdim" , "taxa_not_used", "problematic_traits", "traits_not_used" )
     return ( fric.list )
   }
