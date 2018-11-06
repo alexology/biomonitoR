@@ -338,8 +338,8 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
     }
     if( length( pr.tr ) == 0 ) { tr.pr <- "none" } else { tr.pr <- pr.tr }
 
-    res.list <- list( res, data.frame( Taxa = taxa_traits_name, tr_prep ),
-                      data.frame( Taxa = taxa_traits_name, abundances ), ta.miss, tr.pr , tr.miss  )
+    res.list <- list( res, data.frame( Taxa = abu.names, tr_prep ),
+                      data.frame( Taxa = abu.names, abundances ), ta.miss, tr.pr , tr.miss  )
     names( res.list ) <- c( "results" , "traits" , "taxa", "taxa_not_used", "problematic_traits", "traits_not_used" )
     return( res.list )
   }
