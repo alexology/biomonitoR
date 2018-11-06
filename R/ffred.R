@@ -69,7 +69,16 @@
 #'
 #' @details Taxa with no traits are removed from both the trait and abundance databases.
 #' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
-#' @return a data.frame with 3 columns: Gini-Simpson richness, rao quadratic entropy and functional redundancy.
+#' @return a data.frame with 3 columns: Gini-Simpson richness, rao quadratic entropy and functional redundancy.\cr
+#' If traceB is set to TRUE a list is provided with:
+#' \enumerate{
+#'  \item *results*: results of the ffred function;
+#'  \item *traits*: a data.frame containing the traits used for the calculations;
+#'  \item *taxa*: a data.frame conaining the taxa used for th calculations;
+#'  \item *taxa_not_used*: a vector conaining the names of the taxa exluded from the calculations. Taxa are excluded from the calculations if they have NA values at least in one of the trait modalities;
+#'  \item *problematic traits*: traits containing NAs for *taxa_not_used*
+#'  \item *traits_not_used*: trait modalities excluded from the calculations because they have 0 value for each species. 
+#' }
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread

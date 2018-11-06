@@ -42,6 +42,15 @@ Final number of dimensions depends on the number of positive eigenvalues (after 
 }
 \value{
 a vector with fuzzy functional richness results.
+\enumerate{
+\item \emph{results}: results of the ffred function;
+\item \emph{traits}: a data.frame containing the traits used for the calculations;
+\item \emph{taxa}: a data.frame conaining the taxa used for th calculations;
+\item \emph{nbdim}: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
+\item \emph{taxa_not_used}: a vector conaining the names of the taxa exluded from the calculations. Taxa are excluded from the calculations if they have NA values at least in one of the trait modalities;
+\item \emph{problematic traits}: traits containing NAs for \emph{taxa_not_used}
+\item \emph{traits_not_used}: trait modalities excluded from the calculations because they have 0 value for each species.
+}
 }
 \description{
 This function calculates the functional richness based on trait categories.
