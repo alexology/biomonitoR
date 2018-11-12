@@ -1,9 +1,11 @@
+#' @describeIn shannon Berger-Parker dominance index
+
 berpar <- function(x, taxLev = "Family"){
-  
+
   # check if the object d is of class "biomonitoR"
-  
+
   classCheck(x)
-  
+
   df <-  x[[taxLev]]
   if("unassigned" %in% df[ , 1]){
     z <- which(df[ ,1 ] == "unassigned")
