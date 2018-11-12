@@ -27,6 +27,7 @@
 #' @export brill
 #' @export mcintosh
 #' @export odum
+#' @export allindices
 
 shannon <- function(x, base=2, taxLev="Family"){
 

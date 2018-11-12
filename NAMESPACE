@@ -3,6 +3,7 @@
 export(abu)
 export(abuTax)
 export(aggregatoR)
+export(allindices)
 export(asBiomonitor)
 export(aspt)
 export(berpar)
