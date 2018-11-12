@@ -1,4 +1,4 @@
-#' @describeIn shannon Inverse Simpson
+#' @describeIn allindices Inverse Simpson
 
 invsimpson <- function(x, taxLev = "Family"){
 

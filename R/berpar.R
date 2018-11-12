@@ -1,4 +1,4 @@
-#' @describeIn shannon Berger-Parker dominance index
+#' @describeIn allindices Berger-Parker dominance index
 
 berpar <- function(x, taxLev = "Family"){
 

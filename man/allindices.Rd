@@ -4,16 +4,6 @@
 %   R/menhinick.R, R/odum.R, R/pielou.R, R/shannon.R, R/simpson.R
 \name{allindices}
 \alias{allindices}
-\alias{berpar}
-\alias{brill}
-\alias{esimpson}
-\alias{invberpar}
-\alias{invsimpson}
-\alias{margalef}
-\alias{mcintosh}
-\alias{menhinick}
-\alias{odum}
-\alias{pielou}
 \alias{shannon}
 \alias{simpson}
 \alias{margalef}
@@ -26,8 +16,19 @@
 \alias{invsimpson}
 \alias{mcintosh}
 \alias{odum}
+\alias{berpar}
+\alias{brill}
+\alias{esimpson}
+\alias{invberpar}
+\alias{invsimpson}
+\alias{margalef}
+\alias{mcintosh}
+\alias{menhinick}
+\alias{odum}
+\alias{pielou}
+\alias{shannon}
 \alias{simpson}
-\title{shannon}
+\title{Functions for calculating diversity, eveness and dominance indices}
 \usage{
 allindices(x, taxLev = "Family", base = 2)
 
@@ -67,8 +68,6 @@ Functions for calculating shannon, simpson, margalef, menhinick, pielou and othe
 }
 \section{Functions}{
 \itemize{
-\item \code{allindices}: calculate all indices at once
-
 \item \code{berpar}: Berger-Parker dominance index
 
 \item \code{brill}: Brillouin index
@@ -89,6 +88,8 @@ Functions for calculating shannon, simpson, margalef, menhinick, pielou and othe
 
 \item \code{pielou}: Pielou's evenness index
 
+\item \code{shannon}: Brillouin index
+
 \item \code{simpson}: Simpson's Index of Diversity
 }}
 
@@ -96,6 +97,7 @@ Functions for calculating shannon, simpson, margalef, menhinick, pielou and othe
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
+allindices(data.agR)
 shannon(data.agR)
 
 # natural logarithm

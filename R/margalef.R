@@ -1,4 +1,4 @@
-#' @describeIn shannon Margalef diversity index
+#' @describeIn allindices Margalef diversity index
 
 margalef <- function(x, taxLev = "Family"){
 

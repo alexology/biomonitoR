@@ -1,4 +1,4 @@
-#' @describeIn shannon Pielou's evenness index
+#' @describeIn allindices Pielou's evenness index
 
 pielou <- function(x, base = 2, taxLev="Family"){
 

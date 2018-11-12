@@ -1,4 +1,4 @@
-#' @describeIn shannon McIntosh dominance index
+#' @describeIn allindices McIntosh dominance index
 
 mcintosh <- function(x, taxLev = "Family"){
 

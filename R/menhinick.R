@@ -1,4 +1,4 @@
-#' @describeIn shannon Menhinick index
+#' @describeIn allindices Menhinick index
 
 menhinick <- function(x, taxLev = "Family"){
 

@@ -1,4 +1,4 @@
-#' @describeIn shannon Simpson's Index of Diversity
+#' @describeIn allindices Simpson's Index of Diversity
 
 simpson <- function(x, taxLev = "Family"){
 

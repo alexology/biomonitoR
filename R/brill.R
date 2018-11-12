@@ -1,4 +1,4 @@
-#' @describeIn shannon Brillouin index
+#' @describeIn allindices Brillouin index
 
 brill <- function(x, taxLev = "Family"){
 

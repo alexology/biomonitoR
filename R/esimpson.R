@@ -1,4 +1,4 @@
-#' @describeIn shannon Simpson's Index
+#' @describeIn allindices Simpson's Index
 
 esimpson <- function(x, taxLev = "Family"){
 

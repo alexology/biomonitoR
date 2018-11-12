@@ -1,4 +1,35 @@
-#' @describeIn shannon calculate all indices at once
+#' @name allindices
+#' @title Functions for calculating diversity, eveness and dominance indices
+#'
+#' @description Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
+#' @aliases  shannon simpson margalef menhinick pielou berpar brill esimpson invberpar invsimpson mcintosh odum
+#' @param x results of function aggregatoR
+#' @param base the base of the logarithm
+#' @param taxLev taxonimc level on which the calculation has to be made.
+#' @keywords shannon, simpson, margalef, menhinick, pielou
+#' @export
+#' @seealso \code{\link{aggregatoR}}
+#' @examples
+#' data(macro_ex)
+#' data.bio <- asBiomonitor(macro_ex)
+#' data.agR <- aggregatoR(data.bio)
+#' allindices(data.agR)
+#' shannon(data.agR)
+#'
+#' # natural logarithm
+#' shannon(data.agR, base=exp(1))
+#' @export simpson
+#' @export esimpson
+#' @export invsimpson
+#' @export margalef
+#' @export menhinick
+#' @export pielou
+#' @export berpar
+#' @export invberpar
+#' @export brill
+#' @export mcintosh
+#' @export odum
+#' @export shannon
 
 allindices <- function(x, taxLev = "Family", base = 2){
 

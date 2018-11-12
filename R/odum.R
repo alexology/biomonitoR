@@ -1,4 +1,4 @@
-#' @describeIn shannon Odum index
+#' @describeIn allindices Odum index
 
 odum <- function(x, base = 2,taxLev = "Family"){
 

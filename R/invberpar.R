@@ -1,4 +1,4 @@
-#' @describeIn shannon inverse Berger-Parker
+#' @describeIn allindices inverse Berger-Parker
 
 invberpar <- function(x, taxLev = "Family"){
 
