@@ -55,7 +55,7 @@ allindices <- function(x, taxLev = "Family", base = 2){
   res <- data.frame( t( matrix( unlist( indices ) , ncol = length( st.names ), byrow = T ) ) )
   rownames( res ) <- st.names
   colnames( res ) <- c( "shannon", "berpar", "brill", "invberpar", "invsimpson",
-                        "margalef", "mcintosh", "menhinick", "odum", "pielou",
+                        "margalef", "mcintosh", "menhinick", "pielou",
                         "simpson", "esimpson")
   res
 
