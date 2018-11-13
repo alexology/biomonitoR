@@ -50,7 +50,7 @@ allindices <- function(x, taxLev = "Family", base = 2){
   f11 <- function( x ) ( esimpson(x , taxLev = taxLev) )
 
   funs <- list( f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11)
-  indices <- lapply(funs, function(f) f(data.agR))
+  indices <- lapply(funs, function(f) f(x))
   # from list to data.frame
   res <- data.frame( t( matrix( unlist( indices ) , ncol = length( st.names ), byrow = T ) ) )
   rownames( res ) <- st.names
