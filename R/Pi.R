@@ -10,7 +10,7 @@ Pi <- function(x, index="Shannon", base=2){
     indValue <- 1-sum(relAbu^2)
   }
   if(index=="Simpsoneven"){
-    indValue <- sum( x * ( x - 1 ))/ abu * (abu - 1)
+    indValue <- (1/sum(relAbu^2))/ntaxa
   }
   if(index=="Invsimpson"){
     indValue <- 1/sum(relAbu^2)

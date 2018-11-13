@@ -88,7 +88,7 @@ Functions for calculating shannon, simpson, margalef, menhinick, pielou and othe
 
 \item \code{pielou}: Pielou's evenness index
 
-\item \code{shannon}: Brillouin index
+\item \code{shannon}: Shannon index
 
 \item \code{simpson}: Simpson's Index of Diversity
 }}

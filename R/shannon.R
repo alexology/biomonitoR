@@ -1,4 +1,4 @@
-#' @describeIn allindices Brillouin index
+#' @describeIn allindices Shannon index
 
 shannon <- function(x, base=2, taxLev="Family"){
 
