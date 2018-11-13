@@ -2,7 +2,7 @@
 #' @title Functions for calculating diversity, eveness and dominance indices
 #'
 #' @description Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
-#' @aliases  shannon simpson margalef menhinick pielou berpar brill esimpson invberpar invsimpson mcintosh allindices
+#' @aliases  shannon simpson margalef menhinick pielou berpar brill esimpson invberpar invsimpson mcintosh fisher allindices
 #' @param x results of function aggregatoR
 #' @param base the base of the logarithm
 #' @param taxLev taxonimc level on which the calculation has to be made.
@@ -29,6 +29,7 @@
 #' @export brill
 #' @export mcintosh
 #' @export shannon
+#' @export fisher
 
 allindices <- function(x, taxLev = "Family", base = 2){
 
@@ -48,15 +49,16 @@ allindices <- function(x, taxLev = "Family", base = 2){
   f9 <- function( x ) ( pielou( x , taxLev = taxLev, base = base ) )
   f10 <- function( x ) ( simpson( x , taxLev = taxLev) )
   f11 <- function( x ) ( esimpson(x , taxLev = taxLev) )
+  f12 <- function( x ) ( fisher(x , taxLev = taxLev) )
 
-  funs <- list( f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11)
+  funs <- list( f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12)
   indices <- lapply(funs, function(f) f(x))
   # from list to data.frame
   res <- data.frame( t( matrix( unlist( indices ) , ncol = length( st.names ), byrow = T ) ) )
   rownames( res ) <- st.names
   colnames( res ) <- c( "shannon", "berpar", "brill", "invberpar", "invsimpson",
                         "margalef", "mcintosh", "menhinick", "pielou",
-                        "simpson", "esimpson")
+                        "simpson", "esimpson", "fisher")
   res
 
 }
