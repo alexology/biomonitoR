@@ -2,7 +2,7 @@
 #' @title Functions for calculating diversity, eveness and dominance indices
 #'
 #' @description Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
-#' @aliases  shannon simpson margalef menhinick pielou berpar brill esimpson invberpar invsimpson mcintosh odum
+#' @aliases  shannon simpson margalef menhinick pielou berpar brill esimpson invberpar invsimpson mcintosh allindices
 #' @param x results of function aggregatoR
 #' @param base the base of the logarithm
 #' @param taxLev taxonimc level on which the calculation has to be made.
@@ -28,7 +28,6 @@
 #' @export invberpar
 #' @export brill
 #' @export mcintosh
-#' @export odum
 #' @export shannon
 
 allindices <- function(x, taxLev = "Family", base = 2){
@@ -46,12 +45,11 @@ allindices <- function(x, taxLev = "Family", base = 2){
   f6 <- function( x ) ( margalef( x , taxLev = taxLev) )
   f7 <- function( x ) ( mcintosh( x , taxLev = taxLev) )
   f8 <- function( x ) ( menhinick( x , taxLev = taxLev) )
-  f9 <- function( x ) ( odum( x , taxLev = taxLev, base = base ) )
-  f10 <- function( x ) ( pielou( x , taxLev = taxLev, base = base ) )
-  f11 <- function( x ) ( simpson( x , taxLev = taxLev) )
-  f12 <- function( x ) ( esimpson(x , taxLev = taxLev) )
+  f9 <- function( x ) ( pielou( x , taxLev = taxLev, base = base ) )
+  f10 <- function( x ) ( simpson( x , taxLev = taxLev) )
+  f11 <- function( x ) ( esimpson(x , taxLev = taxLev) )
 
-  funs <- list( f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12)
+  funs <- list( f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11)
   indices <- lapply(funs, function(f) f(data.agR))
   # from list to data.frame
   res <- data.frame( t( matrix( unlist( indices ) , ncol = length( st.names ), byrow = T ) ) )
