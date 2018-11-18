@@ -15,5 +15,5 @@ Imports: hunspell,
     FD,
     geometry,
     ade4
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)

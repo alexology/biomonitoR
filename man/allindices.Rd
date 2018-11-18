@@ -16,18 +16,6 @@
 \alias{invsimpson}
 \alias{mcintosh}
 \alias{fisher}
-\alias{berpar}
-\alias{brill}
-\alias{esimpson}
-\alias{fisher}
-\alias{invberpar}
-\alias{invsimpson}
-\alias{margalef}
-\alias{mcintosh}
-\alias{menhinick}
-\alias{pielou}
-\alias{shannon}
-\alias{simpson}
 \title{Functions for calculating diversity, eveness and dominance indices}
 \usage{
 allindices(x, taxLev = "Family", base = 2)

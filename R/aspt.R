@@ -70,7 +70,7 @@ aspt <- function( x , method = "ita", agg = NULL) {
   z <- NULL
 
   # the following if statement is to allow the users to provide their own bmwp scores and aggregation.
-  if( is.data.frame(method ) == TRUE){
+  if( is.data.frame( method ) == TRUE){
     if( is.null( agg ) == TRUE ){
       y <- method
     } else {
