@@ -40,6 +40,9 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
     stop("Non-numeric columns are not allowed")
   }
 
+  # check if x is a presence absence data.frame
+  check.pa <- any( x[ , -which( "Taxa" %in% colnames( x ) ) , drop = FALSE ]  > 1 )
+
   if(group == "mi"){
     ref <- mi_ref
   }
@@ -113,6 +116,7 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL, overwrite = F )
 
   # aggregate another time to take into account name changes
   x <- aggregate(. ~ Taxa, x, FUN = sum)
+  if( ! check.pa ) ( x <- data.frame( x[ , 1 , drop = FALSE], ( x[ , -1, drop = FALSE ] > 0 ) * 1 ) )
 
   taxa_def <- merge(ref, x, by = "Taxa", all = F)
 
