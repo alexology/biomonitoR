@@ -83,12 +83,16 @@ bmwp <- function( x , method = "ita", agg = NULL) {
   else{
     if(method == "a") (y <- aspt_h)
 
-    if(method == "ita" || method == "ita_agg") {y <- aspt_b
+    if(method == "ita") (y <- aspt_b)
+
+    if( method == "ita_agg" ) {y <- aspt_b
     z <- bfam_acc}
 
     if(method == "spa") { y <- aspt_i }
 
-    if(method == "uk" || method == "uk_agg") {y <- aspt_uk
+    if( method == "uk" ) ( y <- aspt_uk )
+
+    if( method == "uk_agg") {y <- aspt_uk
     z <- bfam_acc}
   }
 
