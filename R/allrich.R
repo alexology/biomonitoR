@@ -8,7 +8,6 @@
 #' @keywords allrich, richness
 #' @export
 #' @export richness
-#' @export abu
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
 #' data(macro_ex)

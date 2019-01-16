@@ -2,7 +2,7 @@
 #' @title abundance
 #'
 #' @description This function allow the calculation of abundances with the possibility to exlude unassigned taxon.
-#' @aliases  richness abu
+#' @aliases  richness
 #' @param x results of function aggregatoR
 #' @param taxLev taxonomic level on which the calculation has to be made.
 #' @param unassigned Does unassigned taxa need to be taken into account? If yes set unassigned to TRUE, otherwise FALSE.
@@ -10,7 +10,6 @@
 #' @details If unassigned equal to TRUE calculated abundances are equal among taxonomic levels.
 #' @export
 #' @export richness
-#' @export abu
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
 #' data(macro_ex)

@@ -3,7 +3,6 @@
 \name{abundance}
 \alias{abundance}
 \alias{richness}
-\alias{abu}
 \title{abundance}
 \usage{
 abundance(x, taxLev = "Family", unassigned = TRUE)
