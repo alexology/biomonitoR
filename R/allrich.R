@@ -2,10 +2,10 @@
 #' @title Function for calculating richness at different taxonomic levels
 #'
 #' @description This function allow the calculation of richness at different taxonomic levels and of the total abundance.
-#' @aliases  richness abu
+#' @aliases  richness
 #' @param x results of function aggregatoR
 #' @param taxLev taxonomic level on which the calculation has to be made.
-#' @keywords allrich, richness, abu
+#' @keywords allrich, richness
 #' @export
 #' @export richness
 #' @export abu
