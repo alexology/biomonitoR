@@ -92,7 +92,7 @@ aspt <- function( x , method = "ita", agg = NULL) {
     if( method == "uk" ) ( y <- aspt_uk )
 
     if( method == "uk_agg") {y <- aspt_uk
-    z <- bfam_acc}
+    z <- bfam_acc_uk}
   }
 
   for(i in 1:length(x)){
