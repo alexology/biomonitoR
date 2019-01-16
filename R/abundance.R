@@ -2,7 +2,6 @@
 #' @title abundance
 #'
 #' @description This function allow the calculation of abundances with the possibility to exlude unassigned taxon.
-#' @aliases  richness
 #' @param x results of function aggregatoR
 #' @param taxLev taxonomic level on which the calculation has to be made.
 #' @param unassigned Does unassigned taxa need to be taken into account? If yes set unassigned to TRUE, otherwise FALSE.

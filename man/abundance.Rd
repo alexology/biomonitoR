@@ -2,7 +2,6 @@
 % Please edit documentation in R/abundance.R
 \name{abundance}
 \alias{abundance}
-\alias{richness}
 \title{abundance}
 \usage{
 abundance(x, taxLev = "Family", unassigned = TRUE)
