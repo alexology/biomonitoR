@@ -1,9 +1,11 @@
+#' @describeIn allrich calculate the abundance
+
 abu <- function(x){
 
   # check if the object d is of class "biomonitoR"
   classCheck(x)
 
-  nord <- apply( x[[ "Order" ]][ , -1 , drop = F ], 2, FUN = sum)
+  nord <- apply( x[[ "Phylum" ]][ , -1 , drop = F ], 2, FUN = sum)
   return(nord)
 }
 
