@@ -128,7 +128,7 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  dfref = NULL, traitSel = FAL
     mes <- "yes"
     if( is.null( colB ) ) ( stop("Please provide colB") )
     # check if the number of traits in traitDB equals the sum of colB, otherwise stop
-    if( ( nrow( traitDB ) - 1 ) != sum( colB ) ) ( stop("The number of traits in traitDB is not equal to the sum of colB") )
+    if( ( ncol( traitDB ) - 1 ) != sum( colB ) ) ( stop("The number of traits in traitDB is not equal to the sum of colB") )
   }
 
   if( traitSel == TRUE){
