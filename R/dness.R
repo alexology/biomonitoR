@@ -5,7 +5,7 @@
 #' @param complete if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with taxLev
 #' @param taxLev taxonomic level from which the indices are to be calculated
 #' @param method available methods are delta (taxonomic diversity), delta.st (taxonomic distinctness) and delta.bin (variation in taxonomic distinctness)
-#' @param taxatree if TRUE dness return a list with results and taxonomic tree
+#' @param taxatree if TRUE dness return a list where the first element is the taxonomic diversity, taxonomic distinctness or variation of taxonomic distinctness and the second elemnt the taxonomic tree
 #' @keywords ept
 #' @references Clarke, K. R., & Warwick, R. M. (1998). A taxonomic distinctness index and its statistical properties. Journal of applied ecology, 35(4), 523-531.
 #' @references Clarke, K. R., & Warwick, R. M. (2001). A further biodiversity index applicable to species lists: variation in taxonomic distinctness. Marine ecology Progress series, 216, 265-278.

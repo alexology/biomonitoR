@@ -11,9 +11,7 @@ cwm(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL,
 \item{x}{results of function aggregatoR}
 
 \item{traitDB}{a trait data base with a column \code{Taxa} and the other columns
-containing the traits. If a trait has several modalities they should be
-named as follow: TRAIT_MODALITY.
-
+containing the traits.
 By default, the data base used is the one from Tachet \emph{et al} (2010) that
 can be retrieved from
 \href{https://www.freshwaterecology.info/}{freshwaterecology.info} website
@@ -30,7 +28,7 @@ database is needed!}
 \item{dfref}{reference database to be used when a custom trait database is provided and agg equals to TRUE.}
 
 \item{trans}{the function used to transform the abundances, by default
-\link{log1p}}
+\code{log1p}.}
 
 \item{traceB}{when set to TRUE returns a list with the results of the cwm function
 and the traits value used for the calculation.}

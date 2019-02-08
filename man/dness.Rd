@@ -16,7 +16,7 @@ dness(x, complete = FALSE, taxLev = "Genus", method = "delta",
 
 \item{method}{available methods are delta (taxonomic diversity), delta.st (taxonomic distinctness) and delta.bin (variation in taxonomic distinctness)}
 
-\item{taxatree}{if TRUE dness return a list with results and taxonomic tree}
+\item{taxatree}{if TRUE dness return a list where the first element is the taxonomic diversity, taxonomic distinctness or variation of taxonomic distinctness and the second elemnt the taxonomic tree}
 }
 \description{
 This function calculates the taxonomic diversity, taxonomic distinctness and variation of taxonomic distinctness.

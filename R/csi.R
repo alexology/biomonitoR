@@ -3,9 +3,7 @@
 #' This function calculates the community trait specialization.
 #' @param x results of function aggregatoR
 #' @param traitDB a trait data base with a column `Taxa` and the other columns
-#'   containing the traits. If a trait has several modalities they should be
-#'   named as follow: TRAIT_MODALITY.
-#'
+#'   containing the traits.
 #'   By default, the data base used is the one from Tachet *et al* (2010) that
 #'   can be retrieved from
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
@@ -18,7 +16,7 @@
 #'   database is needed!
 #' @param dfref reference database to be used when a custom trait database is provided and agg equals to TRUE.
 #' @param trans the function used to transform the abundances, by default
-#'   [log1p]
+#'   `log1p`.
 #' @param traceB when set to TRUE returns a list with the results of the cwm function
 #'   and the traits value used for the calculation.
 #'

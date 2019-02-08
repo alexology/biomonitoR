@@ -4,6 +4,11 @@
 #' @param x results of function aggregatoR.
 #' @param ntaxa number of Taxa to choose.
 #' @param taxLev taxonimc level on which the calculation has to be made.
+#' @details This function is intended to help the user to identify the best subset of taxa that correlate well with environmental variables.
+#' Metrics based on only certain taxa (EPT, 1-GOLD, etc) are currently used in biomonitoring and their are usually based on autoecological knowledge
+#' of the selected taxa. However, the relationship between an environmental variable and a subset of taxa could exist and not detected due to the actual limitations
+#' about the autoecological knowledge of a group of organsism. With more than 4 taxa the calculations should become infeasible, expecially when the number
+#' of taxa in the user dataset is high. For instance the number of combinations taken 20 at time is nearly 20000.
 #' @keywords aggregatoR
 #' @importFrom utils combn
 #' @export

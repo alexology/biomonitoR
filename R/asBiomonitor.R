@@ -4,13 +4,12 @@
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015)). Options to improve or replace the reference database are provided.
 #'
-#' @param x a data.frame as specified in details
-#' @param group biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. This option will not be considered if overwrite i set to FALSE.
+#' @param x a data.frame with a column called "Taxa" where put taxa names (species, genus, family, etc) and samples on the other columns (see the example data macro_ex).
+#' @param group biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. This option will not be considered if overwrite is set to FALSE in `dfref`.
 #' @param dfref allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database.
 #' @param overwrite if set to T the reference database is replaced with the one provided by the user.
 #' @keywords asBiomonitor
-#' @details data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
-#' asBiomonitor checks the correctness of taxa names in the data.frame provided by the user. If names are correct the function will process the data.frame to a biomonitor object, otherwise it will provide suggestions for correct names. If dfref = T a custom dictionary will be saved in the working directory.
+#' @details `asBiomonitor` checks the correctness of taxa names in the data.frame provided by the user. If names are correct the function will process the data.frame to a biomonitor object, otherwise it will provide suggestions for correct names. If dfref = T a custom dictionary will be saved in the working directory.
 #' When using the default database the taxa names provided by the user need to be consistent with the taxonomy of [freshwaterecology.info](https://www.freshwaterecology.info/), otherwise the user is asked to exit. This behaviour is to assure consistency with other functions implemented in biomonitoR.
 #' @importFrom stats aggregate
 #' @export

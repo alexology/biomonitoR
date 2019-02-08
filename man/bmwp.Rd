@@ -12,8 +12,8 @@ bmwp(x, method = "ita", agg = NULL)
 \item{method}{the implementation of BMWP needed to calculate ASPT. Possible choices are "a" (Armitage et al. 1983), "uk" (Davy-Bowker et al. 2010), "spa" (MAGRAMA 2011), "ita" (Buffagni et al . 2014). Methods "uk_agg"and "ita_agg" implement the composite family approach.
 Users can provide their own a data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Value}.}
 
-\item{agg}{a data.frame containing the specification on how to aggregate taxa. This data.frame needs a column called \emph{Taxon}
-containing the taxon to aggregate and a column called \emph{Taxon_changed} with the aggregation specifications.}
+\item{agg}{optional, a data.frame containing the specification on how to aggregate taxa. This data.frame needs a column called \emph{Taxon}
+containing the taxon to aggregate and a column called \emph{Taxon_changed} with the aggregation specifications. Used when users want to aggregate some taxonomic levels while using their own data.frame of scores (provided via \code{method}).}
 }
 \description{
 This function calculates the Biological Monitoring Working Party following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
@@ -55,7 +55,7 @@ Niphargidae \tab Gammaridae \cr
 }
 \note{
 Carefully check if your taxa list contains Ancylidae. Ancylidae is considered
-as family in italian and uk ASPT, while it is not considered a valid family by \href{https://www.freshwaterecology.info/}{freshwaterecology.info}.
+as family in italian and uk ASPT, while it is not considered a valid family by \href{https://www.freshwaterecology.info/}{freshwaterecology.info}. If Ancylidae is considered as valid family users must provide their own reference dataset containing Ancylidae to the function \code{asBiomonitor}.
 }
 \examples{
 data(macro_ex)
