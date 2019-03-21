@@ -25,8 +25,8 @@ data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 
 # calculate genus and family richness
-genNumb(data.agR)
-famNumb(data.agR)
+richness(data.agR, "Genus")
+famNumb(data.agR, "Family")
 
 # calculate shannon index
 shannon(data.agR, taxLev = "Family")
