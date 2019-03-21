@@ -10,10 +10,11 @@ eptd(x)
 \item{x}{results of function aggregatoR}
 }
 \description{
-This function calculates the log10(Sel_EPTD + 1) metric, where EPTD stands for Ephemeroptera, Plecoptera Oligochaeta and Diptera.
+This function calculates the log10(Sel_EPTD + 1) metric, where EPTD stands for Ephemeroptera, Plecoptera, Trichoptera and Diptera.
 }
 \details{
-log10(Sel_EPTD + 1) the base-10 logarithm of the abundance of the selected EPTD families plus 1.
+log10(Sel_EPTD + 1) the base-10 logarithm of the abundance of the selected EPTD families plus 1. Selected EPTD families are Heptageniidae, Ephemeridae, Leptophlebiidae, Brachycentridae, Goeridae, Polycentropodidae, Limnephilidae, Odontoceridae, Dolichopodidae, Stratiomyidae, Dixidae, Empididae, Athericidae and Nemouridae.
+This metric is part of the italian STAR_ICMi index, where it is supposed to be relate to habitat integrity.
 }
 \examples{
 data(macro_ex)

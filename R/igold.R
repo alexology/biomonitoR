@@ -1,20 +1,21 @@
-#' gold
+#' igold
 #'
-#' This function calculates the 1 - GOLD metric, where GOLD stands for Gastropoda, Oligochaeta and Diptera.
+#' This function calculates the 1 - GOLD metric, where GOLD stands for Gastropoda, Oligochaeta and Diptera. This metric should decrease with increasing organic pollution (Pinto et al., 2004).
 #' @param x results of function aggregatoR
 #' @keywords ept
 #' @details The metric 1 - GOLD is calculated as 1 minus the relative abundance of Gastropoda, Oligochaeta and Diptera. If a custom database is provided (see \code{\link{aggregatoR}}) please be sure that Gastropoda and Oligochaeta are submitted as Class and Diptera as Order, otherwise the gold calculation will be meaningless.
 #' @importFrom stats aggregate
+#' @references Pinto, P., Rosado, J., Morais, M., & Antunes, I. (2004). Assessment methodology for southern siliceous basins in Portugal. In Integrated Assessment of Running Waters in Europe (pp. 191-214). Springer, Dordrecht.
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' gold(data.agR)
+#' igold(data.agR)
 
 
-gold <- function (x){
+igold <- function (x){
 
   # check if the object x is of class "biomonitoR"
   classCheck(x, group = "mi")

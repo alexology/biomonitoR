@@ -1,7 +1,7 @@
 #' refFromTree
 #'
 #' This function transforms a taxonomic tree to a reference database suitable for biomonitoR.
-#' @param x taxonomic tree
+#' @param x taxonomic tree. See \code{\link{Tree}} for an example.
 #' @param group merge the user database with biomonitoR reference databases, default to "none". If duplicated Taxa names are present this function keeps the name provided by the user. Check the reliability of results when usin group = "mi" or group = "mf"
 #' @keywords refFromTree
 #' @export

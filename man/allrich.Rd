@@ -15,7 +15,7 @@ richness(x, taxLev = "Family")
 \item{taxLev}{taxonomic level on which the calculation has to be made.}
 }
 \description{
-This function allow the calculation of richness at different taxonomic levels and of the total abundance.
+This function allows the calculation of richness at different taxonomic levels and of the total abundance.
 }
 \section{Functions}{
 \itemize{

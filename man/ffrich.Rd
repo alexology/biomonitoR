@@ -40,7 +40,7 @@ Final number of dimensions depends on the number of positive eigenvalues (after 
 
 \item{metric}{to be used to compute functional distance, "Euclidean" or "Gower" (=default)}
 
-\item{corr_method}{TRUE will aplly the Cailliez correction.}
+\item{corr_method}{TRUE will apply the Cailliez correction, se \code{\link{cmdscale}} function of the \emph{stats} package for further information.}
 }
 \value{
 a vector with fuzzy functional richness results.

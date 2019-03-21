@@ -1,6 +1,6 @@
 #' Fuzzy coded functional redundancy
 #'
-#' This function calculates the functional richness based on trait categories.
+#' This function calculates the functional redundancy based on trait categories.
 #'
 #' Functional redundancy (FR) is measured as the difference between taxonomic
 #' diversity and functional diversity (de Bello et al., 2007). It relates positively
@@ -19,7 +19,7 @@
 #' because it has been considered more appropriate than other indices (Botta-Dukat,
 #' 2005; Ricotta, 2005). In this formula (Q) dij is the dissimilarity (ranging
 #' from 0 to 1), between species i and j based on a set of specified functional
-#' traits. This index is standardized by the maximum value to constrain the values
+#' traits (i.e. effect traits, see below). This index is standardized by the maximum value to constrain the values
 #' within the range of 0-1. Rao index is estimated using presence or abundance data
 #' and the Euclidean transformed version of the traits-based Gower dissimilarity
 #' matrix. For this, Gower's dissimilarity index (which ranges from 0 to 1) is used
@@ -33,7 +33,7 @@
 #' Brown 1993; Rosenfeld, 2002), FR and therefore functional diversity should be
 #' calculated using only effect traits. Effect traits are those biological
 #' features that directly influence a specific function of the ecosystem
-#' (e.g. productivity, nutrient cycling). See Schmera et al., 2017 for more
+#' (e.g. productivity, nutrient cycling). See Schmera et al. (2017) and Hevia et al (2017) for more
 #' information about effect traits in aquatic invertebrate communities. Regarding
 #' the interpretation of the results, when taxa within a community differ
 #' completely in their functional traits, then Q = D and thus FR = 0. On the
@@ -50,7 +50,7 @@
 #'
 #' @param x results of function aggregatoR
 #' @param traitDB a trait data base with a column `Taxa` and the other columns
-#'   containing the traits. If a trait has several modalities they should be
+#'   containing the traits. Needed only if users use their own trait database.  If a trait has several modalities they should be
 #'   named as follow: TRAIT_MODALITY.
 #'
 #'   By default, the data base used is the one from Tachet *et al* (2010) that
@@ -58,16 +58,17 @@
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
 #' @param agg should ffrich aggregate user's traitDB of higher taxonomic level? TRUE to aggregate, otherwise FALSE.
-#'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffrich will aggregate traits value if ADD = TRUE.
-#' @param traitSel interactively select traits.
-#' @param colB A vector that contains the number of modalities for each trait
+#'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffred will aggregate traits value if agg = TRUE.
+#' @param traitSel interactively select traits. See details for more info.
+#' @param colB A vector that contains the number of modalities for each trait. Needed only if users use their own trait database.
 #' @param taxLev character string giving the taxonomic level used to retrieve
 #' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #' `"Family"` as returned by the [aggregatoR] function.
-#' @param dfref reference database to be used when a custom trait database is provided and agg equals to TRUE.
-#' @param traceB if TRUE ffrich will return a list with 2 elements, the first being the ffrich values and the second the database used for the calculation. Useful to check missing taxa.
+#' @param dfref reference database to be used when a custom trait database is provided and agg = TRUE.
+#'    It should be the same reference database used in [asBiomonitor] when dfref = TRUE.
+#' @param traceB if TRUE ffred will return a list with 2 elements, the first being the ffrich values and the second the database used for the calculation. Useful to check missing taxa.
 #'
-#' @details Taxa with no traits are removed from both the trait and abundance databases.
+#' @details Taxa without traits assigned in the trait database are removed from both the trait and abundance databases.
 #' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
 #' @return a data.frame with 3 columns: Gini-Simpson richness, rao quadratic entropy and functional redundancy.\cr
 #' If traceB is set to TRUE a list is provided with:
@@ -110,6 +111,10 @@
 #' @references Guillemot, N., Kulbicki, M., Chabanet, P., & Vigliola, L. (2011).
 #'   Functional redundancy patterns reveal non-random assembly rules in a
 #'  species-rich marine assemblage. PLoS One, 6(10), e26735.
+#' @references Hevia, V., Martin‐Lopez, B., Palomo, S., Garcia‐Llorente, M., de Bello, F.,
+#'   & Gonzalez, J. A. (2017). Trait‐based approaches to analyze links between the drivers
+#'   of change and ecosystem services: Synthesizing existing evidence and future challenges.
+#'   Ecology and evolution, 7(3), 831-844.
 #' @references Hooper, D. U., Chapin, F. S., Ewel, J. J., Hector, A., Inchausti,
 #'   P., Lavorel, S., et al. (2005). Effects of biodiversity on ecosystem
 #'   functioning: a consensus of current knowledge. Ecological Monographs,
@@ -136,7 +141,7 @@
 #'
 #' @export
 
-ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Family", traceB = FALSE){
+ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Taxa", traceB = FALSE){
 
 
   # check if user provided a trait database, otherwise use traitsTachet

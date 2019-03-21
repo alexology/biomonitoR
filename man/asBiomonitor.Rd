@@ -9,7 +9,7 @@ asBiomonitor(x, group = "mi", dfref = NULL, overwrite = F)
 \arguments{
 \item{x}{a data.frame with a column called "Taxa" where put taxa names (species, genus, family, etc) and samples on the other columns (see the example data macro_ex).}
 
-\item{group}{biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. This option will not be considered if overwrite is set to FALSE in \code{dfref}.}
+\item{group}{biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. This option will not be considered if overwrite is set to TRUE.}
 
 \item{dfref}{allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database.}
 

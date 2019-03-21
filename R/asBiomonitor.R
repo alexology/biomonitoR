@@ -5,7 +5,7 @@
 #'   (Schmidt-Kloiber & Hering, 2015)). Options to improve or replace the reference database are provided.
 #'
 #' @param x a data.frame with a column called "Taxa" where put taxa names (species, genus, family, etc) and samples on the other columns (see the example data macro_ex).
-#' @param group biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. This option will not be considered if overwrite is set to FALSE in `dfref`.
+#' @param group biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. This option will not be considered if overwrite is set to TRUE.
 #' @param dfref allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database.
 #' @param overwrite if set to T the reference database is replaced with the one provided by the user.
 #' @keywords asBiomonitor

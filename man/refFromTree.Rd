@@ -7,7 +7,7 @@
 refFromTree(x, group = "none")
 }
 \arguments{
-\item{x}{taxonomic tree}
+\item{x}{taxonomic tree. See \code{\link{Tree}} for an example.}
 
 \item{group}{merge the user database with biomonitoR reference databases, default to "none". If duplicated Taxa names are present this function keeps the name provided by the user. Check the reliability of results when usin group = "mi" or group = "mf"}
 }

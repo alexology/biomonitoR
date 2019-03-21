@@ -59,7 +59,7 @@
 #' @param nbdim maximum number of dimensions for multidimensional functional spaces. By default, nbdim=7                   ##
 #'      		Final number of dimensions depends on the number of positive eigenvalues (after correction) obtained with PCoA
 #' @param metric to be used to compute functional distance, "Euclidean" or "Gower" (=default)
-#' @param corr_method TRUE will aplly the Cailliez correction.
+#' @param corr_method TRUE will apply the Cailliez correction, se \code{\link{cmdscale}} function of the *stats* package for further information.
 #'
 #' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
 #'

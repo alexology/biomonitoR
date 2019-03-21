@@ -40,7 +40,7 @@ while for "life_2017" the following are used:
 \item Hydrophilidae (inc. Georissidae, Hlophoridae, Hydrochidae)
 
 }
-Scores used for life calculation can be explored with the function code{\link{showscores}}.
+Scores used for life calculation can be explored with the function {\link{showscores}}.
 }
 \section{Acknowledgements}{
  We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated LIFE scores and algorithms.
