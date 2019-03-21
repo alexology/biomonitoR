@@ -215,7 +215,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
   trait_db <- traitDB                               %>%
     (function(df) {
       mutate(df,
-             Taxa = gsub(pattern     = "sp.|Ad.|Lv.|Gen.",
+             Taxa = gsub(pattern     = "sp.|Ad.|Lv.|Gen.|lv.|ad.|gen.",
                          replacement = "",
                          x           = Taxa))
     })                                              %>%
