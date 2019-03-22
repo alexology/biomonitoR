@@ -16,9 +16,9 @@
 #'
 #' oglio.asb <- asBiomonitor(oglio, group = "mf")
 #' oglio.agg <- aggregatoR(oglio.asb)
-#' speNumb(oglio.agg)
-#' genNumb(oglio.agg)
-#' famNumb(oglio.agg)
+#' richness(oglio.agg , taxLev = "Species")
+#' richness(oglio.agg , taxLev = "Genus")
+#' richness(oglio.agg , taxLev = "Family")
 
 aggregatoR <- function (x)
 {
