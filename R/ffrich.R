@@ -180,7 +180,7 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  dfref = NULL, traitSel = FAL
   trait_db <- traitDB                               %>%
     (function(df) {
       mutate(df,
-             Taxa = gsub(pattern     = "^sp.|^Ad.|^Lv.|^Gen.|^lv.|^ad.|^gen.",
+             Taxa = gsub(pattern     = "\\bsp.\\b|\\bAd.\\b|\\bLv.\\b|\\bGen.\\b|\\blv.\\b|\\bad.\\b|\\bgen.\\b",
                          replacement = "",
                          x           = Taxa))
     })                                              %>%
