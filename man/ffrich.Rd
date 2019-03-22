@@ -5,7 +5,7 @@
 \title{Fuzzy coded functional richness}
 \usage{
 ffrich(x, traitDB = NULL, agg = FALSE, dfref = NULL,
-  traitSel = FALSE, colB = NULL, taxLev = "Family", traceB = FALSE,
+  traitSel = FALSE, colB = NULL, taxLev = "Taxa", traceB = FALSE,
   nbdim = 7, metric = "Gower", corr_method = FALSE)
 }
 \arguments{

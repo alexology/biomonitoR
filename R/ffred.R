@@ -111,8 +111,8 @@
 #' @references Guillemot, N., Kulbicki, M., Chabanet, P., & Vigliola, L. (2011).
 #'   Functional redundancy patterns reveal non-random assembly rules in a
 #'  species-rich marine assemblage. PLoS One, 6(10), e26735.
-#' @references Hevia, V., Martin‐Lopez, B., Palomo, S., Garcia‐Llorente, M., de Bello, F.,
-#'   & Gonzalez, J. A. (2017). Trait‐based approaches to analyze links between the drivers
+#' @references Hevia, V., Martin-Lopez, B., Palomo, S., Garcia-Llorente, M., de Bello, F.,
+#'   & Gonzalez, J. A. (2017). Trait-based approaches to analyze links between the drivers
 #'   of change and ecosystem services: Synthesizing existing evidence and future challenges.
 #'   Ecology and evolution, 7(3), 831-844.
 #' @references Hooper, D. U., Chapin, F. S., Ewel, J. J., Hector, A., Inchausti,

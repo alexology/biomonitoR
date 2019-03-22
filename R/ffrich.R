@@ -107,7 +107,7 @@
 #'
 #' @export
 
-ffrich <- function(x, traitDB = NULL, agg = FALSE,  dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Family", traceB = FALSE, nbdim = 7, metric = "Gower", corr_method = FALSE){
+ffrich <- function(x, traitDB = NULL, agg = FALSE,  dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Taxa", traceB = FALSE, nbdim = 7, metric = "Gower", corr_method = FALSE){
 
   # check if user provided a trait database, otherwise use traitsTachet
   # if traitsTachet has to be used check for class biomonitoR and "mi"
