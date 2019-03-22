@@ -325,7 +325,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
     raoQ <- divc( abundances, quasieuclid( dist_tr ), scale = TRUE )$diversity
   }
   FRed <- tax_sim - raoQ
-  Fred[ Fred < 0 ] <- 0
+  FRed[ FRed < 0 ] <- 0
 
   res <- data.frame(GS_rich = tax_sim, raoQ = raoQ, fred = FRed)
   rownames( res ) <- st.names
