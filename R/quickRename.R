@@ -16,35 +16,38 @@
 
 
 quickRename <- function(x, group = "mi", write.table=FALSE){
-
+  
   if(is.null(group) == TRUE){
     stop("Please provide a valid group")
   }
-
+  
   dfName <- deparse(substitute(x))
   tempNames <- suggestUserNames(x, group = group)
-
+  
   if(length(tempNames) == 0){
     message("All names are correct")
     return(x)
   }
   else{
-  wrong <- tempNames$wrongNames
-  correct <- tempNames$correctNames
-  result <- as.character(x$Taxa)
-  n <- length(wrong)
-  if (length(wrong)!=length(correct)) {
-    stop("pattern and replacement do not have the same length.")
-  }
-  for(i in 1:n){
-    result[which(result == wrong[i])] <- correct[i]
-  }
-  x$Taxa <- result
-  if(write.table == TRUE){
-    dfNameChange <- paste0(dfName, "_mod",".txt")
-    write.table(x, file=dfNameChange, quote = FALSE, append = FALSE)
-  }
-  x$Taxa <- factor(sub("_", " ", x$Taxa))
-  return(x)
+    wrong <- tempNames$wrongNames
+    correct <- tempNames$correctNames
+    result <- as.character(x$Taxa)
+    n <- length(wrong)
+    if (length(wrong)!=length(correct)) {
+      stop("pattern and replacement do not have the same length.")
+    }
+    for(i in 1:n){
+      result[which(result == wrong[i])] <- correct[i]
+    }
+    x$Taxa <- result
+    if(write.table == TRUE){
+      dfNameChange <- paste0(dfName, "_mod",".txt")
+      write.table(x, file=dfNameChange, quote = FALSE, append = FALSE)
+    }
+    if( any( x$Taxa == "REMOVe" ) ){
+      x <- x[ x$Taxa != "REMOVe" , ] 
+    }
+    x$Taxa <- factor(sub("_", " ", x$Taxa))
+    return(x)
   }
 }
