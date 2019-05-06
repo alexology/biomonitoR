@@ -76,9 +76,8 @@
 #'  \item **results**: results of the ffred function;
 #'  \item **traits**: a data.frame containing the traits used for the calculations;
 #'  \item **taxa**: a data.frame conaining the taxa used for th calculations;
-#'  \item **taxa_not_used**: a vector conaining the names of the taxa exluded from the calculations. Taxa are excluded from the calculations if they have NA values at least in one of the trait modalities;
-#'  \item **problematic traits**: traits containing NAs for *taxa_not_used*
-#'  \item **traits_not_used**: trait modalities excluded from the calculations because they have 0 value for each species.
+#'  \item **taxa_excluded**: a vector conaining the names of the taxa exluded from the calculations;
+#'  \item **NA_detection**: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
 #' }
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
@@ -290,33 +289,25 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
   # be sure that taxa_traits contains only the Taxa present in the user's community data
   taxa_traits <- taxa_traits[ taxa_traits[, "Taxa"]  %in% abundances[, "Taxa"] , ]
   taxa_trace <- taxa_traits
-  # remove NA from the rows. Sometimes happens that a trait for a species is set to NA
-  taxa_traits <- taxa_traits[complete.cases(taxa_traits[ , -which( names( taxa_traits ) %in% "Taxa") , drop = F]), ]
-  taxa_traits_name <- as.character(taxa_traits$Taxa)
-  taxa_traits <- taxa_traits[ , -which( names( taxa_traits ) %in% "Taxa") , drop = F]
+  # be sure that user dataframe contains only taxa present in taxa_traits
+  # find rows with only NA
+  tr.rm <- apply( taxa_traits[ , -1 ] , 1 , function( x ) sum( is.na( x ) ) ) != ncol( taxa_traits[ , -1 ] )
+  taxa_traits <- taxa_traits[ tr.rm , ]
+  rownames( taxa_traits) <- NULL
+  taxa.excluded <- as.character( abundances[ ! abundances$Taxa %in%  taxa_traits$Taxa , ]$Taxa )
+  abundances <- abundances[ abundances$Taxa %in%  taxa_traits$Taxa , ]
 
-  # remove categories with sum = 0, we don't want traits equals to zero
-  cl.rm <- colSums(taxa_traits) > 0
-  taxa_traits <- taxa_traits[ , cl.rm , drop = F ]
-
-  #remove traits with incomplete cases and sum = 0
-
-  Index <- rep( 1:length( colB ), colB)
-  colB <- as.vector( table( Index[ cl.rm ] ) )
-
-  if( any( colB < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
-
-  tr_prep <- prep.fuzzy( taxa_traits, col.blocks = colB)
+  tr_prep <- prep.fuzzy( taxa_traits[ , -1 ], col.blocks = colB)
   # check for the problematic traits
   pr.tr <- names(tr_prep[ , is.na( colSums( tr_prep ) )])
   # remove rows also in abundances
-  abundances <- abundances[ as.character(abundances$Taxa) %in% taxa_traits_name[ complete.cases( tr_prep ) ], ]
-  abu.names <- abundances[ , "Taxa" ]
-  tr_prep <- tr_prep[ complete.cases( tr_prep ), ]
   tr_ktab <- ktab.list.df( list( tr_prep ) )
   dist_tr <- dist.ktab( tr_ktab, "F" )
 
+  abu.names <- abundances[ , "Taxa" ]
   abundances <- abundances[ , -which( names( abundances ) %in% "Taxa") , drop = FALSE ]
+  abu.t <- t( as.matrix( abundances ) )
+  colnames(abu.t) <- c( 1:ncol( abu.t ) )
 
   tax_sim <- divc( abundances )$diversity
   if( is.euclid( dist_tr ) ){
@@ -324,6 +315,7 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
   } else {
     raoQ <- divc( abundances, quasieuclid( dist_tr ), scale = TRUE )$diversity
   }
+
   FRed <- tax_sim - raoQ
   FRed[ FRed < 0 ] <- 0
 
@@ -333,21 +325,18 @@ ffred <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE
     return( res )
   }
   if(traceB == TRUE){
-    if( length( abu.names ) == length( taxa ) ) { ta.miss <- "none"} else {
-      ta.miss <- taxa[ ! taxa %in% abu.names ]
-    }
-    # list the traits that have not been used for the calculation, because they summed to 0
-    if( length( names(tr_prep) == length( names( traitDB  ) ) ) ) { tr.miss <- "none" } else {
-      tr.n <- names( traitDB  ) # trait names in traitDB
-      tr.s <- names( tr_prep ) # trait names used for the calculation
-      tr.miss <- tr.n[ ! tr.n %in% tr.s ]
-    }
-    if( length( pr.tr ) == 0 ) { tr.pr <- "none" } else { tr.pr <- pr.tr }
+    # chech for NA, it could happen that a trait is filled with NAs
+    if( any( is.na( tr_prep ) == TRUE ) ){
+      tax.na <- as.data.frame( which( is.na( tr_prep ) , arr.ind = T ) )
+      tax.na[ , 1 ] <- taxa_traits[ tax.na[ , 1 ] , 1 ]
+      tax.na[ , 2 ] <- colnames( taxa_traits[ , -1 ] )[ tax.na[ , 2 ]  ]
+      colnames( tax.na ) <- c( "Taxa" , "Traits" )
+      tax.na <- tax.na[ order( tax.na[ , 1 ] ) ,  ]
+    } else { tax.na <- "No NAs detected" }
 
     res.list <- list( res, data.frame( Taxa = abu.names, tr_prep ),
-                      data.frame( Taxa = abu.names, abundances ), ta.miss, tr.pr , tr.miss  )
-    names( res.list ) <- c( "results" , "traits" , "taxa", "taxa_not_used", "problematic_traits", "traits_not_used" )
+                      data.frame( Taxa = abu.names, abundances ) , taxa.excluded , tax.na )
+    names( res.list ) <- c( "results" , "traits" , "taxa" , "taxa_excluded", "NA_detection" )
     return( res.list )
   }
-
 }

@@ -4,7 +4,7 @@
 
 
 qfs <- function(x, nbdim = nbdim, metric = metric, corr_method = corr_method){
-  if( anyNA(x) ) {  warning(" NA detected in 'x' ")     }
+  if( anyNA(x) ) {  warning(" NA detected in 'x'. Please run ffrich with traceB = TRUE to get taxa and traits with NAs ")     }
   if ( nbdim < 2)   {  stop(" 'nbdim' must be higher than 1")     }
   if ( nrow( x ) < 3 )   {  stop(" there must be at least 3 species in 'x' ")     }
   if ( metric == "Euclidean" & ! any( apply( x , 2 , is.numeric ) ) )  { stop("using Euclidean distance requires that all traits are continuous")   }

@@ -1,6 +1,6 @@
-#' Fuzzy coded functional dispersion
+#' Fuzzy coded functional eveness
 #'
-#' FDis is defined as the mean distance in multidimensional trait space of individual species to the centroid of all species (Laliberte & Legendre, 2010).
+#' TBD
 #'
 #' @param x results of function aggregatoR
 #' @param traitDB a trait data base with a column `Taxa` and the other columns
@@ -12,7 +12,7 @@
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
 #' @param agg should ffrich aggregate user's traitDB of higher taxonomic level? TRUE to aggregate, otherwise FALSE.
-#'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffdisp will aggregate traits value if agg = TRUE.
+#'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffred will aggregate traits value if agg = TRUE.
 #' @param traitSel interactively select traits. See details for more info.
 #' @param colB A vector that contains the number of modalities for each trait. Needed only if users use their own trait database.
 #' @param taxLev character string giving the taxonomic level used to retrieve
@@ -20,6 +20,7 @@
 #' `"Family"` as returned by the [aggregatoR] function.
 #' @param dfref reference database to be used when a custom trait database is provided and agg = TRUE.
 #'    It should be the same reference database used in [asBiomonitor] when dfref = TRUE.
+#' @param correction Options are *sqrt*, *cailliez*, *lingoes*, or *none*. Default to *none*. See \link[FD]{dbFD} for more details.
 #' @param traceB if TRUE ffred will return a list with 2 elements, the first being the ffrich values and the second the database used for the calculation. Useful to check missing taxa.
 #'
 #' @details Taxa without traits assigned in the trait database are removed from both the trait and abundance databases.
@@ -34,25 +35,24 @@
 #'  \item **NA_detection**: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
 #' }
 #'
-#' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup inner_join
+#' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread
 #' @importFrom stats complete.cases na.omit
 #' @importFrom ade4 ktab.list.df dist.ktab prep.fuzzy divc quasieuclid is.euclid
-#' @importFrom FD fdisp
+#' @importFrom FD dbFD
 #'
 #' @examples
 #' data(macro_ex)
 #'
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' ffdisp(data.agR)
+#' ffeve(data.agR)
 #'
 #' @seealso [aggregatoR]
 #' @references Laliberte, E., & Legendre, P. (2010). A distance-based framework for measuring functional diversity from multiple traits. Ecology, 91(1), 299-305.
 #' @export
 
-
-ffdisp <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Taxa", traceB = FALSE){
+ffeve <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Taxa", correction = "none", traceB = FALSE){
 
 
   # check if user provided a trait database, otherwise use traitsTachet
@@ -216,12 +216,15 @@ ffdisp <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALS
   tr_ktab <- ktab.list.df( list( tr_prep ) )
   dist_tr <- dist.ktab( tr_ktab, "F" )
 
+
   abu.names <- abundances[ , "Taxa" ]
   abundances <- abundances[ , -which( names( abundances ) %in% "Taxa") , drop = FALSE ]
   abu.t <- t( as.matrix( abundances ) )
   colnames(abu.t) <- c( 1:ncol( abu.t ) )
 
-  res <- fdisp( d= dist_tr , a =  abu.t )$FDis
+  res <- dbFD( tr_prep, abu.t , corr = correction , calc.FRic = F )$FEve
+
+  res[ which( is.na( res ) ) ] <- 0
 
   names( res ) <- st.names
 
@@ -244,5 +247,3 @@ ffdisp <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALS
     return( res.list )
   }
 }
-
-

@@ -23,7 +23,7 @@ ricTax <-  function(x , taxa = NULL, taxLev = NULL){
     stop("Please provide a taxon name and/or a taxonomic level")
   }
 
-  # Allow the user to provide a single taxonomic level for all the slected taxa
+  # Allow the user to provide a single taxonomic level for all the selected taxa
   if(length(taxa) > 1 & length(taxLev) == 1){
     taxLev <- rep(taxLev, length(taxa))
   }

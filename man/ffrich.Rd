@@ -49,9 +49,8 @@ a vector with fuzzy functional richness results.
 \item \strong{traits}: a data.frame containing the traits used for the calculations;
 \item \strong{taxa}: a data.frame conaining the taxa used for th calculations;
 \item \strong{nbdim}: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
-\item \strong{taxa_not_used}: a vector conaining the names of the taxa exluded from the calculations. Taxa are excluded from the calculations if they have NA values at least in one of the trait modalities;
-\item \strong{problematic traits}: traits containing NAs for \emph{taxa_not_used}
-\item \strong{traits_not_used}: trait modalities excluded from the calculations because they have 0 value for each species.
+\item \strong{taxa_excluded}: a vector conaining the names of the taxa exluded from the calculations;
+\item \strong{NA_detection}: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
 }
 }
 \description{

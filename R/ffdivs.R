@@ -1,6 +1,6 @@
-#' Fuzzy coded functional dispersion
+#' Fuzzy coded functional diversity
 #'
-#' FDis is defined as the mean distance in multidimensional trait space of individual species to the centroid of all species (Laliberte & Legendre, 2010).
+#' TBD
 #'
 #' @param x results of function aggregatoR
 #' @param traitDB a trait data base with a column `Taxa` and the other columns
@@ -12,7 +12,7 @@
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
 #' @param agg should ffrich aggregate user's traitDB of higher taxonomic level? TRUE to aggregate, otherwise FALSE.
-#'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffdisp will aggregate traits value if agg = TRUE.
+#'    For instance, if user's traitDB has both Halesus and Limnephilidae, ffred will aggregate traits value if agg = TRUE.
 #' @param traitSel interactively select traits. See details for more info.
 #' @param colB A vector that contains the number of modalities for each trait. Needed only if users use their own trait database.
 #' @param taxLev character string giving the taxonomic level used to retrieve
@@ -24,7 +24,7 @@
 #'
 #' @details Taxa without traits assigned in the trait database are removed from both the trait and abundance databases.
 #' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
-#' @return A vector with functional dispersion results.\cr
+#' @return a data.frame with 3 columns: Gini-Simpson richness, rao quadratic entropy and functional redundancy.\cr
 #' If traceB is set to TRUE a list is provided with:
 #' \enumerate{
 #'  \item **results**: results of the ffred function;
@@ -34,25 +34,67 @@
 #'  \item **NA_detection**: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
 #' }
 #'
-#' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup inner_join
+#' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread
 #' @importFrom stats complete.cases na.omit
 #' @importFrom ade4 ktab.list.df dist.ktab prep.fuzzy divc quasieuclid is.euclid
-#' @importFrom FD fdisp
 #'
 #' @examples
 #' data(macro_ex)
 #'
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' ffdisp(data.agR)
+#' ffdivs(data.agR)
 #'
 #' @seealso [aggregatoR]
-#' @references Laliberte, E., & Legendre, P. (2010). A distance-based framework for measuring functional diversity from multiple traits. Ecology, 91(1), 299-305.
+#'
+#' @references Biggs, R., Schluter, M., Biggs, D., Bohensky, E. L., BurnSilver, S.,
+#'   Cundill, G., ... & Leitch, A. M. (2012). Toward principles for enhancing the
+#'   resilience of ecosystem services. Annual Review of Environment and Resources,
+#'   37, 421-448.
+#' @references Botta-Dukat, Z. (2005). Rao's quadratic entropy as a measure of
+#'   functional diversity based on multiple traits. Journal of Vegetation Science,
+#'   16(5), 533-540.
+#' @references de Bello, F., Leps, J., Lavorel, S., & Moretti, M. (2007).
+#'   Importance of species abundance for assessment of trait composition:
+#'   an example based on pollinator communities. Community Ecology, 8(2), 163-170.
+#' @references Elmqvist, T., Folke, C., Nystrom, M., Peterson, G.,
+#'   Bengtsson, J., Walker, B., & Norberg, J. (2003). Response diversity, ecosystem
+#'   change, and resilience. Frontiers in Ecology and the Environment, 1(9), 488-494.
+#' @references Guillemot, N., Kulbicki, M., Chabanet, P., & Vigliola, L. (2011).
+#'   Functional redundancy patterns reveal non-random assembly rules in a
+#'  species-rich marine assemblage. PLoS One, 6(10), e26735.
+#' @references Hevia, V., Martin-Lopez, B., Palomo, S., Garcia-Llorente, M., de Bello, F.,
+#'   & Gonzalez, J. A. (2017). Trait-based approaches to analyze links between the drivers
+#'   of change and ecosystem services: Synthesizing existing evidence and future challenges.
+#'   Ecology and evolution, 7(3), 831-844.
+#' @references Hooper, D. U., Chapin, F. S., Ewel, J. J., Hector, A., Inchausti,
+#'   P., Lavorel, S., et al. (2005). Effects of biodiversity on ecosystem
+#'   functioning: a consensus of current knowledge. Ecological Monographs,
+#'   75(1), 3-35.
+#' @references Lawton, J.H. & Brown, V.K. (1993) Redundancy in ecosystems.
+#'   Biodiversity and Ecosystem Function (eds E.-D. Schulze & H.A. Mooney),
+#'   pp. 255-270. Springer-Verlag, Berlin.
+#' @references Pillar, V. D., Blanco, C. C., Muller, S. C., Sosinski, E. E.,
+#'   Joner, F., & Duarte, L. D. (2013). Functional redundancy and stability
+#'   in plant communities. Journal of Vegetation Science, 24(5), 963-974.
+#' @references Podani, J. (1999). Extending Gower's general coefficient of
+#'   similarity to ordinal characters. Taxon, 331-340.
+#' @references Rao, C. R. (1982). Diversity and dissimilarity coefficients:
+#'   a unified approach. Theoretical population biology, 21(1), 24-43.
+#' @references Ricotta, C. (2005). A note on functional diversity measures.
+#'   Basic and Applied Ecology, 6(5), 479-486.
+#' @references Rosenfeld, J. S. (2002). Functional redundancy in ecology
+#'   and conservation. Oikos, 98(1), 156-162.
+#' @references Schmera, D., Heino, J., Podani, J., Eros, T., & Doledec, S. (2017).
+#'   Functional diversity: a review of methodology and current knowledge in
+#'   freshwater macroinvertebrate research. Hydrobiologia, 787(1), 27-44.
+#' @references Walker, B. H. (1992). Biodiversity and ecological redundancy.
+#'   Conservation biology, 6(1), 18-23.
+#'
 #' @export
 
-
-ffdisp <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Taxa", traceB = FALSE){
+ffdivs <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALSE, colB = NULL, taxLev = "Taxa", traceB = FALSE){
 
 
   # check if user provided a trait database, otherwise use traitsTachet
@@ -196,6 +238,7 @@ ffdisp <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALS
         data.frame(Taxa = taxa, ., stringsAsFactors = FALSE)
     })
   # order the traits as in the original data.frame (tratiDB)
+  # order the traits as in the original data.frame (tratiDB)
   taxa_traits <- taxa_traits[ , match( names( traitDB ), names( taxa_traits ) ) ]
   taxa_traits <- as.data.frame(taxa_traits)
   # be sure that taxa_traits contains only the Taxa present in the user's community data
@@ -221,7 +264,13 @@ ffdisp <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALS
   abu.t <- t( as.matrix( abundances ) )
   colnames(abu.t) <- c( 1:ncol( abu.t ) )
 
-  res <- fdisp( d= dist_tr , a =  abu.t )$FDis
+  if( is.euclid( dist_tr ) ){
+    raoQ <- divc( abundances, dist_tr , scale = T)$diversity
+  } else {
+    raoQ <- divc( abundances, quasieuclid( dist_tr ), scale = TRUE )$diversity
+  }
+
+  res <- raoQ
 
   names( res ) <- st.names
 
@@ -243,6 +292,5 @@ ffdisp <- function(x, traitDB = NULL, agg = FALSE, dfref = NULL, traitSel = FALS
     names( res.list ) <- c( "results" , "traits" , "taxa" , "taxa_excluded", "NA_detection" )
     return( res.list )
   }
+
 }
-
-
