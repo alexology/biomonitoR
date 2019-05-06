@@ -20,7 +20,7 @@ abuTax <- function(x, taxa = NULL, rel = FALSE){
   classCheck(x)
 
   # stop if user does not provide a taxon name
-  if(is.null(taxa) == T || taxa == ""){
+  if( is.null(taxa) == T || ( any( taxa == "" ) & length( taxa ) == 1 ) ){
     stop("Please provide a taxon name")
   }
 
