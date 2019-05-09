@@ -4,12 +4,12 @@
 \alias{ambiguousSolver}
 \title{ambiguousSolver}
 \usage{
-ambiguousSolver(x, method = "higher")
+ambiguousSolver(x, method = "MCWP")
 }
 \arguments{
 \item{x}{result of function aggregatoR.}
 
-\item{method}{only method \emph{higher} is currently implemented. See details.}
+\item{method}{only method \emph{RPKC} and \emph{MCWP} is currently implemented. See details.}
 }
 \description{
 Solve the ambiguous assignment of taxa.
