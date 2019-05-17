@@ -45,7 +45,7 @@ whpt <- function(x, taxLev = "Family", type = "ab", method = "aspt", composite =
   }
 
   if(taxLev != "Family"){
-    stop("Species level WHPT not implemented yet")
+    stop("Please provide a valid taxLev. Remeber that only family level is currently implemented in the default settings.")
   }
 
 
