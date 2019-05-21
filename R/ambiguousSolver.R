@@ -75,5 +75,6 @@ ambiguousSolver <- function( x , method = "MCWP" ){
 
   }
 
+  df <- aggregate( . ~ Taxa , data = df , FUN = sum )
   df
 }
