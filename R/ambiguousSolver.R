@@ -47,6 +47,7 @@ ambiguousSolver <- function( x , method = "MCWP" ){
     taxa.pc[ taxa %in% taxa.acc ] <- FALSE
 
     df <- x[["Taxa"]][ taxa.pc , ]
+    names( df )[ 1 ] <- "Taxa"
   }
 
   if( method == "MCWP"){
