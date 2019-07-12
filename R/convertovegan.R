@@ -1,10 +1,14 @@
 #' convertovegan
 #'
-#' An utility function to export data to a vegan like format, with taxa on the columns and samples on the rows.
+#' An utility function to export data to other formats.
 #' @param x results of aggregatoR function
 #' @param taxLev taxonomic level of interest. Possible choices are Phylum, Class, Subclass, Order, Family, Subfamily, Tribus, Genus, Species, Subspecies, Taxa
 #' @keywords convertovegan
+#' @details `convertovegan` converts data to a vegan style format, with sites on rows and taxa on columns. `convertovegan` converts data to
+#' the format of biotic package. For Oligochaeta, if both family and above family level taxonomic information are concurrently present,
+#' information will be provided at Oligochaeta level.
 #' @export
+#' @export convertobiotic
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
 #' data(macro_ex)
