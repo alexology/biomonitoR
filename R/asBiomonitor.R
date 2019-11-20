@@ -38,8 +38,12 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL ){
     stop("Non-numeric columns are not allowed")
   }
 
+
   # check if x is a presence absence data.frame
   check.pa <- any( x[ , -which( "Taxa" %in% colnames( x ) ) , drop = FALSE ]  > 1 )
+
+  check.na <- any(  is.na( x ) )
+  x[ is.na( x)] <- 0
 
   if(group == "mi"){
     ref <- mi_ref
@@ -91,7 +95,14 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL ){
 
   # aggregate another time to take into account name changes
   x <- aggregate(. ~ Taxa, x, FUN = sum)
-  if( ! check.pa ) ( x <- data.frame( x[ , 1 , drop = FALSE], ( x[ , -1, drop = FALSE ] > 0 ) * 1 ) )
+  if( ! check.pa ) {
+    x <- data.frame( x[ , 1 , drop = FALSE], ( x[ , -1, drop = FALSE ] > 0 ) * 1 )
+    message( "data imported as presence absence" )
+  }
+
+  if( isTRUE( check.na ) ){
+    message( "NA detected, transformed to 0" )
+  }
 
   taxa_def <- merge(ref, x, by = "Taxa", all = F)
 
@@ -105,10 +116,12 @@ asBiomonitor <- function (x, group = "mi", dfref = NULL ){
     class(taxa_def) <- c("biomonitoR", "custom")
   }
 
-  if( is.null(mes) == F ){
+  if( is.null( mes ) == F ){
     message( mes )
     taxa_def
   }
+
+
 
   else{ taxa_def }
 }

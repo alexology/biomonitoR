@@ -38,6 +38,12 @@ refFromTree <- function(x, group = "none"){
     stop("Provide valid column names")
   }
 
+  # reorder user data.frame according to biomonitoR taxa tree
+  value.match <- match( taxa.col , names( x ) )
+  x <- x[ , value.match[ ! is.na( value.match ) ] ]
+
+  cref.name <- colnames( x )
+
   for(i in 1:n){
     temp.name <- colnames( x[ , i, drop = FALSE] )
     temp.pos <- which(cref.name == temp.name)
@@ -64,6 +70,7 @@ refFromTree <- function(x, group = "none"){
   # check for duplicates or errors
 
   df <- as.data.frame( df )
+  df <- df[ ! duplicated( df ) , ]
 
   s.mes <- checkTree(df)
   if(is.null(s.mes) == FALSE){
