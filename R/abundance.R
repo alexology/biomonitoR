@@ -24,7 +24,7 @@ abundance <- function( x , taxLev = "Family" , unassigned = TRUE ){
 
   if( unassigned == TRUE ){
     if( "unassigned" %in% tax[,1] ){
-      z <- which( tax$Taxon == "unassigned" )
+      z <- which( tax[ , 1 ] == "unassigned" )
       tax <- tax[ -z , ] # remove unassigned row from the species count
     }
   }
