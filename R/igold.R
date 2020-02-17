@@ -26,7 +26,7 @@ igold <- function (x){
   stz <- x_gold[!(names(x_gold) %in% tx)]
   stz_n <- names(stz)     # station names
   gold_taxa <- x_gold[which(x_gold$Class == "Gastropoda" |
-                            x_gold$Class == "Oligochaeta" | x_gold$Order == "Diptera"), , drop=F]
+                            x_gold$Subclass == "Oligochaeta" | x_gold$Order == "Diptera"), , drop=F]
   if(nrow(gold_taxa)==0){
     gold_taxa[1,-1] <- rep(0, ncol(gold_taxa)-1)
     return(gold_taxa[,-1])
