@@ -30,8 +30,9 @@ ept <- function (x, taxLev = "Family"){
   ept_taxa <- x_ept[which(x_ept$Order == "Plecoptera" |
                             x_ept$Order == "Ephemeroptera" | x_ept$Order == "Trichoptera"), , drop=F]
   if(nrow(ept_taxa)==0){
-    ept_taxa[1,-1] <- rep(0, ncol(ept_taxa)-1)
-    return(ept_taxa[,-1])
+    res_null <- rep(0, length( stz_n ) )
+    names( res_null ) <- stz_n
+    return( res_null )
   } else {
     ept_temp <- ept_taxa[,c(taxLev,stz_n)]
     colnames(ept_temp)[1] <- "selection"
