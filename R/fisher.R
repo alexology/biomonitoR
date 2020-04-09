@@ -1,18 +1,20 @@
 #' @describeIn allindices Fisher alpha
 
-fisher <- function(x, taxLev = "Family"){
+fisher <- function( x , taxLev = "Taxa" ){
 
   # check if the object d is of class "biomonitoR"
+  classCheck( x )
 
-  classCheck(x)
+  # get the data.frame at the desired taxonomic level
+  df <-  x[[ taxLev ]]
 
-  df <-  x[[taxLev]]
-  if("unassigned" %in% df[ , 1]){
-    z <- which(df[ ,1 ] == "unassigned")
-    df<- df[ -z ,] # remove unassigned row from the species count
+  # remove unassigned row from the species count if present
+  if( "unassigned" %in% df[ , 1 ] ){
+    z <- which( df[ , 1 ] == "unassigned" )
+    df <- df[ -z , ]
   }
 
-  res <- apply(df[ , -1, drop = FALSE ], 2, FUN = function(x){Pi( x, index = "Fisher")})
-
-  return( res )
+  # apply the function for calculating the Fisher alpha that is stored in the Pi.R file
+  res <- apply( df[ , -1 , drop = FALSE ] , 2 , FUN = function( x ){ Pi( x , index = "Fisher" ) } )
+  res
 }

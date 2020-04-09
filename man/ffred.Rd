@@ -4,8 +4,16 @@
 \alias{ffred}
 \title{Fuzzy coded functional redundancy}
 \usage{
-ffred(x, traitDB = NULL, agg = FALSE, dfref = NULL,
-  traitSel = FALSE, colB = NULL, taxLev = "Taxa", traceB = FALSE)
+ffred(
+  x,
+  traitDB = NULL,
+  agg = FALSE,
+  dfref = NULL,
+  traitSel = FALSE,
+  colB = NULL,
+  taxLev = "Taxa",
+  traceB = FALSE
+)
 }
 \arguments{
 \item{x}{results of function aggregatoR}

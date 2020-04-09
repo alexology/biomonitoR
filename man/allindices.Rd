@@ -16,17 +16,17 @@
 \alias{invsimpson}
 \alias{mcintosh}
 \alias{fisher}
-\title{Functions for calculating diversity, eveness and dominance indices}
+\title{Functions for calculating diversity, eveness and dominance indices.}
 \usage{
-allindices(x, taxLev = "Family", base = 2)
+allindices(x, taxLev = "Taxa", base = exp(1))
 
-berpar(x, taxLev = "Family")
+berpar(x, taxLev = "Taxa")
 
-brill(x, taxLev = "Family")
+brill(x, taxLev = "Taxa")
 
-esimpson(x, taxLev = "Family")
+esimpson(x, taxLev = "Taxa")
 
-fisher(x, taxLev = "Family")
+fisher(x, taxLev = "Taxa")
 
 invberpar(x, taxLev = "Family")
 
@@ -40,27 +40,54 @@ menhinick(x, taxLev = "Family")
 
 pielou(x, base = 2, taxLev = "Family")
 
-shannon(x, base = 2, taxLev = "Family")
+shannon(x, base = exp(1), taxLev = "Taxa")
 
 simpson(x, taxLev = "Family")
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{result of the function aggregatoR}
 
-\item{taxLev}{taxonimc level on which the calculation has to be made.}
+\item{taxLev}{taxonomic level on which the calculation has to be made.}
 
 \item{base}{the base of the logarithm}
 }
 \description{
 Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
 }
+\details{
+Shannon index:
+\deqn{H'=-\sum_{i=1}^{S} p_{i}\log(p_{i})}
+Margalef diversity:
+\deqn{D_{mg}=\frac{(S - 1)}{\log(N)}}
+Menhinick diversity:
+\deqn{D_{mn}=\frac{S}{\sqrt(N)}}
+Brillouin index:
+\deqn{HB=\frac{\log(N) -\sum(\log(n_{i})) }{N}}
+Simpson's index is calculated as D. biomonitoR returns 1 - D and 1/D when \code{index} is set to \code{Simpson} or \code{Invsimpson}.
+\deqn{D=\sum_{i=1}^{S} p_{i}^{2}}
+Simpson's evenness:
+\deqn{D_{1/D}=\frac{1/D}{\sqrt(S)}}
+Berger-Parker index:
+\deqn{d=\frac{N_{max}}{N}}
+The inverse of this index is also provided when \code{index} is set to \code{Invberpar}. McIntosh's diversity:
+\deqn{D=\frac{N-U}{N-\sqrt(N)}}
+where
+\deqn{U=\sqrt(\sum_{i=1}^{S} n_{i}^{2})}
+Fisher alpha is calculated as follow:
+\deqn{\alpha=\frac{N(1-x)}{x}}
+where x is estimated from the iterative solution of:
+\deqn{\frac{S}{N}=-\frac{N(1-x)}{x} \log(1-x)}
+
+p_i is the proportion of individuals found in the i-th species, n_i is the number of individuals found in the i-th species, S the species richness,
+N the number of individuals and N_max the number of individuals in the most abundant species. All the indices are calculated according to Magurran (2004).
+}
 \section{Functions}{
 \itemize{
-\item \code{berpar}: Berger-Parker dominance index
+\item \code{berpar}: Berger-Parker index
 
 \item \code{brill}: Brillouin index
 
-\item \code{esimpson}: Simpson's Index
+\item \code{esimpson}: Simpson's evenness
 
 \item \code{fisher}: Fisher alpha
 
@@ -90,6 +117,9 @@ shannon(data.agR)
 
 # natural logarithm
 shannon(data.agR, base=exp(1))
+}
+\references{
+Magurran, A. E. (2004). Measuring biological diversity. Blackwell Science ltd.
 }
 \seealso{
 \code{\link{aggregatoR}}

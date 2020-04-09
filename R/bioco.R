@@ -82,6 +82,7 @@ bioco <- function( x , alien = NULL , dfref = NULL ){
   x.taxa <- x[[ "Tree" ]]
   x.taxa <- x.taxa[ x.taxa[ , "Taxa" ] %in% getAlienAll , ]
   x.taxa <- x.taxa[ , colnames( x.taxa ) %in% c( "Family" , st.names ) ]
+  x.taxa <- aggregate(  as.formula( paste( ". ~ " ,  as.name( "Family" ) ) ) , data = x.taxa ,  FUN = sum  )
 
   abu.alien <- apply( x.taxa[ , -1 , drop = FALSE ] , 2 , sum )
   tax.alien <- apply( x.taxa[ , -1 , drop = FALSE ] , 2 , function( x ) sum( x > 0 ) )

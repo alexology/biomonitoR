@@ -4,8 +4,15 @@
 \alias{csi}
 \title{Community trait specialization}
 \usage{
-csi(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL,
-  trans = log1p, traceB = FALSE)
+csi(
+  x,
+  traitDB = NULL,
+  taxLev = "Taxa",
+  agg = FALSE,
+  dfref = NULL,
+  trans = log1p,
+  traceB = FALSE
+)
 }
 \arguments{
 \item{x}{results of function aggregatoR}

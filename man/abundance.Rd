@@ -4,20 +4,20 @@
 \alias{abundance}
 \title{abundance}
 \usage{
-abundance(x, taxLev = "Family", unassigned = TRUE)
+abundance(x, taxLev = "Family", unassigned = FALSE)
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{result of the function aggregatoR}
 
 \item{taxLev}{taxonomic level on which the calculation has to be made.}
 
 \item{unassigned}{Does unassigned taxa need to be taken into account? If yes set unassigned to TRUE, otherwise FALSE.}
 }
 \description{
-This function allow the calculation of abundances with the possibility to exlude unassigned taxon.
+This function allows the calculation of abundances with the possibility to exclude unassigned taxa at the desired taxonomic level.
 }
 \details{
-If unassigned equal to TRUE calculated abundances are equal among taxonomic levels.
+If unassigned is set to TRUE abundances are equal among taxonomic levels.
 }
 \examples{
 data(macro_ex)

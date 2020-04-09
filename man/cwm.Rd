@@ -4,8 +4,15 @@
 \alias{cwm}
 \title{Community-Weighted Mean values of traits}
 \usage{
-cwm(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL,
-  trans = log1p, traceB = FALSE)
+cwm(
+  x,
+  traitDB = NULL,
+  taxLev = "Taxa",
+  agg = FALSE,
+  dfref = NULL,
+  trans = log1p,
+  traceB = FALSE
+)
 }
 \arguments{
 \item{x}{results of function aggregatoR}

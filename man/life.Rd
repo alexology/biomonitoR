@@ -4,8 +4,13 @@
 \alias{life}
 \title{life}
 \usage{
-life(x, taxLev = "Family", version = "extence", composite = FALSE,
-  abucl = c(0, 9, 99, 999, 9999))
+life(
+  x,
+  taxLev = "Family",
+  version = "extence",
+  composite = FALSE,
+  abucl = c(0, 9, 99, 999, 9999)
+)
 }
 \arguments{
 \item{x}{results of function aggregatoR function}

@@ -4,9 +4,17 @@
 \alias{ffeve}
 \title{Fuzzy coded functional eveness}
 \usage{
-ffeve(x, traitDB = NULL, agg = FALSE, dfref = NULL,
-  traitSel = FALSE, colB = NULL, taxLev = "Taxa",
-  correction = "none", traceB = FALSE)
+ffeve(
+  x,
+  traitDB = NULL,
+  agg = FALSE,
+  dfref = NULL,
+  traitSel = FALSE,
+  colB = NULL,
+  taxLev = "Taxa",
+  correction = "none",
+  traceB = FALSE
+)
 }
 \arguments{
 \item{x}{results of function aggregatoR}

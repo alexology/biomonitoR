@@ -7,14 +7,19 @@
 abuTax(x, taxa = NULL, rel = FALSE)
 }
 \arguments{
-\item{x}{results of function aggregatoR.}
+\item{x}{result of the function aggregatoR.}
 
-\item{taxa}{a Taxon or a vector of taxa.}
+\item{taxa}{a taxon or a vector of taxa.}
 
 \item{rel}{if TRUE calculates relative abundance. Default to FALSE.}
 }
 \description{
-This function calculates the absolute or relative abundance of a Taxon or of a set Taxa.
+This function calculates the absolute or relative abundance of a taxon or of a set taxa.
+}
+\details{
+This function does not check for ambiguous. For instance if the vector of taxa contains both the genus \emph{Baetis} and the
+family Baetidae, the abundance of the genus \emph{Baetis} will be double counted. Check the function \code{\link{ambiguousSolver}} for a solution
+to this problem.
 }
 \examples{
 data(macro_ex)
@@ -24,6 +29,6 @@ abuTax(data.agR, taxa = "Ephemeroptera")
 abuTax(data.agR, taxa = c("Setodes", "Orthocladiinae"), rel = TRUE)
 }
 \seealso{
-\code{\link{aggregatoR}}
+\code{\link{aggregatoR}} \code{\link{ambiguousSolver}}
 }
 \keyword{aggregatoR}

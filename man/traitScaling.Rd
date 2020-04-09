@@ -7,8 +7,7 @@
 \usage{
 sampleTraits(x)
 
-traitScaling(x, traitDB = NULL, dfref = NULL,
-  filter_by_distance = NULL)
+traitScaling(x, traitDB = NULL, dfref = NULL, filter_by_distance = NULL)
 }
 \arguments{
 \item{x}{results of function aggregatoR}

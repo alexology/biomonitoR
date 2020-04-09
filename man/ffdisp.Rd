@@ -4,8 +4,16 @@
 \alias{ffdisp}
 \title{Fuzzy coded functional dispersion}
 \usage{
-ffdisp(x, traitDB = NULL, agg = FALSE, dfref = NULL,
-  traitSel = FALSE, colB = NULL, taxLev = "Taxa", traceB = FALSE)
+ffdisp(
+  x,
+  traitDB = NULL,
+  agg = FALSE,
+  dfref = NULL,
+  traitSel = FALSE,
+  colB = NULL,
+  taxLev = "Taxa",
+  traceB = FALSE
+)
 }
 \arguments{
 \item{x}{results of function aggregatoR}

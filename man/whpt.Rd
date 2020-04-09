@@ -4,8 +4,14 @@
 \alias{whpt}
 \title{whpt}
 \usage{
-whpt(x, taxLev = "Family", type = "ab", method = "aspt",
-  composite = FALSE, abucl = c(0, 9, 99, 999))
+whpt(
+  x,
+  taxLev = "Family",
+  type = "ab",
+  method = "aspt",
+  composite = FALSE,
+  abucl = c(0, 9, 99, 999)
+)
 }
 \arguments{
 \item{x}{results of aggregatoR function}

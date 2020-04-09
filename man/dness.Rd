@@ -4,8 +4,13 @@
 \alias{dness}
 \title{dness}
 \usage{
-dness(x, complete = FALSE, taxLev = "Genus", method = "delta",
-  taxatree = FALSE)
+dness(
+  x,
+  complete = FALSE,
+  taxLev = "Genus",
+  method = "delta",
+  taxatree = FALSE
+)
 }
 \arguments{
 \item{x}{results of function aggregatoR}
