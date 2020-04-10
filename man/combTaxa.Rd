@@ -4,24 +4,24 @@
 \alias{combTaxa}
 \title{combTaxa}
 \usage{
-combTaxa(x, ntaxa = 2, taxLev = "Family")
+combTaxa(x, ntaxa = 2, taxLev = "Taxa")
 }
 \arguments{
-\item{x}{results of function aggregatoR.}
+\item{x}{result of the function aggregatoR.}
 
-\item{ntaxa}{number of Taxa to choose.}
+\item{ntaxa}{number of taxa.}
 
-\item{taxLev}{taxonimc level on which the calculation has to be made.}
+\item{taxLev}{taxonomic level on which the calculation has to be made.}
 }
 \description{
-This function returns all the combinations of Taxa at the desired taxonomic resolution.
+This function returns all the combinations of n taxa at the desired taxonomic resolution.
 }
 \details{
-This function is intended to help the user to identify the best subset of taxa that correlate well with environmental variables.
-Metrics based on only certain taxa (EPT, 1-GOLD, etc) are currently used in biomonitoring and their are usually based on autoecological knowledge
-of the selected taxa. However, the relationship between an environmental variable and a subset of taxa could exist and not detected due to the actual limitations
-about the autoecological knowledge of a group of organsism. With more than 4 taxa the calculations should become infeasible, expecially when the number
-of taxa in the user dataset is high. For instance the number of combinations taken 20 at time is nearly 20000.
+This function is intended to help the user to identify the best subset of taxa that correlates with environmental variables.
+Metrics based on a specific group of taxa (EPT, 1-GOLD, etc) are currently used in biomonitoring. They rely on available information on the responses
+of the selected taxa to target strssors. The relationship between an environmental variable and a subset of taxa could exist and not detected due to the scarce
+availaibility of autoecological data. With more than 4 taxa the calculations should become infeasible, expecially when the number
+of taxa in the user dataset is high.
 }
 \examples{
 data(macro_ex)

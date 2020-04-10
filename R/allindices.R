@@ -8,6 +8,8 @@
 #' @param taxLev taxonomic level on which the calculation has to be made.
 #' @details Shannon index:
 #' \deqn{H'=-\sum_{i=1}^{S} p_{i}\log(p_{i})}
+#' Pielou index:
+#' \deqn{J'=\frac{H'}{\log(S)}}
 #' Margalef diversity:
 #' \deqn{D_{mg}=\frac{(S - 1)}{\log(N)}}
 #' Menhinick diversity:
@@ -43,8 +45,8 @@
 #' allindices(data.agR)
 #' shannon(data.agR)
 #'
-#' # natural logarithm
-#' shannon(data.agR, base=exp(1))
+#' # base 2
+#' shannon(data.agR, base = 2)
 #' @export simpson
 #' @export esimpson
 #' @export invsimpson

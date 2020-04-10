@@ -28,21 +28,21 @@ esimpson(x, taxLev = "Taxa")
 
 fisher(x, taxLev = "Taxa")
 
-invberpar(x, taxLev = "Family")
+invberpar(x, taxLev = "Taxa")
 
-invsimpson(x, taxLev = "Family")
+invsimpson(x, taxLev = "Taxa")
 
-margalef(x, taxLev = "Family")
+margalef(x, taxLev = "Taxa")
 
-mcintosh(x, taxLev = "Family")
+mcintosh(x, taxLev = "Taxa")
 
-menhinick(x, taxLev = "Family")
+menhinick(x, taxLev = "Taxa")
 
-pielou(x, base = 2, taxLev = "Family")
+pielou(x, base = exp(1), taxLev = "Taxa")
 
 shannon(x, base = exp(1), taxLev = "Taxa")
 
-simpson(x, taxLev = "Family")
+simpson(x, taxLev = "Taxa")
 }
 \arguments{
 \item{x}{result of the function aggregatoR}
@@ -57,6 +57,8 @@ Functions for calculating shannon, simpson, margalef, menhinick, pielou and othe
 \details{
 Shannon index:
 \deqn{H'=-\sum_{i=1}^{S} p_{i}\log(p_{i})}
+Pielou index:
+\deqn{J'=\frac{H'}{\log(S)}}
 Margalef diversity:
 \deqn{D_{mg}=\frac{(S - 1)}{\log(N)}}
 Menhinick diversity:
@@ -91,7 +93,7 @@ N the number of individuals and N_max the number of individuals in the most abun
 
 \item \code{fisher}: Fisher alpha
 
-\item \code{invberpar}: inverse Berger-Parker
+\item \code{invberpar}: Inverse Berger-Parker
 
 \item \code{invsimpson}: Inverse Simpson
 
@@ -115,8 +117,8 @@ data.agR <- aggregatoR(data.bio)
 allindices(data.agR)
 shannon(data.agR)
 
-# natural logarithm
-shannon(data.agR, base=exp(1))
+# base 2
+shannon(data.agR, base = 2)
 }
 \references{
 Magurran, A. E. (2004). Measuring biological diversity. Blackwell Science ltd.

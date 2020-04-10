@@ -1,17 +1,20 @@
 #' @describeIn allindices Inverse Simpson
 
-invsimpson <- function(x, taxLev = "Family"){
+invsimpson <- function( x , taxLev = "Taxa" ){
 
   # check if the object x is of class "biomonitoR"
-  classCheck(x)
+  classCheck( x )
 
-  df <-  x[[taxLev]]
-  if("unassigned" %in% df[ , 1]){
-    z <- which(df[ ,1 ] == "unassigned")
-    df<- df[ -z ,] # remove unassigned row from the species count
+  # get the data.frame at the desired taxonomic level
+  df <-  x[[ taxLev ]]
+
+  # remove unassigned row from the species count if present
+  if( "unassigned" %in% df[ , 1 ] ){
+    z <- which( df[ , 1 ] == "unassigned" )
+    df <- df[ -z , ]
   }
 
-  res <- apply(df[ , -1, drop = FALSE ], 2, FUN = function(x){Pi( x, index = "Invsimpson")})
-
-  return( res )
+  # apply the function for calculating the Inverse Simpson index that is stored in the Pi.R file
+  res <- apply( df[ , -1 , drop = FALSE ] , 2, FUN = function( x ){ Pi( x , index = "Invsimpson" ) } )
+  res
 }
