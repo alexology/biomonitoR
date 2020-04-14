@@ -4,10 +4,12 @@
 \alias{aggregatoR}
 \title{aggregatoR}
 \usage{
-aggregatoR(x)
+aggregatoR(x, FUN = sum)
 }
 \arguments{
 \item{x}{results of function asBiomonitoR}
+
+\item{FUN}{the function to be applied for aggregating to higher taxonomic levels. Default to \code{sum}.}
 }
 \description{
 This function prepares data for further calculations.

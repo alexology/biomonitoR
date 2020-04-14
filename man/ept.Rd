@@ -4,26 +4,31 @@
 \alias{ept}
 \title{ept}
 \usage{
-ept(x, taxLev = "Family")
+ept(x, taxLev = "Taxa")
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{result of the function aggregatoR}
 
 \item{taxLev}{the taxonomic level for calculating EPT richness.}
 }
 \description{
-This function calculates the number of Ephemeroptera, Plecotera and Trichoptera (EPT) taxa at different taxonomic levels.
+This function calculates the richness of Ephemeroptera, Plecotera and Trichoptera (EPT) taxa at the desired taxonomic level.
 }
 \details{
-The parameter taxLev can be "Species", "Genus", "Family" or "Order".
+taxLev must be finer than Order (e.g. Species, Genus, Family ).
+The \code{ept} function works if Ephemeroptera, Trichoptera and Plecoptera are set as orders in the reference database. Otherwise try with \code{\link{ricTax}}.
 }
 \examples{
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
 ept(data.agR)
+
+# ept should return the same results as the function ricTax
+ept( data.agR , taxLev = "Family" )
+ricTax( data.agR , taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) , taxLev = "Family" )
 }
 \seealso{
-\code{\link{aggregatoR}}
+\code{\link{aggregatoR}} \code{\link{ricTax}}
 }
 \keyword{ept}

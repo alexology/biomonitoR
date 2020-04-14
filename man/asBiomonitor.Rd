@@ -4,35 +4,48 @@
 \alias{asBiomonitor}
 \title{asBiomonitor}
 \usage{
-asBiomonitor(x, group = "mi", dfref = NULL)
+asBiomonitor(x, group = "mi", dfref = NULL, FUN = sum)
 }
 \arguments{
-\item{x}{a data.frame with a column called "Taxa" where put taxa names (species, genus, family, etc) and samples on the other columns (see the example data macro_ex).}
+\item{x}{a data.frame with a column called "Taxa" where store taxa names and samples on the other columns (see the example macro_ex).}
 
-\item{group}{biotic group of interest. Possible values are "mi" for macroinvertebrates and "mf" for macrophytes. This option will not be considered if overwrite is set to TRUE.}
+\item{group}{biotic group of interest. Possible values are \code{mi} for macroinvertebrates and \code{mf} for macrophytes. The choice will set the right reference database for the specified group.
+This option will not be considered if a custom reference database is provided. Default to \code{mi}.}
 
-\item{dfref}{allow the user to improve (if overwrite = F) or to replace (if overwrite = T) the reference database.}
+\item{dfref}{a custom reference database that replaces the reference database.}
+
+\item{FUN}{the function to be applied for aggregating rows with duplicated taxa names.Default to \code{sum}.}
 }
 \description{
-This function merge the user dataframe with the reference database (be retrieved from
-\href{https://www.freshwaterecology.info/}{freshwaterecology.info} website
-(Schmidt-Kloiber & Hering, 2015)). Options to improve or replace the reference database are provided.
+This function merge the user dataframe with a reference database and suggest corrections for mispelled names.
 }
 \details{
-\code{asBiomonitor} checks the correctness of taxa names in the data.frame provided by the user. If names are correct the function will process the data.frame to a biomonitor object, otherwise it will provide suggestions for correct names. If dfref is not NULL a custom dictionary will be saved in the working directory.
-When using the default database the taxa names provided by the user need to be consistent with the taxonomy of \href{https://www.freshwaterecology.info/}{freshwaterecology.info}, otherwise the user is asked to exit. This behaviour is to assure consistency with other functions implemented in biomonitoR.
+The function \code{asBiomonitor} checks the taxonomy of the data.frame provided by the user and suggests correction for mispelled names.
+If one or more taxa names of \code{x} are not present in the reference database or the spell checker is not able to find any suggestion the user is asked to exit.
+This behaviour is to assure consistency with other functions implemented in biomonitoR.
+Default references databases are provided for macroinvertebrates and macrophytes.
+Both databases heavily rely on the information provided by the \href{https://www.freshwaterecology.info/}{freshwaterecology.info} website.
+If \code{dfref} is not NULL a custom dictionary will be saved in the working directory to let the \code{asBiomonitor} function work correctly.
+If you are unable to build a reference database by your own please check the function \code{\link{refFromTree}} for a possible solution.
+\code{asBiomonitor}  returns an object of class \code{biomonitoR} togheter with one of the classes \code{mi}, \code{mf} or \code{custom} depending from the \code{group}
+and \code{dfref} specifications. If the reference database is used, the class is \code{mi} for macroinvertebrates and \code{mf} for macrophytes.
+If a reference database is provided the class is set to \code{custom}. The function \code{\link{quickRename}} works as the \code{asBiomonitor} but returns
+a data.frame without the biomonitoR format.
+\code{asBiomonitor} aggregates all the rows with the same name with the option \code{FUN} and converts all the \code{NA} to 0.
+If only 1 and 0 are present \code{x} will be imported as presence-absence.
+For macroinvertebrates Hydracarina, Hydracnidia or Acariformes are changed to Trombidiformes given the uncertain taxonomic status of this group.
 }
 \examples{
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex, group = "mi")
 }
 \references{
-Schmidt-Kloiber, A., & Hering, D. (2015). www. freshwaterecology.
-info-An online tool that unifies, standardises and codifies more than
+Schmidt-Kloiber, A., & Hering, D. (2015). www.freshwaterecology.info -
+An online tool that unifies, standardises and codifies more than
 20,000 European freshwater organisms and their ecological preferences.
 Ecological indicators, 53, 271-282.
 }
 \seealso{
-\code{\link{quickRename}}
+\code{\link{quickRename}} \code{\link{refFromTree}} \code{\link{quickRename}}
 }
 \keyword{asBiomonitor}

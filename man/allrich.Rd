@@ -7,15 +7,23 @@
 \usage{
 allrich(x)
 
-richness(x, taxLev = "Family")
+richness(x, taxLev = "Taxa")
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{result of the function aggregatoR}
 
 \item{taxLev}{taxonomic level on which the calculation has to be made.}
 }
 \description{
 This function allows the calculation of richness at different taxonomic levels and of the total abundance.
+}
+\details{
+The function \code{richness} returns a warning meassage if unassigned taxa are detected at the desired taxonomic level. Unassigned taxa can be present
+because some taxa are entered at higher taxonomic levels than those at which the calculation is performed.
+For instance this problem appears when the calculation is done at genus level and some taxa has been entered at family level.
+Unassigned taxa can be present also because of missing levels in the reference database at the desired taxonomic level.
+This problem is present, for example, for Mollusca in the default database for macroinvertebrates.
+Mollusca orders are not present because there is no consensus among taxonomist (see the \href{https://www.molluscabase.org/index.php}{www.molluscabase.org} website).
 }
 \section{Functions}{
 \itemize{

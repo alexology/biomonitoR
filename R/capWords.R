@@ -1,7 +1,7 @@
 capWords <- function(x) {
   # see ?tolower
-  cap <- paste(toupper(substring(x, 1,1)), tolower(substring(x, 2)),
-        sep="", collapse=" ")
+  cap <- paste( toupper( substring( x , 1 , 1 ) ), tolower( substring( x , 2 ) ),
+        sep = "" , collapse = " " )
 }
 
 
@@ -10,7 +10,7 @@ trim <- function( x )( as.factor( trimws( as.character( x ) ) ) )
 traitS <- function( x , y , z , w ){
   DFtaxa <- as.character( x[  11 ] )
   trait.final <- data.frame( Taxa_db = character() , Traits_real = character() , z[-c(1:nrow(z)) , ] , stringsAsFactors = FALSE)
-  
+
 
   taxa_tree <- y[ y[  , "Taxa" ] == DFtaxa , 1:10 ]
   taxa_tree <- rev( taxa_tree[ taxa_tree != "" ] )
