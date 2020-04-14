@@ -7,24 +7,28 @@
 ambiguousSolver(x, method = "MCWP")
 }
 \arguments{
-\item{x}{result of function aggregatoR.}
+\item{x}{result of the function aggregatoR.}
 
-\item{method}{only method \emph{RPKC} and \emph{MCWP} is currently implemented. See details.}
+\item{method}{only methods \code{RPKC} and \code{MCWP} are currently implemented in \code{biomonitoR}. See details.}
 }
 \description{
 Solve the ambiguous assignment of taxa.
 }
 \details{
-Taxonomic dataset often contains ambiguous taxa due to the difficulites in identify damaged and juvenile organisms. For instance Chironominae and Chironomidae could reported as in the same sample. Several techinques has been
-proposed to solve this issue (see Cuffney et al., 2007). Currently ambiguousSolver has only one algorithm that allow to assing the abundances of lowr taxonomic level to those of higher taxonomic level.
+Taxonomic dataset often contains ambiguous taxa due to the difficulites in identify damaged and juvenile organisms.
+For instance Chironominae and Chironomidae could be reported in the same sample. Several techinques has been
+proposed to solve this issue (see Cuffney et al., 2007).
+Currently ambiguousSolver two only one algorithms to solve the problem of ambiguous assignments.
+\code{RPKC} means Remove Parents - Keep Children. It works by removing all the higher taxonomic levels while keeping children.
+\code{MCWP} mean Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of higher taxonomic levels.
 }
 \examples{
 data( macro_ex )
 data.bio <- asBiomonitor( macro_ex )
 data.agR <- aggregatoR( data.bio )
-df <- ambiguousSolver( data.agR )
-df.bio <- asBiomonitor( df )
-df.agR <- aggregatoR( df.bio )
+data_amb_solved <- ambiguousSolver( data.agR )
+data_amb_solved.bio <- asBiomonitor( data_amb_solved )
+data_amb_solved.agR <- aggregatoR( data_amb_solved.bio )
 }
 \references{
 Cuffney, T. F., Bilger, M. D., & Haigler, A. M. (2007). Ambiguous taxa: effects on the characterization and interpretation of invertebrate assemblages. Journal of the North American Benthological Society, 26(2), 286-307.
