@@ -4,7 +4,7 @@
 \alias{bioco}
 \title{bioco}
 \usage{
-bioco(x, alien = NULL, dfref = NULL)
+bioco(x, alien = NULL, dfref = NULL, digits = 2)
 }
 \arguments{
 \item{x}{result of function aggregatoR.}
@@ -12,6 +12,8 @@ bioco(x, alien = NULL, dfref = NULL)
 \item{alien}{a vector containing the alien taxa name. Only taxa up to family level will be considered.}
 
 \item{dfref}{custom reference database if other than default is used. Should be the same of that used in asBiomonitor.}
+
+\item{round}{number of decimal places, default to 2 as in the original work of Arbaciauskas et al. (2008).}
 }
 \description{
 bioco function provides site-specific biocontamination index (SBCI), abundance contamination index (ACI) and richness contamination index (RCI) at family rank according to those proposed by Arbaciauskas et al. (2008).

@@ -20,7 +20,7 @@ For instance Chironominae and Chironomidae could be reported in the same sample.
 proposed to solve this issue (see Cuffney et al., 2007).
 Currently ambiguousSolver two only one algorithms to solve the problem of ambiguous assignments.
 \code{RPKC} means Remove Parents - Keep Children. It works by removing all the higher taxonomic levels while keeping children.
-\code{MCWP} mean Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of higher taxonomic levels.
+\code{MCWP} means Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of higher taxonomic levels.
 }
 \examples{
 data( macro_ex )

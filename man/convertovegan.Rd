@@ -10,7 +10,7 @@ convertobiotic(x)
 convertovegan(x, taxLev = "Family")
 }
 \arguments{
-\item{x}{results of aggregatoR function}
+\item{x}{result of the aggregatoR function}
 
 \item{taxLev}{taxonomic level of interest. Possible choices are Phylum, Class, Subclass, Order, Family, Subfamily, Tribus, Genus, Species, Subspecies, Taxa}
 }
@@ -18,8 +18,8 @@ convertovegan(x, taxLev = "Family")
 An utility function to export data to other formats.
 }
 \details{
-\code{convertovegan} converts data to a vegan style format, with sites on rows and taxa on columns. \code{convertovegan} converts data to
-the format of biotic package. For Oligochaeta, if both family and above family level taxonomic information are concurrently present,
+\code{convertovegan} converts data to the \code{vegan} package style, with sites on rows and taxa on columns. \code{convertobiotic} converts data to
+the format of \code{biotic} package. In \code{convertobiotic} if both family and above family level taxonomic information of Oligochaeta are concurrently present,
 information will be provided at Oligochaeta level.
 }
 \section{Functions}{

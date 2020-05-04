@@ -5,6 +5,7 @@
 #' @param x result of function aggregatoR.
 #' @param alien a vector containing the alien taxa name. Only taxa up to family level will be considered.
 #' @param dfref custom reference database if other than default is used. Should be the same of that used in asBiomonitor.
+#' @param round number of decimal places, default to 2 as in the original work of Arbaciauskas et al. (2008).
 #' @details Biocontamination of sampling sites was assessed using a site-specific biocontamination index (SBCI) derived from two metrics: abundance contamination index (ACI) and richness contamination index (RCI) at family/ordinal rank. These indices were calculated as:
 #' \deqn{ACI = Na/Nt}
 #' where Na and Nt are numbers of specimens of alien taxa and total specimens in a sample, respectively, and
@@ -26,7 +27,7 @@
 #' alien <- c( "Laccobius" , "Setodes bulgaricus" , "Caenidae" )
 #' bioco( data.agR , alien = alien )
 
-bioco <- function( x , alien = NULL , dfref = NULL ){
+bioco <- function( x , alien = NULL , dfref = NULL , digits = 2 ){
 
   #  check if the object x is of class "biomonitoR"
   classCheck( x )
@@ -37,12 +38,11 @@ bioco <- function( x , alien = NULL , dfref = NULL ){
 
   # if dfref = NULL check if x is of class biomonitor mi, mf or fi, otherwise dfref is needed
 
-  if( is.null( dfref )){
-    if( ! any( class( x ) %in% c( "mi" , "mf" , "fi") ) ) stop( ( "Custom reference database you used in aggregatoRis needed" ) )
+  if( is.null( dfref ) ){
     if( any( class( x ) %in% "mi"  ) ) ( ref <- mi_ref)
     if( any( class( x ) %in% "mf"  ) ) ( ref <- mf_ref)
-    if( any( class( x ) %in% "fi"  ) ) ( stop("Fish reference database database not implemented yet") )
-    if( ! any( class( x ) %in% c( "mi" , "mf" , "fi" ) ) ) ( stop("No default reference dataset available for class = custom") )
+    if( any( class( x ) %in% "fi"  ) ) ( stop("The fish reference database has not been implemented yet") )
+    if( ! any( class( x ) %in% c( "mi" , "mf" , "fi" ) ) ) ( stop( "No default reference dataset available for class = custom" ) )
     } else { ref = dfref }
 
   # check
@@ -52,19 +52,29 @@ bioco <- function( x , alien = NULL , dfref = NULL ){
   st.names <- names( x[[ 1 ]][ -1 ] )
   DF <- ref[ , 1:10 ]
 
-  # check if alien contains taxa don't present in the reference database
+  # check if the alien vector contains taxa not present in the reference database
   taxa.vec <- as.character( unique( unlist( DF ) ) )
   if( any( ! alien %in% taxa.vec ) ){
     absent <- alien[ ! alien %in% taxa.vec ]
     absent <- paste( absent , collapse = ", ")
-    mes <- paste( "The following taxa are absent from the reference database:" , absent , sep = " " )
-    stop( mes )
+    if( length( alien ) == length( absent ) ){
+      aci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1 )
+      rci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1  )
+      sbci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1  )
+      res <- data.frame( aci = aci , rci = rci , sbci = sbci )
+      rownames( res ) <- st.names
+      res
+    } else{
+      alien <- alien[ alien %in% taxa.vec ]
+      mes <- paste( "The following taxa are absent from the reference database:" , absent , sep = " " )
+      warning( mes )
+      }
   }
 
   # Position of taxon in the df data.frame
   taxind <- data.frame( row = numeric() , col = numeric( ) )
   for(i in 1:length( alien ) ){
-    temp <- which( DF == alien[ i ], arr.ind = T )
+    temp <- which( DF == alien[ i ] , arr.ind = T )
     taxind <- rbind( temp , taxind )
   }
 
@@ -81,20 +91,27 @@ bioco <- function( x , alien = NULL , dfref = NULL ){
 
   x.taxa <- x[[ "Tree" ]]
   x.taxa <- x.taxa[ x.taxa[ , "Taxa" ] %in% getAlienAll , ]
-  x.taxa <- x.taxa[ , colnames( x.taxa ) %in% c( "Family" , st.names ) ]
-  x.taxa <- aggregate(  as.formula( paste( ". ~ " ,  as.name( "Family" ) ) ) , data = x.taxa ,  FUN = sum  )
-
-  abu.alien <- apply( x.taxa[ , -1 , drop = FALSE ] , 2 , sum )
-  tax.alien <- apply( x.taxa[ , -1 , drop = FALSE ] , 2 , function( x ) sum( x > 0 ) )
-
-  aci <- round( abu.alien / abundance( x , taxLev = "Taxa" ) , 2 )
-  rci <- round( tax.alien / richness( x , taxLev = "Family" ) , 2 )
-  cl.lim <- c( 1 , 0.5 , 0.2 , 0.1 , 0.01 , 0)
-  cl.lab <- c( 0:4 )
-  cl.abu <- cut( aci , cl.lim  , cl.lab , right = TRUE , include.lowest = T )
-  cl.tax <- cut( rci , cl.lim  , cl.lab , right = TRUE , include.lowest = T )
-  cl <- data.frame( as.numeric( as.character( cl.abu ) ) , as.numeric( as.character( cl.tax ) ) )
-  data.frame( aci = aci , rci = rci , sbci = apply(  cl , 1 , max  ) )
+  if( nrow( x.taxa) == 0 ){
+    aci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1 )
+    rci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1  )
+    sbci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1  )
+    res <- data.frame( aci = aci , rci = rci , sbci = sbci )
+    rownames( res ) <- st.names
+    res
+  } else {
+    x.taxa <- x.taxa[ , colnames( x.taxa ) %in% c( "Family" , st.names ) ]
+    x.taxa <- aggregate(  as.formula( paste( ". ~ " ,  as.name( "Family" ) ) ) , data = x.taxa ,  FUN = sum  )
+    abu.alien <- apply( x.taxa[ , -1 , drop = FALSE ] , 2 , sum )
+    tax.alien <- apply( x.taxa[ , -1 , drop = FALSE ] , 2 , function( x ) sum( x > 0 ) )
+    aci <- round( abu.alien / abundance( x , taxLev = "Taxa" , unassigned = TRUE ) , digits )
+    rci <- suppressWarnings( round( tax.alien / richness( x , taxLev = "Family" ) , digits ) )
+    cl.lim <- c( 1 , 0.5 , 0.2 , 0.1 , 0.01 , 0)
+    cl.lab <- c( 0:4 )
+    cl.abu <- cut( aci , cl.lim  , cl.lab , right = TRUE , include.lowest = T )
+    cl.tax <- cut( rci , cl.lim  , cl.lab , right = TRUE , include.lowest = T )
+    cl <- data.frame( as.numeric( as.character( cl.abu ) ) , as.numeric( as.character( cl.tax ) ) )
+    data.frame( aci = aci , rci = rci , sbci = apply(  cl , 1 , max  ) )
+  }
 }
 
 

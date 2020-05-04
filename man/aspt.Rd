@@ -7,10 +7,10 @@
 aspt(x, method = "ita", agg = NULL)
 }
 \arguments{
-\item{x}{results of aggregatoR function.}
+\item{x}{result of the function aggregatoR.}
 
 \item{method}{the implementation of BMWP needed to calculate ASPT. Possible choices are "a" (Armitage et al. 1983), "uk" (Davy-Bowker et al. 2010), "spa" (MAGRAMA 2011), "ita" (Buffagni et al . 2014). Methods "uk_agg"and "ita_agg" implement the composite family approach.
-Users can provide their own a data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Value}.}
+Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Value}.}
 
 \item{agg}{optional, a data.frame provided by the user containing the specification on how to aggregate taxa. This data.frame needs a column called \emph{Taxon}
 containing the taxon to aggregate and a column called \emph{Taxon_changed} with the aggregation specifications. Used when users want to aggregate some taxonomic levels while using their own data.frame of scores (provided via \code{method}).}
@@ -33,9 +33,9 @@ ASPT represents the average scores of the families that receive the score. Armit
 \item Oligochaeta (all the families)
 }
 
-User provided scores data.frame needs to be formatted like following:
+Optional scores provided by the user data.frame needs to be formatted like following:
 \tabular{lc}{
-Taxon \tab value \cr
+Taxon \tab Value \cr
 Aeshnidae \tab 8 \cr
 Ancylidae \tab 6 \cr
 Aphelocheiridae \tab 10 \cr
@@ -43,7 +43,7 @@ Asellidae \tab 3 \cr
 Astacidae \tab 8 \cr
 }
 
-User provide aggregation data.frame needs to be formatted like following:
+Optional aggregation data.frame provided by the user needs to be formatted like following:
 \tabular{ll}{
 Taxon \tab Taxon_changed \cr
 Glossomatidae \tab Rhyachopilidae \cr
@@ -54,8 +54,9 @@ Niphargidae \tab Gammaridae \cr
 }
 }
 \note{
-Carefully check if your taxa list contains Ancylidae. Ancylidae is considered
+For macroinvertebrates, please carefully check if your taxa list contains Ancylidae. Ancylidae is considered
 as family in italian and uk ASPT, while it is not considered a valid family by \href{https://www.freshwaterecology.info/}{freshwaterecology.info}. If Ancylidae is considered as valid family users must provide their own reference dataset containing Ancylidae to the function \code{asBiomonitor}.
+This choice will impact the results of the \code{aspt} function.
 }
 \examples{
 data(macro_ex)
