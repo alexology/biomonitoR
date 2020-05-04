@@ -21,7 +21,7 @@
 #' a data.frame without the biomonitoR format.
 #' `asBiomonitor` aggregates all the rows with the same name with the option `FUN` and converts all the `NA` to 0.
 #' If only 1 and 0 are present `x` will be imported as presence-absence.
-#' For macroinvertebrates Hydracarina, Hydracnidia or Acariformes are changed to Trombidiformes given the uncertain taxonomic status of this group.
+#' When `group = mi` Hydracarina, Hydracnidia or Acariformes are changed to Trombidiformes given the uncertain taxonomic status of this group.
 #'
 #' @importFrom stats aggregate
 #' @export
@@ -71,6 +71,7 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , FUN = sum ){
     dfref[ is.na( dfref ) ] <- ""
     dfref <- as.data.frame( unclass( dfref ) )
     ref <- dfref
+    group <- "custom"
   }
 
   # remove  leading and/or trailing whitespaces
@@ -78,6 +79,21 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , FUN = sum ){
 
   # change the name of taxa to lowercase and capital letter
   userTaxaCap <- sapply( userTaxa , capWords , USE.NAMES = F )
+
+  # initialize message for Trombidiformes for the two checks
+  mes <- NULL
+  mes2 <- NULL
+
+  # change the Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes
+  if( group == "mi" ){
+    # changes various flavours of Hydracarina to Trombidiformes
+    hydrac <- c( "Hydracarina" , "Hydracnidia" , "Acariformes" )
+    hydrac_temp <- userTaxaCap %in% hydrac
+    if( length( which( hydrac_temp == T ) ) != 0 ){
+      userTaxaCap[ which( hydrac_temp ) ] <- "Trombidiformes"
+      mes <- "Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes"
+    }
+  }
 
   x$Taxa <- userTaxaCap
 
@@ -93,20 +109,20 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , FUN = sum ){
     x <- rename( x , customx = T )
   }
 
-  # initialize message for Trombidiformes
-  mes <- NULL
+  # check for Hydracarina again, in case the user mispelled the name
+  userTaxaCap <- as.character( x$Taxa )
 
-  # change the Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes
-  if( group == "mi" ){
+  if( group == "mi"  ){
     # changes various flavours of Hydracarina to Trombidiformes
     hydrac <- c( "Hydracarina" , "Hydracnidia" , "Acariformes" )
     hydrac_temp <- userTaxaCap %in% hydrac
     if( length( which( hydrac_temp == T ) ) != 0 ){
       userTaxaCap[ which( hydrac_temp ) ] <- "Trombidiformes"
-      mes <- "Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes"
+      mes2 <- "Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes"
     }
   }
 
+  x$Taxa <- userTaxaCap
 
   # aggregate once again to take into account name changes
   x <- aggregate( . ~ Taxa, x , FUN = FUN )
@@ -133,8 +149,9 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , FUN = sum ){
     class(taxa_def) <- c( "biomonitoR", "custom" )
   }
 
-  if( is.null( mes ) == F ){
-    message( mes )
+  if( ( ! is.null( mes ) ) | ( ! is.null( mes2 ) )  ){
+    message( "Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes" )
     taxa_def
   } else{ taxa_def }
+
 }
