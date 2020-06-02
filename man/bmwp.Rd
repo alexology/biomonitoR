@@ -4,25 +4,44 @@
 \alias{bmwp}
 \title{bmwp}
 \usage{
-bmwp(x, method = "ita", agg = NULL)
+bmwp(x, method = "ita", agg = FALSE, exceptions = NULL, traceB = FALSE)
 }
 \arguments{
 \item{x}{result of the function aggregatoR.}
 
-\item{method}{the implementation of BMWP needed to calculate ASPT. Possible choices are "a" (Armitage et al. 1983), "uk" (Davy-Bowker et al. 2010), "spa" (MAGRAMA 2011), "ita" (Buffagni et al . 2014). Methods "uk_agg"and "ita_agg" implement the composite family approach.
-Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Value}.}
+\item{method}{the implementation of BMWP. Possible choices are \code{a} (Armitage et al. 1983), \code{uk} (Davy-Bowker et al. 2010), \code{spa} (MAGRAMA 2011), \code{ita} (Buffagni et al . 2014).
+Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
 
-\item{agg}{optional, a data.frame containing the specification on how to aggregate taxa. This data.frame needs a column called \emph{Taxon}
-containing the taxon to aggregate and a column called \emph{Taxon_changed} with the aggregation specifications. Used when users want to aggregate some taxonomic levels while using their own data.frame of scores (provided via \code{method}).}
+\item{agg}{this option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
+If \code{FALSE} no aggregation will be performed, while if \code{TRUE} aggregation will be performed according to the rules described in Details.
+A \code{data.frame} containing the aggregation rules can be provided by the user.
+This \code{data.frame} needs a column called \emph{Taxon} containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
+\code{agg} cannot be \code{TRUE} when a \code{data.frame} is provided as method.}
+
+\item{exceptions}{taxa that need to be exluded from the calculation.
+This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.}
+
+\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+}
+\value{
+If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
+\itemize{
+\item \code{results} Results of the \code{bmwp} index.
+\item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
+\item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{NULL}.
+\item \code{exceptions} A data.frame containing the containing changes made by excluding the taxa included in \code{exceptions}.
+\item \code{parent_child_pairs} For instance in Spanish \code{bmwp} both Ferrissia and Planorbidae receive a score.
+Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
+}
 }
 \description{
-This function calculates the Biological Monitoring Working Party following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
+This function calculates the \emph{Biological Monitoring Working Party} index following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 }
 \details{
-BMWP is calculated as the sum of scores of the sensitive taxa present in a given sample. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker et al. (2010) and Buffagni et al. (2014) implementations take into account composite taxa as follow:
+BMWP represents the sum of the scores of the taxa receiving a score. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker et al. (2010) and Buffagni et al. (2014) implementations take into account composite taxa as follow:
 \enumerate{
 \item Psychomyiidae (inc. Ecnomidae)
-\item Rhyachopilidae (inc. Glossomatidae)
+\item Rhyacophilidae (inc. Glossosomatidae)
 \item Limnephilidae (inc. Apatanidae)
 \item Ancylidae (inc. Acroloxidae)
 \item Gammaridae (inc. Crangonyctidae & Niphargidae)
@@ -33,9 +52,9 @@ BMWP is calculated as the sum of scores of the sensitive taxa present in a given
 \item Oligochaeta (all the families)
 }
 
-User provided scores data.frame needs to be formatted like following:
+Optional scores provided by the user data.frame needs to be formatted like following:
 \tabular{lc}{
-Taxon \tab value \cr
+Taxon \tab Scores \cr
 Aeshnidae \tab 8 \cr
 Ancylidae \tab 6 \cr
 Aphelocheiridae \tab 10 \cr
@@ -43,20 +62,18 @@ Asellidae \tab 3 \cr
 Astacidae \tab 8 \cr
 }
 
-User provide aggregation data.frame needs to be formatted like following:
+Optional aggregation data.frame provided by the user needs to be formatted like following:
 \tabular{ll}{
-Taxon \tab Taxon_changed \cr
+Taxon \tab Correct_Taxon \cr
 Glossomatidae \tab Rhyachopilidae \cr
 Apatanidae \tab Limnephilidae \cr
 Acroloxidae \tab Ancylidae \cr
 Crangonyctidae \tab Gammaridae \cr
 Niphargidae \tab Gammaridae \cr
 }
-}
-\note{
-For macroinvertebrates, please carefully check if your taxa list contains Ancylidae. Ancylidae is considered
-as family in italian and uk ASPT, while it is not considered a valid family by \href{https://www.freshwaterecology.info/}{freshwaterecology.info}. If Ancylidae is considered as valid family users must provide their own reference dataset containing Ancylidae to the function \code{asBiomonitor}.
-This choice will impact the results of the \code{bmwp} function.
+
+The \code{bmwp} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for \code{bmwp} calculation can be retrieved with the function \code{\link{showscores}}.
 }
 \examples{
 data(macro_ex)

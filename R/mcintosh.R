@@ -6,15 +6,19 @@ mcintosh <- function( x , taxLev = "Taxa" ){
   classCheck( x )
 
   # get the data.frame at the desired taxonomic level
-  df <-  x[[ taxLev ]]
+  DF <-  x[[ taxLev ]]
+
+  if( inherits( x , "bin" ) ){
+    DF <- to_bin( DF )
+  }
 
   # remove unassigned row from the species count if present
-  if( "unassigned" %in% df[ , 1 ] ){
-    z <- which( df[ , 1 ] == "unassigned" )
-    df <- df[ -z , ]
+  if( "unassigned" %in% DF[ , 1 ] ){
+    z <- which( DF[ , 1 ] == "unassigned" )
+    DF <- DF[ -z , ]
   }
 
   # apply the function for calculating the McIntosh dominance index that is stored in the Pi.R file
-  res <- apply( df[ , -1 , drop = FALSE ], 2 , FUN = function( x ){ Pi( x , index = "Mcintosh" ) } )
+  res <- apply( DF[ , -1 , drop = FALSE ], 2 , FUN = function( x ){ Pi( x , index = "Mcintosh" ) } )
   res
 }

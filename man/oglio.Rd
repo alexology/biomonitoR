@@ -3,12 +3,14 @@
 \docType{data}
 \name{oglio}
 \alias{oglio}
-\title{Macrophytes example dataset}
+\title{Oglio River macrophyte dataset}
 \format{A data frame with 67 rows and 7 variables.}
 \usage{
 data(oglio)
 }
 \description{
-These data were collected in the Oglio river, northern Italy. This data.frame consists of cover abundances on a scale from 0 to 100.
+Macrophytes were collected from the Oglio river, Northern Italy, during a project for the evaluation of the environmental flow.
+Data consists of cover abundances on a scale from 0 to 100 collected using the italian method
+for the evaluation of ecological status \emph{sensu} Water Framework Directive.
 }
 \keyword{datasets}

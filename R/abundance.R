@@ -24,6 +24,10 @@ abundance <- function( x , taxLev = "Family" , unassigned = FALSE ){
   # get the desired taxomic level
   tax <- x[[ taxLev ]]
 
+  if( inherits( x , "bin" ) ){
+    tax <- to_bin( tax )
+  }
+
   if( unassigned == FALSE ){
     if( "unassigned" %in% tax[ , 1 ] ){
       z <- which( tax[ , 1 ] == "unassigned" ) # find the row corresponding to the unassigned
@@ -33,6 +37,7 @@ abundance <- function( x , taxLev = "Family" , unassigned = FALSE ){
 
   # calculate abundance from the desired taxonomic level. The -1 is to remove the taxa column
   res <- apply( tax[ , -1 , drop = F ], 2 , FUN = sum )
-  return( res )
+
+  res
 
 }

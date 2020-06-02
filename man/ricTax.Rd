@@ -7,14 +7,14 @@
 ricTax(x, taxa = NULL, taxLev = NULL)
 }
 \arguments{
-\item{x}{results of function aggregatoR.}
+\item{x}{result of the function aggregatoR.}
 
-\item{taxa}{a Taxon or a vector of taxa.}
+\item{taxa}{a taxon or a vector of taxa.}
 
-\item{taxLev}{taxonomic level at which the richness has to be calculated. It could be also a vector of taxnomici levels.}
+\item{taxLev}{taxonomic level at which the richness has to be calculated. It could be also a vector of taxonomic levels.}
 }
 \description{
-This function calculates the absolute richness of a Taxon or of a set Taxa at a user provided taxonomic level.
+This function calculates the absolute richness of a taxon or of a set taxa at the taxonomic level provided by the user.
 }
 \examples{
 data(macro_ex)

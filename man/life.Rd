@@ -6,22 +6,47 @@
 \usage{
 life(
   x,
-  taxLev = "Family",
-  version = "extence",
-  composite = FALSE,
-  abucl = c(0, 9, 99, 999, 9999)
+  method = "extence",
+  abucl = c(1, 9, 99, 999, 9999),
+  agg = FALSE,
+  fs_scores = NULL,
+  exceptions = NULL,
+  traceB = FALSE
 )
 }
 \arguments{
-\item{x}{results of function aggregatoR function}
+\item{x}{result of the function aggregatoR.}
 
-\item{taxLev}{currently only the option "Family" is enabled}
+\item{method}{possible choices are "extence" and "life_2017". A custom \code{data.frame} containing the scoring system can be provided by the user.}
 
-\item{version}{possible choices are "extence" and "life_2017"}
+\item{abucl}{Log abundance categories. Treshold are set to 1, 9, 99, 999 and 9999 as in the original paper of Extence et al. (1999).}
 
-\item{composite}{if TRUE composite families as listed in the details section are used}
+\item{agg}{this option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
+If \code{FALSE} no aggregation will be performed, while if \code{TRUE} aggregation will be performed according to the rules described in Details.
+A \code{data.frame} containing the aggregation rules can be provided by the user.
+This \code{data.frame} needs a column called \emph{Taxon} containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
+\code{agg} cannot be \code{TRUE} when a \code{data.frame} is provided as method.}
 
-\item{abucl}{abundance threshold. Default 0, 9, 99, 999, 9999}
+\item{fs_scores}{Scores ( fs) for different abundance categories of taxa associated with flow groups 1-4. A custom \code{data.frame} can be provided by the user.}
+
+\item{exceptions}{taxa that need to be exluded from the calculation.
+This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
+\code{agg} cannot be \code{TRUE} when a data.frame is provided as \code{method}.}
+
+\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+}
+\value{
+If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
+\itemize{
+\item \code{results} Results of the \code{life} index.
+\item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
+\item \code{abu_df} The data.frame containing scores and abundance classes for each site.
+\item \code{life_df} The data.frame used for the calculation containing scores for each site.
+\item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{FALSE}.
+\item \code{exceptions} A data.frame containing the containing changes made by excluding the taxa included in \code{exceptions}.
+\item \code{parent_child_pairs} For instance in Spanish \code{bmwp} both Ferrissia and Planorbidae receive a score.
+Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
+}
 }
 \description{
 This function calculates LIFE index according to most recent version used in UK.
@@ -42,10 +67,12 @@ If composite is set to T the following composite families are used for extence
 while for "life_2017" the following are used:
 
 \enumerate{
-\item Hydrophilidae (inc. Georissidae, Hlophoridae, Hydrochidae)
+\item Hydrophilidae (inc. Georissidae, Helophoridae, Hydrochidae)
 
 }
-Scores used for life calculation can be explored with the function {\link{showscores}}.
+
+The \code{life} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for \code{life} calculation can be retrieved with the function \code{\link{showscores}}.
 }
 \section{Acknowledgements}{
  We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated LIFE scores and algorithms.
@@ -55,7 +82,27 @@ Scores used for life calculation can be explored with the function {\link{showsc
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-data.life <- life(data.agR, taxLev = "Family", composite = FALSE)
+life( data.agR )
+
+# change abundance classes
+life( data.agR , abucl = c( 1, 9 , 99 , 999 ) )
+
+# provide your own score system. Scores and aggregation rules are for example purpose only.
+
+life_fg <- data.frame( Taxon = c( "Ephemerellidae" , "Leuctridae" , "Chironomidae" ) ,
+ FG_Score = c( 1 , 2 , 3 ) )
+
+life_acc <- data.frame( Taxon = "Ephemerellidae" , Correct_Taxon = "Chironomidae" )
+
+fs_scores <- data.frame( FS = rep( 1:3 , each = 3 ) , ABUCLASS = rep( 1:3 , 3 ) ,
+SCORE = c( 9 , 10 , 11 , 8 , 9 , 10 , 7 , 7 , 7 ) )
+
+# without aggregation rules
+life( data.agR , method = life_fg , fs_scores = fs_scores , traceB = TRUE )
+
+# with aggregation
+
+life( data.agR , method = life_fg , agg = life_acc , fs_scores = fs_scores , traceB = TRUE )
 }
 \references{
 Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543-574.

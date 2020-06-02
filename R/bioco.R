@@ -4,8 +4,10 @@
 #'
 #' @param x result of function aggregatoR.
 #' @param alien a vector containing the alien taxa name. Only taxa up to family level will be considered.
-#' @param dfref custom reference database if other than default is used. Should be the same of that used in asBiomonitor.
-#' @param round number of decimal places, default to 2 as in the original work of Arbaciauskas et al. (2008).
+#' @param dfref reference database.
+#' If a default reference database was used use `mi` for macroinvertebrates or `mf` for macrophytes.
+#' Use the same reference database you used for \code{\link{asBiomonitor}} otherwise.
+#' @param digits number of decimal places, default to 2 as in the original work of Arbaciauskas et al. (2008).
 #' @details Biocontamination of sampling sites was assessed using a site-specific biocontamination index (SBCI) derived from two metrics: abundance contamination index (ACI) and richness contamination index (RCI) at family/ordinal rank. These indices were calculated as:
 #' \deqn{ACI = Na/Nt}
 #' where Na and Nt are numbers of specimens of alien taxa and total specimens in a sample, respectively, and
@@ -18,6 +20,7 @@
 #' @references Cuk, R., Milisa, M., Atanackovic, A., Dekic, S., Blazekovic, L., & Zganec, K. (2019). Biocontamination of benthic macroinvertebrate assemblages in Croatian major rivers and effects on ecological quality assessment. Knowledge & Management of Aquatic Ecosystems, (420), 11.
 #' @references MacNeil, C., Briffa, M., Leuven, R.S., Gell, F.R. and Selman, R. (2010). An appraisal of a biocontamination assessment method for freshwater macroinvertebrate assemblages; a practical way to measure a significant biological pressure? Hydrobiologia 638:151-159
 #' @export
+#' @importFrom stats as.formula
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
 #' data( macro_ex )
@@ -25,7 +28,7 @@
 #' data.agR <- aggregatoR( data.bio )
 #' # Toy example:
 #' alien <- c( "Laccobius" , "Setodes bulgaricus" , "Caenidae" )
-#' bioco( data.agR , alien = alien )
+#' bioco( data.agR , alien = alien , dfref = "mi" )
 
 bioco <- function( x , alien = NULL , dfref = NULL , digits = 2 ){
 
@@ -38,12 +41,12 @@ bioco <- function( x , alien = NULL , dfref = NULL , digits = 2 ){
 
   # if dfref = NULL check if x is of class biomonitor mi, mf or fi, otherwise dfref is needed
 
-  if( is.null( dfref ) ){
-    if( any( class( x ) %in% "mi"  ) ) ( ref <- mi_ref)
-    if( any( class( x ) %in% "mf"  ) ) ( ref <- mf_ref)
-    if( any( class( x ) %in% "fi"  ) ) ( stop("The fish reference database has not been implemented yet") )
-    if( ! any( class( x ) %in% c( "mi" , "mf" , "fi" ) ) ) ( stop( "No default reference dataset available for class = custom" ) )
-    } else { ref = dfref }
+  if( inherits( x , "custom" ) & ( identical( dfref , "mi" ) | identical( dfref , "mf" ) ) ) ( stop( "Please provide the dfref you used for asBiomonitor." ) )
+
+  if( is.null( dfref ) ) stop( "Please set dfref" )
+  if( identical( dfref , "mi" )  ) ( ref <- mi_ref)
+  if( identical( dfref , "mf" )  ) ( ref <- mf_ref)
+  if( is.data.frame( dfref ) ) (  ref = dfref )
 
   # check
   if( is.null( alien ) ) ( stop( "Please provide a vector containing the names of alien taxa" ) )
@@ -56,17 +59,20 @@ bioco <- function( x , alien = NULL , dfref = NULL , digits = 2 ){
   taxa.vec <- as.character( unique( unlist( DF ) ) )
   if( any( ! alien %in% taxa.vec ) ){
     absent <- alien[ ! alien %in% taxa.vec ]
-    absent <- paste( absent , collapse = ", ")
     if( length( alien ) == length( absent ) ){
-      aci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1 )
-      rci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1  )
-      sbci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1  )
-      res <- data.frame( aci = aci , rci = rci , sbci = sbci )
+      absent <- paste( absent , collapse = ", ")
+      aci <- rep( 0 , length( st.names ) )
+      res <- data.frame( aci = aci , rci = aci , sbci = aci )
       rownames( res ) <- st.names
-      res
+      arg.names <- as.list( match.call() )[ -1 ]
+      arg.names <- arg.names[[ which( names( arg.names ) == "x" ) ]]
+      mes <- paste( absent , "are not part of the taxonomic tree of" , as.character( arg.names ) , sep = " " )
+      warning( mes )
+      return( res )
     } else{
+      absent <- paste( absent , collapse = ", ")
       alien <- alien[ alien %in% taxa.vec ]
-      mes <- paste( "The following taxa are absent from the reference database:" , absent , sep = " " )
+      mes <- paste( "The following taxa are absent from the reference database: " , absent )
       warning( mes )
       }
   }
@@ -91,11 +97,14 @@ bioco <- function( x , alien = NULL , dfref = NULL , digits = 2 ){
 
   x.taxa <- x[[ "Tree" ]]
   x.taxa <- x.taxa[ x.taxa[ , "Taxa" ] %in% getAlienAll , ]
-  if( nrow( x.taxa) == 0 ){
-    aci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1 )
-    rci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1  )
-    sbci <- rep( 0 , ncol( x[[ "Phylum" ]] ) - 1  )
-    res <- data.frame( aci = aci , rci = rci , sbci = sbci )
+  if( nrow( x.taxa ) == 0 ){
+    aci <- rep( 0 ,  length( st.names ) )
+
+    if( inherits( x , "bin" ) ){
+      aci <- rep( NA ,  length( st.names ) )
+    }
+
+    res <- data.frame( aci = aci , rci = aci , sbci = aci )
     rownames( res ) <- st.names
     res
   } else {
@@ -110,7 +119,12 @@ bioco <- function( x , alien = NULL , dfref = NULL , digits = 2 ){
     cl.abu <- cut( aci , cl.lim  , cl.lab , right = TRUE , include.lowest = T )
     cl.tax <- cut( rci , cl.lim  , cl.lab , right = TRUE , include.lowest = T )
     cl <- data.frame( as.numeric( as.character( cl.abu ) ) , as.numeric( as.character( cl.tax ) ) )
-    data.frame( aci = aci , rci = rci , sbci = apply(  cl , 1 , max  ) )
+    sbci <- apply(  cl , 1 , max  )
+    if( inherits( x , "bin" ) ){
+      aci <- rep( NA ,  length( st.names ) )
+      sbci <- rep( NA ,  length( st.names ) )
+    }
+    data.frame( aci = aci , rci = rci , sbci = sbci )
   }
 }
 

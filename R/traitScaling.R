@@ -23,16 +23,15 @@
 #'
 #' @param x results of function aggregatoR
 #' @param traitDB a trait data base with a column `Taxa` and the other columns
-#'   containing the traits. If a trait has several modalities they should be
-#'   named as follow: TRAIT_MODALITY.
-#'
-#'   By default, the data base used is the one from Tachet *et al* (2010) that
+#'   containing the traits.
+#'   By default, the database used is the one from Tachet *et al* (2010) that
 #'   can be retrieved from
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
+#'   It includes traits only for macroinvertebrates.
 #' @param dfref reference database as used in the function aggregatoR.
 #' @param filter_by_distance filter the results according to the taxonomic distance. Possible values are "pos" , "neg" or a positive integer. See details.
-#' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
+#' @param colB A vector that contains the number of modalities for each trait
 #'
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
@@ -45,15 +44,18 @@
 #' data.agR <- aggregatoR(data.bio)
 #' data.ts <- traitScaling( data.agR )
 #'
-#' # averaging
+#' # select only the nearest traits
+#' data.ts.sub <- manageTraits( data.ts , method = "nearest+-" )
 #'
-#' data.ts.av <- aggregate( . ~ Taxa , data = data.ts[ , -c(2:5)] , FUN = mean  )
+#' # averaging
+#' data.ts.av <- traitsMean( data.ts.sub )
 #'
 #' # traits random sampling
 #' data.ts.st <- sampleTraits( data.ts )
 #' @seealso [aggregatoR]
 #' @export
 #' @export sampleTraits
+#' @export traitsMean
 
 
 
@@ -61,31 +63,14 @@ traitScaling <-  function( x , traitDB = NULL , dfref = NULL , filter_by_distanc
 
   if( is.null( traitDB ) ){
     # check if x is of class biomonitoR and mi
-    classCheck( x , group = "mi")
+    classCheck( x )
 
-    traitDB <- traitsTachet
+    if( inherits( x , "custom" ) ){
+      warning( "It seems that you used your own reference database. Please check the consistency of the taxonomy used for calculating the index with those of your reference database to have reliable results." )
+    }
 
-    # create dummy variables to avoid R CMD check NOTES
-    traitsTachet <- Taxa <- modality <- affinity <- Phylum <- Subspecies <-
-      Abundance <- Sample <- Weight <- Affinity <- totWeight <-
-      weightedAffinity <- Category <- . <- NULL
+    trait_db <- traitsTachet
 
-    # prepare the taxa trait database
-    trait_db <- traitDB                               %>%
-      (function(df) {
-        mutate(df,
-               Taxa = gsub(pattern     = "sp[.]|Ad[.]|Lv[.]|Gen[.]|lv[.]|ad[.]|gen[.]",
-                           replacement = "",
-                           x           = Taxa))
-      })                                              %>%
-      gather(key = modality, value = affinity, -Taxa) %>%
-      group_by(Taxa, modality)                        %>%
-      summarise(affinity = mean(affinity))            %>%
-      spread(key = modality, value = affinity)        %>%
-      ungroup()
-    trait_db$Taxa <- trimws(trait_db$Taxa)
-    trait_db <- as.data.frame( trait_db )
-    trait_db <- trait_db[ , match( colnames(traitDB) , colnames( trait_db) ) ]
   } else{
     trait_db <- traitDB
     trait_db$Taxa <- trimws(trait_db$Taxa)

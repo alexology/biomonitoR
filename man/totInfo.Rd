@@ -7,9 +7,9 @@
 totInfo(x, taxalist = FALSE)
 }
 \arguments{
-\item{x}{results of function asBiomonitoR}
+\item{x}{results of the function \link{aggregatoR}}
 
-\item{taxalist}{if true returns the list of taxa for each taxonomic level}
+\item{taxalist}{if \code{TRUE} returns the list of taxa for each taxonomic level.}
 }
 \description{
 Function to calculate the overall richness at different taxonomic level.

@@ -1,29 +1,35 @@
 #' showscores
 #'
-#' This function print the scores used for the calculation of several indices in biomonitoR.
-#' @param x name of the scores to print. Allowed names are "aspt_b", "aspt_i", "aspt_h", "life_scores_fam", "whpt_scores_fam", "psi_scores_fam" and "psi_scores_fam"
-#' @param writecsv if TRUE the scores are saved in the working directory.
+#' This function print the databases used for the calculation of several indices implemented in biomonitoR.
+#' @param index name of the index for which information are needed.
+#' @param method method of the index specified in `index`.
 #' @keywords asBiomonitor
-#' @importFrom utils write.csv
+#' @importFrom utils write.csv menu
 #' @export
-#' @seealso \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}
+#' @seealso \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}, \code{\link{psi}}, \code{\link{epsi}}
 #' @examples
-#' showscores("aspt_i", writecsv = FALSE)
+#' showscores( index = "aspt", method = "spa" )
+#' showscores( index = "life", method = "extence" )
 
-showscores <- function(x, writecsv = FALSE){
-  # list of allowed scores
-  score.list <- c("aspt_b", "aspt_i", "aspt_h", "life_scores_fam", "whpt_scores_fam", "psi_scores_fam", "epsi_scores_fam")
-  if(!x %in% score.list){
-    stop("provide a valid name")
+showscores <- function( index = NULL , method = NULL ){
+
+  to.print <- file_list[ file_list$Index == index & file_list$Method == method , , drop = FALSE ]
+
+  if( nrow( to.print ) == 0 ){
+    mes0 <- paste( "Method" , method , "is not implemented into the index" , index , "or index and methods names are wrong" , sep = " "  )
+    mes1 <-  paste( "Index must be one of: "  , paste( as.character( unique( file_list[ , "Index" ] ) ) , collapse = ", " ) )
+    mes2 <-  paste( "Method must be one of: "  , paste( as.character( unique( file_list[ , "Method" ] ) ) , collapse = ", " ) )
+    stop( cat( mes0 , mes1 , mes2 , sep = "\n" ) )
   }
 
-  else {
-    score.obj <- get(x)
-    if(writecsv == FALSE){
-      return(score.obj)
-    } else {
-      write.csv(score.obj, paste(x, ".csv", sep =""))
-      return(score.obj)
-    }
+  to.print.list <- list( )
+
+  for( i in 1:nrow( to.print ) ){
+    to.print.list[[ i ]] <- get( as.character( to.print[ i , "File" ] ) )
   }
+
+  names( to.print.list ) <- to.print[ , "Type" ]
+  to.print.list
+
 }
+

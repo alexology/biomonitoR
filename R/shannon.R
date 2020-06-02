@@ -6,16 +6,20 @@ shannon <- function( x , base = exp( 1 ) , taxLev = "Taxa" ){
   classCheck( x )
 
   # get the data.frame at the desired taxonomic level
-  df <-  x[[ taxLev ]]
+  DF <-  x[[ taxLev ]]
+
+  if( inherits( x , "bin" ) ){
+    DF <- to_bin( DF )
+  }
 
   # remove unassigned row from the species count if present
-  if( "unassigned" %in% df[ , 1 ] ){
-    z <- which( df[ , 1 ] == "unassigned" )
-    df <- df[ -z , ]
+  if( "unassigned" %in% DF[ , 1 ] ){
+    z <- which( DF[ , 1 ] == "unassigned" )
+    DF <- DF[ -z , ]
   }
 
   # apply the function for calculating the Shannon index that is stored in the Pi.R file
-  sha <- apply( df[ , -1 , drop = FALSE], 2 , FUN = function( x ){ Pi( x, index = "Shannon", base = base ) } )
+  sha <- apply( DF[ , -1 , drop = FALSE], 2 , FUN = function( x ){ Pi( x, index = "Shannon", base = base ) } )
   sha
 }
 

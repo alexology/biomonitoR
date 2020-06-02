@@ -6,7 +6,11 @@
 #' @param group biotic group of interest. Possible values are `mi` for macroinvertebrates and `mf` for macrophytes. The choice will set the right reference database for the specified group.
 #' This option will not be considered if a custom reference database is provided. Default to `mi`.
 #' @param dfref a custom reference database that replaces the reference database.
-#' @param FUN the function to be applied for aggregating rows with duplicated taxa names.Default to `sum`.
+#' @param to_change a `data.frame` specifying the taxa name that needs to be changed.
+#' This `data.frame` needs a column called *Taxon* containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications.
+#' By default, when group is set to `mi` Hydracarina, Hydracnidia and Acariformes are changed to Trombidiformes.
+#' @param FUN the function to be applied for aggregating rows with duplicated taxa names.
+#' It should be `sum` for abundances, while it should be `bin` for presence-absence data. Default to `sum`.
 #' @keywords asBiomonitor
 #' @details The function `asBiomonitor` checks the taxonomy of the data.frame provided by the user and suggests correction for mispelled names.
 #' If one or more taxa names of `x` are not present in the reference database or the spell checker is not able to find any suggestion the user is asked to exit.
@@ -35,12 +39,25 @@
 #' data.bio <- asBiomonitor(macro_ex, group = "mi")
 
 
-asBiomonitor <- function ( x , group = "mi" , dfref = NULL , FUN = sum ){
+asBiomonitor <- function ( x , group = "mi" , dfref = NULL , to_change = "default" , FUN = sum ){
 
   # check if user database contains a column called Taxa
   if( ! "Taxa" %in% names( x ) ){
     stop( "A column called Taxa is needed")
   }
+
+
+  asb.call <- as.character( as.list( match.call() )[[ "FUN" ]] )
+  if( length( asb.call ) == 0 ) {
+    asb.call <- "sum"
+  }
+
+  if( ! is.null( to_change ) & ! is.data.frame( to_change ) & ! identical( to_change , "default" ) )( stop( "to_change needs to be NULL or data.frame as specified in the help" ) )
+
+  if( ! any( x[ , ! colnames( x ) %in% "Taxa" ] > 1 ) & all( x[ , ! colnames( x ) %in% "Taxa" ]%%1 == 0 ) & ! identical( asb.call , "bin" ) ) ( warning( "Presence-absence data detected but FUN is not set to bin. Is it this what you want?" ) )
+  if( any( x[ , ! colnames( x ) %in% "Taxa" ] > 1 ) & all( x[ , ! colnames( x ) %in% "Taxa" ]%%1 == 0 ) & ! identical( asb.call , "sum" ) ) ( warning( "Abundance data detected but FUN is not set to sum. Is it this what you want?" ) )
+  if( any( x[ , ! colnames( x ) %in% "Taxa" ]%%1 != 0 ) ) warning( "Decimal numbers detected. Please check carefully which FUN to use.")
+
 
   # check if columns other than Taxa are numeric
   # position of column Taxa
@@ -74,28 +91,32 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , FUN = sum ){
     group <- "custom"
   }
 
-  # remove  leading and/or trailing whitespaces
-  userTaxa <- trimws( x$Taxa )
-
   # change the name of taxa to lowercase and capital letter
-  userTaxaCap <- sapply( userTaxa , capWords , USE.NAMES = F )
-
-  # initialize message for Trombidiformes for the two checks
-  mes <- NULL
-  mes2 <- NULL
+  x$Taxa <- trimws( sapply( x$Taxa , capWords , USE.NAMES = F ) )
 
   # change the Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes
-  if( group == "mi" ){
-    # changes various flavours of Hydracarina to Trombidiformes
-    hydrac <- c( "Hydracarina" , "Hydracnidia" , "Acariformes" )
-    hydrac_temp <- userTaxaCap %in% hydrac
-    if( length( which( hydrac_temp == T ) ) != 0 ){
-      userTaxaCap[ which( hydrac_temp ) ] <- "Trombidiformes"
-      mes <- "Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes"
+  if( identical( to_change , "default" ) ){
+    to_change_mi[ , "Taxon" ] <- trimws( sapply( to_change_mi[ , "Taxon" ] , capWords , USE.NAMES = F ) )
+    to_change_mi[ , "Correct_Taxon" ] <- trimws( sapply( to_change_mi[ , "Correct_Taxon" ] , capWords , USE.NAMES = F ) )
+    if( any( to_change_mi[ , "Taxon" ] %in% x$Taxa ) ){
+      names( x )[ 1 ] <- "Taxon"
+      st.names <-  names( x )[ -1 ]
+      x <- checkBmwpFam( x , to_change_mi , st.names )
+      names( x )[ 1 ] <- "Taxa"
     }
   }
 
-  x$Taxa <- userTaxaCap
+  # change according to user needs
+  if( is.data.frame( to_change ) ){
+    to_change[ , "Taxon" ] <- trimws( sapply( to_change[ , "Taxon" ] , capWords , USE.NAMES = F ) )
+    to_change[ , "Correct_Taxon" ] <- trimws( sapply( to_change[ , "Correct_Taxon" ] , capWords , USE.NAMES = F ) )
+    if( any( to_change[ , "Taxon" ] %in% x$Taxa ) ){
+      names( x )[ 1 ] <- "Taxon"
+      st.names <-  names( x )[ -1 ]
+      x <- checkBmwpFam( x , to_change , st.names )
+      names( x )[ 1 ] <- "Taxa"
+    }
+  }
 
   # if dfref is NULL use the rename function to check for mispelled names and suggest for correct names
   if( is.null( dfref ) ){
@@ -109,20 +130,32 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , FUN = sum ){
     x <- rename( x , customx = T )
   }
 
-  # check for Hydracarina again, in case the user mispelled the name
-  userTaxaCap <- as.character( x$Taxa )
+  # repeat the check after the names correction
 
-  if( group == "mi"  ){
-    # changes various flavours of Hydracarina to Trombidiformes
-    hydrac <- c( "Hydracarina" , "Hydracnidia" , "Acariformes" )
-    hydrac_temp <- userTaxaCap %in% hydrac
-    if( length( which( hydrac_temp == T ) ) != 0 ){
-      userTaxaCap[ which( hydrac_temp ) ] <- "Trombidiformes"
-      mes2 <- "Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes"
+  # change the Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes
+  if( identical( to_change , "default" ) ){
+    to_change_mi[ , "Taxon" ] <- trimws( sapply( to_change_mi[ , "Taxon" ] , capWords , USE.NAMES = F ) )
+    to_change_mi[ , "Correct_Taxon" ] <- trimws( sapply( to_change_mi[ , "Correct_Taxon" ] , capWords , USE.NAMES = F ) )
+    if( any( to_change_mi[ , "Taxon" ] %in% x$Taxa ) ){
+      names( x )[ 1 ] <- "Taxon"
+      st.names <-  names( x )[ -1 ]
+      x <- checkBmwpFam( x , to_change_mi , st.names )
+      names( x )[ 1 ] <- "Taxa"
     }
   }
 
-  x$Taxa <- userTaxaCap
+  # change according to user needs
+  if( is.data.frame( to_change ) ){
+    to_change[ , "Taxon" ] <- trimws( sapply( to_change[ , "Taxon" ] , capWords , USE.NAMES = F ) )
+    to_change[ , "Correct_Taxon" ] <- trimws( sapply( to_change[ , "Correct_Taxon" ] , capWords , USE.NAMES = F ) )
+    if( any( to_change[ , "Taxon" ] %in% x$Taxa ) ){
+      names( x )[ 1 ] <- "Taxon"
+      st.names <-  names( x )[ -1 ]
+      x <- checkBmwpFam( x , to_change , st.names )
+      names( x )[ 1 ] <- "Taxa"
+    }
+  }
+
 
   # aggregate once again to take into account name changes
   x <- aggregate( . ~ Taxa, x , FUN = FUN )
@@ -138,20 +171,15 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , FUN = sum ){
   # merge reference database to the user data.frame
   taxa_def <- merge( ref, x , by = "Taxa" , all = F )
 
-  # assign classes to the data.frame
-  if(group == "mi" & is.null( dfref ) == TRUE){
-    class(taxa_def) <- c("biomonitoR", "mi" )
-  }
-  if(group == "mf" & is.null( dfref ) == TRUE){
-    class(taxa_def) <- c( "biomonitoR" , "mf" )
-  }
-  if(is.null( dfref ) == FALSE){
-    class(taxa_def) <- c( "biomonitoR", "custom" )
+  class( taxa_def ) <- c( "biomonitoR" )
+
+  if( ! any( x[ , -1 ] >1 ) ){
+    class( taxa_def ) <- c( class( taxa_def ) , "bin" )
   }
 
-  if( ( ! is.null( mes ) ) | ( ! is.null( mes2 ) )  ){
-    message( "Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes" )
-    taxa_def
-  } else{ taxa_def }
+  if( ! is.null( dfref ) ){
+    class( taxa_def ) <- c( class( taxa_def ) , "custom" )
+  }
 
+  taxa_def
 }

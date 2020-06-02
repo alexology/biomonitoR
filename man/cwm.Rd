@@ -4,15 +4,7 @@
 \alias{cwm}
 \title{Community-Weighted Mean values of traits}
 \usage{
-cwm(
-  x,
-  traitDB = NULL,
-  taxLev = "Taxa",
-  agg = FALSE,
-  dfref = NULL,
-  trans = log1p,
-  traceB = FALSE
-)
+cwm(x, traitDB = NULL, taxLev = "Taxa", trans = log1p, traceB = FALSE)
 }
 \arguments{
 \item{x}{results of function aggregatoR}
@@ -27,12 +19,6 @@ can be retrieved from
 \item{taxLev}{character string giving the taxonomic level used to retrieve
 trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
 \code{"Family"} as returned by the \link{aggregatoR} function.}
-
-\item{agg}{if custom trait and reference databases are used this option allows
-the user to aggregate traits at the desired taxonomic level. A custom reference
-database is needed!}
-
-\item{dfref}{reference database to be used when a custom trait database is provided and agg equals to TRUE.}
 
 \item{trans}{the function used to transform the abundances, by default
 \code{log1p}.}
@@ -66,13 +52,18 @@ data(macro_ex)
 
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
+data.ts <- traitScaling( data.agR )
 
-cwm(x = data.agR, taxLev = "Taxa", trans = log1p)
-cwm(x = data.agR, taxLev = "Taxa",
+# averaging
+data.ts.av <- traitsMean( data.ts )
+
+# community specialization index
+cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa", trans = log1p)
+cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa",
     trans = function(x) {
         ifelse(x > 0, 1, 0)
     })
-cwm(x = data.agR, taxLev = "Genus", trans = log1p)
+cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Genus", trans = log1p)
 
 }
 \references{

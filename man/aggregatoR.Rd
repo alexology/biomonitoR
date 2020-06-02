@@ -9,7 +9,9 @@ aggregatoR(x, FUN = sum)
 \arguments{
 \item{x}{results of function asBiomonitoR}
 
-\item{FUN}{the function to be applied for aggregating to higher taxonomic levels. Default to \code{sum}.}
+\item{FUN}{the function to be applied for aggregating to higher taxonomic levels.
+Must be sum for both abundances and presence-absence data.
+Default to \code{sum}. Change if you know what you are doing.}
 }
 \description{
 This function prepares data for further calculations.

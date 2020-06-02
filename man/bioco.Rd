@@ -11,9 +11,11 @@ bioco(x, alien = NULL, dfref = NULL, digits = 2)
 
 \item{alien}{a vector containing the alien taxa name. Only taxa up to family level will be considered.}
 
-\item{dfref}{custom reference database if other than default is used. Should be the same of that used in asBiomonitor.}
+\item{dfref}{reference database.
+If a default reference database was used use \code{mi} for macroinvertebrates or \code{mf} for macrophytes.
+Use the same reference database you used for \code{\link{asBiomonitor}} otherwise.}
 
-\item{round}{number of decimal places, default to 2 as in the original work of Arbaciauskas et al. (2008).}
+\item{digits}{number of decimal places, default to 2 as in the original work of Arbaciauskas et al. (2008).}
 }
 \description{
 bioco function provides site-specific biocontamination index (SBCI), abundance contamination index (ACI) and richness contamination index (RCI) at family rank according to those proposed by Arbaciauskas et al. (2008).
@@ -33,7 +35,7 @@ data.bio <- asBiomonitor( macro_ex )
 data.agR <- aggregatoR( data.bio )
 # Toy example:
 alien <- c( "Laccobius" , "Setodes bulgaricus" , "Caenidae" )
-bioco( data.agR , alien = alien )
+bioco( data.agR , alien = alien , dfref = "mi" )
 }
 \references{
 Arbaciauskas, K., Semenchenko, V., Grabowski, M., Leuven, R.S.E.W., Paunovic, M., Son, M.O., Csanyi, B., Gumuliauskaite, S., Konopacka, A., Nehring, S., Van der Velde, G., Vezhnovetz, V., Panov, V.E. (2008). Assessment of biocontamination of benthic macroinvertebrate communities in European inland waterways. Aquatic Invasions 3 (2): 211-230.

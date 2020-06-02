@@ -6,31 +6,56 @@
 \usage{
 whpt(
   x,
-  taxLev = "Family",
+  method = "uk",
   type = "ab",
-  method = "aspt",
-  composite = FALSE,
-  abucl = c(0, 9, 99, 999)
+  metric = "aspt",
+  agg = FALSE,
+  abucl = c(1, 9, 99, 999),
+  exceptions = NULL,
+  traceB = FALSE
 )
 }
 \arguments{
-\item{x}{results of aggregatoR function}
+\item{x}{result of the function \code{aggregatoR}.}
 
-\item{taxLev}{currently only the option "Family" is enabled}
+\item{method}{the only choice is \code{uk}.Users can provide their own data.frame (see examples) with a column called \emph{Taxon}, a column called \emph{ABUCLASS} and a column called \emph{Scores}.}
 
-\item{type}{presence only ("po") or abundance ("ab")}
+\item{type}{presence only \code{po} or abundance \code{ab}.}
 
-\item{method}{possible choices are "aspt", "ntaxa", "bmwp"}
+\item{metric}{possible choices are \code{aspt}, \code{ntaxa}, \code{bmwp}.}
 
-\item{composite}{if T composite families as listed in the details section are used}
+\item{agg}{this option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
+If \code{FALSE} no aggregation will be performed, while if \code{TRUE} aggregation will be performed according to the rules described in Details.
+A \code{data.frame} containing the aggregation rules can be provided by the user.
+This \code{data.frame} needs a column called \emph{Taxon} containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
+\code{agg} cannot be \code{TRUE} when a \code{data.frame} is provided as method.}
 
-\item{abucl}{abundance threshold. Default 0, 9, 99, 999.}
+\item{abucl}{Log abundance categories. Treshold are set to 1, 9, 99 and 999.}
+
+\item{exceptions}{taxa that need to be exluded from the calculation.
+This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
+\code{agg} cannot be \code{TRUE} when a data.frame is provided as \code{method}.}
+
+\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+}
+\value{
+If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
+\itemize{
+\item \code{results} Results of the \code{whpt} index.
+\item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
+\item \code{abu_df} The data.frame containing fssr scores and abundance classes for each site.
+\item \code{whpt_df} The data.frame used for the calculation containing scores for each site.
+\item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{NULL}.
+\item \code{exceptions} A data.frame containing the con.
+\item \code{parent_child_pairs} For instance in Spanish \code{aspt} both Ferrissia and Planorbidae receive a score.
+Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
+}
 }
 \description{
-This function calculates WHPT index according to most recent version used in UK.
+This function calculates \emph{Whalley Hawkes Paisley Trigg} index according to version used in UK in 2017.
 }
 \details{
-WHPT is a revision of BMWP and it takes into account the abundances of organisms. The following aggregation is used if composit is set equal to T:
+WHPT is a revision of BMWP and it takes into account the abundances of organisms. The following aggregation is used if agg is set equal to \code{TRUE}:
 
 \enumerate{
 \item Psychomyiidae (inc. Ecnomidae)
@@ -41,7 +66,8 @@ WHPT is a revision of BMWP and it takes into account the abundances of organisms
 \item Hydrobiidae (inc. Bithyniidae)
 }
 
-Scores used for whpt calculation can be explored with the function code{\link{showscores}}.
+The \code{whpt} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for \code{whpt} calculation can be retrieved with the function \code{\link{showscores} }.
 }
 \section{Acknowledgements}{
  We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated WHPT scores and algorithms.
@@ -51,9 +77,16 @@ Scores used for whpt calculation can be explored with the function code{\link{sh
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-data.whpt <- whpt(data.agR, taxLev = "Family", composite = FALSE)
+whpt( data.agR )
+whpt( data.agR , metric = "bmwp" )
+whpt( data.agR , type = "po"  , metric = "bmwp" )
+
+# take a look to the metrics used for whpt calculation
+# only the first 6 rows of each database are shown
+
+lapply( showscores( "whpt" , "uk" ) , head )
 }
 \seealso{
-\code{\link{asBiomonitor}}
+\code{\link{asBiomonitor}}, \code{\link{aspt}}, \code{\link{bmwp}}
 }
 \keyword{whpt}

@@ -27,21 +27,25 @@ combTaxa <- function( x, ntaxa = 2 , taxLev = "Taxa" ){
   classCheck( x )
 
   # get the data.frame at the desired taxonomic level
-  df <- x[[ taxLev ]]
+  DF <- x[[ taxLev ]]
+
+  if( inherits( x , "bin" ) ){
+    DF <- to_bin( DF )
+  }
 
   # remove unassigned row from the species count if present
-  if( "unassigned" %in% df[ , 1 ] ){
-    z <- which( df[ , 1 ] == "unassigned" )
-    df <- df[ -z , ] # remove unassigned row from the species count
+  if( "unassigned" %in% DF[ , 1 ] ){
+    z <- which( DF[ , 1 ] == "unassigned" )
+    DF <- DF[ -z , ] # remove unassigned row from the species count
   }
 
   # list all the combination of x taxa taken n at time
-  cbn <- combn( nrow( df ) , ntaxa )
-  df.sub <- lapply( seq( ncol( cbn ) ) , function( x ) df[ cbn[ , x ] , ] )
+  cbn <- combn( nrow( DF ) , ntaxa )
+  DF.sub <- lapply( seq( ncol( cbn ) ) , function( x ) DF[ cbn[ , x ] , ] )
 
-  # sum the abundances of the n-th combination of df.sub and change the label
-  df.agg <- lapply( df.sub , FUN = agg_fun )
+  # sum the abundances of the n-th combination of DF.sub and change the label
+  DF.agg <- lapply( DF.sub , FUN = agg_fun )
 
   # create a data.frame to store the results
-  return( do.call( rbind, df.agg ) )
+  return( do.call( rbind, DF.agg ) )
 }

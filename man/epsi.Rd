@@ -4,29 +4,57 @@
 \alias{epsi}
 \title{e-psi}
 \usage{
-epsi(x, taxLev = "Family", abucl = c(0, 9, 99, 999), composite = F)
+epsi(
+  x,
+  method = "uk",
+  agg = FALSE,
+  abucl = c(1, 9, 99, 999),
+  exceptions = NULL,
+  traceB = FALSE
+)
 }
 \arguments{
 \item{x}{results of aggregatoR function}
 
-\item{taxLev}{currently only the option "Family" is allowed}
+\item{method}{method \code{uk}.
+Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
 
-\item{abucl}{Log abundance categories. Treshold are set to 0, 9, 99, 999.}
+\item{agg}{optional, a data.frame provided by the user containing the specification on how to aggregate taxa. This data.frame needs a column called \emph{Taxon}
+containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications. Used when users want to aggregate some taxonomic levels while using their own data.frame of scores (provided via \code{method}).}
 
-\item{composite}{if T composite families as listed in the details section are used.}
+\item{abucl}{Log abundance categories. Tresholds are set to 1, 9, 99, 999.}
+
+\item{exceptions}{taxa that need to be exluded from the calculation.
+This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
+\code{agg} cannot be \code{TRUE} when a data.frame is provided as \code{method}.}
+
+\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+}
+\value{
+If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
+\itemize{
+\item \code{results} Results of the \code{epsi} index.
+\item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
+\item \code{epsi_df} The data.frame used for the calculation containing scores and abundance classes for each site.
+\item \code{composite_taxa} Taxa aggregated following the aggregation rules of the \code{uk_agg} method or set in the \code{agg} option.
+\item \code{exceptions} A data.frame containing the containing changes made by excluding the taxa included in \code{exceptions}.
+\item \code{parent_child_pairs} For instance in Spanish \code{bmwp} both Ferrissia and Planorbidae receive a score.
+Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
+}
 }
 \description{
-This function calculates Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index (ePSI) according to the most recent version used in UK.
+This function calculates the Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index (ePSI) according to the most recent version used in UK.
 }
 \details{
-ePSI implementation take into account composite taxa as follow:
+\code{epsi} implementation take into account composite taxa as follow:
 \enumerate{
 \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
 \item Siphlonuridae (inc. Ameletidae)
 \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
 }
-Ancylus (0.51) has a different score compared to the other Planorbidae (0). Take it into account when interpreting the results.
-Scores used for epsi calculation can be explored with the function code{\link{showscores}}.
+
+The \code{epsi} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for \code{epsi} calculation can be retrieved with the function \code{\link{showscores}}.
 }
 \section{Acknowledgements}{
  We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated ePSI scores and algorithms.
@@ -36,7 +64,15 @@ Scores used for epsi calculation can be explored with the function code{\link{sh
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-data.psi <- epsi(data.agR, taxLev = "Family")
+epsi( data.agR )
+
+# provide your own score sistem. Scores and aggregation rules are for example purpose only.
+
+epsi_scores <- data.frame( Taxon = c( "Ephemerellidae" , "Leuctridae" , "Chironomidae" ) ,
+ Scores = c( 0.1 , 0.5 , 0.2 ) )
+epsi_acc <- data.frame( Taxon = "Ephemerellidae" , Correct_Taxon = "Chironomidae" )
+
+epsi( data.agR , method = epsi_scores , agg = epsi_acc , traceB = TRUE )
 }
 \references{
 Turley MD, Bilotta GS, Chadd RP, Extence CA, Brazier RE, Burnside NG, Pickwell AG. 2016. A sediment-specific family-level biomonitoring tool to identify the impacts of fine sediment in temperate rivers and streams. Ecological Indicators 70, 151-165.

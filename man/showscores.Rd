@@ -4,20 +4,21 @@
 \alias{showscores}
 \title{showscores}
 \usage{
-showscores(x, writecsv = FALSE)
+showscores(index = NULL, method = NULL)
 }
 \arguments{
-\item{x}{name of the scores to print. Allowed names are "aspt_b", "aspt_i", "aspt_h", "life_scores_fam", "whpt_scores_fam", "psi_scores_fam" and "psi_scores_fam"}
+\item{index}{name of the index for which information are needed.}
 
-\item{writecsv}{if TRUE the scores are saved in the working directory.}
+\item{method}{method of the index specified in \code{index}.}
 }
 \description{
-This function print the scores used for the calculation of several indices in biomonitoR.
+This function print the databases used for the calculation of several indices implemented in biomonitoR.
 }
 \examples{
-showscores("aspt_i", writecsv = FALSE)
+showscores( index = "aspt", method = "spa" )
+showscores( index = "life", method = "extence" )
 }
 \seealso{
-\code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}
+\code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}, \code{\link{psi}}, \code{\link{epsi}}
 }
 \keyword{asBiomonitor}

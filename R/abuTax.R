@@ -4,7 +4,7 @@
 #' @param x result of the function aggregatoR.
 #' @param taxa a taxon or a vector of taxa.
 #' @param rel if TRUE calculates relative abundance. Default to FALSE.
-#' @details This function does not check for ambiguous. For instance if the vector of taxa contains both the genus *Baetis* and the
+#' @details This function does not check for parent-child pairs. For instance if the vector of taxa contains both the genus *Baetis* and the
 #' family Baetidae, the abundance of the genus *Baetis* will be double counted. Check the function \code{\link{ambiguousSolver}} for a solution
 #' to this problem.
 #' @keywords aggregatoR
@@ -22,6 +22,8 @@ abuTax <- function ( x, taxa = NULL, rel = FALSE )
 
   # check if the object d is of class "biomonitoR"
   classCheck( x )
+
+  if( inherits( x , "bin" ) ) ( stop( "This function cannot be applied to presence-absence data." ) )
 
   # check if the taxa argument is empty or contains NULL strings
   if ( is.null( taxa ) == T || ( any( taxa == "" ) & length( taxa ) == 1 ) ) {
@@ -81,4 +83,5 @@ abuTax <- function ( x, taxa = NULL, rel = FALSE )
   abuperc.v <- as.vector( t( abucum ) )
   names( abuperc.v ) <- names( abucum )
   abuperc.v
+
 }

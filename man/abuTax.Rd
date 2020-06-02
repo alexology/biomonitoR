@@ -17,7 +17,7 @@ abuTax(x, taxa = NULL, rel = FALSE)
 This function calculates the absolute or relative abundance of a taxon or of a set taxa.
 }
 \details{
-This function does not check for ambiguous. For instance if the vector of taxa contains both the genus \emph{Baetis} and the
+This function does not check for parent-child pairs. For instance if the vector of taxa contains both the genus \emph{Baetis} and the
 family Baetidae, the abundance of the genus \emph{Baetis} will be double counted. Check the function \code{\link{ambiguousSolver}} for a solution
 to this problem.
 }

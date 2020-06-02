@@ -1,12 +1,12 @@
 Package: biomonitoR
 Type: Package
 Title: Calculates Indices and Metrics for Biomonitoring of Running Waters
-Version: 0.0.0.9000
-Author: Alex Laini, Gemma Burgazzi, Rossano Bolpagni, Daniel Bruno, Tommaso Cancellario, Simone Guareschi, Cédric Mondy
+Version: 0.9
+Author: Alex Laini, Gemma Burgazzi, Rossano Bolpagni, Daniel Bruno, Simone Guareschi, Cédric Mondy, Tommaso Cancellario
 Maintainer: Alex Laini <alex.laini@gmail.com>
-Description: A package to calculate indices and metrics for biomonitoring of running waters with a focus on macroinvertebrate community.
+Description: Provides a tool for calculating biomonitoring indices and metrics of running waters.
 License: GPL-2
-LazyLoad: Yes
+LazyData: true
 Encoding: UTF-8
 Depends: R (>= 3.00)
 Imports: hunspell,
@@ -14,6 +14,8 @@ Imports: hunspell,
     tidyr,
     FD,
     geometry,
-    ade4
+    ade4,
+    tibble,
+    ape
 RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)

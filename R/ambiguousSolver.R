@@ -9,7 +9,7 @@
 #' proposed to solve this issue (see Cuffney et al., 2007).
 #' Currently ambiguousSolver two only one algorithms to solve the problem of ambiguous assignments.
 #' `RPKC` means Remove Parents - Keep Children. It works by removing all the higher taxonomic levels while keeping children.
-#' `MCWP` mean Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of higher taxonomic levels.
+#' `MCWP` means Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of higher taxonomic levels.
 #' @keywords aggregatoR
 #' @references Cuffney, T. F., Bilger, M. D., & Haigler, A. M. (2007). Ambiguous taxa: effects on the characterization and interpretation of invertebrate assemblages. Journal of the North American Benthological Society, 26(2), 286-307.
 #' @export
@@ -109,5 +109,10 @@ ambiguousSolver <- function( x , method = "MCWP" ){
 
   # aggregate to avoid duplicated rownames
   DF <- aggregate( . ~ Taxa , data = DF , FUN = sum )
+
+  if( inherits( x , "bin" ) ){
+    DF <- to_bin( DF )
+  }
+
   DF
 }

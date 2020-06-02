@@ -2,7 +2,9 @@
 #'
 #' This function prepares data for further calculations.
 #' @param x results of function asBiomonitoR
-#' @param FUN the function to be applied for aggregating to higher taxonomic levels. Default to `sum`.
+#' @param FUN the function to be applied for aggregating to higher taxonomic levels.
+#' Must be sum for both abundances and presence-absence data.
+#' Default to `sum`. Change if you know what you are doing.
 #' @keywords aggregatoR
 #' @importFrom stats aggregate
 #' @export

@@ -4,20 +4,65 @@
 \alias{psi}
 \title{psi}
 \usage{
-psi(x, taxLev = "Family", abucl = c(0, 9, 99, 999))
+psi(
+  x,
+  method = "extence",
+  abucl = c(1, 9, 99, 999),
+  agg = FALSE,
+  fssr_scores = NULL,
+  exceptions = NULL,
+  traceB = FALSE
+)
 }
 \arguments{
-\item{x}{results of aggregatoR function}
+\item{x}{result of the function aggregatoR.}
 
-\item{taxLev}{currently only the option "Family" is allowed}
+\item{method}{the only choice is \code{extence}. Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Score}.}
 
-\item{abucl}{abundance threshold. Default 0, 9, 99, 999.}
+\item{abucl}{Log abundance categories. Treshold are set to 1, 9, 99 and 999 as in the original paper of Extence et al. (2013).}
+
+\item{agg}{this option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
+If \code{FALSE} no aggregation will be performed, while if \code{TRUE} aggregation will be performed according to the rules described in Details.
+A \code{data.frame} containing the aggregation rules can be provided by the user.
+This \code{data.frame} needs a column called \emph{Taxon} containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
+\code{agg} cannot be \code{TRUE} when a \code{data.frame} is provided as method.}
+
+\item{fssr_scores}{Optional, scores (fssr) for different abundance categories of taxa associated with
+\emph{Fine Sediment Sensitivity Ratings}. To be used when a custom \code{method} is provided.}
+
+\item{exceptions}{taxa that need to be exluded from the calculation.
+This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
+\code{agg} cannot be \code{TRUE} when a data.frame is provided as \code{method}.}
+
+\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+}
+\value{
+If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
+\itemize{
+\item \code{results} Results of the \code{psi} index.
+\item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
+\item \code{abu_df} The data.frame containing fssr scores and abundance classes for each site.
+\item \code{psi_df} The data.frame used for the calculation containing scores for each site.
+\item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{NULL}.
+\item \code{exceptions} A data.frame containing the con.
+\item \code{parent_child_pairs} For instance in Spanish \code{aspt} both Ferrissia and Planorbidae receive a score.
+Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
+}
 }
 \description{
-This function calculates Proportion of Sediment-sensitive Invertebrates index (PSI) according to the most recent version used in UK.
+This function calculates the \emph{Proportion of Sediment-sensitive Invertebrates index} (PSI) according to the most recent version used in UK.
 }
 \details{
-Scores used for psi calculation can be explored with the function code{\link{showscores}}.
+Despite Extence et al 2013 did not suggest nay aggregation rule, the \code{psi} implementation of \code{biomonitoR}
+allows for a default aggregation as specified below. Custom aggregation rules can be provided as a \code{data.frame}.
+\enumerate{
+\item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
+\item Siphlonuridae (inc. Ameletidae)
+\item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
+}
+
+The \code{psi} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for \code{psi} calculation can be retrieved with the function \code{\link{showscores}}.
 }
 \section{Acknowledgements}{
  We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated PSI scores and algorithms.
@@ -27,7 +72,28 @@ Scores used for psi calculation can be explored with the function code{\link{sho
 data(macro_ex)
 data.bio <- asBiomonitor(macro_ex)
 data.agR <- aggregatoR(data.bio)
-data.psi <- psi(data.agR, taxLev = "Family")
+psi( data.agR )
+
+# change abundance classes
+psi( data.agR , abucl = c( 1 , 9 , 99 , 999 , 9999 ) )
+
+# provide your own score system. Scores and aggregation rules are for example purpose only.
+
+psi_fssr <- data.frame( Taxon = c( "Ephemerellidae" , "Leuctridae" , "Chironomidae" ) ,
+ FSSR_Score = c( 1 , 2 , 3 ) )
+
+psi_acc <- data.frame( Taxon = "Ephemerellidae" , Correct_Taxon = "Chironomidae" )
+
+fssr_scores <- data.frame( FSSR = rep( 1:3 , each = 3 ) , ABUCLASS = rep( 1:3 , 3 ) ,
+SCORE = c( 9 , 10 , 11 , 8 , 9 , 10 , 7 , 7 , 7 ) )
+
+# without aggregation rules
+psi( data.agR , method = psi_fssr , fssr_scores = fssr_scores , traceB = TRUE )
+
+# with aggregation
+
+psi( data.agR , method = psi_fssr , agg = psi_acc , fssr_scores = fssr_scores , traceB = TRUE )
+
 }
 \references{
 Extence CA, Chadd RP, England J, Dunbar MJ, Wood PJ, Taylor ED. 2013. The assessment of fine sediment accumulation in rivers using macro-invertebrate community response. River Research and Applications 29, 17-55.

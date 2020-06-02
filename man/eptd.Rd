@@ -4,17 +4,33 @@
 \alias{eptd}
 \title{eptd}
 \usage{
-eptd(x)
+eptd(x, base = 10, eptd_families = NULL, traceB = FALSE)
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{result of the function \link{aggregatoR}}
+
+\item{base}{Default to 10.}
+
+\item{eptd_families}{a vector of selected EPTD taxa at family level. Optional, default to \code{NULL}.}
+
+\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+}
+\value{
+If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
+\itemize{
+\item \code{results} Results of the \code{eptd} index.
+\item \code{taxa_df} The data.frame used for the calculation containing the abundance of the EPTD taxa.
+}
 }
 \description{
 This function calculates the log10(Sel_EPTD + 1) metric, where EPTD stands for Ephemeroptera, Plecoptera, Trichoptera and Diptera.
 }
 \details{
-log10(Sel_EPTD + 1) the base-10 logarithm of the abundance of the selected EPTD families plus 1. Selected EPTD families are Heptageniidae, Ephemeridae, Leptophlebiidae, Brachycentridae, Goeridae, Polycentropodidae, Limnephilidae, Odontoceridae, Dolichopodidae, Stratiomyidae, Dixidae, Empididae, Athericidae and Nemouridae.
+log10(Sel_EPTD + 1) is the base-10 logarithm of the abundance of the selected EPTD families plus 1. Selected EPTD families are Heptageniidae, Ephemeridae, Leptophlebiidae, Brachycentridae, Goeridae, Polycentropodidae, Limnephilidae, Odontoceridae, Dolichopodidae, Stratiomyidae, Dixidae, Empididae, Athericidae and Nemouridae.
 This metric is part of the italian STAR_ICMi index, where it is supposed to be relate to habitat integrity.
+The function \code{eptd} will search for the selected EPT within Ephemeroptera, Plecoptera, Trichoptera and Diptera set at Order level.
+If you plan to store Ephemeroptera, Plecoptera, Trichoptera and Diptera at other taxonomic levels this function will
+not work properly, see \link{abuTax} instead.
 }
 \examples{
 data(macro_ex)
@@ -25,4 +41,4 @@ eptd(data.agR)
 \seealso{
 \code{\link{aggregatoR}}
 }
-\keyword{ept}
+\keyword{eptd}

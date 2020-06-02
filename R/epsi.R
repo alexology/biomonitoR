@@ -1,19 +1,43 @@
 #' e-psi
 #'
-#' This function calculates Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index (ePSI) according to the most recent version used in UK.
+#' This function calculates the Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index (ePSI) according to the most recent version used in UK.
 #' @param x results of aggregatoR function
-#' @param taxLev currently only the option "Family" is allowed
-#' @param abucl Log abundance categories. Treshold are set to 0, 9, 99, 999.
-#' @param composite if T composite families as listed in the details section are used.
+#' @param method method `uk`.
+#'  Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Scores*.
+#' @param agg this option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
+#' If `FALSE` no aggregation will be performed, while if `TRUE` aggregation will be performed according to the rules described in Details.
+#' A `data.frame` containing the aggregation rules can be provided by the user.
+#' This `data.frame` needs a column called *Taxon* containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications.
+#' `agg` cannot be `TRUE` when a `data.frame` is provided as method.
+#' @param agg  optional, a data.frame provided by the user containing the specification on how to aggregate taxa. This data.frame needs a column called *Taxon*
+#'  containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications. Used when users want to aggregate some taxonomic levels while using their own data.frame of scores (provided via `method`).
+#' @param abucl Log abundance categories. Tresholds are set to 1, 9, 99, 999.
+#' @param exceptions taxa that need to be exluded from the calculation.
+#' This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
+#' `agg` cannot be `TRUE` when a data.frame is provided as `method`.
+#' @param traceB if set to `TRUE` a list as specified below will be returned.
 #' @keywords epsi
-#' @details ePSI implementation take into account composite taxa as follow:
+#' @details `epsi` implementation take into account composite taxa as follow:
 #' \enumerate{
 #'  \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
 #'  \item Siphlonuridae (inc. Ameletidae)
 #'  \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
 #'  }
-#' Ancylus (0.51) has a different score compared to the other Planorbidae (0). Take it into account when interpreting the results.
-#' Scores used for epsi calculation can be explored with the function code{\link{showscores}}.
+#'
+#' The `epsi` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+#' All the information used for `epsi` calculation can be retrieved with the function \code{\link{showscores}}.
+#'
+#' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
+#' \itemize{
+#'  \item `results` Results of the `epsi` index.
+#'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
+#'  \item `epsi_df` The data.frame used for the calculation containing scores and abundance classes for each site.
+#'  \item `composite_taxa` Taxa aggregated following the aggregation rules of the `uk_agg` method or set in the `agg` option.
+#'  \item `exceptions` A data.frame containing the containing changes made by excluding the taxa included in `exceptions`.
+#'  \item `parent_child_pairs` For instance in Spanish `bmwp` both Ferrissia and Planorbidae receive a score.
+#'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
+#' }
+#'
 #' @references Turley MD, Bilotta GS, Chadd RP, Extence CA, Brazier RE, Burnside NG, Pickwell AG. 2016. A sediment-specific family-level biomonitoring tool to identify the impacts of fine sediment in temperate rivers and streams. Ecological Indicators 70, 151-165.
 #' @references Turley MD, Bilotta GS, Krueger T, Brazier RE, Extence CA. 2015. Developing an improved biomonitoring tool for fine sediment: combining expert knowledge and empirical data. Ecological indicators 54, 82-86.
 #' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated ePSI scores and algorithms.
@@ -24,91 +48,141 @@
 #' data(macro_ex)
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
-#' data.psi <- epsi(data.agR, taxLev = "Family")
+#' epsi( data.agR )
+#'
+#' # provide your own score sistem. Scores and aggregation rules are for example purpose only.
+#'
+#' epsi_scores <- data.frame( Taxon = c( "Ephemerellidae" , "Leuctridae" , "Chironomidae" ) ,
+#'  Scores = c( 0.1 , 0.5 , 0.2 ) )
+#' epsi_acc <- data.frame( Taxon = "Ephemerellidae" , Correct_Taxon = "Chironomidae" )
+#'
+#' epsi( data.agR , method = epsi_scores , agg = epsi_acc , traceB = TRUE )
 
-epsi <- function(x, taxLev = "Family", abucl = c(0,9,99,999), composite = F){
+
+epsi <- function( x , method = "uk" ,  agg = FALSE , abucl = c( 1 , 9 , 99 , 999 ) , exceptions = NULL , traceB = FALSE ){
 
   # check if the object x is of class "biomonitoR"
-  classCheck(x, group = "mi")
+  classCheck( x )
 
-  if(taxLev != "Family"){
-    stop("Currently only family level is implemented!")
-  }
+  # useful for transforming data to 0-1 later
+  if( inherits( x , "bin" ) ){
+    BIN <- TRUE
+  } else { BIN <- FALSE }
 
 
-  if(taxLev == "Family"){
-    epsi_scores_use <- epsi_scores_fam
-    epsi_fam_acc <- epsi_fam_acc
-  }
+  if( ! identical( method , "uk" ) & !( is.data.frame( method ) ) ) ( stop( "Please provide a valid method" )  )
+  if( ! any( isFALSE( agg ) | isTRUE( agg ) | is.data.frame( agg ) ) ) stop( "agg is not one of TRUE, FALSE or a custom data.frame" )
 
-  numb <- c(which(names(x)=="Tree"), which(names(x)=="Taxa")) # position of the Tree element in the list to remove
-  fam <- x[-numb, drop = F]
+  # Store tree for searching for inconsistencies
+  Tree <- x[[ "Tree" ]][ , 1:10 ]
 
-  st.names <- names(x[[1]][-1]) # names of sampled sites
+  numb <- c( which( names( x ) == "Tree" ) , which( names( x ) == "Taxa" ) ) # position of the Tree and Taxa data.frame in the biomonitoR object that need to be removed
 
-    # take into account composite families
-  if(composite == T & taxLev == "Family"){
-    fam <- checkBmwpFam(df=fam, famNames=epsi_fam_acc, stNames=st.names)
-  }
+  # remove Tree and Taxa data.frame
+  x <- x[ -numb ]
+  st.names <- names( x[[ 1 ]][ -1 ] ) # names of the sampled sites
+  # initialize the aggregation method
+  z <- NULL
 
-  for(i in 1:length(fam)){
-    colnames(fam[[i]])[1] <- "Taxon"
-  }
 
-  fam <- do.call( "rbind" , fam )
-  rownames( fam ) <- NULL
-  fam <- aggregate(. ~ Taxon, fam, FUN = sum)
-
-  # take into account the Ancylus/Planorbidae problem
-  ancy <- fam[ which(fam$Taxon == "Ancylus") , ] # subset Ancylus
-
-  if(nrow(fam[ which(fam$Taxon == "Ancylidae") , ]) > 0){ fam <- fam} else { # this row because if the user provide a custom database with Ancylidae the abundance of Ancylus must not be subtract from the abundance of Planorbidae
-
-  if(nrow(ancy) > 0){
-    taxon.col <- which(names(fam) %in% c("Taxon")) # Identifying the Taxon column, should be the first
-    plan.row <- rownames(fam[ which(fam$Taxon == "Planorbidae") , ]) # identify the Planorbidae row
-    fam[plan.row,-1] <- fam[ plan.row , -taxon.col] - ancy[ , -taxon.col] # -1 for not considering the column Taxon
+  # the following if statement is to allow the users to provide their own bmwp scores and aggregation rules.
+  # y represents the method to be used
+  if( is.data.frame( method ) == TRUE ){
+    if( isFALSE( agg ) ){
+      y <- method
+    } else {
+      y <- method
+      z <- agg
     }
-    else (fam <- fam)
+  } else {
+
+    if( ! ( isTRUE( agg ) | isFALSE( agg ) ) ) stop( "When using the deafult method agg can only be TRUE or FALSE")
+
+    # assign the default scores and aggregation rules as needed by the user
+
+    if( identical( method , "uk" ) ) {
+      y <- epsi_scores_fam_uk
+
+      if( isTRUE( agg ) ){
+        z <- epsi_acc_fam_uk
+      }
+    }
   }
 
-  fam.long <- reshape(fam, direction="long", varying=list(names(fam)[-1]), v.names="Abu",
-                      idvar="Taxon", times = names(fam)[-1], timevar = "Site")
-  rownames(fam.long) <- NULL
+  # the calculation of the index in biomonitoR consists in rbind all the taxonomic levels
+  # in the biomonitoR object that has been previously deprived of Taxa and Tree elements and then merge
+  # it with the scores data.frame.
+  # The first step is to change the column name of the first column of each data.frame to
+  # an unique name
 
+  for( i in 1:length( x ) ){
+    colnames( x[[ i ]] )[ 1 ] <- "Taxon"
+  }
 
-  # keep only numeric columns
-  temp <- fam.long[, 3, drop = F]
+  # rbind the data.frames representing a taxonomic level each
+  # aggregate is not necessary here
+  DF <- do.call( "rbind" , x )
+  rownames( DF ) <- NULL
+  DF <- aggregate(. ~ Taxon, DF , sum)
 
-  A <- abucl[1]
-  B <- abucl[2]
-  C <- abucl[3]
-  D <- abucl[4]
+  if( ! is.null( exceptions ) ){
+    DF <- manage_exceptions( DF = DF , Tree = Tree , y = y , Taxon = exceptions )
+    if( ! is.data.frame( DF ) ){
+      exce <- DF[[ 2 ]]
+      DF <- DF[[ 1 ]]
+    }
+  }
 
+  # merge the new data.frame with the score data.frame and change
+  # the names of the taxa according to the aggregation rules if needed
+  DF <- merge( DF, y[ , "Taxon" , drop = FALSE ] )
+  if( ! is.null( z ) ){
+    taxa.to.change <- as.character( DF$Taxon[ DF$Taxon %in% z$Taxon  ] )
+    DF <- checkBmwpFam( DF = DF , famNames = z , stNames = st.names )
+  } else {
+    DF <- DF
+  }
 
-  # transform row abundances to abunance categories
-  names(temp) <- "ABU_NUM"
-  temp[temp==A] <- 0
-  temp[temp>=c(A+1) & temp<=B] <- 1
-  temp[temp>=c(B+1) & temp<=C] <- 2
-  temp[temp>=c(C+1) & temp<=D] <- 3
-  temp[temp>=c(D+1)] <- 4
+  DF <- manage_inconsistencies( DF = DF , Tree = Tree )
+  if( ! is.data.frame( DF ) ){
+    incon <- DF[[ 2 ]]
+    DF <- DF[[ 1 ]]
+  }
 
+  if( BIN ){
+    DF <- to_bin( DF )
+  }
 
-  fam.long <- data.frame(fam.long, temp)
-  fam.long <- merge(fam.long, epsi_scores_use)
-  fam.long$EPSI <- fam.long$ABU_NUM * fam.long$Scores
-  epsi.sensitive <- aggregate(EPSI ~ Site, data = fam.long[which(fam.long$Scores >= 0.5),], FUN = sum)
-  epsi.insensitive <- aggregate(EPSI ~ Site, data = fam.long, FUN = sum)
+  if( traceB == "TRUE" ){
+    df2 <- DF
+  }
 
-  # the next two lines ot overcome the problem of having 0 organisms belonging to 1 and 2 FSSR
-  epsi.mer <- merge(epsi.sensitive, epsi.insensitive, by = "Site", all.x = T, all.y = T)
-  epsi.mer[is.na(epsi.mer)] <- 0
+  class.fun <- function( x ) cut( x , breaks = c( abucl , 10^18 ) , labels = 1:length( abucl ) , include.lowest = TRUE , right = TRUE )
+  abu.class <- apply( apply( DF[ , - 1 , drop = FALSE ] , 2 , class.fun ) , 2 , as.numeric )
+  abu.class[ is.na( abu.class ) ] <- 0
+  DF <- data.frame( Taxon = DF[ , 1 ] , abu.class )
+  tot.mer <- merge( y , DF )
 
-  # x stands for sensitive epsi and y for insensitive epsi. This results from the merge function above
-  res <- epsi.mer$EPSI.x/epsi.mer$EPSI.y*100
-  names(res) <- epsi.mer[, "Site"]
-  res <- res[st.names]
-  names(res) <- st.names
-  return(res)
+  EPSI <- data.frame( tot.mer[ , "Scores" ] * tot.mer[ , st.names , drop = FALSE ] )
+  epsi.sens <- apply( EPSI[ tot.mer[ , "Scores" ] >= 0.5 , , drop = FALSE] , 2 , sum )
+  epsi.insens <- apply( EPSI , 2 , sum )
+  res <- epsi.sens / epsi.insens * 100
+  names( res ) <- st.names
+
+  if( traceB == FALSE ){
+    res
+  } else {
+    if(  ! exists( "taxa.to.change" ) ){
+      df3 <- NA
+    } else { df3 <- taxa.to.change }
+    if( exists( "exce" , inherits = FALSE  ) ){
+      df4 <- exce
+    } else { df4 <- "none" }
+    if( exists( "incon" , inherits = FALSE  ) ){
+      df5 <- incon
+    } else { df5 <- "none" }
+    res <- list( results = res , taxa_df = df2 , epsi_df = tot.mer , composite_taxa = df3 , exceptions = df4 ,  parent_child_pairs = df5 )
+    res
+  }
+
 }

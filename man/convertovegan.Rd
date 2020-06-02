@@ -19,8 +19,11 @@ An utility function to export data to other formats.
 }
 \details{
 \code{convertovegan} converts data to the \code{vegan} package style, with sites on rows and taxa on columns. \code{convertobiotic} converts data to
-the format of \code{biotic} package. In \code{convertobiotic} if both family and above family level taxonomic information of Oligochaeta are concurrently present,
+the format of \code{biotic} package. This function will extract information at the family level, with an exception for Oligochaeta.
+In \code{convertobiotic} if both family and above family level taxonomic information of Oligochaeta are concurrently present,
 information will be provided at Oligochaeta level.
+\code{biomonitoR} automatically identify the taxonomic level at which Oligochaeta are stored (subclass is the default in \code{biomonitoR}).
+Be careful, for all the other taxa entered at taxonomic level higher than family will be discarded (e.g. Trombidiformes).
 }
 \section{Functions}{
 \itemize{

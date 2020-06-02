@@ -1,10 +1,23 @@
 #' eptd
 #'
 #' This function calculates the log10(Sel_EPTD + 1) metric, where EPTD stands for Ephemeroptera, Plecoptera, Trichoptera and Diptera.
-#' @param x results of function aggregatoR
-#' @keywords ept
-#' @details log10(Sel_EPTD + 1) the base-10 logarithm of the abundance of the selected EPTD families plus 1. Selected EPTD families are Heptageniidae, Ephemeridae, Leptophlebiidae, Brachycentridae, Goeridae, Polycentropodidae, Limnephilidae, Odontoceridae, Dolichopodidae, Stratiomyidae, Dixidae, Empididae, Athericidae and Nemouridae.
+#' @param x result of the function [aggregatoR]
+#' @param base Default to 10.
+#' @param eptd_families a vector of selected EPTD taxa at family level. Optional, default to `NULL`.
+#' @param traceB if set to `TRUE` a list as specified below will be returned.
+#' @keywords eptd
+#' @details log10(Sel_EPTD + 1) is the base-10 logarithm of the abundance of the selected EPTD families plus 1. Selected EPTD families are Heptageniidae, Ephemeridae, Leptophlebiidae, Brachycentridae, Goeridae, Polycentropodidae, Limnephilidae, Odontoceridae, Dolichopodidae, Stratiomyidae, Dixidae, Empididae, Athericidae and Nemouridae.
 #' This metric is part of the italian STAR_ICMi index, where it is supposed to be relate to habitat integrity.
+#' The function `eptd` will search for the selected EPT within Ephemeroptera, Plecoptera, Trichoptera and Diptera set at Order level.
+#' If you plan to store Ephemeroptera, Plecoptera, Trichoptera and Diptera at other taxonomic levels this function will
+#' not work properly, see [abuTax] instead.
+#'
+#' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
+#' \itemize{
+#'  \item `results` Results of the `eptd` index.
+#'  \item `taxa_df` The data.frame used for the calculation containing the abundance of the EPTD taxa.
+#' }
+#'
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
@@ -14,18 +27,31 @@
 #' eptd(data.agR)
 
 
-eptd <- function (x){
-
-  # check if the object d is of class "biomonitoR"
+eptd <- function ( x , base = 10 , eptd_families = NULL , traceB = FALSE ){
 
   # check if the object x is of class "biomonitoR"
-  classCheck(x, group = "mi")
+  classCheck( x )
 
-  eptd_fam <- c("Heptageniidae", "Ephemeridae", "Leptophlebiidae", "Brachycentridae", "Goeridae", "Polycentropodidae", "Limnephilidae", "Odontoceridae", "Dolichopodidae", "Stratiomyidae", "Dixidae", "Empididae", "Athericidae", "Nemouridae")
-  x_fam <- x[["Family"]]
-  x_eptd <- x_fam[which(x_fam$Family %in% eptd_fam), , drop=F]
-  temp <- log10(apply(x_eptd[ , -1 , drop = FALSE ], 2 , sum) + 1 )
+  if( is.null( eptd_families ) ){
+    eptd_fam <- c("Heptageniidae", "Ephemeridae", "Leptophlebiidae", "Brachycentridae", "Goeridae", "Polycentropodidae", "Limnephilidae", "Odontoceridae", "Dolichopodidae", "Stratiomyidae", "Dixidae", "Empididae", "Athericidae", "Nemouridae")
+  } else {
+    eptd_fam <- trimws( capWords( as.character( eptd_families ) ) )
+  }
 
-  return( temp )
+  x_fam <- x[[ "Family" ]]
+
+  if( inherits( x , "bin" ) ){
+    x_fam <- to_bin( x_fam )
+  }
+
+  x_eptd <- x_fam[ which( x_fam$Family %in% eptd_fam ) , , drop = F ]
+  temp <- log( apply( x_eptd[ , -1 , drop = FALSE ] , 2 , sum ) + 1 , base = base )
+
+  if( ! traceB ){
+    temp
+  } else {
+    rownames( x_eptd ) <- NULL
+    list( results = temp , taxa_df = x_eptd )
+  }
 
 }

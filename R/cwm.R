@@ -23,10 +23,6 @@
 #' @param taxLev character string giving the taxonomic level used to retrieve
 #'   trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #'   `"Family"` as returned by the [aggregatoR] function.
-#' @param agg if custom trait and reference databases are used this option allows
-#'    the user to aggregate traits at the desired taxonomic level. A custom reference
-#'    database is needed!
-#' @param dfref reference database to be used when a custom trait database is provided and agg equals to TRUE.
 #' @param trans the function used to transform the abundances, by default
 #'   `log1p`.
 #' @param traceB when set to TRUE returns a list with the results of the cwm function
@@ -44,13 +40,18 @@
 #'
 #' data.bio <- asBiomonitor(macro_ex)
 #' data.agR <- aggregatoR(data.bio)
+#' data.ts <- traitScaling( data.agR )
 #'
-#' cwm(x = data.agR, taxLev = "Taxa", trans = log1p)
-#' cwm(x = data.agR, taxLev = "Taxa",
+#' # averaging
+#' data.ts.av <- traitsMean( data.ts )
+#'
+#' # community specialization index
+#' cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa", trans = log1p)
+#' cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa",
 #'     trans = function(x) {
 #'         ifelse(x > 0, 1, 0)
 #'     })
-#' cwm(x = data.agR, taxLev = "Genus", trans = log1p)
+#' cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Genus", trans = log1p)
 #'
 #' @seealso [aggregatoR]
 #'
@@ -64,16 +65,14 @@
 #'
 #' @export
 
-cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, trans = log1p, traceB = FALSE) {
+cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p, traceB = FALSE) {
 
-  classCheck(x)
+  classCheck( x )
 
   if( is.null( traitDB )){
-    traitDB = traitsTachet
-    mes <- "no"
+    trait_db = traitsTachet
   } else {
-    traitDB = traitDB
-    mes <- "yes"
+    trait_db = traitDB
   }
 
 
@@ -87,22 +86,12 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
     Abundance <- Sample <- Weight <- Affinity <- totWeight <-
     weightedAffinity <- Category <- . <- NULL
 
-  trait_db <- traitDB                               %>%
-    (function(df) {
-      mutate(df,
-             Taxa = gsub(pattern     = "sp[.]|Ad[.]|Lv[.]|Gen[.]|lv[.]|ad[.]|gen[.]",
-                         replacement = "",
-                         x           = Taxa))
-    })                                              %>%
-    gather(key = modality, value = affinity, -Taxa) %>%
-    group_by(Taxa, modality)                        %>%
-    summarise(affinity = mean(affinity))            %>%
-    spread(key = modality, value = affinity)        %>%
-    ungroup()
-  trait_db$Taxa <- trimws(trait_db$Taxa)
-
   abundances <- x[[taxLev]]
   colnames(abundances)[1] <- "Taxa"
+
+  if( inherits( x , "bin" ) ){
+    abundances <- to_bin( abundances )
+  }
 
   # remove unassigned taxa from abundances
   if("unassigned" %in% abundances[ , "Taxa"]){
@@ -110,71 +99,8 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
     abundances <- abundances[ -z ,] # remove unassigned row from the species count
   }
 
-  taxa <- as.character(abundances$Taxa)
-
-  if (length(taxa[taxa != "unassigned"]) == 0) {
-    return("At least one taxa should be identified at a level compatible with the indicated taxLev")
-  }
-
-  if(mes == "no"){
-    if (taxLev == "Taxa") {
-      level <- sapply(select(x$Tree, Phylum:Subspecies),
-                      function(i) {
-                        as.character(i) == as.character(x$Tree$Taxa)
-                      }) %>%
-        (function(df) {
-          colnames(df)[apply(df, MARGIN = 1, which)]
-        })
-    } else {
-      level <- rep(taxLev, length(taxa))
-    }
-
-    # merge reference database
-
-    ref <- select(mi_ref, Phylum:Taxa)
-  }
-
-  if(mes == "yes"){
-    if(agg == TRUE){
-      if( is.null( dfref ) == TRUE) ( stop("Reference database is needed when agg = TRUE") )
-      if (taxLev == "Taxa") {
-        level <- sapply(select(x$Tree, Phylum:Subspecies),
-                        function(i) {
-                          as.character(i) == as.character(x$Tree$Taxa)
-                        }) %>%
-          (function(df) {
-            colnames(df)[apply(df, MARGIN = 1, which)]
-          })
-      } else {
-        level <- rep(taxLev, length(taxa))
-      }
-
-      # merge reference database
-
-      ref <- select(dfref, Phylum:Taxa)
-    } else {
-      ref <- select(x$Tree, Phylum:taxLev)
-      ref <- ref[ !duplicated(ref) , ]
-      ref <- ref[ref[taxLev] != "", ]
-      ref$Taxa <- ref[ , taxLev]
-      level <-  rep(taxLev, nrow( ref ) )
-    }
-  }
-
-  taxa_traits <- mutate(ref, Taxa = as.character(Taxa)) %>%
-    left_join(mutate(trait_db, Taxa = as.character(Taxa)),
-              by = "Taxa")                              %>%
-    (function(df) {
-      lapply(seq(length(taxa)),
-             function(i) {
-               df[df[, level[i]] == taxa[i],] %>%
-                 select(-(Phylum:Taxa))       %>%
-                 colMeans(na.rm = TRUE)
-             })               %>%
-        do.call(what = rbind) %>%
-        data.frame(Taxa = taxa, ., stringsAsFactors = FALSE)
-    })
-
+  abundances$Taxa <- as.character( abundances$Taxa )
+  trait_db <- trait_db %>% mutate( Taxa = as.character( Taxa ) )
   res <- abundances                                       %>%
     gather(key = Sample, value = Abundance, -Taxa) %>%
     mutate(Sample = factor(Sample,
@@ -184,7 +110,7 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
     left_join(group_by(., Sample)                  %>%
                 summarise(totWeight = sum(Weight)),
               by = "Sample")                       %>%
-    left_join(gather(taxa_traits,
+    left_join(gather(trait_db,
                      key   = Category,
                      value = Affinity, -Taxa),
               by = "Taxa")                         %>%
@@ -200,6 +126,14 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", agg = FALSE, dfref = NULL, t
   if( traceB == FALSE ){
     res
   } else {
-    list(res, taxa_traits[ complete.cases( taxa_traits ) , ] )
+
+    df1 <- trait_db %>% semi_join( abundances , "Taxa" )
+    df2 <- abundances %>% semi_join( trait_db , "Taxa" )
+    df3 <- abundances[ ! abundances$Taxa %in% df2$Taxa , "Taxa" ]
+    if( length( df3) == 0) ( df3 <- NA )
+    res.list <- list( res , df1 , df2 , df3 )
+    names( res.list ) <- c( "results" , "traits" , "taxa" , "taxa_excluded" )
+    res.list
+
   }
 }
