@@ -9,9 +9,9 @@
 #' The bias is added with the `rnorm` function.
 #'
 #' @export
-#' @importFrom dplyr group_by_all filter '%>%'
+#' @importFrom dplyr group_by_all filter '%>%' count
 
-addBiasToTraits <- function( x , colB = NULL , SD = 0.001 , traceB = TRUE ){
+addBiasToTraits <- function( x , colB = NULL , SD = 0.001 , traceB = FALSE ){
 
   # simulate modalities of duplicated traits
   # at first a small bias is addedd to the original traits with rnorm
