@@ -65,7 +65,7 @@ traitScaling <-  function( x , traitDB = NULL , dfref = NULL , filter_by_distanc
     # check if x is of class biomonitoR and mi
     classCheck( x )
 
-    if( inherits( x , "custom" ) ){
+    if( inherits( x , "custom" ) & is.null( traitDB ) ){
       warning( "It seems that you used your own reference database. Please check the consistency of the taxonomy used for calculating the index with those of your reference database to have reliable results." )
     }
 
