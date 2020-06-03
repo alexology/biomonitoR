@@ -4,7 +4,7 @@
 \alias{addBiasToTraits}
 \title{Add bias to duplicated fuzzy traits}
 \usage{
-addBiasToTraits(x, colB = NULL, SD = 0.001, traceB = TRUE)
+addBiasToTraits(x, colB = NULL, SD = 0.001, traceB = FALSE)
 }
 \arguments{
 \item{x}{results of \code{traitsMean} or a \code{data.frame} with a similar structure.}

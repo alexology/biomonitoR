@@ -300,11 +300,6 @@ f_eve <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = N
     df1 <- zero_corr[[3]]
   }
 
-  # transform the data.frame from abundance to presence-absence if needed
-  if( BIN ){
-    DF <- to_bin( DF )
-  }
-
 
   if( identical( distance , "gower" ) ){
     if( identical( correction , "cailliez" ) ) mat_dissim <- suppressWarnings( cailliez( mat_dissim , tol = set_param$tol , cor.zero = set_param$cor.zero ) )

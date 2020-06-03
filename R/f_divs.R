@@ -308,12 +308,6 @@ f_divs <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
   }
 
 
-  # transform the data.frame from abundance to presence-absence if needed
-  if( BIN ){
-    DF <- to_bin( DF )
-  }
-
-
   if( identical( distance , "gower" ) ){
     if( identical( correction , "cailliez" ) ) mat_dissim <- suppressWarnings( cailliez( mat_dissim , tol = set_param$tol , cor.zero = set_param$cor.zero ) )
     if( identical( correction , "lingoes" ) ) mat_dissim <- suppressWarnings( lingoes( mat_dissim  , tol = set_param$tol , cor.zero = set_param$cor.zero ) )
