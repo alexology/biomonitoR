@@ -29,6 +29,8 @@
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
 #'   It includes traits only for macroinvertebrates.
+#' @param taxLev taxonomic level on which the calculation has to be made.
+#' Default to `Taxa`, the maximum taxonomic level is `Family`.
 #' @param dfref reference database as used in the function aggregatoR.
 #' @param filter_by_distance filter the results according to the taxonomic distance. Possible values are "pos" , "neg" or a positive integer. See details.
 #' @param colB A vector that contains the number of modalities for each trait
@@ -59,7 +61,7 @@
 
 
 
-traitScaling <-  function( x , traitDB = NULL , dfref = NULL , filter_by_distance = NULL ){
+traitScaling <-  function( x , traitDB = NULL , taxLev = "Taxa" , dfref = NULL , filter_by_distance = NULL ){
 
   if( is.null( traitDB ) ){
     # check if x is of class biomonitoR and mi
@@ -114,6 +116,24 @@ traitScaling <-  function( x , traitDB = NULL , dfref = NULL , filter_by_distanc
   trait_db <- trait.interm
 
   DF <- x[["Tree"]]
+
+  # allow the user to work at a desired taxonomic level
+
+  if( ! taxLev %in% c( "Family" ,     "Subfamily" ,  "Tribus" ,    "Genus" ,
+                     "Species" ,  "Subspecies" , "Taxa" ) ) stop( "Maximum taxonomic level is family.")
+
+  if( ! identical( taxLev , "Taxa" ) ){
+    # set values to "" for the taxonomic levels lower than specified
+    DF <- DF[ , 1:11 ]
+    DF[ colnames( DF )[ ( which( colnames( DF ) %in% taxLev ) + 1 ):11 ]    ] <- ""
+
+    # remove duplicated rows
+    DF <- DF[ ! duplicated( DF ) , ]
+
+    # change Taxa to the taxa of the required taxonomic level
+    DF[ , 11 ] <- DF[ , taxLev ]
+
+  }
 
   # DFtaxa stores the taxa present in the user database
 

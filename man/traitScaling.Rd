@@ -9,7 +9,13 @@
 \usage{
 sampleTraits(x)
 
-traitScaling(x, traitDB = NULL, dfref = NULL, filter_by_distance = NULL)
+traitScaling(
+  x,
+  traitDB = NULL,
+  taxLev = "Taxa",
+  dfref = NULL,
+  filter_by_distance = NULL
+)
 
 traitsMean(x, colB = NULL)
 }
@@ -23,6 +29,9 @@ can be retrieved from
 \href{https://www.freshwaterecology.info/}{freshwaterecology.info} website
 (Schmidt-Kloiber & Hering, 2015).
 It includes traits only for macroinvertebrates.}
+
+\item{taxLev}{taxonomic level on which the calculation has to be made.
+Default to \code{Taxa}, the maximum taxonomic level is \code{Family}.}
 
 \item{dfref}{reference database as used in the function aggregatoR.}
 
