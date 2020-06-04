@@ -71,7 +71,6 @@
 #'  \item **taxa**: a data.frame conaining the taxa used for th calculations;
 #'  \item **nbdim**: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
 #'  \item **correction**: the type of correction used.
-#'  \item **taxa_excluded**: a vector conaining the names of the taxa exluded from the calculations;
 #'  \item **NA_detection**: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
 #'  \item **duplicated_traits**: if present, list the taxa with the same traits.
 #'  \item `parent_child_pairs` For instance in Spanish `aspt` both Ferrissia and Planorbidae receive a score.
@@ -380,11 +379,6 @@ f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
       rownames( traitDB ) <- NULL
     }
 
-    # check for taxa esxluded during the calculation
-    taxa.excluded <- taxa[ ! taxa %in% DF$Taxon ]
-    if( length( taxa.excluded ) == 0 ){
-      taxa.excluded <- "no taxa were excluded"
-    }
 
     if(  exists( "df1" , inherits = FALSE  ) ){
       df1 <- df1
@@ -396,8 +390,8 @@ f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
 
     rownames( DF ) <- NULL
 
-    res.list <- list( fric , traitDB , DF , m , correction = correction ,  taxa.excluded , tax.na , df1 , df2 )
-    names( res.list ) <- c( "results" , "traits" , "taxa" , "nbdim" , "correction" , "taxa_excluded" , "NA_detection" , "duplicated_traits" , "parent_child_pairs" )
+    res.list <- list( fric , traitDB , DF , m , correction = correction ,  tax.na , df1 , df2 )
+    names( res.list ) <- c( "results" , "traits" , "taxa" , "nbdim" , "correction" , "NA_detection" , "duplicated_traits" , "parent_child_pairs" )
     return( res.list )
   }
 

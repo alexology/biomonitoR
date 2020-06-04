@@ -47,7 +47,6 @@
 #'  \item **traits**: a data.frame containing the traits used for the calculations;
 #'  \item **taxa**: a data.frame conaining the taxa used for th calculations;
 #'  \item **correction**: the type of correction used.
-#'  \item **taxa_excluded**: a vector conaining the names of the taxa exluded from the calculations;
 #'  \item **NA_detection**: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
 #'  \item **duplicated_traits**: if present, list the taxa with the same traits.
 #'  \item `parent_child_pairs` For instance in Spanish `aspt` both Ferrissia and Planorbidae receive a score.
@@ -218,8 +217,6 @@ f_divs <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
   DF <- do.call( "rbind" , x )
   rownames( DF ) <- NULL
   DF <- aggregate(. ~ Taxon, DF , sum )
-
-  taxa <- as.character( DF$Taxon )
   DF$Taxon <- as.character( DF$Taxon )
 
 
@@ -366,12 +363,6 @@ f_divs <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
       rownames( traitDB ) <- NULL
     }
 
-    # check for taxa excluded during the calculation
-    taxa.excluded <- taxa[ ! taxa %in% DF$Taxon ]
-    if( length( taxa.excluded ) == 0 ){
-      taxa.excluded <- "no taxa were excluded"
-    }
-
     if(  exists( "df1" , inherits = FALSE  ) ){
         df1 <- df1
     } else { df1 <- "no taxa with the same traits"}
@@ -382,8 +373,8 @@ f_divs <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
 
     rownames( DF ) <- NULL
 
-    res.list <- list( res , traitDB , DF ,  correction = correction ,  taxa.excluded , tax.na , df1 , df2 )
-    names( res.list ) <- c( "results" , "traits" , "taxa" , "correction" , "taxa_excluded" , "NA_detection" , "duplicated_traits" , "parent_child_pairs" )
+    res.list <- list( res , traitDB , DF ,  correction = correction , tax.na , df1 , df2 )
+    names( res.list ) <- c( "results" , "traits" , "taxa" , "correction" , "NA_detection" , "duplicated_traits" , "parent_child_pairs" )
     return( res.list )
   }
 }

@@ -64,7 +64,6 @@ a vector with fuzzy functional richness results.
 \item \strong{taxa}: a data.frame conaining the taxa used for th calculations;
 \item \strong{nbdim}: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
 \item \strong{correction}: the type of correction used.
-\item \strong{taxa_excluded}: a vector conaining the names of the taxa exluded from the calculations;
 \item \strong{NA_detection}: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
 \item \strong{duplicated_traits}: if present, list the taxa with the same traits.
 \item \code{parent_child_pairs} For instance in Spanish \code{aspt} both Ferrissia and Planorbidae receive a score.
