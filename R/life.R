@@ -206,7 +206,7 @@ life <- function( x , method = "extence" , abucl = c( 1 , 9 , 99 , 999 , 9999 ) 
   class.fun <- function( x ) cut( x , breaks = c( abucl , 10^18 ) , labels = 1:length( abucl ) , include.lowest = TRUE , right = TRUE )
   abu.class <- apply( apply( DF[ , - 1 , drop = FALSE ] , 2 , class.fun ) , 2 , as.numeric )
   abu.class[ is.na( abu.class ) ] <- 0
-  DF <- data.frame( Taxon = DF[ , 1 ] , abu.class )
+  DF <- data.frame( Taxon = DF[ , 1 ] , abu.class , check.names = FALSE )
   tot.mer <- merge( y , DF )
 
   res <- tot.mer %>% pivot_longer( -c( Taxon , FG_Score ) , names_to = "Sample", values_to = "ABUCLASS" ) %>%

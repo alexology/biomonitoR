@@ -190,7 +190,7 @@ psi <- function( x , method = "extence" , abucl = c( 1 , 9 , 99 , 999 ) , agg = 
   class.fun <- function( x ) cut( x , breaks = c( abucl , 10^18 ) , labels = 1:length( abucl ) , include.lowest = TRUE , right = TRUE )
   abu.class <- apply( apply( DF[ , -c( 1:2 ) , drop = FALSE ] , 2 , class.fun ) , 2 , as.numeric )
   abu.class[ is.na( abu.class ) ] <- 0
-  tot.mer <- data.frame( DF[ , 1:2 ] , abu.class )
+  tot.mer <- data.frame( DF[ , 1:2 ] , abu.class , check.names = FALSE )
 
 
   res.tot <- tot.mer %>% pivot_longer( -c( Taxon , FSSR_Score ) , names_to = "Sample", values_to = "ABUCLASS" ) %>%

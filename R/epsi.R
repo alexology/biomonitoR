@@ -160,7 +160,7 @@ epsi <- function( x , method = "uk" ,  agg = FALSE , abucl = c( 1 , 9 , 99 , 999
   class.fun <- function( x ) cut( x , breaks = c( abucl , 10^18 ) , labels = 1:length( abucl ) , include.lowest = TRUE , right = TRUE )
   abu.class <- apply( apply( DF[ , - 1 , drop = FALSE ] , 2 , class.fun ) , 2 , as.numeric )
   abu.class[ is.na( abu.class ) ] <- 0
-  DF <- data.frame( Taxon = DF[ , 1 ] , abu.class )
+  DF <- data.frame( Taxon = DF[ , 1 ] , abu.class , check.names = FALSE )
   tot.mer <- merge( y , DF )
 
   EPSI <- data.frame( tot.mer[ , "Scores" ] * tot.mer[ , st.names , drop = FALSE ] )

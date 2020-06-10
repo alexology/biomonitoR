@@ -193,7 +193,7 @@ whpt <- function(x, method = "uk" , type = "ab", metric = "aspt", agg = FALSE , 
   class.fun <- function( x ) cut( x , breaks = c( abucl , 10^18 ) , labels = 1:length( abucl ) , include.lowest = TRUE , right = TRUE )
   abu.class <- apply( apply( DF[ , -1 , drop = FALSE ] , 2 , class.fun ) , 2 , as.numeric )
   abu.class[ is.na( abu.class ) ] <- 0
-  tot.mer <- data.frame( DF[ , 1 , drop = FALSE ] , abu.class )
+  tot.mer <- data.frame( DF[ , 1 , drop = FALSE ] , abu.class , check.names = FALSE )
 
   # to avoid warning from inner_join
   y$Taxon <- as.character( y$Taxon )
