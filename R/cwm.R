@@ -65,7 +65,7 @@
 #'
 #' @export
 
-cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p, traceB = FALSE) {
+cwm <- function( x , traitDB = NULL, taxLev = "Taxa" , trans = log1p , traceB = FALSE ) {
 
   classCheck( x )
 
@@ -98,6 +98,9 @@ cwm <- function(x, traitDB = NULL, taxLev = "Taxa", trans = log1p, traceB = FALS
     z <- which(abundances[ , "Taxa" ] == "unassigned")
     abundances <- abundances[ -z ,] # remove unassigned row from the species count
   }
+
+  abundances <- merge( abundances , trait_db[ , "Taxa" , drop = FALSE ] )
+  trait_db <- merge( trait_db , abundances[ , "Taxa" , drop = FALSE ] )
 
   abundances$Taxa <- as.character( abundances$Taxa )
   trait_db <- trait_db %>% mutate( Taxa = as.character( Taxa ) )

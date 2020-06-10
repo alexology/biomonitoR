@@ -108,6 +108,9 @@ csi <- function( x, traitDB = NULL, taxLev = "Taxa", trans = log1p, traceB = FAL
   abundances$Taxa <- as.character( abundances$Taxa )
   trait_db <- trait_db %>% mutate( Taxa = as.character( Taxa ) )
 
+  abundances <- merge( abundances , trait_db[ , "Taxa" , drop = FALSE ] )
+  trait_db <- merge( trait_db , abundances[ , "Taxa" , drop = FALSE ] )
+
   tsi <- trait_db                                       %>%
     semi_join( abundances , "Taxa" )                    %>%
     gather( key = Modality , value = Affinity , -Taxa ) %>%
