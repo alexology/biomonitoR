@@ -42,7 +42,6 @@ addBiasToTraits <- function( x , colB = NULL , SD = 0.001 , traceB = FALSE ){
   for( i in 1:nrow( temp.df ) ) {
     res.names  <- which( apply(  x[ , ! colnames( x ) %in% "Taxa" ] , 1 , function( z ) return( all( z == t( temp.df[ i , -ncol( temp.df ) , drop = FALSE ] )[ , 1 ] , na.rm = TRUE   ) )  ) )
     names.vec <- c( names.vec , res.names )
-    print( length( res.names ) )
   }
 
 
