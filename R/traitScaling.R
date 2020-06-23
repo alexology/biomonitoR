@@ -140,11 +140,12 @@ traitScaling <-  function( x , traitDB = NULL , taxLev = "Taxa" , dfref = NULL ,
   DFtaxa <- as.character( DF[  11 ] )
   result.list <- apply( DF , 1 , function( x ) traitS( x = x, y = DF , z = trait_db , w = ref.na ) )
   result.data.frame <- do.call( rbind , result.list )
+  result.data.frame <- result.data.frame[ result.data.frame$Taxa_db != "" , ]
   result.data.frame.single <- result.data.frame
 
   unique.taxa <- unique( result.data.frame.single$Taxa_db )
 
-  # deleting row for the follwing reason. It happens that traits are present for a species
+  # deleting row for the following reason. It happens that traits are present for a species
   # and also for the genus of this species. If the user sample
   # contains a species other than that reported in the trait list we want only to keep the
   # trait at genus level

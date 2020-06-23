@@ -26,7 +26,7 @@ zero_dist_traits <- function( x , mat_dissim , BIN ){
   trait.df <- as.matrix( trait.df[ , -1 ] )
 
   if( any( x[ , "Taxon" ] != rownames( trait.df ) )  ){
-    stop( "Something wen wrong with the zero distance removal. Please ask the mainteiner to solve the problem." )
+    stop( "Something went wrong with the zero distance removal. Please ask the mainteiner to solve the problem." )
   }
   diag( trait.df ) <- rep( 0 , ncol( trait.df ) )
   trait.df[ lower.tri( trait.df ) ] <- trait.df[ upper.tri( trait.df ) ]
