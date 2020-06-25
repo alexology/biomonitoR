@@ -9,7 +9,7 @@ asBiomonitor(x, group = "mi", dfref = NULL, to_change = "default", FUN = sum)
 \arguments{
 \item{x}{a data.frame with a column called "Taxa" where store taxa names and samples on the other columns (see the example macro_ex).}
 
-\item{group}{biotic group of interest. Possible values are \code{mi} for macroinvertebrates and \code{mf} for macrophytes. The choice will set the right reference database for the specified group.
+\item{group}{biotic group of interest. Possible values are \code{mi} for macroinvertebrates, \code{mf} for macrophytes and \code{fi} for fish. The choice will set the right reference database for the specified group.
 This option will not be considered if a custom reference database is provided. Default to \code{mi}.}
 
 \item{dfref}{a custom reference database that replaces the reference database.}
@@ -32,9 +32,8 @@ Default references databases are provided for macroinvertebrates and macrophytes
 Both databases heavily rely on the information provided by the \href{https://www.freshwaterecology.info/}{freshwaterecology.info} website.
 If \code{dfref} is not NULL a custom dictionary will be saved in the working directory to let the \code{asBiomonitor} function work correctly.
 If you are unable to build a reference database by your own please check the function \code{\link{refFromTree}} for a possible solution.
-\code{asBiomonitor}  returns an object of class \code{biomonitoR} togheter with one of the classes \code{mi}, \code{mf} or \code{custom} depending from the \code{group}
-and \code{dfref} specifications. If the reference database is used, the class is \code{mi} for macroinvertebrates and \code{mf} for macrophytes.
-If a reference database is provided the class is set to \code{custom}. The function \code{\link{quickRename}} works as the \code{asBiomonitor} but returns
+\code{asBiomonitor}  returns an object of class \code{biomonitoR} togheter with one of the classes \code{abundance} or \code{bin}.
+The function \code{\link{quickRename}} works as the \code{asBiomonitor} but returns
 a data.frame without the biomonitoR format.
 \code{asBiomonitor} aggregates all the rows with the same name with the option \code{FUN} and converts all the \code{NA} to 0.
 If only 1 and 0 are present \code{x} will be imported as presence-absence.

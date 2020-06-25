@@ -3,7 +3,7 @@
 #' This function merge the user dataframe with a reference database and suggest corrections for mispelled names.
 #'
 #' @param x a data.frame with a column called "Taxa" where store taxa names and samples on the other columns (see the example macro_ex).
-#' @param group biotic group of interest. Possible values are `mi` for macroinvertebrates and `mf` for macrophytes. The choice will set the right reference database for the specified group.
+#' @param group biotic group of interest. Possible values are `mi` for macroinvertebrates, `mf` for macrophytes and `fi` for fish. The choice will set the right reference database for the specified group.
 #' This option will not be considered if a custom reference database is provided. Default to `mi`.
 #' @param dfref a custom reference database that replaces the reference database.
 #' @param to_change a `data.frame` specifying the taxa name that needs to be changed.
@@ -19,9 +19,8 @@
 #' Both databases heavily rely on the information provided by the [freshwaterecology.info](https://www.freshwaterecology.info/) website.
 #' If `dfref` is not NULL a custom dictionary will be saved in the working directory to let the `asBiomonitor` function work correctly.
 #' If you are unable to build a reference database by your own please check the function \code{\link{refFromTree}} for a possible solution.
-#' `asBiomonitor`  returns an object of class `biomonitoR` togheter with one of the classes `mi`, `mf` or `custom` depending from the `group`
-#' and `dfref` specifications. If the reference database is used, the class is `mi` for macroinvertebrates and `mf` for macrophytes.
-#' If a reference database is provided the class is set to `custom`. The function \code{\link{quickRename}} works as the `asBiomonitor` but returns
+#' `asBiomonitor`  returns an object of class `biomonitoR` togheter with one of the classes `abundance` or `bin`.
+#' The function \code{\link{quickRename}} works as the `asBiomonitor` but returns
 #' a data.frame without the biomonitoR format.
 #' `asBiomonitor` aggregates all the rows with the same name with the option `FUN` and converts all the `NA` to 0.
 #' If only 1 and 0 are present `x` will be imported as presence-absence.
@@ -81,6 +80,10 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , to_change = "defaul
 
   if(group == "mf"){
     ref <- mf_ref
+  }
+
+  if(group == "fi"){
+    ref <- fi_ref
   }
 
   # allow the users to use their own reference database
@@ -173,7 +176,7 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , to_change = "defaul
 
   class( taxa_def ) <- c( "biomonitoR" )
 
-  if( ! any( x[ , -1 ] >1 ) ){
+  if( all( x[ , -1 ] %in% c( 0, 1 ) )  ){
     class( taxa_def ) <- c( class( taxa_def ) , "bin" )
   }
 

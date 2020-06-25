@@ -16,6 +16,10 @@ suggestNames <- function( x , custom = F , group = group , ... ){
       dic.path <- system.file( "dict" , "mf_dictionary.txt" , package = "biomonitoR" )
       dictio <- dictionary( dic.path , cache = F )
     }
+    if( group == "fi" ){
+      dic.path <- system.file( "dict" , "fi_dictionary.txt" , package = "biomonitoR" )
+      dictio <- dictionary( dic.path , cache = F )
+    }
   }
   if( custom == T ){
     dic.path <- c( paste(getwd() , "/custom_dictio.dic" , sep = "" ) )

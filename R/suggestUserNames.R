@@ -11,6 +11,10 @@ suggestUserNames <- function(x, group = "mi"){
     dic.path <- system.file("dict", "mf_dictionary.txt", package="biomonitoR")
     dictio <- dictionary(dic.path, cache = F)
   }
+  if( group == "fi" ){
+    dic.path <- system.file( "dict" , "fi_dictionary.txt" , package = "biomonitoR" )
+    dictio <- dictionary( dic.path , cache = F )
+  }
   taxaCar <- as.character( x$Taxa )
   taxaCar <- sapply( taxaCar, capWords, USE.NAMES = F )
 
