@@ -214,7 +214,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
 
     if( is.euclid( x ) ){
       qual_fs <- qfs( x , nbdim = nbdim )
-      m.check <- qual_fs$meanSD < 0.01
+      m.check <- qual_fs$meanSD < tresh
 
       if( ! any( na.omit( m.check ) ) ) { stop ("there is no optimal number of dimension, please increase the number of dimensions" )}
       r2.ax <- min( which( m.check ) )
@@ -230,7 +230,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
 
       if( identical( type , "none" ) ){
         qual_fs <- qfs( x , nbdim = nbdim )
-        m.check <- qual_fs$meanSD < 0.1
+        m.check <- qual_fs$meanSD < tresh
         if( ! any( na.omit( m.check ) ) ) { stop ("there is no optimal number of dimension, please increase the number of dimensions" )}
         r2.ax <- min( which( m.check ) )
         res <- data.frame( Transformation = "none" , Euclidean = "no" , nbdim = r2.ax  )
@@ -239,7 +239,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
       if( identical( type , "cailliez" ) ){
         if( is.euclid( cai.dist ) ){
           qual_fs <- qfs( cai.dist , nbdim = nbdim )
-          m.check <- qual_fs$meanSD < 0.01
+          m.check <- qual_fs$meanSD < tresh
           if( ! any( na.omit( m.check ) ) ) { stop ("there is no optimal number of dimension, please increase the number of dimensions" )}
           r2.ax <- min( which( m.check ) )
           res <- data.frame( Transformation = "cailliez" , Euclidean = "yes" , nbdim = r2.ax  )
@@ -251,7 +251,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
       if( identical( type , "lingoes" ) ){
         if( is.euclid( lin.dist ) ){
           qual_fs <- qfs( lin.dist , nbdim = nbdim )
-          m.check <- qual_fs$meanSD < 0.01
+          m.check <- qual_fs$meanSD < tresh
           if( ! any( na.omit( m.check ) ) ) { stop ("there is no optimal number of dimension, please increase the number of dimensions" )}
           r2.ax <- min( which( m.check ) )
           res <- data.frame( Transformation = "lingoes" , Euclidean = "yes" , nbdim = r2.ax  )
@@ -263,7 +263,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
       if( identical( type , "sqrt" ) ){
         if( is.euclid( sqr.dist ) ){
           qual_fs <- qfs( sqr.dist , nbdim = nbdim )
-          m.check <- qual_fs$meanSD < 0.01
+          m.check <- qual_fs$meanSD < tresh
           if( ! any( na.omit( m.check ) ) ) { stop ("there is no optimal number of dimension, please increase the number of dimensions" )}
           r2.ax <- min( which( m.check ) )
           res <- data.frame( Transformation = "sqrt" , Euclidean = "yes" , nbdim = r2.ax  )
@@ -275,7 +275,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
       if( identical( type , "quasi" ) ){
         if( is.euclid( qua.dist ) ){
           qual_fs <- qfs( sqr.dist , nbdim = nbdim )
-          m.check <- qual_fs$meanSD < 0.01
+          m.check <- qual_fs$meanSD < tresh
           if( ! any( na.omit( m.check ) ) ) { stop ("there is no optimal number of dimension, please increase the number of dimensions" )}
           r2.ax <- min( which( m.check ) )
           res <- data.frame( Transformation = "quasi" , Euclidean = "yes" , nbdim = r2.ax  )
