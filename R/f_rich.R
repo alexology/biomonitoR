@@ -42,6 +42,9 @@
 #' @param traitDB a trait database. Can be a `data.frame` ot a `dist` object.
 #' Taxonomic level of the traits database must match those of the taxonomic database.
 #' No automatic check is done by the `function`.
+#' @param taxLev character string giving the taxonomic level used to retrieve
+#' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
+#' `"Family"` as returned by the [aggregatoR] function.
 #' @param type the type of variables speciefied in `traitDB`.
 #' Must be one of `F`, fuzzy, or `C`, continuous.
 #' If more control is needed please consider to provide `traitDB` as a `dist` object.
@@ -51,10 +54,11 @@
 #' Not needed when `euclidean` distance is used.
 #' @param nbdim number of dimensions for the multidimensional functional spaces.
 #' We suggest to keep `nbdim` as low as possible.
-#' By default `biomonitoR` select the optimal number of dimensions with the quality of the functional space approach.
+#' By default `biomonitoR` set the number of dimensions to 2. Select `auto` if you want the automated selection
+#' approach according to Maire et al. (2015).
 #' @param distance to be used to compute functional distances, `euclidean` or `gower`. Default to `gower`.
 #' @param zerodist_rm If `TRUE` aggregates taxa with the same traits.
-#' @param correction Correction methods for negative eigenvalues, can be one of `none`, `lingoes` and `cailliez`.
+#' @param correction Correction methods for negative eigenvalues, can be one of `none`, `lingoes`, `cailliez`, `sqrt` and `quasi`.
 #' Ignored when type is set to `C`.
 #' @param traceB if `TRUE` ffrich will return a list as specified in details.
 #' @param set_param a list of parameters for fine tuning the calculations.
@@ -130,7 +134,7 @@
 #'
 #' @export
 
-f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = NULL,  nbdim = "auto" , distance = "gower", zerodist_rm = FALSE , correction = "none" , traceB = FALSE , set_param = NULL ){
+f_rich <- function( x , traitDB = NULL , taxLev = "Taxa" , type = NULL , traitSel = FALSE , colB = NULL,  nbdim = 2 , distance = "gower", zerodist_rm = FALSE , correction = "none" , traceB = FALSE , set_param = NULL ){
 
   #  check if the object x is of class "biomonitoR"
   classCheck( x )
@@ -194,26 +198,10 @@ f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
 
   }
 
+  st.names <- names( x[[ 1 ]][ -1 ] )
 
-  # Store tree for searching for inconsistencies
-  Tree <- x[[ "Tree" ]][ , 1:10 ]
-
-  numb <- c( which( names( x ) == "Tree" ) , which( names( x ) == "Taxa" ) ) # position of the Tree and Taxa data.frame in the biomonitoR object that need to be removed
-
-
-  # remove Tree and Taxa data.frame
-  x <- x[ -numb ]
-  st.names <- names( x[[ 1 ]][ -1 ] ) # names of the sampled sites
-
-  for( i in 1:length( x ) ){
-    colnames( x[[ i ]] )[ 1 ] <- "Taxon"
-  }
-
-  # rbind the data.frames representing a taxonomic level each
-  # aggregate is not necessary here
-  DF <- do.call( "rbind" , x )
-  rownames( DF ) <- NULL
-  DF <- aggregate(. ~ Taxon, DF , sum )
+  DF <- x[[ taxLev ]]
+  names( DF )[ 1 ] <- "Taxon"
 
   taxa <- as.character( DF$Taxon )
   DF$Taxon <- as.character( DF$Taxon )
@@ -228,12 +216,6 @@ f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
     # be sure that taxonomic and functional database have the same order and taxa
     DF <- merge( DF , traitDB[ , "Taxon" , drop = FALSE ] , by = "Taxon" )
 
-
-    DF <- manage_inconsistencies( DF = DF , Tree = Tree )
-    if( ! is.data.frame( DF ) ){
-      incon <- DF[[ 2 ]]
-      DF <- DF[[ 1 ]]
-    }
 
     # transform the data.frame from abundance to presence-absence if needed
     if( BIN ){
@@ -270,12 +252,6 @@ f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
     traitDB <- as.matrix( traitDB )
     DF <- merge( DF , data.frame( Taxon = rownames( traitDB ) ) , by = "Taxon" )
 
-    DF <- manage_inconsistencies( DF = DF , Tree = Tree )
-    if( ! is.data.frame( DF ) ){
-      incon <- DF[[ 2 ]]
-      DF <- DF[[ 1 ]]
-    }
-
     # transform the data.frame from abundance to presence-absence if needed
     if( BIN ){
       DF <- to_bin( DF )
@@ -292,7 +268,6 @@ f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
 
     mat_dissim <- as.dist( traitDB )
 
-
   }
 
   if( zerodist_rm & any( mat_dissim < set_param$tol ) ){
@@ -305,6 +280,8 @@ f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
   if( identical( distance , "gower" ) ){
     if( identical( correction , "cailliez" ) ) mat_dissim <- suppressWarnings( cailliez( mat_dissim , tol = set_param$tol , cor.zero = set_param$cor.zero ) )
     if( identical( correction , "lingoes" ) ) mat_dissim <- suppressWarnings( lingoes( mat_dissim  , tol = set_param$tol , cor.zero = set_param$cor.zero ) )
+    if( identical( correction , "sqrt" ) ) mat_dissim <- suppressWarnings( sqrt( mat_dissim ) )
+    if( identical( correction , "quasi" ) ) mat_dissim <- suppressWarnings( quasieuclid( mat_dissim ) )
   }
 
   suppressWarnings( euclid.dist.mat <- is.euclid( mat_dissim , tol = set_param$tol ) )
@@ -331,7 +308,6 @@ f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
   }
 
 
-
   suppressWarnings( traits_pcoa <- dudi.pco( mat_dissim , scannf = F , nf = m ) )
 
 
@@ -353,23 +329,23 @@ f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
   if( traceB ){
     # chech for NA, it could happen that a trait is filled with NAs
     # but this can be done only when traitDB is a data.frame
-  if( is.data.frame( traitDB ) ){
-    if( any( is.na( tr_prep ) ) ){
-      tax.na <- as.data.frame( which( is.na( tr_prep ) , arr.ind = TRUE ) )
-      tax.na[ , 1 ] <- traitDB[ tax.na[ , 1 ] , 1 ]
-      tax.na[ , 2 ] <- colnames( traitDB[ , -1 ] )[ tax.na[ , 2 ]  ]
-      colnames( tax.na ) <- c( "Taxa" , "Traits" )
-      tax.na <- tax.na[ order( tax.na[ , 1 ] ) ,  ]
-      rownames( tax.na ) <- NULL
-    } else { tax.na <- "No NAs detected" }
+    if( is.data.frame( traitDB ) ){
+      if( any( is.na( tr_prep ) ) ){
+        tax.na <- as.data.frame( which( is.na( tr_prep ) , arr.ind = TRUE ) )
+        tax.na[ , 1 ] <- traitDB[ tax.na[ , 1 ] , 1 ]
+        tax.na[ , 2 ] <- colnames( traitDB[ , -1 ] )[ tax.na[ , 2 ]  ]
+        colnames( tax.na ) <- c( "Taxa" , "Traits" )
+        tax.na <- tax.na[ order( tax.na[ , 1 ] ) ,  ]
+        rownames( tax.na ) <- NULL
+      } else { tax.na <- "No NAs detected" }
 
-  } else {
-    tax.na <- "NAs cannot be detected when traitDB is a dist object"
-  }
+    } else {
+      tax.na <- "NAs cannot be detected when traitDB is a dist object"
+    }
 
     # prepare traits to be returned
     if( ! is.data.frame( traitDB ) ){
-    # returns the distance matrix used for the calculation as a dist object
+      # returns the distance matrix used for the calculation as a dist object
       traitDB <- as.dist( traitDB )
     }
 
@@ -384,14 +360,11 @@ f_rich <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = 
       df1 <- df1
     } else { df1 <- MES }
 
-    if( exists( "incon" , inherits = FALSE  ) ){
-      df2 <- incon
-    } else { df2 <- "none" }
 
     rownames( DF ) <- NULL
 
-    res.list <- list( fric , traitDB , DF , m , correction = correction ,  tax.na , df1 , df2 )
-    names( res.list ) <- c( "results" , "traits" , "taxa" , "nbdim" , "correction" , "NA_detection" , "duplicated_traits" , "parent_child_pairs" )
+    res.list <- list( fric , traitDB , DF , m , correction = correction ,  tax.na , df1 )
+    names( res.list ) <- c( "results" , "traits" , "taxa" , "nbdim" , "correction" , "NA_detection" , "duplicated_traits" )
     return( res.list )
   }
 

@@ -7,6 +7,7 @@
 f_red(
   x,
   traitDB = NULL,
+  taxLev = "Taxa",
   type = NULL,
   traitSel = FALSE,
   colB = NULL,
@@ -23,6 +24,10 @@ f_red(
 \item{traitDB}{a trait database. Can be a \code{data.frame} ot a \code{dist} object.
 Taxonomic level of the traits database must match those of the taxonomic database.
 No automatic check is done by the \code{function}.}
+
+\item{taxLev}{character string giving the taxonomic level used to retrieve
+trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
+\code{"Family"} as returned by the \link{aggregatoR} function.}
 
 \item{type}{the type of variables speciefied in \code{traitDB}.
 Must be one of \code{F}, fuzzy, or \code{C}, continuous.
@@ -41,7 +46,7 @@ By default \code{biomonitoR} select the optimal number of dimensions with the qu
 
 \item{traceB}{if \code{TRUE} ffrich will return a list as specified in details.}
 
-\item{correction}{Correction methods for negative eigenvalues, can be one of \code{none}, \code{lingoes} and \code{cailliez}.
+\item{correction}{Correction methods for negative eigenvalues, can be one of \code{none}, \code{lingoes} , \code{cailliez}, \code{sqrt} and \code{quasi}.
 Ignored when type is set to \code{C}.}
 
 \item{set_param}{a list of parameters for fine tuning the calculations.
@@ -58,8 +63,6 @@ a vector with fuzzy functional richness results.
 \item \strong{correction}: the type of correction used.
 \item \strong{NA_detection}: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
 \item \strong{duplicated_traits}: if present, list the taxa with the same traits.
-\item \code{parent_child_pairs} For instance in Spanish \code{aspt} both Ferrissia and Planorbidae receive a score.
-Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 }
 }
 \description{

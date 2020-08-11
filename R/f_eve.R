@@ -42,6 +42,9 @@
 #' @param traitDB a trait database. Can be a `data.frame` ot a `dist` object.
 #' Taxonomic level of the traits database must match those of the taxonomic database.
 #' No automatic check is done by the `function`.
+#' @param taxLev character string giving the taxonomic level used to retrieve
+#' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
+#' `"Family"` as returned by the [aggregatoR] function.
 #' @param type the type of variables speciefied in `traitDB`.
 #' Must be one of `F`, fuzzy, or `C`, continuous.
 #' If more control is needed please consider to provide `traitDB` as a `dist` object.
@@ -51,10 +54,11 @@
 #' Not needed when `euclidean` distance is used.
 #' @param nbdim number of dimensions for the multidimensional functional spaces.
 #' We suggest to keep `nbdim` as low as possible.
-#' By default `biomonitoR` select the optimal number of dimensions with the quality of the functional space approach.
+#' By default `biomonitoR` set the number of dimensions to 2. Select `auto` if you want the automated selection
+#' approach according to Maire et al. (2015).
 #' @param distance to be used to compute functional distances, `euclidean` or `gower`. Default to `gower`.
 #' @param zerodist_rm If `TRUE` aggregates taxa with the same traits.
-#' @param correction Correction methods for negative eigenvalues, can be one of `none`, `lingoes` and `cailliez`.
+#' @param correction Correction methods for negative eigenvalues, can be one of `none`, `lingoes`, `cailliez`, `sqrt` and `quasi`.
 #' Ignored when type is set to `C`.
 #' @param traceB if `TRUE` ffrich will return a list as specified in details.
 #' @param set_param a list of parameters for fine tuning the calculations.
@@ -74,8 +78,6 @@
 #'  \item **correction**: the type of correction used.
 #'  \item **NA_detection**: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
 #'  \item **duplicated_traits**: if present, list the taxa with the same traits.
-#'  \item `parent_child_pairs` For instance in Spanish `aspt` both Ferrissia and Planorbidae receive a score.
-#'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 #' }
 #'
 #' @importFrom ade4 prep.fuzzy dudi.pco is.euclid cailliez lingoes prep.binary prep.circular
@@ -131,7 +133,7 @@
 #'
 #' @export
 
-f_eve <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = NULL,  nbdim = "auto" , distance = "gower", zerodist_rm = FALSE ,  correction = "none" , traceB = FALSE , set_param = NULL ){
+f_eve <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel = FALSE , colB = NULL,  nbdim = 2 , distance = "gower", zerodist_rm = FALSE ,  correction = "none" , traceB = FALSE , set_param = NULL ){
 
   #  check if the object x is of class "biomonitoR"
   classCheck( x )
@@ -194,28 +196,13 @@ f_eve <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = N
   }
 
 
-  # Store tree for searching for inconsistencies
-  Tree <- x[[ "Tree" ]][ , 1:10 ]
+  st.names <- names( x[[ 1 ]][ -1 ] )
 
-  numb <- c( which( names( x ) == "Tree" ) , which( names( x ) == "Taxa" ) ) # position of the Tree and Taxa data.frame in the biomonitoR object that need to be removed
+  DF <- x[[ taxLev ]]
+  names( DF )[ 1 ] <- "Taxon"
 
-
-  # remove Tree and Taxa data.frame
-  x <- x[ -numb ]
-  st.names <- names( x[[ 1 ]][ -1 ] ) # names of the sampled sites
-
-  for( i in 1:length( x ) ){
-    colnames( x[[ i ]] )[ 1 ] <- "Taxon"
-  }
-
-  # rbind the data.frames representing a taxonomic level each
-  # aggregate is not necessary here
-  DF <- do.call( "rbind" , x )
-  rownames( DF ) <- NULL
-  DF <- aggregate(. ~ Taxon, DF , sum )
-
+  taxa <- as.character( DF$Taxon )
   DF$Taxon <- as.character( DF$Taxon )
-
 
 
   if( is.data.frame( traitDB ) ) {
@@ -226,12 +213,6 @@ f_eve <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = N
     # be sure that taxonomic and functional database have the same order and taxa
     DF <- merge( DF , traitDB[ , "Taxon" , drop = FALSE ] , by = "Taxon" )
 
-
-    DF <- manage_inconsistencies( DF = DF , Tree = Tree )
-    if( ! is.data.frame( DF ) ){
-      incon <- DF[[ 2 ]]
-      DF <- DF[[ 1 ]]
-    }
 
     if( inherits( x , "bin" ) ){
       DF <- to_bin( DF )
@@ -267,12 +248,6 @@ f_eve <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = N
     traitDB <- as.matrix( traitDB )
     DF <- merge( DF , data.frame( Taxon = rownames( traitDB ) ) , by = "Taxon" )
 
-    DF <- manage_inconsistencies( DF = DF , Tree = Tree )
-    if( ! is.data.frame( DF ) ){
-      incon <- DF[[ 2 ]]
-      DF <- DF[[ 1 ]]
-    }
-
     if( inherits( x , "bin" ) ){
       DF <- to_bin( DF )
     }
@@ -302,13 +277,19 @@ f_eve <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = N
   if( identical( distance , "gower" ) ){
     if( identical( correction , "cailliez" ) ) mat_dissim <- suppressWarnings( cailliez( mat_dissim , tol = set_param$tol , cor.zero = set_param$cor.zero ) )
     if( identical( correction , "lingoes" ) ) mat_dissim <- suppressWarnings( lingoes( mat_dissim  , tol = set_param$tol , cor.zero = set_param$cor.zero ) )
+    if( identical( correction , "sqrt" ) ) mat_dissim <- suppressWarnings( sqrt( mat_dissim ) )
+    if( identical( correction , "quasi" ) ) mat_dissim <- suppressWarnings( quasieuclid( mat_dissim ) )
   }
 
   suppressWarnings( euclid.dist.mat <- is.euclid( mat_dissim , tol = set_param$tol ) )
 
   if( any( mat_dissim < set_param$tol ) ){
-    message( "At least a pair of species has the same traits. Depending on your needs, this could be an issue. See traceB for further details." )
+    MES <- "At least a pair of species has the same traits. Depending on your needs, this could be an issue."
+    message( MES )
+  } else {
+    MES <- "no taxa with the same traits"
   }
+
 
 
 
@@ -374,14 +355,11 @@ f_eve <- function( x , traitDB = NULL, type = NULL , traitSel = FALSE , colB = N
       df1 <- df1
     } else { df1 <- MES }
 
-    if( exists( "incon" , inherits = FALSE  ) ){
-      df2 <- incon
-    } else { df2 <- "none" }
 
     rownames( DF ) <- NULL
 
-    res.list <- list( res , traitDB , DF , m , correction = correction  , tax.na , df1 , df2 )
-    names( res.list ) <- c( "results" , "traits" , "taxa" , "nbdim" , "correction" , "NA_detection" , "duplicated_traits" , "parent_child_pairs" )
+    res.list <- list( res , traitDB , DF , m , correction = correction  , tax.na , df1 )
+    names( res.list ) <- c( "results" , "traits" , "taxa" , "nbdim" , "correction" , "NA_detection" , "duplicated_traits" )
     return( res.list )
   }
 

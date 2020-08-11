@@ -1,5 +1,9 @@
 zero_dist_traits <- function( x , mat_dissim , BIN ){
 
+  # avoid RCMD notes
+
+  Taxon <- value <- NULL
+
   trait.df <- as.matrix( mat_dissim )
   diag( trait.df ) <- NA
   trait.df[ lower.tri( trait.df ) ] <- NA

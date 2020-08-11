@@ -7,10 +7,11 @@
 f_rich(
   x,
   traitDB = NULL,
+  taxLev = "Taxa",
   type = NULL,
   traitSel = FALSE,
   colB = NULL,
-  nbdim = "auto",
+  nbdim = 2,
   distance = "gower",
   zerodist_rm = FALSE,
   correction = "none",
@@ -25,6 +26,10 @@ f_rich(
 Taxonomic level of the traits database must match those of the taxonomic database.
 No automatic check is done by the \code{function}.}
 
+\item{taxLev}{character string giving the taxonomic level used to retrieve
+trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
+\code{"Family"} as returned by the \link{aggregatoR} function.}
+
 \item{type}{the type of variables speciefied in \code{traitDB}.
 Must be one of \code{F}, fuzzy, or \code{C}, continuous.
 If more control is needed please consider to provide \code{traitDB} as a \code{dist} object.
@@ -37,13 +42,14 @@ Not needed when \code{euclidean} distance is used.}
 
 \item{nbdim}{number of dimensions for the multidimensional functional spaces.
 We suggest to keep \code{nbdim} as low as possible.
-By default \code{biomonitoR} select the optimal number of dimensions with the quality of the functional space approach.}
+By default \code{biomonitoR} set the number of dimensions to 2. Select \code{auto} if you want the automated selection
+approach according to Maire et al. (2015).}
 
 \item{distance}{to be used to compute functional distances, \code{euclidean} or \code{gower}. Default to \code{gower}.}
 
 \item{zerodist_rm}{If \code{TRUE} aggregates taxa with the same traits.}
 
-\item{correction}{Correction methods for negative eigenvalues, can be one of \code{none}, \code{lingoes} and \code{cailliez}.
+\item{correction}{Correction methods for negative eigenvalues, can be one of \code{none}, \code{lingoes}, \code{cailliez}, \code{sqrt} and \code{quasi}.
 Ignored when type is set to \code{C}.}
 
 \item{traceB}{if \code{TRUE} ffrich will return a list as specified in details.}

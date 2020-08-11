@@ -108,11 +108,11 @@ qfs <- function( dist_funct ,  nbdim = nbdim, plot = "quality_funct_space" )
   }  # end of k
 
   # plotting change in meanSD with increasing number of dimensions
-  par(mfrow=c(1,1),mar=c(5,5,1,1))
-  barplot(height=meanSD,names.arg=names(meanSD), xlab="Functional space", ylab= "Quality (Mean SD)",
-          space=0, cex.names=0.7, col=c("red", rep("blue",nbdim-1) ) )
-
-  abline(h=0.01,lwd=3,lty=2)
+  # par(mfrow=c(1,1),mar=c(5,5,1,1))
+  # barplot(height=meanSD,names.arg=names(meanSD), xlab="Functional space", ylab= "Quality (Mean SD)",
+  #         space=0, cex.names=0.7, col=c("red", rep("blue",nbdim-1) ) )
+  #
+  # abline(h=0.01,lwd=3,lty=2)
 
   # plotting quality of each functional space
 
