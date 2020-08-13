@@ -25,6 +25,7 @@
 #'
 #' @keywords aggregatoR
 #' @export
+#' @importFrom dplyr bind_rows
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
 #'
@@ -84,7 +85,7 @@ selectPcoaAxis <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 
     res3 <- pcoaQuality( x , "lingoes" , method = "cor" , tresh = tresh )
     res4 <- pcoaQuality( x , "sqrt" , method = "cor" , tresh = tresh )
     res5 <- pcoaQuality( x , "quasi" , method = "cor" , tresh = tresh )
-    res <- rbind( res1 , res2 , res3 , res4 , res5 )
+    res <- suppressWarnings( bind_rows( res1 , res2 , res3 , res4 , res5 ) )
   }
 
   if( ! is.euclid( x ) & identical( method , "legendre" ) ){
@@ -93,7 +94,7 @@ selectPcoaAxis <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 
     res3 <- pcoaQuality( x , "lingoes" , method = "legendre" , tresh = tresh )
     res4 <- pcoaQuality( x , "sqrt" , method = "legendre" , tresh = tresh )
     res5 <- pcoaQuality( x , "quasi" , method = "legendre" , tresh = tresh )
-    res <- rbind( res2 , res3 , res4 , res5 )
+    res <- suppressWarnings( bind_rows( res2 , res3 , res4 , res5 ) )
   }
 
 
@@ -103,7 +104,7 @@ selectPcoaAxis <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 
     res3 <- pcoaQuality( x , "lingoes" , method = "maire" , nbdim = nbdim , tresh = tresh )
     res4 <- pcoaQuality( x , "sqrt" , method = "maire" , nbdim = nbdim , tresh = tresh )
     res5 <- pcoaQuality( x , "quasi" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res <- rbind( res2 , res3 , res4 , res5 )
+    res <- suppressWarnings( bind_rows( res2 , res3 , res4 , res5 ) )
   }
 
 

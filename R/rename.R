@@ -21,6 +21,7 @@ rename <- function( x, customx = FALSE , group = "none" ){
 
   # get the taxa list from the user dataset and calculate the length of the taxa list
   result <- x$Taxa
+  result <- sub( " " , "_", x$Taxa )
   n <- length( wrong )
 
   # check if the length of correct names equals those of the wrong names
