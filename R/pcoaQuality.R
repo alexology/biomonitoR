@@ -1,13 +1,3 @@
-#' pcoaQuality
-#'
-#' This function merge the quality of the functional space.
-#' @param x distance matrix
-#' @param type correction. Default to `none`, other choices are `cailliez`, `lingoes` and `sqrt`.
-#' @param method three evaluation methods are availabe: `cor`, `legendre` and `maire`.
-#' @param tresh treshold used for the `cor` method.
-#' @param maximum number of dimensions for the `maire` method. Keep it as small as possible.
-#'
-#'
 #' @importFrom ade4 mantel.randtest is.euclid
 #' @importFrom stats cmdscale
 
