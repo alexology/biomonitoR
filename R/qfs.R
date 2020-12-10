@@ -137,7 +137,7 @@ fric_3d <- function( taxa , fpc , m , prec = c( "Qt" , "QJ" ) ){
   apply( taxa , 1 , FUN = function( x ) sum( x > 0 ) ) -> ric
   for ( com in 1:nrow( taxa ) ){
     fpc[ which( unlist( rep( taxa[ com , ] ) ) > 0 ) , 1:m ] -> tr.com
-    if( ric[ com ] >= m + 1 ) convhulln( tr.com , c( "FA" , prec ) )$vol / fric.3d.max -> fric.3d[ com ] else NA -> fric.3d[ com ]
+    if( ric[ com ] >= m ) convhulln( tr.com , c( "FA" , prec ) )$vol / fric.3d.max -> fric.3d[ com ] else NA -> fric.3d[ com ]
   }
   return( fric.3d )
 }
