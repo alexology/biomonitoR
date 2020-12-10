@@ -89,22 +89,22 @@ selectPcoaAxis <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 
   }
 
   if( ! is.euclid( x ) & identical( method , "legendre" ) ){
-    # res1 <- pcoaQuality( x , "none" , method = "legendre" , tresh = tresh )
+    res1 <- pcoaQuality( x , "none" , method = "legendre" , tresh = tresh )
     res2 <- pcoaQuality( x , "cailliez" , method = "legendre" , tresh = tresh )
     res3 <- pcoaQuality( x , "lingoes" , method = "legendre" , tresh = tresh )
     res4 <- pcoaQuality( x , "sqrt" , method = "legendre" , tresh = tresh )
     res5 <- pcoaQuality( x , "quasi" , method = "legendre" , tresh = tresh )
-    res <- suppressWarnings( bind_rows( res2 , res3 , res4 , res5 ) )
+    res <- suppressWarnings( bind_rows( res1 , res2 , res3 , res4 , res5 ) )
   }
 
 
   if( ! is.euclid( x ) & identical( method , "maire" ) ){
-    # res1 <- pcoaQuality( x , "none" , method = "maire" , nbdim = nbdim , tresh = tresh )
+    res1 <- pcoaQuality( x , "none" , method = "maire" , nbdim = nbdim , tresh = tresh )
     res2 <- pcoaQuality( x , "cailliez" , method = "maire" , nbdim = nbdim , tresh = tresh )
     res3 <- pcoaQuality( x , "lingoes" , method = "maire" , nbdim = nbdim , tresh = tresh )
     res4 <- pcoaQuality( x , "sqrt" , method = "maire" , nbdim = nbdim , tresh = tresh )
     res5 <- pcoaQuality( x , "quasi" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res <- suppressWarnings( bind_rows( res2 , res3 , res4 , res5 ) )
+    res <- suppressWarnings( bind_rows( res1 , res2 , res3 , res4 , res5 ) )
   }
 
 

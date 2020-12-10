@@ -73,7 +73,7 @@ qfs <- function( dist_funct ,  nbdim = nbdim, plot = "quality_funct_space" )
   suppressWarnings( mat_pcoa<- dudi.pco( mat_dissim , scannf = F , nf = nbdim ) )
 
   # changing number of dimensions given number of positive eigenvalues
-  nbdim <-min( nbdim , ncol( mat_pcoa$li ) )
+  nbdim <- min( nbdim , ncol( mat_pcoa$li ) )
 
   # keeping species coordoinates on the 'nbdim' axes
   mat_coord <- mat_pcoa$li[ , 1:nbdim ]
@@ -85,15 +85,15 @@ qfs <- function( dist_funct ,  nbdim = nbdim, plot = "quality_funct_space" )
   dist_st<-list()
 
   # computing Euclidean distances between species in the (nbdim-1) multidimensionnal functional spaces
-  for (k in 2:nbdim)
-  {
+  for(k in 2:nbdim){
     eval(parse(text=paste("dist_",k,"D<-dist(mat_coord[,1:",k,"],method='euclidean')", sep="")))
     eval(parse(text=paste("dist_raw$m_",k,"D<-dist_",k,"D", sep="")))
   } # end of k
 
   ################################################################
   # computing mean squared deviation between initial distance and standardized final distance in the functional space
-  meanSD<-rep(NA,nbdim) ; names(meanSD)<-paste("m_",2:nbdim,"D",sep="")
+  meanSD<-rep( NA , nbdim-1 )
+  names(meanSD)<-paste("m_",2:nbdim,"D",sep="")
 
   x<-mat_dissim # initial distance
   S<-length(nm_sp) # species richness
@@ -118,7 +118,7 @@ qfs <- function( dist_funct ,  nbdim = nbdim, plot = "quality_funct_space" )
 
   # list of outputs
 
-  res <- list( meanSD = meanSD , mat_coord = mat_coord , dist_raw = dist_raw, dist_st = dist_st )
+  res <- list( meanSD = meanSD , mat_coord = mat_coord , dist_raw = dist_raw, dist_st = dist_st , mat_eig = mat_pcoa$eig )
 
   ################################################################################################################################
   ################################################################################################################################
