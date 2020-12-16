@@ -282,6 +282,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
   }
 
   if( identical( method , "maire" ) ){
+    Order <- attr( x ,"Size" )
 
     if( is.euclid( x ) ){
       qual_fs <- qfs( x , nbdim = nbdim )
