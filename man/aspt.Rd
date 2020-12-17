@@ -35,6 +35,8 @@ Abundances of the higher taxonomic level need therefore to be adjusted by subtra
 }
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+
 This function calculates the \emph{Average Score Per Taxon} index following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 }
 \details{

@@ -1,5 +1,8 @@
 #' Functional diversity
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+#'
 #' This function calculates the functional diversity.
 #'
 #' Rao quadratic entropy (Q; Rao, 1982) is used to estimate Functional Diversity

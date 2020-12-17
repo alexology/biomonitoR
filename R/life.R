@@ -1,5 +1,8 @@
 #' life
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+#'
 #' This function calculates LIFE index according to most recent version used in UK.
 #'
 #' @param x result of the function aggregatoR.

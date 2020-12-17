@@ -1,5 +1,8 @@
 #' aspt
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+#'
 #' This function calculates the *Average Score Per Taxon* index following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 #'
 #' @param x result of the function aggregatoR.

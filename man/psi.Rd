@@ -50,6 +50,8 @@ Abundances of the higher taxonomic level need therefore to be adjusted by subtra
 }
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+
 This function calculates the \emph{Proportion of Sediment-sensitive Invertebrates index} (PSI) according to the most recent version used in UK.
 }
 \details{

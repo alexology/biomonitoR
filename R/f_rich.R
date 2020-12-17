@@ -1,5 +1,8 @@
 #' Functional richness
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+#'
 #' This function calculates the functional richness based on trait categories.
 #'
 #'

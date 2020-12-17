@@ -1,6 +1,10 @@
 #' whpt
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+#'
 #' This function calculates *Whalley Hawkes Paisley Trigg* index according to version used in UK in 2017.
+#'
 #' @param x result of the function `aggregatoR`.
 #' @param method the only choice is `uk`.Users can provide their own data.frame (see examples) with a column called *Taxon*, a column called *ABUCLASS* and a column called *Scores*.
 #' @param type presence only `po` or abundance `ab`.

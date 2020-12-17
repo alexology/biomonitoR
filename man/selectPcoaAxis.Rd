@@ -17,6 +17,8 @@ selectPcoaAxis(x, method = "legendre", tresh = NULL, nbdim = 15)
 \item{nbdim}{the maximum number of dimension when the option is set to \code{maire}. Default to 15.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
+
 Select the number of the axis for the calculation of functional richness.
 }
 \details{

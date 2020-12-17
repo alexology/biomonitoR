@@ -66,9 +66,10 @@ a vector with fuzzy functional richness results.
 }
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+
 This function calculates the functional redundancy based on trait categories.
-}
-\details{
+
 Functional redundancy (FR) is measured as the difference between taxonomic
 diversity and functional diversity (de Bello et al., 2007). It relates positively
 to ecosystem stability, resistance and resilience (Hooper et al. 2005; Guillemot
@@ -114,7 +115,8 @@ need such redundancy to perform their functions efficiently and stably over time
 in non-redundant communities since the loss or replacement of one species could
 lead to loss of unique traits or functions (Hooper et al. 2005), increasing
 ecosystem vulnerability (Elmqvist et al. 2003).
-
+}
+\details{
 Taxa without traits assigned in the trait database are removed from both the trait and abundance databases.
 }
 \examples{

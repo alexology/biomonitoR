@@ -1,5 +1,8 @@
 #' Functional redundancy
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+#'
 #' This function calculates the functional redundancy based on trait categories.
 #'
 #' Functional redundancy (FR) is measured as the difference between taxonomic

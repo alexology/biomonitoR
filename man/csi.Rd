@@ -29,6 +29,8 @@ and the traits value used for the calculation.}
 a table with the CSI values for each trait
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+
 This function calculates the community trait specialization.
 }
 \details{

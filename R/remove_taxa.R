@@ -1,6 +1,13 @@
 #' remove_taxa
 #'
+#'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
+#'
 #' Remove a taxon or a set of taxa and create a new `data.frame`.
+#'
+#'
+#'
 #' @param x result of the function aggregatoR.
 #' @param taxa a taxon or a vector of taxa.
 #' @details This function does not check for parent-child pairs but it should handle them pretty well.

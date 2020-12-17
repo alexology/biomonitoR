@@ -1,6 +1,10 @@
 #' Functional dispersion
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+#'
 #' This function calculates the functional richness based on trait categories.
+#'
 #'
 #'
 #' Functional richness (FRic) represents the amount of functional space filled by

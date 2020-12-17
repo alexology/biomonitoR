@@ -1,6 +1,10 @@
 #' Community trait specialization
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+#'
 #' This function calculates the community trait specialization.
+#'
 #' @param x results of function aggregatoR
 #' @param traitDB a trait data base with a column `Taxa` and the other columns
 #'   containing the traits.Please check [traitScaling] for building the trait database.

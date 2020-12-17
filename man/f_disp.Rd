@@ -74,9 +74,10 @@ a vector with fuzzy functional richness results.
 }
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+
 This function calculates the functional richness based on trait categories.
-}
-\details{
+
 Functional richness (FRic) represents the amount of functional space filled by
 the community (Villeger et al., 2008) and it is related to the community use of
 resources and productivity (Mason et al., 2005). FRic is defined by the trait

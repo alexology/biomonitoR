@@ -1,5 +1,8 @@
 #' e-psi
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+#'
 #' This function calculates the Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index (ePSI) according to the most recent version used in UK.
 #' @param x results of aggregatoR function
 #' @param method method `uk`.

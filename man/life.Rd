@@ -49,6 +49,8 @@ Abundances of the higher taxonomic level need therefore to be adjusted by subtra
 }
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+
 This function calculates LIFE index according to most recent version used in UK.
 }
 \details{

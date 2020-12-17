@@ -1,6 +1,11 @@
 #' selectPcoaAxis
 #'
+#'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
+#'
 #' Select the number of the axis for the calculation of functional richness.
+#'
 #' @param x a distance matrix.
 #' @param method the measure of the quality of the functional space. Can be `cor`, `legendre` and `maire`.
 #' @param tresh the treshold for selecting the axis. By default is 0.7 for `cor` and `legendre` and

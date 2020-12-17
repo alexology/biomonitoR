@@ -1,5 +1,8 @@
 #' psi
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+#'
 #' This function calculates the *Proportion of Sediment-sensitive Invertebrates index* (PSI) according to the most recent version used in UK.
 #' @param x result of the function aggregatoR.
 #' @param method the only choice is `extence`. Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Score*.

@@ -12,6 +12,8 @@ remove_taxa(x, taxa = NULL)
 \item{taxa}{a taxon or a vector of taxa.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
+
 Remove a taxon or a set of taxa and create a new \code{data.frame}.
 }
 \details{

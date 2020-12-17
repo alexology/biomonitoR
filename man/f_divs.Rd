@@ -67,9 +67,10 @@ a vector with fuzzy functional richness results.
 }
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+
 This function calculates the functional diversity.
-}
-\details{
+
 Rao quadratic entropy (Q; Rao, 1982) is used to estimate Functional Diversity
 because it has been considered more appropriate than other indices (Botta-Dukat,
 2005; Ricotta, 2005). In this formula (Q) dij is the dissimilarity (ranging
@@ -82,7 +83,8 @@ because it can deal with traits of different nature and measuring scales
 (continuous, nominal, binary, ordinal, etc.; see Podani 1999 for more information)
 
 \deqn{Q = \sum_{i=1}^{S} \sum_{j=1}^{S} d_{ij} \ p_i \ p_j}
-
+}
+\details{
 Taxa without traits assigned in the trait database are removed from both the trait and abundance databases.
 }
 \examples{

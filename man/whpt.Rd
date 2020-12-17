@@ -52,6 +52,8 @@ Abundances of the higher taxonomic level need therefore to be adjusted by subtra
 }
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+
 This function calculates \emph{Whalley Hawkes Paisley Trigg} index according to version used in UK in 2017.
 }
 \details{
