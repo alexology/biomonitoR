@@ -4,7 +4,15 @@
 \alias{asBiomonitor}
 \title{asBiomonitor}
 \usage{
-asBiomonitor(x, group = "mi", dfref = NULL, to_change = "default", FUN = sum)
+asBiomonitor(
+  x,
+  group = "mi",
+  dfref = NULL,
+  to_change = "default",
+  FUN = sum,
+  correct_names = FALSE,
+  traceB = FALSE
+)
 }
 \arguments{
 \item{x}{a data.frame with a column called "Taxa" where store taxa names and samples on the other columns (see the example macro_ex).}
@@ -20,6 +28,11 @@ By default, when group is set to \code{mi} Hydracarina, Hydracnidia and Acarifor
 
 \item{FUN}{the function to be applied for aggregating rows with duplicated taxa names.
 It should be \code{sum} for abundances, while it should be \code{bin} for presence-absence data. Default to \code{sum}.}
+
+\item{correct_names}{if \code{TRUE} alternative names will be suggested for taxa not found in the reference database. Default to
+\code{FALSE}, with which the unrecognized taxa will be removed.}
+
+\item{traceB}{track changes in taxa names.}
 }
 \description{
 This function merge the user dataframe with a reference database and suggest corrections for mispelled names.

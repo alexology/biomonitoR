@@ -13,7 +13,7 @@ manageTraits(x, method = "nearest+-", traceB = FALSE)
 Please see details for further information.}
 
 \item{traceB}{if \code{TRUE} it will return a vector containing taxa excluded from the selection process
-because they did not meet the reuirments of the selection.}
+because they did not meet the requirments of the selection.}
 }
 \description{
 A function to select traits based on taxonomic distance.

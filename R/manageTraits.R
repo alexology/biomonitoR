@@ -6,7 +6,7 @@
 #' @param method can be `nearest`, `nearest+`, `nearest-`, `nearest+-` and `neareast-+`.
 #'  Please see details for further information.
 #' @param traceB if `TRUE` it will return a vector containing taxa excluded from the selection process
-#'  because they did not meet the reuirments of the selection.
+#'  because they did not meet the requirments of the selection.
 #'
 #' @details Method `nearest` select the traits belonging to the nearest taxa irrispective of their position
 #' in the taxonomic tree.

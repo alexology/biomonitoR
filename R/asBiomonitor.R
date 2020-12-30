@@ -11,6 +11,9 @@
 #' By default, when group is set to `mi` Hydracarina, Hydracnidia and Acariformes are changed to Trombidiformes.
 #' @param FUN the function to be applied for aggregating rows with duplicated taxa names.
 #' It should be `sum` for abundances, while it should be `bin` for presence-absence data. Default to `sum`.
+#' @param correct_names if `TRUE` alternative names will be suggested for taxa not found in the reference database. Default to
+#' `FALSE`, with which the unrecognized taxa will be removed.
+#' @param traceB track changes in taxa names.
 #' @keywords asBiomonitor
 #' @details The function `asBiomonitor` checks the taxonomy of the data.frame provided by the user and suggests correction for mispelled names.
 #' If one or more taxa names of `x` are not present in the reference database or the spell checker is not able to find any suggestion the user is asked to exit.
@@ -27,6 +30,8 @@
 #' When `group = mi` Hydracarina, Hydracnidia or Acariformes are changed to Trombidiformes given the uncertain taxonomic status of this group.
 #'
 #' @importFrom stats aggregate
+#' @importFrom utils select.list stack
+#' @importFrom hunspell dictionary hunspell_check hunspell_suggest
 #' @export
 #' @seealso \code{\link{quickRename}} \code{\link{refFromTree}} \code{\link{quickRename}}
 #' @references Schmidt-Kloiber, A., & Hering, D. (2015). www.freshwaterecology.info -
@@ -38,22 +43,34 @@
 #' data.bio <- asBiomonitor(macro_ex, group = "mi")
 
 
-asBiomonitor <- function ( x , group = "mi" , dfref = NULL , to_change = "default" , FUN = sum ){
+asBiomonitor <- function ( x , group = "mi" , dfref = NULL , to_change = "default" , FUN = sum , correct_names = FALSE , traceB = FALSE ){
 
   # check if user database contains a column called Taxa
   if( ! "Taxa" %in% names( x ) ){
     stop( "A column called Taxa is needed")
   }
 
-
   asb.call <- as.character( as.list( match.call() )[[ "FUN" ]] )
   if( length( asb.call ) == 0 ) {
     asb.call <- "sum"
   }
 
-  if( ! is.null( to_change ) & ! is.data.frame( to_change ) & ! identical( to_change , "default" ) )( stop( "to_change needs to be NULL or data.frame as specified in the help" ) )
+  # initialize check.pa
+  check.pa <- FALSE
 
-  if( ! any( x[ , ! colnames( x ) %in% "Taxa" ] > 1 ) & all( x[ , ! colnames( x ) %in% "Taxa" ]%%1 == 0 ) & ! identical( asb.call , "bin" ) ) ( warning( "Presence-absence data detected but FUN is not set to bin. Is it this what you want?" ) )
+  if( ! is.null( to_change ) & ! is.data.frame( to_change ) & ! identical( to_change , "default" ) )( stop( "to_change needs to be NULL, default or data.frame as specified in the help" ) )
+
+  if( is.data.frame( to_change ) ){
+    if( length( unique( to_change$Taxon ) ) != nrow( to_change ) ) ( stop( "the same name cannot be present twice in the Taxon column of the data.frame to_change" ) )
+    if( nrow( to_change ) == 0 ) ( stop( "to_change must have at least one entry" ) )
+  }
+
+  if( ! any( x[ , ! colnames( x ) %in% "Taxa" ] > 1 ) & all( x[ , ! colnames( x ) %in% "Taxa" ]%%1 == 0 ) & ! identical( asb.call , "bin" ) ){
+    ( warning( "Presence-absence data detected but FUN is not set to bin. Is it this what you want?" ) )
+    check.pa <- TRUE
+  }
+
+
   if( any( x[ , ! colnames( x ) %in% "Taxa" ] > 1 ) & all( x[ , ! colnames( x ) %in% "Taxa" ]%%1 == 0 ) & ! identical( asb.call , "sum" ) ) ( warning( "Abundance data detected but FUN is not set to sum. Is it this what you want?" ) )
   if( any( x[ , ! colnames( x ) %in% "Taxa" ]%%1 != 0 ) ) warning( "Decimal numbers detected. Please check carefully which FUN to use.")
 
@@ -66,23 +83,23 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , to_change = "defaul
     stop( "Non-numeric columns other than Taxa are not allowed" )
   }
 
-  # check if x is a presence absence data.frame
-  check.pa <- any( x[ , -which( "Taxa" %in% colnames( x ) ) , drop = FALSE ]  != 1 )
-
   # check if NAs are present. If present they are changed to 0.
   check.na <- any(  is.na( x ) )
   x[ is.na( x ) ] <- 0
 
   # set the reference database for the specified group
   if( group == "mi" ){
+    # macroinvertebrates
     ref <- mi_ref
   }
 
   if(group == "mf"){
+    # macrophytes
     ref <- mf_ref
   }
 
   if(group == "fi"){
+    # fish
     ref <- fi_ref
   }
 
@@ -91,92 +108,223 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , to_change = "defaul
     dfref[ is.na( dfref ) ] <- ""
     dfref <- as.data.frame( unclass( dfref ) )
     ref <- dfref
+    newDictio( ref )
     group <- "custom"
   }
+
+  # select or create dictinoaries
+
+  if( ! identical( group , "custom" ) ){
+    if( identical( group , "mi" ) ){
+      dic.path <- system.file( "dict" , "mi_dictionary.txt", package = "biomonitoR" )
+      # very important to set cache equal to FALSE, otherwise suggestNames will provide inconsistent results.
+      dictio <- dictionary( dic.path, cache = F )
+    }
+    if( identical( group , "mf" )  ){
+      dic.path <- system.file( "dict" , "mf_dictionary.txt" , package = "biomonitoR" )
+      dictio <- dictionary( dic.path , cache = F )
+    }
+    if( identical( group , "fi" )  ){
+      dic.path <- system.file( "dict" , "fi_dictionary.txt" , package = "biomonitoR" )
+      dictio <- dictionary( dic.path , cache = F )
+    }
+  }
+
+  if( identical( group , "custom" ) ){
+    dic.path <- c( paste( getwd() , "/custom_dictio.dic" , sep = "" ) )
+    dictio <- dictionary( dic.path , cache = F )
+  }
+
+
+  # change Taxa from factor to character
+  x$Taxa <- as.character( x$Taxa )
 
   # change the name of taxa to lowercase and capital letter
   x$Taxa <- trimws( sapply( x$Taxa , capWords , USE.NAMES = F ) )
 
+
   # change the Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes
   if( identical( to_change , "default" ) ){
-    to_change_mi[ , "Taxon" ] <- trimws( sapply( to_change_mi[ , "Taxon" ] , capWords , USE.NAMES = F ) )
-    to_change_mi[ , "Correct_Taxon" ] <- trimws( sapply( to_change_mi[ , "Correct_Taxon" ] , capWords , USE.NAMES = F ) )
+    to_change_mi[ , "Taxon" ] <- trimws( sapply( to_change_mi[ , "Taxon" ] , capWords , USE.NAMES = FALSE ) )
+    to_change_mi[ , "Correct_Taxon" ] <- trimws( sapply( to_change_mi[ , "Correct_Taxon" ] , capWords , USE.NAMES = FALSE ) )
+
     if( any( to_change_mi[ , "Taxon" ] %in% x$Taxa ) ){
-      names( x )[ 1 ] <- "Taxon"
-      st.names <-  names( x )[ -1 ]
-      x <- checkBmwpFam( x , to_change_mi , st.names )
-      names( x )[ 1 ] <- "Taxa"
+
+      # store results for traceB
+      to_store <- to_change_mi[ to_change_mi$Taxon %in% x$Taxa ,  ]
+
+      change_uni <- x[ x$Taxa %in% to_change_mi$Taxon , "Taxa" , drop = TRUE ]
+
+      for( i in 1:length( change_uni ) ){
+        x[ x$Taxa %in% change_uni[ i ] , "Taxa"  ] <- to_change_mi[ to_change_mi$Taxon %in% change_uni[ i ] , "Correct_Taxon"  ]
+
+      }
     }
   }
 
   # change according to user needs
   if( is.data.frame( to_change ) ){
-    to_change[ , "Taxon" ] <- trimws( sapply( to_change[ , "Taxon" ] , capWords , USE.NAMES = F ) )
-    to_change[ , "Correct_Taxon" ] <- trimws( sapply( to_change[ , "Correct_Taxon" ] , capWords , USE.NAMES = F ) )
+    to_change[ , "Taxon" ] <- trimws( sapply( to_change[ , "Taxon" ] , capWords , USE.NAMES = FALSE ) )
+    to_change[ , "Correct_Taxon" ] <- trimws( sapply( to_change[ , "Correct_Taxon" ] , capWords , USE.NAMES = FALSE ) )
+
     if( any( to_change[ , "Taxon" ] %in% x$Taxa ) ){
-      names( x )[ 1 ] <- "Taxon"
-      st.names <-  names( x )[ -1 ]
-      x <- checkBmwpFam( x , to_change , st.names )
-      names( x )[ 1 ] <- "Taxa"
-    }
-  }
 
-  # if dfref is NULL use the rename function to check for mispelled names and suggest for correct names
-  if( is.null( dfref ) ){
-    x <- rename( x , group = group )
-  }
+      # store results for traceB
+      to_store <- to_change[ to_change$Taxon %in% x$Taxa ,  ]
 
-  # if dfref is not NULL create the dictionary in the user working directory
-  # and use the rename function to check for mispelled names and suggest for correct names
-  if( ! is.null( dfref ) ) {
-    newDictio( ref )
-    x <- rename( x , customx = T )
-  }
 
-  # repeat the check after the names correction
+      change_uni <- x[ x$Taxa %in% to_change$Taxon , "Taxa" , drop = TRUE ]
 
-  # change the Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes
-  if( identical( to_change , "default" ) ){
-    to_change_mi[ , "Taxon" ] <- trimws( sapply( to_change_mi[ , "Taxon" ] , capWords , USE.NAMES = F ) )
-    to_change_mi[ , "Correct_Taxon" ] <- trimws( sapply( to_change_mi[ , "Correct_Taxon" ] , capWords , USE.NAMES = F ) )
-    if( any( to_change_mi[ , "Taxon" ] %in% x$Taxa ) ){
-      names( x )[ 1 ] <- "Taxon"
-      st.names <-  names( x )[ -1 ]
-      x <- checkBmwpFam( x , to_change_mi , st.names )
-      names( x )[ 1 ] <- "Taxa"
-    }
-  }
+      for( i in 1:length( change_uni ) ){
+        x[ x$Taxa %in% change_uni[ i ] , "Taxa" ] <- to_change[ to_change$Taxon %in% change_uni[ i ] , "Correct_Taxon" ]
 
-  # change according to user needs
-  if( is.data.frame( to_change ) ){
-    to_change[ , "Taxon" ] <- trimws( sapply( to_change[ , "Taxon" ] , capWords , USE.NAMES = F ) )
-    to_change[ , "Correct_Taxon" ] <- trimws( sapply( to_change[ , "Correct_Taxon" ] , capWords , USE.NAMES = F ) )
-    if( any( to_change[ , "Taxon" ] %in% x$Taxa ) ){
-      names( x )[ 1 ] <- "Taxon"
-      st.names <-  names( x )[ -1 ]
-      x <- checkBmwpFam( x , to_change , st.names )
-      names( x )[ 1 ] <- "Taxa"
+      }
     }
   }
 
 
-  # aggregate once again to take into account name changes
-  x <- aggregate( . ~ Taxa, x , FUN = FUN )
-  if( ! check.pa ){
-    x <- data.frame( x[ , 1 , drop = FALSE ], ( x[ , -1, drop = FALSE ] > 0 ) * 1 )
+  # search for mispelled names
+  ref_taxa <- unique( ref$Taxa )
+  wrong_taxa <- unique( x$Taxa )
+
+  # get wrong names
+  wrong_taxa <- wrong_taxa[ ! wrong_taxa %in% ref_taxa ]
+
+  if( length( wrong_taxa ) > 0 ){
+    # replace space with underscore to be compatible with hunspell
+    wrong_taxa <- gsub( " " , '_' , wrong_taxa )
+
+    # nameCheck and nameSuggest check for the wrong names and suggest for correct names.
+    # hunspell_check and hunspell_suggest are from the package hunspell
+
+    name_suggest <- hunspell_suggest( wrong_taxa , dict = dictio )
+
+    names( name_suggest ) <- wrong_taxa
+
+    names_suggest <- stack( name_suggest )
+    names_suggest$ind <- as.character( names_suggest$ind )
+    colnames( names_suggest ) <- c( "suggested" , "excluded" )
+    names_suggest <- names_suggest[ , 2:1 ]
+  }
+
+
+  ### INTERACTIVE EQUAL TO FALSE
+
+  # if correct names is equal to FALSE all the wrong names will be discarded
+
+  if( ! correct_names ){
+    x <-  x[ ! x$Taxa %in% wrong_taxa , , drop = FALSE ]
+  } else {
+
+    if( length( wrong_taxa ) == 0 ){
+      x <- x
+    } else {
+
+      temp <- rep( NA , length( wrong_taxa ) ) # vector to store user choices
+
+      for( i in 1:length( wrong_taxa ) ){
+
+        choice <- names_suggest[ names_suggest$excluded %in% wrong_taxa[ i ] , 2 , drop = TRUE ] # choices provided to the user
+        # provide alternative names to the user and if the user can't find the correct name he must exit
+        temp[ i ] <- select.list( choice , title = wrong_taxa[ i ] )
+        if( temp[ i ] == "exit" ) stop()
+      }
+
+      taxa_corrected <- data.frame( "wrong_names" = wrong_taxa , "correct_names" = temp , stringsAsFactors = FALSE )
+
+      # change wrong names
+      for( i in 1:nrow( taxa_corrected ) ){
+        x[ x$Taxa %in% taxa_corrected$wrong_names[ i ] ,  "Taxa" ] <- taxa_corrected$correct_names[ i ]
+      }
+
+    }
+  }
+
+  x <- aggregate( . ~ Taxa , data = x , FUN = FUN )
+
+
+  if( check.pa ){
+    x <- data.frame( x[ , 1 , drop = FALSE ], ( x[ , -1, drop = FALSE ] > 0 ) * 1 , stringsAsFactors = FALSE )
     message( "data imported as presence absence" )
   }
 
-  if( isTRUE( check.na ) ){
+  if( check.na ){
     message( "NA detected, transformed to 0" )
   }
 
   # merge reference database to the user data.frame
-  taxa_def <- merge( ref, x , by = "Taxa" , all = F )
+  taxa_def <- merge( ref, x , by = "Taxa" , all = FALSE )
 
-  class( taxa_def ) <- c( "biomonitoR" )
+  # reorder the columns
+  taxa_def <- taxa_def[ , c( 2:11 , 1 , 12:ncol( taxa_def ) ) , drop = FALSE ]
 
-  if( all( x[ , -1 ] %in% c( 0, 1 ) )  ){
+
+
+  if( ! traceB ){
+    taxa_def <- list( taxa_db = taxa_def )
+
+  } else{
+    if( ! correct_names ){
+      if( length( wrong_taxa ) == 0 ){
+
+        if(  ! exists( "to_store" , inherits = FALSE ) ){
+          taxa_def <- list( taxa_db = taxa_def )
+        } else {
+          taxa_def <- list( taxa_db = taxa_def , corrected_names = to_store )
+        }
+
+        } else {
+
+          if( ! exists( "to_store" , inherits = FALSE ) ){
+
+            taxa_def <- list( taxa_db = taxa_def , suggested_taxa_names = names_suggest )
+
+          } else {
+
+            names( to_store ) <- c( "wrong_names" , "correct_names" )
+            rownames( to_store ) <- NULL
+            taxa_def <- list( taxa_db = taxa_def , corrected_names = to_store , suggested_taxa_names = names_suggest )
+
+          }
+
+
+      }
+    } else {
+
+      if( length( wrong_taxa ) == 0 ){
+
+        if(  ! exists( "to_store" , inherits = FALSE ) ){
+          taxa_def <- list( taxa_db = taxa_def )
+        } else {
+          taxa_def <- list( taxa_db = taxa_def , corrected_names = to_store )
+        }
+
+      } else {
+
+        if( ! exists( "to_store" , inherits = FALSE ) ){
+
+          taxa_def <- list( taxa_db = taxa_def , suggested_taxa_names = names_suggest )
+
+        } else {
+
+          names( to_store ) <- c( "wrong_names" , "correct_names" )
+          taxa_corrected <- rbind( to_store , taxa_corrected )
+          rownames( to_store ) <- NULL
+          taxa_def <- list( taxa_db = taxa_def , corrected_names = taxa_corrected )
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+
+  class( taxa_def ) <- c( "asb" )
+
+  if( check.pa  ){
     class( taxa_def ) <- c( class( taxa_def ) , "bin" )
   }
 
@@ -185,4 +333,5 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , to_change = "defaul
   }
 
   taxa_def
+
 }

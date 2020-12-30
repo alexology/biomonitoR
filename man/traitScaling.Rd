@@ -53,9 +53,7 @@ to the target taxa (e.g. Tanypodinae traits assign to Ablabesmyia monilis). Cons
 function. For instance Anabolia lombarda is present in the user taxomic dataset while only Anabolia nervosa and Anabolia are present
 in the trait database. In this case traitScaling will assing to A. lombarda only the traits of Anabolia.
 Moreover, let assume that Coelostoma is present in the user dataset while only Berosus and Crenitis punctatostriata are present in the traits database.
-Here traitScaling will assign to Coelostoma the scores of Berosus and C. punctatostriata since they belong to the same family and there are no information at family level.\cr
-In case of multiple matches for the target taxa, traitScaling will not average the scores but it will provide all the matches. It is
-then straightforward to average the results by using the \link[stats]{aggregate}. \cr
+Here traitScaling will assign to Coelostoma the scores of Berosus and C. punctatostriata since they belong to the same family and there are no information at family level. \cr \cr
 The function traitScaling will measure the taxonomic distance between the target taxa and the taxa used to assign the trait score. This distance
 can be negative (e.g. Species to Genus) and positive (e.g. Genus to Species). The distance is measured assigning values as follows:
 1 (Species to Genus) , 2 (Species to family), -1 (Family to Genus), etc. traitScaling considers only the

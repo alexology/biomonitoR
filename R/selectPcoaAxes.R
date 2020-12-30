@@ -1,4 +1,4 @@
-#' selectPcoaAxis
+#' selectPcoaAxes
 #'
 #'
 #' @description
@@ -51,9 +51,9 @@
 #' traits.dist <- ktab.list.df( list( traits.prep ) )
 #' traits.dist <- dist.ktab( traits.dist , type = "F" )
 #'
-#' selectPcoaAxis( traits.dist , method = "cor" , tresh = 0.7)
-#' selectPcoaAxis( traits.dist , method = "legendre" , tresh = 0.7)
-#' selectPcoaAxis( traits.dist , method = "maire" , tresh = 0.01)
+#' selectPcoaAxes( traits.dist , method = "cor" , tresh = 0.7)
+#' selectPcoaAxes( traits.dist , method = "legendre" , tresh = 0.7)
+#' selectPcoaAxes( traits.dist , method = "maire" , tresh = 0.01)
 #'
 #' @references Maire, E., Grenouillet, G., Brosse, S., & Villeger, S. (2015).
 #'   How many dimensions are needed to accurately assess functional diversity?
@@ -66,7 +66,7 @@
 
 
 
-selectPcoaAxis <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 ){
+selectPcoaAxes <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 ){
 
   if( identical( method , "cor" ) & is.null( tresh )  ) { tresh <- 0.7 }
   if( identical( method , "legendre" ) & is.null( tresh )  ) { tresh <- 0.7 }

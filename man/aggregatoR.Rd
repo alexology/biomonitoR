@@ -7,7 +7,7 @@
 aggregatoR(x, FUN = sum)
 }
 \arguments{
-\item{x}{results of function asBiomonitoR}
+\item{x}{results of function asBiomonitor}
 
 \item{FUN}{the function to be applied for aggregating to higher taxonomic levels.
 Must be sum for both abundances and presence-absence data.

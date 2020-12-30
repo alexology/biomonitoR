@@ -27,7 +27,7 @@ remove_taxa <- function( x , taxa = NULL ){
   classCheck( x )
 
   # check if the taxa argument is empty or contains NULL strings
-  if ( is.null( taxa ) == T || ( any( taxa == "" ) & length( taxa ) == 1 ) ) {
+  if ( is.null( taxa ) == TRUE || ( any( taxa == "" ) & length( taxa ) == 1 ) ) {
     stop( "Please provide at least taxon name" )
   }
 
