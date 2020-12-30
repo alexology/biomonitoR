@@ -321,7 +321,6 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , to_change = "defaul
   }
 
 
-
   class( taxa_def ) <- c( "asb" )
 
   if( check.pa  ){
