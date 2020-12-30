@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Trait-based analysis with biomonitoR</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Trait-based analysis with biomonitoR</h1>
+
+
+
+<p>Trait-based analysis is a standard procedure in community ecology and represents a good complement to taxonomic information. Some efforts have also been made to include trait-based metrics into current biomonitoring practices. The <code>biomonitoR</code> package provides functions to manipulate trait data and to calculate functional metrics (e.g. richness, diversity). Some examples on how to deal with functional analysis in <code>biomonitoR</code> will be provided.</p>
+<div id="macroinvertebrates" class="section level2">
+<h2>Macroinvertebrates</h2>
+<p>For macroinvertebrates, <code>biomonitoR</code> provides by default the Tachet database (Tachet et al. 2010) available at <a href="https://www.freshwaterecology.info/">freshwaterecology.info</a> website. Briefly, the Tachet database is a fuzzy-coded database with 21 categories and a total of 113 modalities. One of the first steps in trait-based analysis is to retrieve trait information for the taxa present in the taxonomic dataset. There are some time-consuming steps when retrieving traits for macroinvertebrates because of inconsistencies between taxonomic resolution of the taxonomic dataset and those of traits. <code>biomonitoR</code> accomplish this task with the function <code>traitScaling</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(biomonitoR)</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co"># import the example dataset in biomonitoR</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co"># macro_ex includes taxa identified at species, genus and family level</span></a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">data</span>(macro_ex)</a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8">data.bio &lt;-<span class="st"> </span><span class="kw">asBiomonitor</span>(macro_ex)</a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; All names are correct</span></a>
+<a class="sourceLine" id="cb1-10" title="10">data.agR &lt;-<span class="st"> </span><span class="kw">aggregatoR</span>(data.bio)</a>
+<a class="sourceLine" id="cb1-11" title="11"></a>
+<a class="sourceLine" id="cb1-12" title="12"></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co"># use the traitScaling function</span></a>
+<a class="sourceLine" id="cb1-14" title="14"></a>
+<a class="sourceLine" id="cb1-15" title="15">data.ts &lt;-<span class="st"> </span><span class="kw">traitScaling</span>( data.agR , <span class="dt">taxLev =</span> <span class="st">&quot;Taxa&quot;</span> )</a>
+<a class="sourceLine" id="cb1-16" title="16"></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="co"># we can use traitScaling at the desired taxonomic level</span></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="co"># for example setting taxLev = &quot;Family&quot;</span></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co"># traitscaling does not allow taxonomic levels higher than families</span></a></code></pre></div>
+<p><code>traitScaling</code> returns a <code>data.frame</code> reporting taxa names of the taxonomic dataset, the taxonomic level of each taxon of the taxonomic dataset, the name of the taxa whose traits have been associated to a taxon of the taxonomic dataset and the corresponding taxonomic level, the taxonomic distance between taxa of the taxonomic dataset and the one from trait dataset and traits. Taxonomic distance is calculated based on the taxonomic levels implemented in <code>biomonitoR</code>. There are some rules of aggregation that can be consulted on the help page of <code>traitScaling</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># data.ts has more rows because more entries have been found for one or more taxa.</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co"># only the first two traits are showed to not fill the page with numbers</span></a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4">data.ts[ <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> , <span class="dv">1</span><span class="op">:</span><span class="dv">7</span> ]</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt;         Taxa Taxa_db       Traits_taxlev Traits_real Taxonomic_distance</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; 1 Acentrella   Genus  Acentrella sinaica     Species                  1</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt; 2    Ancylus   Genus Ancylus fluviatilis     Species                  1</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt; 3     Baetis   Genus              Baetis       Genus                  0</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; 4 Beraeamyia   Genus Beraeamyia squamosa     Species                  1</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; 5  Beraeidae  Family              Beraea       Genus                  3</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt;   LONGITUDINAL_1 LONGITUDINAL_2</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt; 1      0.0000000      0.2857143</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; 2      0.1538462      0.2307692</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; 3      0.1428571      0.1904762</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; 4      0.0000000      0.0000000</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; 5      0.2500000      0.2500000</span></a></code></pre></div>
+<p>The <code>traitScaling</code> function links available traits to a taxon by looking at the taxonomic tree. Multiple assignements for the same taxon can thus be obtained.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># data.ts has more rows because more entries have been found for one or more taxa.</span></a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">dim</span>( macro_ex )</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; [1] 34  3</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw">dim</span>( data.ts )</a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; [1]  71 118</span></a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co"># look at Beraeidae for which five taxa of the trait dataset have been associated</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co"># to one taxon of the taxonomic dataset</span></a>
+<a class="sourceLine" id="cb3-10" title="10"></a>
+<a class="sourceLine" id="cb3-11" title="11">data.ts[ data.ts<span class="op">$</span>Taxa <span class="op">%in%</span><span class="st"> &quot;Beraeidae&quot;</span> , <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> ]</a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="co">#&gt;        Taxa Taxa_db       Traits_taxlev Traits_real Taxonomic_distance</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; 5 Beraeidae  Family              Beraea       Genus                  3</span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt; 6 Beraeidae  Family Beraeamyia squamosa     Species                  4</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt; 7 Beraeidae  Family   Beraeodes minutus     Species                  4</span></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt; 8 Beraeidae  Family Beraeodina palpalis     Species                  4</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt; 9 Beraeidae  Family             Ernodes       Genus                  3</span></a></code></pre></div>
+<p>Taxonomic distance can be useful, for example when only exact matches are needed. The <code>filter_by_distance</code> option of the <code>traitScaling</code> function or simple subsets can be used.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">traitScaling</span>( data.agR , <span class="dt">filter_by_distance =</span> <span class="dv">0</span> )[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> ]</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt;              Taxa   Taxa_db  Traits_taxlev Traits_real Taxonomic_distance</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; 3          Baetis     Genus         Baetis       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; 10         Caenis     Genus         Caenis       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; 21         Cyphon     Genus         Cyphon       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; 22    Electrogena     Genus    Electrogena       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; 23          Elmis     Genus          Elmis       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; 26         Esolus     Genus         Esolus       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; 27        Gyrinus     Genus        Gyrinus       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; 28 Habroleptoides     Genus Habroleptoides       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; 29   Habrophlebia     Genus   Habrophlebia       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; 30  Holocentropus     Genus  Holocentropus       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; 31       Hydraena     Genus       Hydraena       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 32    Hydropsyche     Genus    Hydropsyche       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 33     Hydroptila     Genus     Hydroptila       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 43      Laccobius     Genus      Laccobius       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; 45        Leuctra     Genus        Leuctra       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; 62    Nebrioporus     Genus    Nebrioporus       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; 63  Onychogomphus     Genus  Onychogomphus       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; 64 Orthocladiinae Subfamily Orthocladiinae   Subfamily                  0</span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; 66    Rhithrogena     Genus    Rhithrogena       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; 68        Setodes     Genus        Setodes       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; 71    Tanypodinae Subfamily    Tanypodinae   Subfamily                  0</span></a>
+<a class="sourceLine" id="cb4-24" title="24"></a>
+<a class="sourceLine" id="cb4-25" title="25">data.ts[ data.ts<span class="op">$</span>Taxonomic_distance <span class="op">==</span><span class="st"> </span><span class="dv">0</span> , <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> ]</a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt;              Taxa   Taxa_db  Traits_taxlev Traits_real Taxonomic_distance</span></a>
+<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt; 3          Baetis     Genus         Baetis       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt; 10         Caenis     Genus         Caenis       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; 21         Cyphon     Genus         Cyphon       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-30" title="30"><span class="co">#&gt; 22    Electrogena     Genus    Electrogena       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-31" title="31"><span class="co">#&gt; 23          Elmis     Genus          Elmis       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-32" title="32"><span class="co">#&gt; 26         Esolus     Genus         Esolus       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-33" title="33"><span class="co">#&gt; 27        Gyrinus     Genus        Gyrinus       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-34" title="34"><span class="co">#&gt; 28 Habroleptoides     Genus Habroleptoides       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-35" title="35"><span class="co">#&gt; 29   Habrophlebia     Genus   Habrophlebia       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-36" title="36"><span class="co">#&gt; 30  Holocentropus     Genus  Holocentropus       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-37" title="37"><span class="co">#&gt; 31       Hydraena     Genus       Hydraena       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-38" title="38"><span class="co">#&gt; 32    Hydropsyche     Genus    Hydropsyche       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-39" title="39"><span class="co">#&gt; 33     Hydroptila     Genus     Hydroptila       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-40" title="40"><span class="co">#&gt; 43      Laccobius     Genus      Laccobius       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-41" title="41"><span class="co">#&gt; 45        Leuctra     Genus        Leuctra       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-42" title="42"><span class="co">#&gt; 62    Nebrioporus     Genus    Nebrioporus       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-43" title="43"><span class="co">#&gt; 63  Onychogomphus     Genus  Onychogomphus       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-44" title="44"><span class="co">#&gt; 64 Orthocladiinae Subfamily Orthocladiinae   Subfamily                  0</span></a>
+<a class="sourceLine" id="cb4-45" title="45"><span class="co">#&gt; 66    Rhithrogena     Genus    Rhithrogena       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-46" title="46"><span class="co">#&gt; 68        Setodes     Genus        Setodes       Genus                  0</span></a>
+<a class="sourceLine" id="cb4-47" title="47"><span class="co">#&gt; 71    Tanypodinae Subfamily    Tanypodinae   Subfamily                  0</span></a></code></pre></div>
+<p>What to do next? <code>biomonitoR</code> offers a more advanced subsetting tool with the function <code>manageTraits</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># select the traits belonging to the nearest taxa that have a taxonomic level equal or finer than the target one</span></a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3">data.ts_plus &lt;-<span class="st"> </span><span class="kw">manageTraits</span>( data.ts , <span class="dt">method =</span> <span class="st">&quot;nearest+&quot;</span> , <span class="dt">traceB =</span> <span class="ot">TRUE</span> )</a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co"># with the traceB option set to TRUE you can check the taxa removed because they did not meet the requirments</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co"># Here Serratella ignita is at species level while the trait at genus level (Serratella)</span></a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8">data.ts_plus<span class="op">$</span>taxa_excluded</a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt; [1] &quot;Serratella ignita&quot;</span></a></code></pre></div>
+<p>When you are satisfied with the list of taxa you can finalize your trait dataset with two strategies. The function <code>traitsMean</code> allow the computation of the average traits for each Taxon. It is currently designed only for fuzzy data. For continuos data the default <code>aggregate</code> function can be used. Alternatively, taxa can be chosen randomly when multiple matches are available.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># take the average. If colB is set to NULL the default values will be used.</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co"># Please consider that the default value is correct only for the default trait dataset!</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co"># only the first 5 rows and columns will be showed</span></a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5">data.ts.av &lt;-<span class="st"> </span><span class="kw">traitsMean</span>( data.ts )</a>
+<a class="sourceLine" id="cb6-6" title="6">data.ts.av[ <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> , <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> ]</a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt;         Taxa LONGITUDINAL_1 LONGITUDINAL_2 LONGITUDINAL_3 LONGITUDINAL_4</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; 1 Acentrella      0.0000000      0.2857143      0.4285714     0.28571429</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; 2    Ancylus      0.1538462      0.2307692      0.3076923     0.07692308</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; 3     Baetis      0.1428571      0.1904762      0.1904762     0.19047619</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; 4 Beraeamyia      0.0000000      0.0000000      0.0000000     0.00000000</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; 5  Beraeidae      0.2291667      0.2708333      0.1145833     0.03125000</span></a>
+<a class="sourceLine" id="cb6-13" title="13"></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="co"># alternatively a random selection can be done</span></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="co"># only the first 5 rows and  columns will be showed</span></a>
+<a class="sourceLine" id="cb6-16" title="16"></a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="kw">sampleTraits</span>( data.ts )[ <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> , <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> ]</a>
+<a class="sourceLine" id="cb6-18" title="18"><span class="co">#&gt;         Taxa LONGITUDINAL_1 LONGITUDINAL_2 LONGITUDINAL_3 LONGITUDINAL_4</span></a>
+<a class="sourceLine" id="cb6-19" title="19"><span class="co">#&gt; 1 Acentrella      0.0000000      0.2857143      0.4285714     0.28571429</span></a>
+<a class="sourceLine" id="cb6-20" title="20"><span class="co">#&gt; 2    Ancylus      0.1538462      0.2307692      0.3076923     0.07692308</span></a>
+<a class="sourceLine" id="cb6-21" title="21"><span class="co">#&gt; 3     Baetis      0.1428571      0.1904762      0.1904762     0.19047619</span></a>
+<a class="sourceLine" id="cb6-22" title="22"><span class="co">#&gt; 4 Beraeamyia      0.0000000      0.0000000      0.0000000     0.00000000</span></a>
+<a class="sourceLine" id="cb6-23" title="23"><span class="co">#&gt; 5  Beraeidae      0.0000000      0.0000000      0.0000000     0.00000000</span></a></code></pre></div>
+<p>Now we have obtained a trait dataset that can be used for calculating functional metrics.</p>
+<div id="functional-indices" class="section level3">
+<h3>Functional indices</h3>
+<p>The calculation of functional dispersion, diversity, evenness, redundancy and richness are straightforward.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">colB &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">8</span> )</a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co"># functional dispersion</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="kw">f_disp</span>( data.agR , <span class="dt">traitDB =</span> data.ts.av , <span class="dt">nbdim =</span> <span class="dv">2</span> , <span class="dt">type =</span> <span class="st">&quot;F&quot;</span> , <span class="dt">colB =</span> colB )</a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt;  Sample_1  Sample_2 </span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; 0.1552291 0.2511085</span></a>
+<a class="sourceLine" id="cb7-7" title="7"></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co"># functional diversity </span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="kw">f_divs</span>( data.agR , <span class="dt">traitDB =</span> data.ts.av , <span class="dt">type =</span> <span class="st">&quot;F&quot;</span> , <span class="dt">colB =</span> colB )</a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt;  Sample_1  Sample_2 </span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt; 0.4739221 0.6409958</span></a>
+<a class="sourceLine" id="cb7-12" title="12"></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="co"># functional evenness</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="kw">f_eve</span>( data.agR , <span class="dt">traitDB =</span> data.ts.av , <span class="dt">type =</span> <span class="st">&quot;F&quot;</span> , <span class="dt">colB =</span> colB )</a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt;  Sample_1  Sample_2 </span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; 0.5272678 0.4367577</span></a>
+<a class="sourceLine" id="cb7-17" title="17"></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="co"># functional redundancy</span></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="kw">f_red</span>( data.agR , <span class="dt">traitDB =</span> data.ts.av , <span class="dt">type =</span> <span class="st">&quot;F&quot;</span> , <span class="dt">colB =</span> colB )</a>
+<a class="sourceLine" id="cb7-20" title="20"><span class="co">#&gt;            GS_rich      raoQ      fred</span></a>
+<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt; Sample_1 0.7245364 0.4739221 0.2506143</span></a>
+<a class="sourceLine" id="cb7-22" title="22"><span class="co">#&gt; Sample_2 0.8450080 0.6409958 0.2040121</span></a>
+<a class="sourceLine" id="cb7-23" title="23"></a>
+<a class="sourceLine" id="cb7-24" title="24"><span class="co"># functional richness on 2 dimensions</span></a>
+<a class="sourceLine" id="cb7-25" title="25"><span class="kw">f_rich</span>( data.agR , <span class="dt">traitDB =</span> data.ts.av , <span class="dt">nbdim =</span> <span class="dv">2</span> , <span class="dt">type =</span> <span class="st">&quot;F&quot;</span> , <span class="dt">colB =</span> colB )</a>
+<a class="sourceLine" id="cb7-26" title="26"><span class="co">#&gt;  Sample_1  Sample_2 </span></a>
+<a class="sourceLine" id="cb7-27" title="27"><span class="co">#&gt; 0.8609289 0.8719325</span></a></code></pre></div>
+</div>
+<div id="the-traceb-option" class="section level3">
+<h3>The traceB option</h3>
+<p>Some information on the calculation is provided by the traceB option. This option is implemented in several biomonitoR functions to have a feedback on the calculation and to check if functions beahved as intended. It is particularly important for functional indices.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">frich &lt;-<span class="st"> </span><span class="kw">f_rich</span>( data.agR , <span class="dt">traitDB =</span> data.ts.av , <span class="dt">nbdim =</span> <span class="dv">2</span> , <span class="dt">type =</span> <span class="st">&quot;F&quot;</span> , <span class="dt">colB =</span> colB , <span class="dt">traceB =</span> <span class="ot">TRUE</span> )</a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co"># look at the traits with NA values</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="kw">head</span>( frich<span class="op">$</span>NA_detection )</a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt;         Taxa      Traits</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 1 Beraeamyia SAPROBITY_1</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 2 Beraeamyia SAPROBITY_2</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 3 Beraeamyia SAPROBITY_3</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 4 Beraeamyia SAPROBITY_4</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 5 Beraeamyia SAPROBITY_5</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; 6 Beraeamyia   TROPHIC_1</span></a></code></pre></div>
+</div>
+<div id="community-weighted-mean-and-community-specialization-index" class="section level3">
+<h3>Community weighted mean and community specialization index</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="co"># community weighted mean and community specialization index</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="co"># only the first 5 columns are showed</span></a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="kw">cwm</span>(<span class="dt">x =</span> data.agR, <span class="dt">traitDB =</span> data.ts.av, <span class="dt">taxLev =</span> <span class="st">&quot;Taxa&quot;</span>, <span class="dt">trans =</span> log1p )[ , <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> ]</a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="co">#&gt;     Sample ALTITUDE_1 ALTITUDE_2 ALTITUDE_3 CURRENT_1</span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="co">#&gt; 1 Sample_1  0.5960847  0.2864141 0.11750121 0.1358856</span></a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="co">#&gt; 2 Sample_2  0.7002625  0.2136752 0.08606234 0.2250836</span></a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="kw">csi</span>(<span class="dt">x =</span> data.agR, <span class="dt">traitDB =</span> data.ts.av, <span class="dt">taxLev =</span> <span class="st">&quot;Taxa&quot;</span>, <span class="dt">trans =</span> log1p )[ , <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> ]</a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt;     Sample  ALTITUDE   CURRENT DISPERSAL   FEEDING</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt; 1 Sample_1 0.2620320 0.2203436 0.1332345 0.5159607</span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="co">#&gt; 2 Sample_2 0.4308245 0.2540240 0.1498556 0.5270865</span></a></code></pre></div>
+</div>
+<div id="working-with-distance-matrices" class="section level3">
+<h3>Working with distance matrices</h3>
+<p>Distance matrices can be provided instead of the functional database for calculating functional indices. Building distance matrices assure more flexibility and control. <code>biomonitoR</code> deals only fuzzy and continuous traits only, but other types of traits are frequent in ecological applications.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">library</span>( ade4 )</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="co">#&gt; Warning: package &#39;ade4&#39; was built under R version 3.6.3</span></a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="kw">rownames</span>( data.ts.av ) &lt;-<span class="st"> </span>data.ts.av<span class="op">$</span>Taxa</a>
+<a class="sourceLine" id="cb10-5" title="5">traits.prep &lt;-<span class="st"> </span><span class="kw">prep.fuzzy</span>( data.ts.av[ , <span class="dv">-1</span> ], <span class="dt">col.blocks =</span> colB )</a>
+<a class="sourceLine" id="cb10-6" title="6"></a>
+<a class="sourceLine" id="cb10-7" title="7">traits.dist &lt;-<span class="st"> </span><span class="kw">ktab.list.df</span>( <span class="kw">list</span>( traits.prep ) )</a>
+<a class="sourceLine" id="cb10-8" title="8">traits.dist &lt;-<span class="st"> </span><span class="kw">dist.ktab</span>( traits.dist , <span class="dt">type =</span> <span class="st">&quot;F&quot;</span> )</a>
+<a class="sourceLine" id="cb10-9" title="9"></a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="kw">f_rich</span>( data.agR , <span class="dt">traitDB =</span> traits.dist , <span class="dt">nbdim =</span> <span class="dv">2</span> )</a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="co">#&gt;  Sample_1  Sample_2 </span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="co">#&gt; 0.8609289 0.8719325</span></a></code></pre></div>
+<p>Functional richness and dispersion require the construction of a functional space from distance/dissimilarity matrices. <code>f_rich</code> and <code>f_disp</code> do it internally through when a trait dataset is provided, but more control can be obtained by providing a distance matrix. The fuction <code>selectPcoaAxes</code> is a useful tool to select the number of axes needed to build the functional space with a desired quality. Three methods for evaluating the qauality of the functional space are proposed. <code>selectPcoaAxes</code> also evaluates the performances of different correction algorhitms when negative eigenvalues are found during the construction of the functional space.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">selectPcoaAxes</span>( traits.dist , <span class="dt">method =</span> <span class="st">&quot;cor&quot;</span> , <span class="dt">tresh =</span> <span class="fl">0.7</span>)</a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="co">#&gt;   Transformation Euclidean nbdim       cor p_value        r2</span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="co">#&gt; 1           none       yes     3 0.7550625   0.001 0.3952706</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="kw">selectPcoaAxes</span>( traits.dist , <span class="dt">method =</span> <span class="st">&quot;legendre&quot;</span> , <span class="dt">tresh =</span> <span class="fl">0.65</span>)</a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="co">#&gt;   Transformation Euclidean nbdim        r2</span></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="co">#&gt; 1           none       yes     7 0.6541659</span></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="kw">selectPcoaAxes</span>( traits.dist , <span class="dt">method =</span> <span class="st">&quot;maire&quot;</span> , <span class="dt">tresh =</span> <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="co">#&gt;   Transformation Euclidean nbdim       SD        r2</span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="co">#&gt; 1           none       yes     7 0.009984 0.6541659</span></a></code></pre></div>
+</div>
+<div id="working-at-different-taxonomic-levels" class="section level3">
+<h3>Working at different taxonomic levels</h3>
+<p>One of the strength of <code>biomonitoR</code> is the ability to work at different taxonomic levels. The examples above were done at a mixed-taxonomic level (species, genus, family and order). If we wanto to look at the family level results, we can repeat the analysis by specifying famly in both <code>traitScaling</code> and <code>indices</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">data_fam.ts &lt;-<span class="st"> </span><span class="kw">traitScaling</span>( data.agR , <span class="dt">taxLev =</span> <span class="st">&quot;Family&quot;</span> )</a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3">data_fam.ts.av &lt;-<span class="st"> </span><span class="kw">traitsMean</span>( data_fam.ts )</a>
+<a class="sourceLine" id="cb12-4" title="4"></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="co"># functional richness</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="kw">f_rich</span>( data.agR , <span class="dt">traitDB =</span> data_fam.ts.av , <span class="dt">taxLev =</span> <span class="st">&quot;Family&quot;</span> , <span class="dt">nbdim =</span> <span class="dv">2</span> , <span class="dt">type =</span> <span class="st">&quot;F&quot;</span> , <span class="dt">colB =</span> colB )</a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="co">#&gt;  Sample_1  Sample_2 </span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="co">#&gt; 0.8235481 0.9314145</span></a></code></pre></div>
+</div>
+</div>
+<div id="macrophytes" class="section level2">
+<h2>Macrophytes</h2>
+<p>The same approach used for macroinvertebrates can be used for other groups. The following example is for macrophytes.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># load macrophyte data</span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="kw">data</span>( oglio )</a>
+<a class="sourceLine" id="cb13-3" title="3"></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="co"># transform to presence-absence data for simplicity</span></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="co"># ignore the warning</span></a>
+<a class="sourceLine" id="cb13-6" title="6">oglio.bin &lt;-<span class="st"> </span>oglio</a>
+<a class="sourceLine" id="cb13-7" title="7">oglio.bin[ oglio.bin <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> ] &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="co">#&gt; Warning in Ops.factor(left, right): &#39;&gt;&#39; not meaningful for factors</span></a>
+<a class="sourceLine" id="cb13-9" title="9"></a>
+<a class="sourceLine" id="cb13-10" title="10"><span class="co"># importing data in the biomonitoR format</span></a>
+<a class="sourceLine" id="cb13-11" title="11">oglio.asb &lt;-<span class="st"> </span><span class="kw">asBiomonitor</span>( oglio.bin , <span class="dt">group =</span> <span class="st">&quot;mf&quot;</span> , <span class="dt">FUN =</span> bin )</a>
+<a class="sourceLine" id="cb13-12" title="12"><span class="co">#&gt; All names are correct</span></a>
+<a class="sourceLine" id="cb13-13" title="13">oglio.agg &lt;-<span class="st"> </span><span class="kw">aggregatoR</span>( oglio.asb )</a></code></pre></div>
+</div>
+<div id="references" class="section level2">
+<h2>REFERENCES</h2>
+<p>Schmidt-Kloiber, A., &amp; Hering, D. (2015). An online tool that unifies, standardises and codifies more than 20,000 European freshwater organisms and their ecological preferences. Ecological Indicators, 53, 271-282.</p>
+<p>Tachet H (2010) Invertébrés d’eau douce: Systématique, biologie, écologie, édition revue et augmentée edizione. CNRS Editions, Paris</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

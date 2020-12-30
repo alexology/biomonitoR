@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Introduction to biomonitoR</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to biomonitoR</h1>
+
+
+
+<p>The biomonitoR package was primarily developed for dealing with taxonomic dataset and for calculating diversity, functional and biomonitoring indices at different taxonomic resolution. Although its focus is on freshwater macroinvertebrates, it actually works with multiple biotic groups.</p>
+<div id="import-data-into-biomonitor-format" class="section level2">
+<h2>Import data into biomonitoR format</h2>
+<p>To import a taxonomic dataset in the <code>biomonitoR</code> format a <code>data.frame</code> with a column called “Taxa” where store taxa names and samples on the other columns is needed.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(biomonitoR)</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co"># built-in example</span></a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw">data</span>( macro_ex )</a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">head</span>( macro_ex )</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt;         Taxa Sample_1 Sample_2</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; 1 Acentrella        3        0</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; 2    Ancylus        2        3</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; 3     Baetis       11        1</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; 4 Beraeamyia        0        4</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; 5  Beraeidae        0        1</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; 6     Caenis        2      166</span></a></code></pre></div>
+<p>The first step is to import taxonomic dataset with the function <code>asBiomonitor</code> that return an object of class <code>asb</code>. Basically this function adds the taxonomic tree to the taxonomic data. The taxonomic tree is built from a reference database, specified in the option <code>group</code>. <code>biomonitoR</code> implements 3 reference database for macroinvertebrates, macrophytes and fish but a reference database can be added by the user.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># import macroinvertebrate data</span></a>
+<a class="sourceLine" id="cb2-2" title="2">data.bio &lt;-<span class="st"> </span><span class="kw">asBiomonitor</span>( macro_ex , <span class="dt">group =</span> <span class="st">&quot;mi&quot;</span> )</a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4">data.bio</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt;        Phylum      Class    Subclass         Order            Family</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; 1  Arthropoda    Insecta             Ephemeroptera          Baetidae</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt; 2    Mollusca Gastropoda                                 Planorbidae</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt; 3  Arthropoda    Insecta             Ephemeroptera          Baetidae</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; 4  Arthropoda    Insecta               Trichoptera         Beraeidae</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; 5  Arthropoda    Insecta               Trichoptera         Beraeidae</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt; 6  Arthropoda    Insecta             Ephemeroptera          Caenidae</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt; 7  Arthropoda    Insecta               Trichoptera    Hydropsychidae</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; 8  Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; 9  Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; 10 Arthropoda    Insecta                Coleoptera         Scirtidae</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; 11 Arthropoda    Insecta             Ephemeroptera     Heptageniidae</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; 12 Arthropoda    Insecta                Coleoptera           Elmidae</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; 13 Arthropoda    Insecta                   Diptera         Empididae</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt; 14 Arthropoda    Insecta                Coleoptera           Elmidae</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt; 15 Arthropoda    Insecta                Coleoptera         Gyrinidae</span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; 16 Arthropoda    Insecta             Ephemeroptera   Leptophlebiidae</span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; 17 Arthropoda    Insecta             Ephemeroptera   Leptophlebiidae</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; 18 Arthropoda    Insecta               Trichoptera Polycentropodidae</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt; 19 Arthropoda    Insecta                Coleoptera       Hydraenidae</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt; 20 Arthropoda    Insecta               Trichoptera    Hydropsychidae</span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="co">#&gt; 21 Arthropoda    Insecta               Trichoptera     Hydroptilidae</span></a>
+<a class="sourceLine" id="cb2-27" title="27"><span class="co">#&gt; 22 Arthropoda    Insecta               Trichoptera     Hydroptilidae</span></a>
+<a class="sourceLine" id="cb2-28" title="28"><span class="co">#&gt; 23 Arthropoda    Insecta                Coleoptera     Hydrophilidae</span></a>
+<a class="sourceLine" id="cb2-29" title="29"><span class="co">#&gt; 24 Arthropoda    Insecta                Plecoptera        Leuctridae</span></a>
+<a class="sourceLine" id="cb2-30" title="30"><span class="co">#&gt; 25   Annelida Clitellata Oligochaeta                        Naididae</span></a>
+<a class="sourceLine" id="cb2-31" title="31"><span class="co">#&gt; 26 Arthropoda    Insecta                Coleoptera        Dytiscidae</span></a>
+<a class="sourceLine" id="cb2-32" title="32"><span class="co">#&gt; 27 Arthropoda    Insecta                   Odonata         Gomphidae</span></a>
+<a class="sourceLine" id="cb2-33" title="33"><span class="co">#&gt; 28 Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb2-34" title="34"><span class="co">#&gt; 29 Arthropoda    Insecta                Coleoptera         Dryopidae</span></a>
+<a class="sourceLine" id="cb2-35" title="35"><span class="co">#&gt; 30 Arthropoda    Insecta             Ephemeroptera     Heptageniidae</span></a>
+<a class="sourceLine" id="cb2-36" title="36"><span class="co">#&gt; 31 Arthropoda    Insecta             Ephemeroptera    Ephemerellidae</span></a>
+<a class="sourceLine" id="cb2-37" title="37"><span class="co">#&gt; 32 Arthropoda    Insecta               Trichoptera      Leptoceridae</span></a>
+<a class="sourceLine" id="cb2-38" title="38"><span class="co">#&gt; 33 Arthropoda    Insecta                   Diptera        Simuliidae</span></a>
+<a class="sourceLine" id="cb2-39" title="39"><span class="co">#&gt; 34 Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb2-40" title="40"><span class="co">#&gt;          Subfamily Tribus          Genus           Species Subspecies</span></a>
+<a class="sourceLine" id="cb2-41" title="41"><span class="co">#&gt; 1                             Acentrella                             </span></a>
+<a class="sourceLine" id="cb2-42" title="42"><span class="co">#&gt; 2                                Ancylus                             </span></a>
+<a class="sourceLine" id="cb2-43" title="43"><span class="co">#&gt; 3                                 Baetis                             </span></a>
+<a class="sourceLine" id="cb2-44" title="44"><span class="co">#&gt; 4                             Beraeamyia                             </span></a>
+<a class="sourceLine" id="cb2-45" title="45"><span class="co">#&gt; 5                                                                    </span></a>
+<a class="sourceLine" id="cb2-46" title="46"><span class="co">#&gt; 6                                 Caenis                             </span></a>
+<a class="sourceLine" id="cb2-47" title="47"><span class="co">#&gt; 7                         Cheumatopsyche                             </span></a>
+<a class="sourceLine" id="cb2-48" title="48"><span class="co">#&gt; 8                                                                    </span></a>
+<a class="sourceLine" id="cb2-49" title="49"><span class="co">#&gt; 9     Chironominae                                                   </span></a>
+<a class="sourceLine" id="cb2-50" title="50"><span class="co">#&gt; 10                                Cyphon                             </span></a>
+<a class="sourceLine" id="cb2-51" title="51"><span class="co">#&gt; 11                           Electrogena                             </span></a>
+<a class="sourceLine" id="cb2-52" title="52"><span class="co">#&gt; 12         Elminae                 Elmis                             </span></a>
+<a class="sourceLine" id="cb2-53" title="53"><span class="co">#&gt; 13                                                                   </span></a>
+<a class="sourceLine" id="cb2-54" title="54"><span class="co">#&gt; 14         Elminae                Esolus                             </span></a>
+<a class="sourceLine" id="cb2-55" title="55"><span class="co">#&gt; 15       Gyrininae               Gyrinus                             </span></a>
+<a class="sourceLine" id="cb2-56" title="56"><span class="co">#&gt; 16                        Habroleptoides                             </span></a>
+<a class="sourceLine" id="cb2-57" title="57"><span class="co">#&gt; 17                          Habrophlebia                             </span></a>
+<a class="sourceLine" id="cb2-58" title="58"><span class="co">#&gt; 18                         Holocentropus                             </span></a>
+<a class="sourceLine" id="cb2-59" title="59"><span class="co">#&gt; 19     Hydraeninae              Hydraena                             </span></a>
+<a class="sourceLine" id="cb2-60" title="60"><span class="co">#&gt; 20                           Hydropsyche                             </span></a>
+<a class="sourceLine" id="cb2-61" title="61"><span class="co">#&gt; 21                            Hydroptila                             </span></a>
+<a class="sourceLine" id="cb2-62" title="62"><span class="co">#&gt; 22                                                                   </span></a>
+<a class="sourceLine" id="cb2-63" title="63"><span class="co">#&gt; 23   Hydrophilinae             Laccobius                             </span></a>
+<a class="sourceLine" id="cb2-64" title="64"><span class="co">#&gt; 24                               Leuctra                             </span></a>
+<a class="sourceLine" id="cb2-65" title="65"><span class="co">#&gt; 25                                                                   </span></a>
+<a class="sourceLine" id="cb2-66" title="66"><span class="co">#&gt; 26    Hydroporinae           Nebrioporus                             </span></a>
+<a class="sourceLine" id="cb2-67" title="67"><span class="co">#&gt; 27 Onychogomphinae         Onychogomphus                             </span></a>
+<a class="sourceLine" id="cb2-68" title="68"><span class="co">#&gt; 28  Orthocladiinae                                                   </span></a>
+<a class="sourceLine" id="cb2-69" title="69"><span class="co">#&gt; 29                             Pomatinus                             </span></a>
+<a class="sourceLine" id="cb2-70" title="70"><span class="co">#&gt; 30                           Rhithrogena                             </span></a>
+<a class="sourceLine" id="cb2-71" title="71"><span class="co">#&gt; 31                            Serratella Serratella ignita           </span></a>
+<a class="sourceLine" id="cb2-72" title="72"><span class="co">#&gt; 32                               Setodes                             </span></a>
+<a class="sourceLine" id="cb2-73" title="73"><span class="co">#&gt; 33                                                                   </span></a>
+<a class="sourceLine" id="cb2-74" title="74"><span class="co">#&gt; 34     Tanypodinae                                                   </span></a>
+<a class="sourceLine" id="cb2-75" title="75"><span class="co">#&gt;                 Taxa Sample_1 Sample_2</span></a>
+<a class="sourceLine" id="cb2-76" title="76"><span class="co">#&gt; 1         Acentrella        3        0</span></a>
+<a class="sourceLine" id="cb2-77" title="77"><span class="co">#&gt; 2            Ancylus        2        3</span></a>
+<a class="sourceLine" id="cb2-78" title="78"><span class="co">#&gt; 3             Baetis       11        1</span></a>
+<a class="sourceLine" id="cb2-79" title="79"><span class="co">#&gt; 4         Beraeamyia        0        4</span></a>
+<a class="sourceLine" id="cb2-80" title="80"><span class="co">#&gt; 5          Beraeidae        0        1</span></a>
+<a class="sourceLine" id="cb2-81" title="81"><span class="co">#&gt; 6             Caenis        2      166</span></a>
+<a class="sourceLine" id="cb2-82" title="82"><span class="co">#&gt; 7     Cheumatopsyche        0        1</span></a>
+<a class="sourceLine" id="cb2-83" title="83"><span class="co">#&gt; 8       Chironomidae        0        9</span></a>
+<a class="sourceLine" id="cb2-84" title="84"><span class="co">#&gt; 9       Chironominae        6       40</span></a>
+<a class="sourceLine" id="cb2-85" title="85"><span class="co">#&gt; 10            Cyphon        0        4</span></a>
+<a class="sourceLine" id="cb2-86" title="86"><span class="co">#&gt; 11       Electrogena        0       15</span></a>
+<a class="sourceLine" id="cb2-87" title="87"><span class="co">#&gt; 12             Elmis        0        1</span></a>
+<a class="sourceLine" id="cb2-88" title="88"><span class="co">#&gt; 13         Empididae        0        1</span></a>
+<a class="sourceLine" id="cb2-89" title="89"><span class="co">#&gt; 14            Esolus       61      177</span></a>
+<a class="sourceLine" id="cb2-90" title="90"><span class="co">#&gt; 15           Gyrinus        1        0</span></a>
+<a class="sourceLine" id="cb2-91" title="91"><span class="co">#&gt; 16    Habroleptoides        0        8</span></a>
+<a class="sourceLine" id="cb2-92" title="92"><span class="co">#&gt; 17      Habrophlebia        0        9</span></a>
+<a class="sourceLine" id="cb2-93" title="93"><span class="co">#&gt; 18     Holocentropus        0        8</span></a>
+<a class="sourceLine" id="cb2-94" title="94"><span class="co">#&gt; 19          Hydraena        1        0</span></a>
+<a class="sourceLine" id="cb2-95" title="95"><span class="co">#&gt; 20       Hydropsyche        5        2</span></a>
+<a class="sourceLine" id="cb2-96" title="96"><span class="co">#&gt; 21        Hydroptila        0       25</span></a>
+<a class="sourceLine" id="cb2-97" title="97"><span class="co">#&gt; 22     Hydroptilidae        0        1</span></a>
+<a class="sourceLine" id="cb2-98" title="98"><span class="co">#&gt; 23         Laccobius        0        5</span></a>
+<a class="sourceLine" id="cb2-99" title="99"><span class="co">#&gt; 24           Leuctra        2       21</span></a>
+<a class="sourceLine" id="cb2-100" title="100"><span class="co">#&gt; 25          Naididae        3      167</span></a>
+<a class="sourceLine" id="cb2-101" title="101"><span class="co">#&gt; 26       Nebrioporus        1        0</span></a>
+<a class="sourceLine" id="cb2-102" title="102"><span class="co">#&gt; 27     Onychogomphus        0        2</span></a>
+<a class="sourceLine" id="cb2-103" title="103"><span class="co">#&gt; 28    Orthocladiinae        5      128</span></a>
+<a class="sourceLine" id="cb2-104" title="104"><span class="co">#&gt; 29         Pomatinus        2       13</span></a>
+<a class="sourceLine" id="cb2-105" title="105"><span class="co">#&gt; 30       Rhithrogena       11        0</span></a>
+<a class="sourceLine" id="cb2-106" title="106"><span class="co">#&gt; 31 Serratella ignita        3        4</span></a>
+<a class="sourceLine" id="cb2-107" title="107"><span class="co">#&gt; 32           Setodes        0        1</span></a>
+<a class="sourceLine" id="cb2-108" title="108"><span class="co">#&gt; 33        Simuliidae        1        0</span></a>
+<a class="sourceLine" id="cb2-109" title="109"><span class="co">#&gt; 34       Tanypodinae        2       13</span></a></code></pre></div>
+<p>taxonomic dataset can be imported as presence-absence by levaragin on the <code>FUN</code> option. This option need to be thinked carefully. It is needed because <code>biomonitoR</code> accepts duplicated taxa names in the “Taxa” column. For abundance data <code>sum</code> is thus the natural choice for aggregating data. Case sensitive function for aggregating data could be used when decimal numbers are present (e.g. pecentages) and <code>biomonitoR</code> will remind this issue with a warning.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># import macroinvertebrate data</span></a>
+<a class="sourceLine" id="cb3-2" title="2">data.bio.bin &lt;-<span class="st"> </span><span class="kw">asBiomonitor</span>( macro_ex , <span class="dt">group =</span> <span class="st">&quot;mi&quot;</span> , <span class="dt">FUN =</span> bin )</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; Warning in asBiomonitor(macro_ex, group = &quot;mi&quot;, FUN = bin): Abundance data</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; detected but FUN is not set to sum. Is it this what you want?</span></a>
+<a class="sourceLine" id="cb3-5" title="5"></a>
+<a class="sourceLine" id="cb3-6" title="6">data.bio.bin</a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt;        Phylum      Class    Subclass         Order            Family</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; 1  Arthropoda    Insecta             Ephemeroptera          Baetidae</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co">#&gt; 2    Mollusca Gastropoda                                 Planorbidae</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co">#&gt; 3  Arthropoda    Insecta             Ephemeroptera          Baetidae</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="co">#&gt; 4  Arthropoda    Insecta               Trichoptera         Beraeidae</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="co">#&gt; 5  Arthropoda    Insecta               Trichoptera         Beraeidae</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; 6  Arthropoda    Insecta             Ephemeroptera          Caenidae</span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt; 7  Arthropoda    Insecta               Trichoptera    Hydropsychidae</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt; 8  Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt; 9  Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt; 10 Arthropoda    Insecta                Coleoptera         Scirtidae</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="co">#&gt; 11 Arthropoda    Insecta             Ephemeroptera     Heptageniidae</span></a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="co">#&gt; 12 Arthropoda    Insecta                Coleoptera           Elmidae</span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt; 13 Arthropoda    Insecta                   Diptera         Empididae</span></a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt; 14 Arthropoda    Insecta                Coleoptera           Elmidae</span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt; 15 Arthropoda    Insecta                Coleoptera         Gyrinidae</span></a>
+<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt; 16 Arthropoda    Insecta             Ephemeroptera   Leptophlebiidae</span></a>
+<a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt; 17 Arthropoda    Insecta             Ephemeroptera   Leptophlebiidae</span></a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="co">#&gt; 18 Arthropoda    Insecta               Trichoptera Polycentropodidae</span></a>
+<a class="sourceLine" id="cb3-26" title="26"><span class="co">#&gt; 19 Arthropoda    Insecta                Coleoptera       Hydraenidae</span></a>
+<a class="sourceLine" id="cb3-27" title="27"><span class="co">#&gt; 20 Arthropoda    Insecta               Trichoptera    Hydropsychidae</span></a>
+<a class="sourceLine" id="cb3-28" title="28"><span class="co">#&gt; 21 Arthropoda    Insecta               Trichoptera     Hydroptilidae</span></a>
+<a class="sourceLine" id="cb3-29" title="29"><span class="co">#&gt; 22 Arthropoda    Insecta               Trichoptera     Hydroptilidae</span></a>
+<a class="sourceLine" id="cb3-30" title="30"><span class="co">#&gt; 23 Arthropoda    Insecta                Coleoptera     Hydrophilidae</span></a>
+<a class="sourceLine" id="cb3-31" title="31"><span class="co">#&gt; 24 Arthropoda    Insecta                Plecoptera        Leuctridae</span></a>
+<a class="sourceLine" id="cb3-32" title="32"><span class="co">#&gt; 25   Annelida Clitellata Oligochaeta                        Naididae</span></a>
+<a class="sourceLine" id="cb3-33" title="33"><span class="co">#&gt; 26 Arthropoda    Insecta                Coleoptera        Dytiscidae</span></a>
+<a class="sourceLine" id="cb3-34" title="34"><span class="co">#&gt; 27 Arthropoda    Insecta                   Odonata         Gomphidae</span></a>
+<a class="sourceLine" id="cb3-35" title="35"><span class="co">#&gt; 28 Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb3-36" title="36"><span class="co">#&gt; 29 Arthropoda    Insecta                Coleoptera         Dryopidae</span></a>
+<a class="sourceLine" id="cb3-37" title="37"><span class="co">#&gt; 30 Arthropoda    Insecta             Ephemeroptera     Heptageniidae</span></a>
+<a class="sourceLine" id="cb3-38" title="38"><span class="co">#&gt; 31 Arthropoda    Insecta             Ephemeroptera    Ephemerellidae</span></a>
+<a class="sourceLine" id="cb3-39" title="39"><span class="co">#&gt; 32 Arthropoda    Insecta               Trichoptera      Leptoceridae</span></a>
+<a class="sourceLine" id="cb3-40" title="40"><span class="co">#&gt; 33 Arthropoda    Insecta                   Diptera        Simuliidae</span></a>
+<a class="sourceLine" id="cb3-41" title="41"><span class="co">#&gt; 34 Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb3-42" title="42"><span class="co">#&gt;          Subfamily Tribus          Genus           Species Subspecies</span></a>
+<a class="sourceLine" id="cb3-43" title="43"><span class="co">#&gt; 1                             Acentrella                             </span></a>
+<a class="sourceLine" id="cb3-44" title="44"><span class="co">#&gt; 2                                Ancylus                             </span></a>
+<a class="sourceLine" id="cb3-45" title="45"><span class="co">#&gt; 3                                 Baetis                             </span></a>
+<a class="sourceLine" id="cb3-46" title="46"><span class="co">#&gt; 4                             Beraeamyia                             </span></a>
+<a class="sourceLine" id="cb3-47" title="47"><span class="co">#&gt; 5                                                                    </span></a>
+<a class="sourceLine" id="cb3-48" title="48"><span class="co">#&gt; 6                                 Caenis                             </span></a>
+<a class="sourceLine" id="cb3-49" title="49"><span class="co">#&gt; 7                         Cheumatopsyche                             </span></a>
+<a class="sourceLine" id="cb3-50" title="50"><span class="co">#&gt; 8                                                                    </span></a>
+<a class="sourceLine" id="cb3-51" title="51"><span class="co">#&gt; 9     Chironominae                                                   </span></a>
+<a class="sourceLine" id="cb3-52" title="52"><span class="co">#&gt; 10                                Cyphon                             </span></a>
+<a class="sourceLine" id="cb3-53" title="53"><span class="co">#&gt; 11                           Electrogena                             </span></a>
+<a class="sourceLine" id="cb3-54" title="54"><span class="co">#&gt; 12         Elminae                 Elmis                             </span></a>
+<a class="sourceLine" id="cb3-55" title="55"><span class="co">#&gt; 13                                                                   </span></a>
+<a class="sourceLine" id="cb3-56" title="56"><span class="co">#&gt; 14         Elminae                Esolus                             </span></a>
+<a class="sourceLine" id="cb3-57" title="57"><span class="co">#&gt; 15       Gyrininae               Gyrinus                             </span></a>
+<a class="sourceLine" id="cb3-58" title="58"><span class="co">#&gt; 16                        Habroleptoides                             </span></a>
+<a class="sourceLine" id="cb3-59" title="59"><span class="co">#&gt; 17                          Habrophlebia                             </span></a>
+<a class="sourceLine" id="cb3-60" title="60"><span class="co">#&gt; 18                         Holocentropus                             </span></a>
+<a class="sourceLine" id="cb3-61" title="61"><span class="co">#&gt; 19     Hydraeninae              Hydraena                             </span></a>
+<a class="sourceLine" id="cb3-62" title="62"><span class="co">#&gt; 20                           Hydropsyche                             </span></a>
+<a class="sourceLine" id="cb3-63" title="63"><span class="co">#&gt; 21                            Hydroptila                             </span></a>
+<a class="sourceLine" id="cb3-64" title="64"><span class="co">#&gt; 22                                                                   </span></a>
+<a class="sourceLine" id="cb3-65" title="65"><span class="co">#&gt; 23   Hydrophilinae             Laccobius                             </span></a>
+<a class="sourceLine" id="cb3-66" title="66"><span class="co">#&gt; 24                               Leuctra                             </span></a>
+<a class="sourceLine" id="cb3-67" title="67"><span class="co">#&gt; 25                                                                   </span></a>
+<a class="sourceLine" id="cb3-68" title="68"><span class="co">#&gt; 26    Hydroporinae           Nebrioporus                             </span></a>
+<a class="sourceLine" id="cb3-69" title="69"><span class="co">#&gt; 27 Onychogomphinae         Onychogomphus                             </span></a>
+<a class="sourceLine" id="cb3-70" title="70"><span class="co">#&gt; 28  Orthocladiinae                                                   </span></a>
+<a class="sourceLine" id="cb3-71" title="71"><span class="co">#&gt; 29                             Pomatinus                             </span></a>
+<a class="sourceLine" id="cb3-72" title="72"><span class="co">#&gt; 30                           Rhithrogena                             </span></a>
+<a class="sourceLine" id="cb3-73" title="73"><span class="co">#&gt; 31                            Serratella Serratella ignita           </span></a>
+<a class="sourceLine" id="cb3-74" title="74"><span class="co">#&gt; 32                               Setodes                             </span></a>
+<a class="sourceLine" id="cb3-75" title="75"><span class="co">#&gt; 33                                                                   </span></a>
+<a class="sourceLine" id="cb3-76" title="76"><span class="co">#&gt; 34     Tanypodinae                                                   </span></a>
+<a class="sourceLine" id="cb3-77" title="77"><span class="co">#&gt;                 Taxa Sample_1 Sample_2</span></a>
+<a class="sourceLine" id="cb3-78" title="78"><span class="co">#&gt; 1         Acentrella        1        0</span></a>
+<a class="sourceLine" id="cb3-79" title="79"><span class="co">#&gt; 2            Ancylus        1        1</span></a>
+<a class="sourceLine" id="cb3-80" title="80"><span class="co">#&gt; 3             Baetis        1        1</span></a>
+<a class="sourceLine" id="cb3-81" title="81"><span class="co">#&gt; 4         Beraeamyia        0        1</span></a>
+<a class="sourceLine" id="cb3-82" title="82"><span class="co">#&gt; 5          Beraeidae        0        1</span></a>
+<a class="sourceLine" id="cb3-83" title="83"><span class="co">#&gt; 6             Caenis        1        1</span></a>
+<a class="sourceLine" id="cb3-84" title="84"><span class="co">#&gt; 7     Cheumatopsyche        0        1</span></a>
+<a class="sourceLine" id="cb3-85" title="85"><span class="co">#&gt; 8       Chironomidae        0        1</span></a>
+<a class="sourceLine" id="cb3-86" title="86"><span class="co">#&gt; 9       Chironominae        1        1</span></a>
+<a class="sourceLine" id="cb3-87" title="87"><span class="co">#&gt; 10            Cyphon        0        1</span></a>
+<a class="sourceLine" id="cb3-88" title="88"><span class="co">#&gt; 11       Electrogena        0        1</span></a>
+<a class="sourceLine" id="cb3-89" title="89"><span class="co">#&gt; 12             Elmis        0        1</span></a>
+<a class="sourceLine" id="cb3-90" title="90"><span class="co">#&gt; 13         Empididae        0        1</span></a>
+<a class="sourceLine" id="cb3-91" title="91"><span class="co">#&gt; 14            Esolus        1        1</span></a>
+<a class="sourceLine" id="cb3-92" title="92"><span class="co">#&gt; 15           Gyrinus        1        0</span></a>
+<a class="sourceLine" id="cb3-93" title="93"><span class="co">#&gt; 16    Habroleptoides        0        1</span></a>
+<a class="sourceLine" id="cb3-94" title="94"><span class="co">#&gt; 17      Habrophlebia        0        1</span></a>
+<a class="sourceLine" id="cb3-95" title="95"><span class="co">#&gt; 18     Holocentropus        0        1</span></a>
+<a class="sourceLine" id="cb3-96" title="96"><span class="co">#&gt; 19          Hydraena        1        0</span></a>
+<a class="sourceLine" id="cb3-97" title="97"><span class="co">#&gt; 20       Hydropsyche        1        1</span></a>
+<a class="sourceLine" id="cb3-98" title="98"><span class="co">#&gt; 21        Hydroptila        0        1</span></a>
+<a class="sourceLine" id="cb3-99" title="99"><span class="co">#&gt; 22     Hydroptilidae        0        1</span></a>
+<a class="sourceLine" id="cb3-100" title="100"><span class="co">#&gt; 23         Laccobius        0        1</span></a>
+<a class="sourceLine" id="cb3-101" title="101"><span class="co">#&gt; 24           Leuctra        1        1</span></a>
+<a class="sourceLine" id="cb3-102" title="102"><span class="co">#&gt; 25          Naididae        1        1</span></a>
+<a class="sourceLine" id="cb3-103" title="103"><span class="co">#&gt; 26       Nebrioporus        1        0</span></a>
+<a class="sourceLine" id="cb3-104" title="104"><span class="co">#&gt; 27     Onychogomphus        0        1</span></a>
+<a class="sourceLine" id="cb3-105" title="105"><span class="co">#&gt; 28    Orthocladiinae        1        1</span></a>
+<a class="sourceLine" id="cb3-106" title="106"><span class="co">#&gt; 29         Pomatinus        1        1</span></a>
+<a class="sourceLine" id="cb3-107" title="107"><span class="co">#&gt; 30       Rhithrogena        1        0</span></a>
+<a class="sourceLine" id="cb3-108" title="108"><span class="co">#&gt; 31 Serratella ignita        1        1</span></a>
+<a class="sourceLine" id="cb3-109" title="109"><span class="co">#&gt; 32           Setodes        0        1</span></a>
+<a class="sourceLine" id="cb3-110" title="110"><span class="co">#&gt; 33        Simuliidae        1        0</span></a>
+<a class="sourceLine" id="cb3-111" title="111"><span class="co">#&gt; 34       Tanypodinae        1        1</span></a></code></pre></div>
+<p>An important feature of the <code>biomonitoR</code> package is the spell checker, built from the reference database. By default <code>biomonitoR</code> remove taxa that are not recognized by the reference database and will provide suggestion for unrecognized names. The taxonomic dataset can thus be corrected by modifying the original file, directly in R or by using the spell checker. The spell checker is enabled by setting the option <code>correct_names</code> to to <code>TRUE</code> and it will run interactively. Every taxon needs to be present in the reference database, otherwise the user is forced to exit. This behaviour is important to assure consistency with further calculations. The option <code>traceB</code> will list suggestions and correction.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># introduce an error into taxonomic data</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3">macro_ex_wrong &lt;-<span class="st"> </span>macro_ex</a>
+<a class="sourceLine" id="cb4-4" title="4">macro_ex_wrong<span class="op">$</span>Taxa &lt;-<span class="st"> </span><span class="kw">as.character</span>( macro_ex_wrong<span class="op">$</span>Taxa )</a>
+<a class="sourceLine" id="cb4-5" title="5">macro_ex_wrong[ macro_ex_wrong<span class="op">$</span>Taxa <span class="op">%in%</span><span class="st"> &quot;Acentrella&quot;</span> , <span class="st">&quot;Taxa&quot;</span> ] &lt;-<span class="st"> &quot;Acentrela&quot;</span></a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7">data.bio.wrong &lt;-<span class="st"> </span><span class="kw">asBiomonitor</span>( macro_ex_wrong , <span class="dt">group =</span> <span class="st">&quot;mi&quot;</span> , <span class="dt">traceB =</span> <span class="ot">TRUE</span> )</a>
+<a class="sourceLine" id="cb4-8" title="8"></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co"># &quot;Acentrela&quot; has been removed and a suggestion is proposed</span></a>
+<a class="sourceLine" id="cb4-10" title="10">data.bio.wrong</a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; $taxa_db</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt;        Phylum      Class    Subclass         Order            Family</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; 1    Mollusca Gastropoda                                 Planorbidae</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 2  Arthropoda    Insecta             Ephemeroptera          Baetidae</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 3  Arthropoda    Insecta               Trichoptera         Beraeidae</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 4  Arthropoda    Insecta               Trichoptera         Beraeidae</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; 5  Arthropoda    Insecta             Ephemeroptera          Caenidae</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; 6  Arthropoda    Insecta               Trichoptera    Hydropsychidae</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; 7  Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; 8  Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; 9  Arthropoda    Insecta                Coleoptera         Scirtidae</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; 10 Arthropoda    Insecta             Ephemeroptera     Heptageniidae</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; 11 Arthropoda    Insecta                Coleoptera           Elmidae</span></a>
+<a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt; 12 Arthropoda    Insecta                   Diptera         Empididae</span></a>
+<a class="sourceLine" id="cb4-25" title="25"><span class="co">#&gt; 13 Arthropoda    Insecta                Coleoptera           Elmidae</span></a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt; 14 Arthropoda    Insecta                Coleoptera         Gyrinidae</span></a>
+<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt; 15 Arthropoda    Insecta             Ephemeroptera   Leptophlebiidae</span></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt; 16 Arthropoda    Insecta             Ephemeroptera   Leptophlebiidae</span></a>
+<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; 17 Arthropoda    Insecta               Trichoptera Polycentropodidae</span></a>
+<a class="sourceLine" id="cb4-30" title="30"><span class="co">#&gt; 18 Arthropoda    Insecta                Coleoptera       Hydraenidae</span></a>
+<a class="sourceLine" id="cb4-31" title="31"><span class="co">#&gt; 19 Arthropoda    Insecta               Trichoptera    Hydropsychidae</span></a>
+<a class="sourceLine" id="cb4-32" title="32"><span class="co">#&gt; 20 Arthropoda    Insecta               Trichoptera     Hydroptilidae</span></a>
+<a class="sourceLine" id="cb4-33" title="33"><span class="co">#&gt; 21 Arthropoda    Insecta               Trichoptera     Hydroptilidae</span></a>
+<a class="sourceLine" id="cb4-34" title="34"><span class="co">#&gt; 22 Arthropoda    Insecta                Coleoptera     Hydrophilidae</span></a>
+<a class="sourceLine" id="cb4-35" title="35"><span class="co">#&gt; 23 Arthropoda    Insecta                Plecoptera        Leuctridae</span></a>
+<a class="sourceLine" id="cb4-36" title="36"><span class="co">#&gt; 24   Annelida Clitellata Oligochaeta                        Naididae</span></a>
+<a class="sourceLine" id="cb4-37" title="37"><span class="co">#&gt; 25 Arthropoda    Insecta                Coleoptera        Dytiscidae</span></a>
+<a class="sourceLine" id="cb4-38" title="38"><span class="co">#&gt; 26 Arthropoda    Insecta                   Odonata         Gomphidae</span></a>
+<a class="sourceLine" id="cb4-39" title="39"><span class="co">#&gt; 27 Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb4-40" title="40"><span class="co">#&gt; 28 Arthropoda    Insecta                Coleoptera         Dryopidae</span></a>
+<a class="sourceLine" id="cb4-41" title="41"><span class="co">#&gt; 29 Arthropoda    Insecta             Ephemeroptera     Heptageniidae</span></a>
+<a class="sourceLine" id="cb4-42" title="42"><span class="co">#&gt; 30 Arthropoda    Insecta             Ephemeroptera    Ephemerellidae</span></a>
+<a class="sourceLine" id="cb4-43" title="43"><span class="co">#&gt; 31 Arthropoda    Insecta               Trichoptera      Leptoceridae</span></a>
+<a class="sourceLine" id="cb4-44" title="44"><span class="co">#&gt; 32 Arthropoda    Insecta                   Diptera        Simuliidae</span></a>
+<a class="sourceLine" id="cb4-45" title="45"><span class="co">#&gt; 33 Arthropoda    Insecta                   Diptera      Chironomidae</span></a>
+<a class="sourceLine" id="cb4-46" title="46"><span class="co">#&gt;          Subfamily Tribus          Genus           Species Subspecies</span></a>
+<a class="sourceLine" id="cb4-47" title="47"><span class="co">#&gt; 1                                Ancylus                             </span></a>
+<a class="sourceLine" id="cb4-48" title="48"><span class="co">#&gt; 2                                 Baetis                             </span></a>
+<a class="sourceLine" id="cb4-49" title="49"><span class="co">#&gt; 3                             Beraeamyia                             </span></a>
+<a class="sourceLine" id="cb4-50" title="50"><span class="co">#&gt; 4                                                                    </span></a>
+<a class="sourceLine" id="cb4-51" title="51"><span class="co">#&gt; 5                                 Caenis                             </span></a>
+<a class="sourceLine" id="cb4-52" title="52"><span class="co">#&gt; 6                         Cheumatopsyche                             </span></a>
+<a class="sourceLine" id="cb4-53" title="53"><span class="co">#&gt; 7                                                                    </span></a>
+<a class="sourceLine" id="cb4-54" title="54"><span class="co">#&gt; 8     Chironominae                                                   </span></a>
+<a class="sourceLine" id="cb4-55" title="55"><span class="co">#&gt; 9                                 Cyphon                             </span></a>
+<a class="sourceLine" id="cb4-56" title="56"><span class="co">#&gt; 10                           Electrogena                             </span></a>
+<a class="sourceLine" id="cb4-57" title="57"><span class="co">#&gt; 11         Elminae                 Elmis                             </span></a>
+<a class="sourceLine" id="cb4-58" title="58"><span class="co">#&gt; 12                                                                   </span></a>
+<a class="sourceLine" id="cb4-59" title="59"><span class="co">#&gt; 13         Elminae                Esolus                             </span></a>
+<a class="sourceLine" id="cb4-60" title="60"><span class="co">#&gt; 14       Gyrininae               Gyrinus                             </span></a>
+<a class="sourceLine" id="cb4-61" title="61"><span class="co">#&gt; 15                        Habroleptoides                             </span></a>
+<a class="sourceLine" id="cb4-62" title="62"><span class="co">#&gt; 16                          Habrophlebia                             </span></a>
+<a class="sourceLine" id="cb4-63" title="63"><span class="co">#&gt; 17                         Holocentropus                             </span></a>
+<a class="sourceLine" id="cb4-64" title="64"><span class="co">#&gt; 18     Hydraeninae              Hydraena                             </span></a>
+<a class="sourceLine" id="cb4-65" title="65"><span class="co">#&gt; 19                           Hydropsyche                             </span></a>
+<a class="sourceLine" id="cb4-66" title="66"><span class="co">#&gt; 20                            Hydroptila                             </span></a>
+<a class="sourceLine" id="cb4-67" title="67"><span class="co">#&gt; 21                                                                   </span></a>
+<a class="sourceLine" id="cb4-68" title="68"><span class="co">#&gt; 22   Hydrophilinae             Laccobius                             </span></a>
+<a class="sourceLine" id="cb4-69" title="69"><span class="co">#&gt; 23                               Leuctra                             </span></a>
+<a class="sourceLine" id="cb4-70" title="70"><span class="co">#&gt; 24                                                                   </span></a>
+<a class="sourceLine" id="cb4-71" title="71"><span class="co">#&gt; 25    Hydroporinae           Nebrioporus                             </span></a>
+<a class="sourceLine" id="cb4-72" title="72"><span class="co">#&gt; 26 Onychogomphinae         Onychogomphus                             </span></a>
+<a class="sourceLine" id="cb4-73" title="73"><span class="co">#&gt; 27  Orthocladiinae                                                   </span></a>
+<a class="sourceLine" id="cb4-74" title="74"><span class="co">#&gt; 28                             Pomatinus                             </span></a>
+<a class="sourceLine" id="cb4-75" title="75"><span class="co">#&gt; 29                           Rhithrogena                             </span></a>
+<a class="sourceLine" id="cb4-76" title="76"><span class="co">#&gt; 30                            Serratella Serratella ignita           </span></a>
+<a class="sourceLine" id="cb4-77" title="77"><span class="co">#&gt; 31                               Setodes                             </span></a>
+<a class="sourceLine" id="cb4-78" title="78"><span class="co">#&gt; 32                                                                   </span></a>
+<a class="sourceLine" id="cb4-79" title="79"><span class="co">#&gt; 33     Tanypodinae                                                   </span></a>
+<a class="sourceLine" id="cb4-80" title="80"><span class="co">#&gt;                 Taxa Sample_1 Sample_2</span></a>
+<a class="sourceLine" id="cb4-81" title="81"><span class="co">#&gt; 1            Ancylus        2        3</span></a>
+<a class="sourceLine" id="cb4-82" title="82"><span class="co">#&gt; 2             Baetis       11        1</span></a>
+<a class="sourceLine" id="cb4-83" title="83"><span class="co">#&gt; 3         Beraeamyia        0        4</span></a>
+<a class="sourceLine" id="cb4-84" title="84"><span class="co">#&gt; 4          Beraeidae        0        1</span></a>
+<a class="sourceLine" id="cb4-85" title="85"><span class="co">#&gt; 5             Caenis        2      166</span></a>
+<a class="sourceLine" id="cb4-86" title="86"><span class="co">#&gt; 6     Cheumatopsyche        0        1</span></a>
+<a class="sourceLine" id="cb4-87" title="87"><span class="co">#&gt; 7       Chironomidae        0        9</span></a>
+<a class="sourceLine" id="cb4-88" title="88"><span class="co">#&gt; 8       Chironominae        6       40</span></a>
+<a class="sourceLine" id="cb4-89" title="89"><span class="co">#&gt; 9             Cyphon        0        4</span></a>
+<a class="sourceLine" id="cb4-90" title="90"><span class="co">#&gt; 10       Electrogena        0       15</span></a>
+<a class="sourceLine" id="cb4-91" title="91"><span class="co">#&gt; 11             Elmis        0        1</span></a>
+<a class="sourceLine" id="cb4-92" title="92"><span class="co">#&gt; 12         Empididae        0        1</span></a>
+<a class="sourceLine" id="cb4-93" title="93"><span class="co">#&gt; 13            Esolus       61      177</span></a>
+<a class="sourceLine" id="cb4-94" title="94"><span class="co">#&gt; 14           Gyrinus        1        0</span></a>
+<a class="sourceLine" id="cb4-95" title="95"><span class="co">#&gt; 15    Habroleptoides        0        8</span></a>
+<a class="sourceLine" id="cb4-96" title="96"><span class="co">#&gt; 16      Habrophlebia        0        9</span></a>
+<a class="sourceLine" id="cb4-97" title="97"><span class="co">#&gt; 17     Holocentropus        0        8</span></a>
+<a class="sourceLine" id="cb4-98" title="98"><span class="co">#&gt; 18          Hydraena        1        0</span></a>
+<a class="sourceLine" id="cb4-99" title="99"><span class="co">#&gt; 19       Hydropsyche        5        2</span></a>
+<a class="sourceLine" id="cb4-100" title="100"><span class="co">#&gt; 20        Hydroptila        0       25</span></a>
+<a class="sourceLine" id="cb4-101" title="101"><span class="co">#&gt; 21     Hydroptilidae        0        1</span></a>
+<a class="sourceLine" id="cb4-102" title="102"><span class="co">#&gt; 22         Laccobius        0        5</span></a>
+<a class="sourceLine" id="cb4-103" title="103"><span class="co">#&gt; 23           Leuctra        2       21</span></a>
+<a class="sourceLine" id="cb4-104" title="104"><span class="co">#&gt; 24          Naididae        3      167</span></a>
+<a class="sourceLine" id="cb4-105" title="105"><span class="co">#&gt; 25       Nebrioporus        1        0</span></a>
+<a class="sourceLine" id="cb4-106" title="106"><span class="co">#&gt; 26     Onychogomphus        0        2</span></a>
+<a class="sourceLine" id="cb4-107" title="107"><span class="co">#&gt; 27    Orthocladiinae        5      128</span></a>
+<a class="sourceLine" id="cb4-108" title="108"><span class="co">#&gt; 28         Pomatinus        2       13</span></a>
+<a class="sourceLine" id="cb4-109" title="109"><span class="co">#&gt; 29       Rhithrogena       11        0</span></a>
+<a class="sourceLine" id="cb4-110" title="110"><span class="co">#&gt; 30 Serratella ignita        3        4</span></a>
+<a class="sourceLine" id="cb4-111" title="111"><span class="co">#&gt; 31           Setodes        0        1</span></a>
+<a class="sourceLine" id="cb4-112" title="112"><span class="co">#&gt; 32        Simuliidae        1        0</span></a>
+<a class="sourceLine" id="cb4-113" title="113"><span class="co">#&gt; 33       Tanypodinae        2       13</span></a>
+<a class="sourceLine" id="cb4-114" title="114"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-115" title="115"><span class="co">#&gt; $suggested_taxa_names</span></a>
+<a class="sourceLine" id="cb4-116" title="116"><span class="co">#&gt;    excluded  suggested</span></a>
+<a class="sourceLine" id="cb4-117" title="117"><span class="co">#&gt; 1 Acentrela Acentrella</span></a></code></pre></div>
+<p><code>asBiomonitor</code> will create an object of class <code>asb</code> that is needed for perfroming further calculation in <code>biomonitoR</code>. It is possible to export both the taxonomic dataset and the suggestion/correction as data.frame objects using the function <code>as.data.frame</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># export taxonomic dataset and suggestions as data.frame</span></a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3">macro_ex.df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>( data.bio.wrong )</a>
+<a class="sourceLine" id="cb5-4" title="4">macro_ex_correction.df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>( data.bio.wrong , <span class="dt">object =</span> <span class="dv">2</span> )</a>
+<a class="sourceLine" id="cb5-5" title="5">macro_ex_correction.df</a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt;    excluded  suggested</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt; 1 Acentrela Acentrella</span></a></code></pre></div>
+<p>The calculation of biomonitoring indices in <code>biomonitoR</code> can be done by creating an object with the function <code>aggregatoR</code>. This function aggregates data at various taxonomic levels.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">data.agg &lt;-<span class="st"> </span><span class="kw">aggregatoR</span>( data.bio )</a></code></pre></div>
+<p>It is possible to subset data prior to import them with the <code>aggregatoR</code> function. This is useful, for example, when the calculations need to be done with some Orders only.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># select EPT Taxa (Ephemeroptera, Plecoptera and Trichoptera)</span></a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw">subset</span>(data.bio, <span class="dt">taxa =</span> <span class="kw">c</span>( <span class="st">&quot;Ephemeroptera&quot;</span> , <span class="st">&quot;Plecoptera&quot;</span> , <span class="st">&quot;Trichoptera&quot;</span> ) )</a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt;        Phylum   Class Subclass         Order            Family Subfamily Tribus</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt; 1  Arthropoda Insecta            Trichoptera         Beraeidae                 </span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; 2  Arthropoda Insecta            Trichoptera         Beraeidae                 </span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; 3  Arthropoda Insecta            Trichoptera    Hydropsychidae                 </span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; 4  Arthropoda Insecta            Trichoptera Polycentropodidae                 </span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; 5  Arthropoda Insecta            Trichoptera    Hydropsychidae                 </span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; 6  Arthropoda Insecta            Trichoptera     Hydroptilidae                 </span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt; 7  Arthropoda Insecta            Trichoptera     Hydroptilidae                 </span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; 8  Arthropoda Insecta            Trichoptera      Leptoceridae                 </span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt; 9  Arthropoda Insecta             Plecoptera        Leuctridae                 </span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt; 10 Arthropoda Insecta          Ephemeroptera          Baetidae                 </span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; 11 Arthropoda Insecta          Ephemeroptera          Baetidae                 </span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; 12 Arthropoda Insecta          Ephemeroptera          Caenidae                 </span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; 13 Arthropoda Insecta          Ephemeroptera     Heptageniidae                 </span></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="co">#&gt; 14 Arthropoda Insecta          Ephemeroptera   Leptophlebiidae                 </span></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="co">#&gt; 15 Arthropoda Insecta          Ephemeroptera   Leptophlebiidae                 </span></a>
+<a class="sourceLine" id="cb7-20" title="20"><span class="co">#&gt; 16 Arthropoda Insecta          Ephemeroptera     Heptageniidae                 </span></a>
+<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt; 17 Arthropoda Insecta          Ephemeroptera    Ephemerellidae                 </span></a>
+<a class="sourceLine" id="cb7-22" title="22"><span class="co">#&gt;             Genus           Species Subspecies              Taxa Sample_1</span></a>
+<a class="sourceLine" id="cb7-23" title="23"><span class="co">#&gt; 1      Beraeamyia                                     Beraeamyia        0</span></a>
+<a class="sourceLine" id="cb7-24" title="24"><span class="co">#&gt; 2                                                      Beraeidae        0</span></a>
+<a class="sourceLine" id="cb7-25" title="25"><span class="co">#&gt; 3  Cheumatopsyche                                 Cheumatopsyche        0</span></a>
+<a class="sourceLine" id="cb7-26" title="26"><span class="co">#&gt; 4   Holocentropus                                  Holocentropus        0</span></a>
+<a class="sourceLine" id="cb7-27" title="27"><span class="co">#&gt; 5     Hydropsyche                                    Hydropsyche        5</span></a>
+<a class="sourceLine" id="cb7-28" title="28"><span class="co">#&gt; 6      Hydroptila                                     Hydroptila        0</span></a>
+<a class="sourceLine" id="cb7-29" title="29"><span class="co">#&gt; 7                                                  Hydroptilidae        0</span></a>
+<a class="sourceLine" id="cb7-30" title="30"><span class="co">#&gt; 8         Setodes                                        Setodes        0</span></a>
+<a class="sourceLine" id="cb7-31" title="31"><span class="co">#&gt; 9         Leuctra                                        Leuctra        2</span></a>
+<a class="sourceLine" id="cb7-32" title="32"><span class="co">#&gt; 10     Acentrella                                     Acentrella        3</span></a>
+<a class="sourceLine" id="cb7-33" title="33"><span class="co">#&gt; 11         Baetis                                         Baetis       11</span></a>
+<a class="sourceLine" id="cb7-34" title="34"><span class="co">#&gt; 12         Caenis                                         Caenis        2</span></a>
+<a class="sourceLine" id="cb7-35" title="35"><span class="co">#&gt; 13    Electrogena                                    Electrogena        0</span></a>
+<a class="sourceLine" id="cb7-36" title="36"><span class="co">#&gt; 14 Habroleptoides                                 Habroleptoides        0</span></a>
+<a class="sourceLine" id="cb7-37" title="37"><span class="co">#&gt; 15   Habrophlebia                                   Habrophlebia        0</span></a>
+<a class="sourceLine" id="cb7-38" title="38"><span class="co">#&gt; 16    Rhithrogena                                    Rhithrogena       11</span></a>
+<a class="sourceLine" id="cb7-39" title="39"><span class="co">#&gt; 17     Serratella Serratella ignita            Serratella ignita        3</span></a>
+<a class="sourceLine" id="cb7-40" title="40"><span class="co">#&gt;    Sample_2</span></a>
+<a class="sourceLine" id="cb7-41" title="41"><span class="co">#&gt; 1         4</span></a>
+<a class="sourceLine" id="cb7-42" title="42"><span class="co">#&gt; 2         1</span></a>
+<a class="sourceLine" id="cb7-43" title="43"><span class="co">#&gt; 3         1</span></a>
+<a class="sourceLine" id="cb7-44" title="44"><span class="co">#&gt; 4         8</span></a>
+<a class="sourceLine" id="cb7-45" title="45"><span class="co">#&gt; 5         2</span></a>
+<a class="sourceLine" id="cb7-46" title="46"><span class="co">#&gt; 6        25</span></a>
+<a class="sourceLine" id="cb7-47" title="47"><span class="co">#&gt; 7         1</span></a>
+<a class="sourceLine" id="cb7-48" title="48"><span class="co">#&gt; 8         1</span></a>
+<a class="sourceLine" id="cb7-49" title="49"><span class="co">#&gt; 9        21</span></a>
+<a class="sourceLine" id="cb7-50" title="50"><span class="co">#&gt; 10        0</span></a>
+<a class="sourceLine" id="cb7-51" title="51"><span class="co">#&gt; 11        1</span></a>
+<a class="sourceLine" id="cb7-52" title="52"><span class="co">#&gt; 12      166</span></a>
+<a class="sourceLine" id="cb7-53" title="53"><span class="co">#&gt; 13       15</span></a>
+<a class="sourceLine" id="cb7-54" title="54"><span class="co">#&gt; 14        8</span></a>
+<a class="sourceLine" id="cb7-55" title="55"><span class="co">#&gt; 15        9</span></a>
+<a class="sourceLine" id="cb7-56" title="56"><span class="co">#&gt; 16        0</span></a>
+<a class="sourceLine" id="cb7-57" title="57"><span class="co">#&gt; 17        4</span></a>
+<a class="sourceLine" id="cb7-58" title="58"></a>
+<a class="sourceLine" id="cb7-59" title="59"><span class="co"># select Trichoptera excluding the trichopteran family Hydropsychidae</span></a>
+<a class="sourceLine" id="cb7-60" title="60"></a>
+<a class="sourceLine" id="cb7-61" title="61">tricho &lt;-<span class="st"> </span><span class="kw">subset</span>(data.bio, <span class="dt">taxa =</span> <span class="st">&quot;Trichoptera&quot;</span> , <span class="dt">exclude =</span> <span class="st">&quot;Hydropsychidae&quot;</span> )</a>
+<a class="sourceLine" id="cb7-62" title="62">tricho</a>
+<a class="sourceLine" id="cb7-63" title="63"><span class="co">#&gt;       Phylum   Class Subclass       Order            Family Subfamily Tribus</span></a>
+<a class="sourceLine" id="cb7-64" title="64"><span class="co">#&gt; 1 Arthropoda Insecta          Trichoptera         Beraeidae                 </span></a>
+<a class="sourceLine" id="cb7-65" title="65"><span class="co">#&gt; 2 Arthropoda Insecta          Trichoptera         Beraeidae                 </span></a>
+<a class="sourceLine" id="cb7-66" title="66"><span class="co">#&gt; 3 Arthropoda Insecta          Trichoptera Polycentropodidae                 </span></a>
+<a class="sourceLine" id="cb7-67" title="67"><span class="co">#&gt; 4 Arthropoda Insecta          Trichoptera     Hydroptilidae                 </span></a>
+<a class="sourceLine" id="cb7-68" title="68"><span class="co">#&gt; 5 Arthropoda Insecta          Trichoptera     Hydroptilidae                 </span></a>
+<a class="sourceLine" id="cb7-69" title="69"><span class="co">#&gt; 6 Arthropoda Insecta          Trichoptera      Leptoceridae                 </span></a>
+<a class="sourceLine" id="cb7-70" title="70"><span class="co">#&gt;           Genus Species Subspecies          Taxa Sample_1 Sample_2</span></a>
+<a class="sourceLine" id="cb7-71" title="71"><span class="co">#&gt; 1    Beraeamyia                       Beraeamyia        0        4</span></a>
+<a class="sourceLine" id="cb7-72" title="72"><span class="co">#&gt; 2                                      Beraeidae        0        1</span></a>
+<a class="sourceLine" id="cb7-73" title="73"><span class="co">#&gt; 3 Holocentropus                    Holocentropus        0        8</span></a>
+<a class="sourceLine" id="cb7-74" title="74"><span class="co">#&gt; 4    Hydroptila                       Hydroptila        0       25</span></a>
+<a class="sourceLine" id="cb7-75" title="75"><span class="co">#&gt; 5                                  Hydroptilidae        0        1</span></a>
+<a class="sourceLine" id="cb7-76" title="76"><span class="co">#&gt; 6       Setodes                          Setodes        0        1</span></a>
+<a class="sourceLine" id="cb7-77" title="77"></a>
+<a class="sourceLine" id="cb7-78" title="78"><span class="co"># import tricho with the aggregatoR function</span></a>
+<a class="sourceLine" id="cb7-79" title="79">tricho.agg &lt;-<span class="st"> </span><span class="kw">aggregatoR</span>( tricho )</a></code></pre></div>
+</div>
+<div id="building-your-own-reference-database" class="section level2">
+<h2>Building your own reference database</h2>
+<p>Users can provide their own reference database, but they need to imported in the correct format. <code>biomonitoR</code> assists the user in creating their own reference database with the function <code>refFromTree</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># import data</span></a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw">data</span>( Tree )</a>
+<a class="sourceLine" id="cb8-4" title="4"></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co"># Tree is a standard taxonomic tree that needs to be transformed into a reference database</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co"># We can use the function refFromTree</span></a>
+<a class="sourceLine" id="cb8-7" title="7"></a>
+<a class="sourceLine" id="cb8-8" title="8">ref_custom &lt;-<span class="st"> </span><span class="kw">refFromTree</span>(Tree)</a>
+<a class="sourceLine" id="cb8-9" title="9"></a>
+<a class="sourceLine" id="cb8-10" title="10">ref_custom</a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt;        Phylum      Class Subclass         Order         Family Subfamily Tribus</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; 1  Arthropoda                                                                  </span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; 2    Mollusca                                                                  </span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; 3  Arthropoda   Hexapoda                                                       </span></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; 4    Mollusca Gastropoda                                                       </span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; 5  Arthropoda   Hexapoda          Ephemeroptera                                </span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; 6  Arthropoda   Hexapoda            Trichoptera                                </span></a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt; 7  Arthropoda   Hexapoda          Ephemeroptera Ephemerellidae                 </span></a>
+<a class="sourceLine" id="cb8-19" title="19"><span class="co">#&gt; 8  Arthropoda   Hexapoda          Ephemeroptera       Caenidae                 </span></a>
+<a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt; 9  Arthropoda   Hexapoda            Trichoptera  Limnephilidae                 </span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt; 10   Mollusca Gastropoda                              Physidae                 </span></a>
+<a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt; 11 Arthropoda   Hexapoda          Ephemeroptera Ephemerellidae                 </span></a>
+<a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt; 12 Arthropoda   Hexapoda          Ephemeroptera       Caenidae                 </span></a>
+<a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; 13   Mollusca Gastropoda                              Physidae                 </span></a>
+<a class="sourceLine" id="cb8-25" title="25"><span class="co">#&gt; 14 Arthropoda   Hexapoda          Ephemeroptera Ephemerellidae                 </span></a>
+<a class="sourceLine" id="cb8-26" title="26"><span class="co">#&gt;         Genus           Species Subspecies              Taxa</span></a>
+<a class="sourceLine" id="cb8-27" title="27"><span class="co">#&gt; 1                                                 Arthropoda</span></a>
+<a class="sourceLine" id="cb8-28" title="28"><span class="co">#&gt; 2                                                   Mollusca</span></a>
+<a class="sourceLine" id="cb8-29" title="29"><span class="co">#&gt; 3                                                   Hexapoda</span></a>
+<a class="sourceLine" id="cb8-30" title="30"><span class="co">#&gt; 4                                                 Gastropoda</span></a>
+<a class="sourceLine" id="cb8-31" title="31"><span class="co">#&gt; 5                                              Ephemeroptera</span></a>
+<a class="sourceLine" id="cb8-32" title="32"><span class="co">#&gt; 6                                                Trichoptera</span></a>
+<a class="sourceLine" id="cb8-33" title="33"><span class="co">#&gt; 7                                             Ephemerellidae</span></a>
+<a class="sourceLine" id="cb8-34" title="34"><span class="co">#&gt; 8                                                   Caenidae</span></a>
+<a class="sourceLine" id="cb8-35" title="35"><span class="co">#&gt; 9                                              Limnephilidae</span></a>
+<a class="sourceLine" id="cb8-36" title="36"><span class="co">#&gt; 10                                                  Physidae</span></a>
+<a class="sourceLine" id="cb8-37" title="37"><span class="co">#&gt; 11 Serratella                                     Serratella</span></a>
+<a class="sourceLine" id="cb8-38" title="38"><span class="co">#&gt; 12     Caenis                                         Caenis</span></a>
+<a class="sourceLine" id="cb8-39" title="39"><span class="co">#&gt; 13      Physa                                          Physa</span></a>
+<a class="sourceLine" id="cb8-40" title="40"><span class="co">#&gt; 14 Serratella Serratella ignita            Serratella ignita</span></a></code></pre></div>
+<p>The number of taxonomic levels of the reference database is 11 and their number and names cannot be modified. There is the hope to change this beahviour in a next version of <code>biomonitoR</code>.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
