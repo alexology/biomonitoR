@@ -27,7 +27,7 @@
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
 #'   It includes traits only for macroinvertebrates.
-#' @param biotic group of interest. Possible values are mi for macroinvertebrates, mf for macrophytes and fi for fish.
+#' @param group biotic group of interest. Possible values are mi for macroinvertebrates, mf for macrophytes and fi for fish.
 #'  The choice will set the right reference database for the specified group.
 #'  This option will not be considered if a custom reference database is provided. Default to `mi`.
 #' @param taxLev taxonomic level on which the calculation has to be made.

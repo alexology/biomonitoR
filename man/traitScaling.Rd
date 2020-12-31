@@ -31,6 +31,10 @@ can be retrieved from
 (Schmidt-Kloiber & Hering, 2015).
 It includes traits only for macroinvertebrates.}
 
+\item{group}{biotic group of interest. Possible values are mi for macroinvertebrates, mf for macrophytes and fi for fish.
+The choice will set the right reference database for the specified group.
+This option will not be considered if a custom reference database is provided. Default to \code{mi}.}
+
 \item{taxLev}{taxonomic level on which the calculation has to be made.
 Default to \code{Taxa}, the maximum taxonomic level is \code{Family}.}
 
@@ -39,10 +43,6 @@ Default to \code{Taxa}, the maximum taxonomic level is \code{Family}.}
 \item{filter_by_distance}{filter the results according to the taxonomic distance. Possible values are \code{pos} , \code{neg} or a positive integer. See details.}
 
 \item{colB}{A vector that contains the number of modalities for each trait}
-
-\item{biotic}{group of interest. Possible values are mi for macroinvertebrates, mf for macrophytes and fi for fish.
-The choice will set the right reference database for the specified group.
-This option will not be considered if a custom reference database is provided. Default to \code{mi}.}
 }
 \description{
 A function for scaling traits across taxonomic levels.
