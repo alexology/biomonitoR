@@ -72,19 +72,19 @@ selectPcoaAxes <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 
   if( identical( method , "legendre" ) & is.null( tresh )  ) { tresh <- 0.7 }
   if( identical( method , "maire" ) & is.null( tresh )  ) { tresh <- 0.01 }
 
-  if( is.euclid( x )  & identical( method , "cor" ) ){
+  if( suppressWarnings( is.euclid( x ) )  & identical( method , "cor" ) ){
     res <- pcoaQuality( x , "none" , method = "cor" , tresh = tresh  )
   }
 
-  if( is.euclid( x )  & identical( method , "legendre" ) ){
+  if( suppressWarnings( is.euclid( x ) )  & identical( method , "legendre" ) ){
     res <- pcoaQuality( x , "none" , method = "legendre" , tresh = tresh  )
   }
 
-  if( is.euclid( x )  & identical( method , "maire" ) ){
+  if( suppressWarnings( is.euclid( x ) )  & identical( method , "maire" ) ){
     res <- pcoaQuality( x , "none" , method = "maire" , tresh = tresh  )
   }
 
-  if( ! is.euclid( x ) & identical( method , "cor" ) ){
+  if( ! suppressWarnings( is.euclid( x ) ) & identical( method , "cor" ) ){
     res1 <- pcoaQuality( x , "none" , method = "cor" , tresh = tresh )
     res2 <- pcoaQuality( x , "cailliez" , method = "cor" , tresh = tresh )
     res3 <- pcoaQuality( x , "lingoes" , method = "cor" , tresh = tresh )
@@ -93,7 +93,7 @@ selectPcoaAxes <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 
     res <- suppressWarnings( bind_rows( res1 , res2 , res3 , res4 , res5 ) )
   }
 
-  if( ! is.euclid( x ) & identical( method , "legendre" ) ){
+  if( ! suppressWarnings( is.euclid( x ) ) & identical( method , "legendre" ) ){
     res1 <- pcoaQuality( x , "none" , method = "legendre" , tresh = tresh )
     res2 <- pcoaQuality( x , "cailliez" , method = "legendre" , tresh = tresh )
     res3 <- pcoaQuality( x , "lingoes" , method = "legendre" , tresh = tresh )
@@ -103,7 +103,7 @@ selectPcoaAxes <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 
   }
 
 
-  if( ! is.euclid( x ) & identical( method , "maire" ) ){
+  if( ! suppressWarnings( is.euclid( x ) ) & identical( method , "maire" ) ){
     res1 <- pcoaQuality( x , "none" , method = "maire" , nbdim = nbdim , tresh = tresh )
     res2 <- pcoaQuality( x , "cailliez" , method = "maire" , nbdim = nbdim , tresh = tresh )
     res3 <- pcoaQuality( x , "lingoes" , method = "maire" , nbdim = nbdim , tresh = tresh )

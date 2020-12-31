@@ -6,7 +6,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
   if( identical( method , "cor" ) ){
     Order <- attr( x ,"Size" )
 
-    if( is.euclid( x ) ){
+    if( suppressWarnings( is.euclid( x ) ) ){
       res.pco.c <- suppressWarnings( cmdscale( x , k = Order - 1 , eig = TRUE ) )
       res.eig <- res.pco.c$eig
       r2.eig <- cumsum( res.eig ) / sum( res.eig )
@@ -24,11 +24,11 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
     }
 
 
-    if( ! is.euclid( x ) ){
-      cai.dist <- cailliez( x )
-      lin.dist <- lingoes( x )
+    if( ! suppressWarnings( is.euclid( x ) ) ){
+      cai.dist <- suppressWarnings( cailliez( x ) )
+      lin.dist <- suppressWarnings( lingoes( x ) )
       sqr.dist <- sqrt( x )
-      qua.dist <- quasieuclid( x )
+      qua.dist <- suppressWarnings( quasieuclid( x ) )
 
       if( identical( type , "none" ) ){
         res.pco.c <- suppressWarnings( cmdscale( x , k = Order - 1 , eig = TRUE ) )
@@ -65,7 +65,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
         tresh.max <- max( res.man.r[ 1 ] , tresh )
         r2.ax <- length( which( res.man.r  <= tresh.max ) )
 
-        if( is.euclid( cai.dist ) ){
+        if( suppressWarnings( is.euclid( cai.dist ) ) ){
 
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           res <- data.frame( Transformation = "cailliez" , Euclidean = "yes" , nbdim = r2.ax , cor = res.man.r[ r2.ax ] , p_value = res.man.p[ r2.ax ] , r2 = r2.eig[ r2.ax ] )
@@ -95,7 +95,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
 
         r2.ax <- which( res.man.r > tresh )[ 1 ]
 
-        if( is.euclid( lin.dist ) ){
+        if( suppressWarnings( is.euclid( lin.dist ) ) ){
 
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           res <- data.frame( Transformation = "lingoes" , Euclidean = "yes" , nbdim = r2.ax , cor = res.man.r[ r2.ax ] , p_value = res.man.p[ r2.ax ] , r2 = r2.eig[ r2.ax ]  )
@@ -125,7 +125,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
 
         r2.ax <- which( res.man.r > tresh )[ 1 ]
 
-        if( is.euclid( sqr.dist ) ){
+        if( suppressWarnings( is.euclid( sqr.dist ) ) ){
 
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           res <- data.frame( Transformation = "sqrt" , Euclidean = "yes" , nbdim = r2.ax , cor = res.man.r[ r2.ax ] , p_value = res.man.p[ r2.ax ] , r2 = r2.eig[ r2.ax ]   )
@@ -155,7 +155,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
 
         r2.ax <- which( res.man.r > tresh )[ 1 ]
 
-        if( is.euclid( qua.dist ) ){
+        if( suppressWarnings( is.euclid( qua.dist ) ) ){
 
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           res <- data.frame( Transformation = "quasi" , Euclidean = "yes" , nbdim = r2.ax , cor = res.man.r[ r2.ax ] , p_value = res.man.p[ r2.ax ] , r2 = r2.eig[ r2.ax ]  )
@@ -181,7 +181,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
   if( identical( method , "legendre" ) ){
     Order <- attr( x ,"Size" )
 
-    if( is.euclid( x ) ){
+    if( suppressWarnings( is.euclid( x ) ) ){
       res.pco <- suppressWarnings( cmdscale( x , k = Order - 1 , eig = TRUE ) )
       res.eig <- res.pco$eig
       r2.eig <- cumsum( res.eig ) / sum( res.eig )
@@ -190,11 +190,11 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
     }
 
 
-    if( ! is.euclid( x ) ){
-      cai.dist <- cailliez( x )
-      lin.dist <- lingoes( x )
+    if( ! suppressWarnings( is.euclid( x ) ) ){
+      cai.dist <- suppressWarnings( cailliez( x ) )
+      lin.dist <- suppressWarnings( lingoes( x ) )
       sqr.dist <- sqrt( x )
-      qua.dist <- quasieuclid( x )
+      qua.dist <- suppressWarnings( quasieuclid( x ) )
 
       if( identical( type , "none" ) ){
         res.pco <- suppressWarnings( cmdscale( x , k = Order - 1 , eig = TRUE ) )
@@ -210,7 +210,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
         res.pco <- suppressWarnings( cmdscale( cai.dist , k = Order - 1 , eig = TRUE ) )
         res.eig <- res.pco$eig
 
-        if( is.euclid( cai.dist ) ){
+        if( suppressWarnings( is.euclid( cai.dist ) ) ){
 
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           r2.ax <- which( r2.eig > tresh )[ 1 ]
@@ -230,7 +230,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
         res.pco <- suppressWarnings( cmdscale( lin.dist , k = Order - 1 , eig = TRUE ) )
         res.eig <- res.pco$eig
 
-        if( is.euclid( lin.dist ) ){
+        if( suppressWarnings( is.euclid( lin.dist ) ) ){
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           r2.ax <- which( r2.eig > tresh )[ 1 ]
           res <- data.frame( Transformation = "lingoes" , Euclidean = "yes" , nbdim = r2.ax , r2 = r2.eig[ r2.ax ] )
@@ -247,7 +247,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
         res.pco <- suppressWarnings( cmdscale( sqr.dist , k = Order - 1 , eig = TRUE ) )
         res.eig <- res.pco$eig
 
-        if( is.euclid( sqr.dist ) ){
+        if( suppressWarnings( is.euclid( sqr.dist ) ) ){
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           r2.ax <- which( r2.eig > tresh )[ 1 ]
           res <- data.frame( Transformation = "sqrt" , Euclidean = "yes" , nbdim = r2.ax , r2 = r2.eig[ r2.ax ]   )
@@ -264,7 +264,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
         res.pco <- suppressWarnings( cmdscale( qua.dist , k = Order - 1 , eig = TRUE ) )
         res.eig <- res.pco$eig
 
-        if( is.euclid( qua.dist ) ){
+        if( suppressWarnings( is.euclid( qua.dist ) ) ){
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           r2.ax <- which( r2.eig > tresh )[ 1 ]
           res <- data.frame( Transformation = "quasi" , Euclidean = "yes" , nbdim = r2.ax , r2 = r2.eig[ r2.ax ]   )
@@ -284,7 +284,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
   if( identical( method , "maire" ) ){
     Order <- attr( x ,"Size" )
 
-    if( is.euclid( x ) ){
+    if( suppressWarnings( is.euclid( x ) ) ){
       qual_fs <- qfs( x , nbdim = nbdim )
       r2.ax <- which( qual_fs$meanSD < tresh )[ 1 ] + 1
 
@@ -296,11 +296,11 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
     }
 
 
-    if( ! is.euclid( x ) ){
-      cai.dist <- cailliez( x )
-      lin.dist <- lingoes( x )
+    if( ! suppressWarnings( is.euclid( x ) ) ){
+      cai.dist <- suppressWarnings( cailliez( x ) )
+      lin.dist <- suppressWarnings( lingoes( x ) )
       sqr.dist <- sqrt( x )
-      qua.dist <- quasieuclid( x )
+      qua.dist <- suppressWarnings( quasieuclid( x ) )
 
       if( identical( type , "none" ) ){
         qual_fs <- qfs( x , nbdim = nbdim )
@@ -322,7 +322,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
         if( is.na( r2.ax ) ) { stop ("there is no optimal number of dimension, please increase the number of dimensions" )}
         res.eig <- suppressWarnings( cmdscale( cai.dist , k = Order - 1 , eig = TRUE ) )$eig
 
-        if( is.euclid( cai.dist ) ){
+        if( suppressWarnings( is.euclid( cai.dist ) ) ){
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           res <- data.frame( Transformation = "cailliez" , Euclidean = "yes" , nbdim = r2.ax , SD = qual_fs$meanSD[ r2.ax - 1 ] , r2 = r2.eig[ r2.ax ]   )
           rownames( res ) <- NULL
@@ -345,7 +345,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
         res.eig <- suppressWarnings( cmdscale( lin.dist , k = Order - 1 , eig = TRUE ) )$eig
 
 
-        if( is.euclid( lin.dist ) ){
+        if( suppressWarnings( is.euclid( lin.dist ) ) ){
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           res <- data.frame( Transformation = "lingoes" , Euclidean = "yes" , nbdim = r2.ax , SD = qual_fs$meanSD[ r2.ax - 1 ] , r2 = r2.eig[ r2.ax ]   )
           rownames( res ) <- NULL
@@ -364,7 +364,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
         if( is.na( r2.ax ) ) { stop ("there is no optimal number of dimension, please increase the number of dimensions" )}
         res.eig <- suppressWarnings( cmdscale( sqr.dist , k = Order - 1 , eig = TRUE ) )$eig
 
-        if( is.euclid( sqr.dist ) ){
+        if( suppressWarnings( is.euclid( sqr.dist ) ) ){
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           res <- data.frame( Transformation = "sqrt" , Euclidean = "yes" , nbdim = r2.ax , SD = qual_fs$meanSD[ r2.ax - 1 ] , r2 = r2.eig[ r2.ax ]   )
           rownames( res ) <- NULL
@@ -385,7 +385,7 @@ pcoaQuality <- function( x , type = "none" , method = NULL , tresh = 0.7 , nbdim
         res.eig <- suppressWarnings( cmdscale( qua.dist , k = Order - 1 , eig = TRUE ) )$eig
 
 
-        if( is.euclid( qua.dist ) ){
+        if( suppressWarnings( is.euclid( qua.dist ) ) ){
           r2.eig <- cumsum( res.eig ) / sum( res.eig )
           res <- data.frame( Transformation = "quasi" , Euclidean = "yes" , nbdim = r2.ax , SD = qual_fs$meanSD[ r2.ax - 1 ] , r2 = r2.eig[ r2.ax ]   )
           rownames( res ) <- NULL

@@ -213,18 +213,40 @@ f_rich( data.agR , traitDB = data_fam.ts.av , taxLev = "Family" , nbdim = 2 , ty
 The same approach used for macroinvertebrates can be used for other groups. The following example is for macrophytes.
 
 
-```{r macroph }
+```{r macroph , warning = FALSE , message = FALSE }
 # load macrophyte data
 data( oglio )
-
-# transform to presence-absence data for simplicity
-# ignore the warning
-oglio.bin <- oglio
-oglio.bin[ oglio.bin > 0 ] <- 1
+data( traits_mf )
 
 # importing data in the biomonitoR format
-oglio.asb <- asBiomonitor( oglio.bin , group = "mf" , FUN = bin )
+oglio.asb <- asBiomonitor( oglio , group = "mf" , FUN = bin )
 oglio.agg <- aggregatoR( oglio.asb )
+
+# no need to run traitScaling, just to show its use
+oglio.ts <- traitScaling( oglio.agg , traitDB = traits_mf , group = "mf" )
+oglio.ts[ 1:5 , 1:5 ]
+
+# create a distance matrix using the gowdis distance in the package FD
+# other distances could be better, but for this example is enough
+
+# load FD
+library( FD )
+
+# prepare the traits database
+oglio_traits <- traits_mf
+rownames( oglio_traits ) <- oglio_traits[ , "Taxa" ]
+oglio_traits <- oglio_traits[ , ! colnames( oglio_traits ) %in% "Taxa" ]
+
+# crea
+oglio.dist <- gowdis( oglio_traits )
+
+# select the number of axis according to legendre
+selectPcoaAxes( oglio.dist , method = "legendre" )
+
+# calculate functional richness
+f_rich( oglio.agg , traitDB = oglio.dist , taxLev = "Taxa" , nbdim = 4 , correction = "quasi" )
+
+
 
 ```
 
@@ -234,7 +256,7 @@ oglio.agg <- aggregatoR( oglio.asb )
 ## REFERENCES
 Schmidt-Kloiber, A., & Hering, D. (2015). An online tool that unifies, standardises and codifies more than 20,000 European freshwater organisms and their ecological preferences. Ecological Indicators, 53, 271-282.
 
-Tachet H (2010) Invertébrés d’eau douce: Systématique, biologie, écologie, édition revue et augmentée edizione. CNRS Editions, Paris
+Tachet H (2010) Invertébrés d’eau douce: Systématique, biologie, écologie, édition revue et augmentée. CNRS Editions, Paris
 
 
 

@@ -12,6 +12,7 @@ sampleTraits(x)
 traitScaling(
   x,
   traitDB = NULL,
+  group = "mi",
   taxLev = "Taxa",
   dfref = NULL,
   filter_by_distance = NULL
@@ -35,9 +36,13 @@ Default to \code{Taxa}, the maximum taxonomic level is \code{Family}.}
 
 \item{dfref}{reference database as used in the function aggregatoR.}
 
-\item{filter_by_distance}{filter the results according to the taxonomic distance. Possible values are "pos" , "neg" or a positive integer. See details.}
+\item{filter_by_distance}{filter the results according to the taxonomic distance. Possible values are \code{pos} , \code{neg} or a positive integer. See details.}
 
 \item{colB}{A vector that contains the number of modalities for each trait}
+
+\item{biotic}{group of interest. Possible values are mi for macroinvertebrates, mf for macrophytes and fi for fish.
+The choice will set the right reference database for the specified group.
+This option will not be considered if a custom reference database is provided. Default to \code{mi}.}
 }
 \description{
 A function for scaling traits across taxonomic levels.
