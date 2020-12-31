@@ -48,7 +48,7 @@ print.asb <- function( x , ... ){
 
 subset.asb <- function( x , ... , taxa = NULL , exclude = NULL ){
 
-   DF <- as.data.frame( x )[ , 1:11 ]
+   DF <- as.data.frame( x )
 
    if( is.null( taxa ) & is.null( exclude ) ){
       stop( "taxa and exclude cannot be both null" )
@@ -67,7 +67,7 @@ subset.asb <- function( x , ... , taxa = NULL , exclude = NULL ){
    # get the list of all the taxa present in the x object including the information stored
    # in the taxonomic tree
 
-   df.vec <- unique( as.character( unlist( DF ) ) )
+   df.vec <- unique( as.character( unlist( DF[ , 1:11 ] ) ) )
    df.vec <- df.vec[ ! df.vec  %in% ""  ]
 
    # get the name of the x object
