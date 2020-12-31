@@ -4,7 +4,7 @@
 \alias{subset.asb}
 \title{subset.asb}
 \usage{
-\method{subset}{asb}(x, ..., taxa, exclude = NULL)
+\method{subset}{asb}(x, ..., taxa = NULL, exclude = NULL)
 }
 \arguments{
 \item{x}{results of function \code{asBiomonitor}.}
@@ -17,6 +17,7 @@
 }
 \description{
 \code{summary} method for class \code{asb}.
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
 }
 \examples{
 data(macro_ex)
@@ -31,4 +32,6 @@ subset(data.bio, taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) )
 tricho <- subset(data.bio, taxa = "Trichoptera" , exclude = "Hydropsychidae" )
 tricho.agg <- aggregatoR( tricho )
 
+# exclude Chironomidae
+subset( data.bio , exclude = "Chironomidae" )
 }
