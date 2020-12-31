@@ -256,7 +256,7 @@ f_rich( oglio.agg , traitDB = oglio.dist , taxLev = "Taxa" , nbdim = 4 , correct
 ## REFERENCES
 Schmidt-Kloiber, A., & Hering, D. (2015). An online tool that unifies, standardises and codifies more than 20,000 European freshwater organisms and their ecological preferences. Ecological Indicators, 53, 271-282.
 
-Tachet H (2010) Invertébrés d’eau douce: Systématique, biologie, écologie, édition revue et augmentée edizione. CNRS Editions, Paris
+Tachet H (2010) Invertébrés d’eau douce: Systématique, biologie, écologie, édition revue et augmentée. CNRS Editions, Paris
 
 
 
