@@ -8,6 +8,6 @@
 #'
 #' @keywords datasets
 #'
-#' @format A data frame with 67 rows and 7 variables.
+#' @format A data frame with 67 rows and 31 variables.
 #'
 "oglio"
