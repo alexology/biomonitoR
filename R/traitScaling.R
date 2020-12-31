@@ -27,10 +27,13 @@
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
 #'   It includes traits only for macroinvertebrates.
+#' @param biotic group of interest. Possible values are mi for macroinvertebrates, mf for macrophytes and fi for fish.
+#'  The choice will set the right reference database for the specified group.
+#'  This option will not be considered if a custom reference database is provided. Default to `mi`.
 #' @param taxLev taxonomic level on which the calculation has to be made.
 #' Default to `Taxa`, the maximum taxonomic level is `Family`.
 #' @param dfref reference database as used in the function aggregatoR.
-#' @param filter_by_distance filter the results according to the taxonomic distance. Possible values are "pos" , "neg" or a positive integer. See details.
+#' @param filter_by_distance filter the results according to the taxonomic distance. Possible values are `pos` , `neg` or a positive integer. See details.
 #' @param colB A vector that contains the number of modalities for each trait
 #'
 #'
@@ -59,7 +62,7 @@
 
 
 
-traitScaling <-  function( x , traitDB = NULL , taxLev = "Taxa" , dfref = NULL , filter_by_distance = NULL ){
+traitScaling <-  function( x , traitDB = NULL , group = "mi" , taxLev = "Taxa" , dfref = NULL , filter_by_distance = NULL ){
 
   if( is.null( traitDB ) ){
     # check if x is of class biomonitoR and mi
@@ -73,12 +76,20 @@ traitScaling <-  function( x , traitDB = NULL , taxLev = "Taxa" , dfref = NULL ,
 
   } else{
     trait_db <- traitDB
-    trait_db$Taxa <- trimws(trait_db$Taxa)
+    trait_db$Taxa <- trimws( trait_db$Taxa )
     classCheck(x)
   }
 
   if( is.null( dfref ) ){
-    dfref <- mi_ref
+    if( identical( group , "mi" ) ){
+      dfref <- mi_ref
+    }
+    if( identical( group , "mf" ) ){
+      dfref <- mf_ref
+    }
+    if( identical( group , "fi" ) ){
+      dfref <- fi_ref
+    }
   } else { dfref <- dfref }
 
 
