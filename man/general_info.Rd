@@ -18,7 +18,7 @@ Function to calculate the overall richness at different taxonomic level.
 data(macro_ex)
 data_bio <- as_biomonitor(macro_ex)
 data_agr <- aggregate_taxa(data_bio)
-general_info( data_agr )
+general_info(data_agr)
 }
 \seealso{
 \code{\link{as_biomonitor}}

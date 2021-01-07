@@ -35,5 +35,4 @@ data_ts <- assign_traits(data_agr)
 
 # select only the nearest traits
 data_ts_sub <- manage_traits(data_ts, method = "nearest+-")
-
 }

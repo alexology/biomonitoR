@@ -34,27 +34,26 @@
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
 #'
-#' library( ade4 )
+#' library(ade4)
 #'
 #' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
-#' data_ts <- assign_traits( data_agr )
+#' data_ts <- assign_traits(data_agr)
 #'
 #' # averaging
-#' data_ts_av <- average_traits( data_ts )
+#' data_ts_av <- average_traits(data_ts)
 #'
-#' col_blocks <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+#' col_blocks <- c(8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8)
 #'
-#' rownames( data_ts_av ) <- data_ts_av$Taxa
-#' traits_prep <- prep.fuzzy( data_ts_av[ , -1 ], col.blocks = col_blocks )
+#' rownames(data_ts_av) <- data_ts_av$Taxa
+#' traits_prep <- prep.fuzzy(data_ts_av[, -1], col.blocks = col_blocks)
 #'
-#' traits_dist <- ktab.list.df( list( traits_prep ) )
-#' traits_dist <- dist.ktab( traits_dist , type = "F" )
+#' traits_dist <- ktab.list.df(list(traits_prep))
+#' traits_dist <- dist.ktab(traits_dist, type = "F")
 #'
-#' select_pcoa_axes( traits_dist , method = "cor" , tresh = 0.7)
-#' select_pcoa_axes( traits_dist , method = "legendre" , tresh = 0.7)
-#' select_pcoa_axes( traits_dist , method = "maire" , tresh = 0.01)
-#'
+#' select_pcoa_axes(traits_dist, method = "cor", tresh = 0.7)
+#' select_pcoa_axes(traits_dist, method = "legendre", tresh = 0.7)
+#' select_pcoa_axes(traits_dist, method = "maire", tresh = 0.01)
 #' @references Maire, E., Grenouillet, G., Brosse, S., & Villeger, S. (2015).
 #'   How many dimensions are needed to accurately assess functional diversity?
 #'   A pragmatic approach for assessing the quality of functional spaces. Global
@@ -66,53 +65,57 @@
 
 
 
-select_pcoa_axes <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 ){
-
-  if( identical( method , "cor" ) & is.null( tresh )  ) { tresh <- 0.7 }
-  if( identical( method , "legendre" ) & is.null( tresh )  ) { tresh <- 0.7 }
-  if( identical( method , "maire" ) & is.null( tresh )  ) { tresh <- 0.01 }
-
-  if( suppressWarnings( is.euclid( x ) )  & identical( method , "cor" ) ){
-    res <- pcoaQuality( x , "none" , method = "cor" , tresh = tresh  )
+select_pcoa_axes <- function(x, method = "legendre", tresh = NULL, nbdim = 15) {
+  if (identical(method, "cor") & is.null(tresh)) {
+    tresh <- 0.7
+  }
+  if (identical(method, "legendre") & is.null(tresh)) {
+    tresh <- 0.7
+  }
+  if (identical(method, "maire") & is.null(tresh)) {
+    tresh <- 0.01
   }
 
-  if( suppressWarnings( is.euclid( x ) )  & identical( method , "legendre" ) ){
-    res <- pcoaQuality( x , "none" , method = "legendre" , tresh = tresh  )
+  if (suppressWarnings(is.euclid(x)) & identical(method, "cor")) {
+    res <- pcoaQuality(x, "none", method = "cor", tresh = tresh)
   }
 
-  if( suppressWarnings( is.euclid( x ) )  & identical( method , "maire" ) ){
-    res <- pcoaQuality( x , "none" , method = "maire" , tresh = tresh  )
+  if (suppressWarnings(is.euclid(x)) & identical(method, "legendre")) {
+    res <- pcoaQuality(x, "none", method = "legendre", tresh = tresh)
   }
 
-  if( ! suppressWarnings( is.euclid( x ) ) & identical( method , "cor" ) ){
-    res1 <- pcoaQuality( x , "none" , method = "cor" , tresh = tresh )
-    res2 <- pcoaQuality( x , "cailliez" , method = "cor" , tresh = tresh )
-    res3 <- pcoaQuality( x , "lingoes" , method = "cor" , tresh = tresh )
-    res4 <- pcoaQuality( x , "sqrt" , method = "cor" , tresh = tresh )
-    res5 <- pcoaQuality( x , "quasi" , method = "cor" , tresh = tresh )
-    res <- suppressWarnings( bind_rows( res1 , res2 , res3 , res4 , res5 ) )
+  if (suppressWarnings(is.euclid(x)) & identical(method, "maire")) {
+    res <- pcoaQuality(x, "none", method = "maire", tresh = tresh)
   }
 
-  if( ! suppressWarnings( is.euclid( x ) ) & identical( method , "legendre" ) ){
-    res1 <- pcoaQuality( x , "none" , method = "legendre" , tresh = tresh )
-    res2 <- pcoaQuality( x , "cailliez" , method = "legendre" , tresh = tresh )
-    res3 <- pcoaQuality( x , "lingoes" , method = "legendre" , tresh = tresh )
-    res4 <- pcoaQuality( x , "sqrt" , method = "legendre" , tresh = tresh )
-    res5 <- pcoaQuality( x , "quasi" , method = "legendre" , tresh = tresh )
-    res <- suppressWarnings( bind_rows( res1 , res2 , res3 , res4 , res5 ) )
+  if (!suppressWarnings(is.euclid(x)) & identical(method, "cor")) {
+    res1 <- pcoaQuality(x, "none", method = "cor", tresh = tresh)
+    res2 <- pcoaQuality(x, "cailliez", method = "cor", tresh = tresh)
+    res3 <- pcoaQuality(x, "lingoes", method = "cor", tresh = tresh)
+    res4 <- pcoaQuality(x, "sqrt", method = "cor", tresh = tresh)
+    res5 <- pcoaQuality(x, "quasi", method = "cor", tresh = tresh)
+    res <- suppressWarnings(bind_rows(res1, res2, res3, res4, res5))
+  }
+
+  if (!suppressWarnings(is.euclid(x)) & identical(method, "legendre")) {
+    res1 <- pcoaQuality(x, "none", method = "legendre", tresh = tresh)
+    res2 <- pcoaQuality(x, "cailliez", method = "legendre", tresh = tresh)
+    res3 <- pcoaQuality(x, "lingoes", method = "legendre", tresh = tresh)
+    res4 <- pcoaQuality(x, "sqrt", method = "legendre", tresh = tresh)
+    res5 <- pcoaQuality(x, "quasi", method = "legendre", tresh = tresh)
+    res <- suppressWarnings(bind_rows(res1, res2, res3, res4, res5))
   }
 
 
-  if( ! suppressWarnings( is.euclid( x ) ) & identical( method , "maire" ) ){
-    res1 <- pcoaQuality( x , "none" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res2 <- pcoaQuality( x , "cailliez" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res3 <- pcoaQuality( x , "lingoes" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res4 <- pcoaQuality( x , "sqrt" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res5 <- pcoaQuality( x , "quasi" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res <- suppressWarnings( bind_rows( res1 , res2 , res3 , res4 , res5 ) )
+  if (!suppressWarnings(is.euclid(x)) & identical(method, "maire")) {
+    res1 <- pcoaQuality(x, "none", method = "maire", nbdim = nbdim, tresh = tresh)
+    res2 <- pcoaQuality(x, "cailliez", method = "maire", nbdim = nbdim, tresh = tresh)
+    res3 <- pcoaQuality(x, "lingoes", method = "maire", nbdim = nbdim, tresh = tresh)
+    res4 <- pcoaQuality(x, "sqrt", method = "maire", nbdim = nbdim, tresh = tresh)
+    res5 <- pcoaQuality(x, "quasi", method = "maire", nbdim = nbdim, tresh = tresh)
+    res <- suppressWarnings(bind_rows(res1, res2, res3, res4, res5))
   }
 
 
   res
-
 }

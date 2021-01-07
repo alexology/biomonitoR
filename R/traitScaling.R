@@ -50,48 +50,48 @@
 
 
 
-traitScaling <-  function( x , traitDB = NULL , group = "mi" , taxLev = "Taxa" , dfref = NULL , filter_by_distance = NULL ){
-
+traitScaling <- function(x, traitDB = NULL, group = "mi", taxLev = "Taxa", dfref = NULL, filter_by_distance = NULL) {
   .Deprecated("assign_traits")
 
-  if( is.null( traitDB ) ){
+  if (is.null(traitDB)) {
     # check if x is of class biomonitoR and mi
-    classCheck( x )
+    classCheck(x)
 
-    if( inherits( x , "custom" ) & is.null( traitDB ) ){
-      warning( "It seems that you used your own reference database. Please check the consistency of the taxonomy used for calculating the index with those of your reference database to have reliable results." )
+    if (inherits(x, "custom") & is.null(traitDB)) {
+      warning("It seems that you used your own reference database. Please check the consistency of the taxonomy used for calculating the index with those of your reference database to have reliable results.")
     }
 
     trait_db <- traitsTachet
-
-  } else{
+  } else {
     trait_db <- traitDB
-    trait_db$Taxa <- trimws( trait_db$Taxa )
+    trait_db$Taxa <- trimws(trait_db$Taxa)
     classCheck(x)
   }
 
-  if( is.null( dfref ) ){
-    if( identical( group , "mi" ) ){
+  if (is.null(dfref)) {
+    if (identical(group, "mi")) {
       dfref <- mi_ref
     }
-    if( identical( group , "mf" ) ){
+    if (identical(group, "mf")) {
       dfref <- mf_ref
     }
-    if( identical( group , "fi" ) ){
+    if (identical(group, "fi")) {
       dfref <- fi_ref
     }
-  } else { dfref <- dfref }
+  } else {
+    dfref <- dfref
+  }
 
 
 
   # merge the trait database with the reference database in order to scale
   # traits across taxonomic levels
   # [ , - 1] deletes the Taxa columns
-  ref <- merge( dfref , trait_db , by = "Taxa" , sort = FALSE )[ , -1 ]
+  ref <- merge(dfref, trait_db, by = "Taxa", sort = FALSE)[, -1]
 
   # create a data.frame with the same column as trait_db but with 0 rows
   # it will be important later to iterate rbind to this object
-  trait.interm <- data.frame( trait_db[-c(1:nrow(trait_db)) , ] )
+  trait.interm <- data.frame(trait_db[-c(1:nrow(trait_db)), ])
 
   # ref.na is a 0 length vector to store the taxa names of the selected rows
   # this allow to does not loose the information about the name of the taxa at the orginial
@@ -102,14 +102,14 @@ traitScaling <-  function( x , traitDB = NULL , group = "mi" , taxLev = "Taxa" ,
   # 10 to  5  because it is intended to work from subspecises to family
 
   # cycle to scale the traits among taxonomic levels
-  for( i in 10:5){
-    temp <- ref[ , -which( c(1:10) != i ) ]
-    names( temp )[ 1 ] <- "Taxa"
-    temp <- temp[ temp[ , 1 ] != "" , ]
-    ref.name <- ref[ rownames( ref ) %in% rownames( temp ) , 5:10 ]
-    ref.name <- apply( ref.name , 1 , function( x )(  rev( x )[ rev( x ) != "" ][ 1 ]  ) )
-    ref.na <- c( ref.na , ref.name )
-    trait.interm <- rbind( trait.interm , temp)
+  for (i in 10:5) {
+    temp <- ref[, -which(c(1:10) != i)]
+    names(temp)[1] <- "Taxa"
+    temp <- temp[temp[, 1] != "", ]
+    ref.name <- ref[rownames(ref) %in% rownames(temp), 5:10]
+    ref.name <- apply(ref.name, 1, function(x) (rev(x)[rev(x) != ""][1]))
+    ref.na <- c(ref.na, ref.name)
+    trait.interm <- rbind(trait.interm, temp)
   }
 
   trait_db <- trait.interm
@@ -118,98 +118,105 @@ traitScaling <-  function( x , traitDB = NULL , group = "mi" , taxLev = "Taxa" ,
 
   # allow the user to work at a desired taxonomic level
 
-  if( ! taxLev %in% c( "Family" ,     "Subfamily" ,  "Tribus" ,    "Genus" ,
-                     "Species" ,  "Subspecies" , "Taxa" ) ) stop( "Maximum taxonomic level is family.")
+  if (!taxLev %in% c(
+    "Family", "Subfamily", "Tribus", "Genus",
+    "Species", "Subspecies", "Taxa"
+  )) {
+    stop("Maximum taxonomic level is family.")
+  }
 
-  if( ! identical( taxLev , "Taxa" ) ){
+  if (!identical(taxLev, "Taxa")) {
     # set values to "" for the taxonomic levels lower than specified
-    DF <- DF[ , 1:11 ]
-    DF[ colnames( DF )[ ( which( colnames( DF ) %in% taxLev ) + 1 ):11 ]    ] <- ""
+    DF <- DF[, 1:11]
+    DF[colnames(DF)[(which(colnames(DF) %in% taxLev) + 1):11]] <- ""
 
     # remove duplicated rows
-    DF <- DF[ ! duplicated( DF ) , ]
+    DF <- DF[!duplicated(DF), ]
 
     # change Taxa to the taxa of the required taxonomic level
-    DF[ , 11 ] <- DF[ , taxLev ]
-
+    DF[, 11] <- DF[, taxLev]
   }
 
   # DFtaxa stores the taxa present in the user database
 
-  DFtaxa <- as.character( DF[  11 ] )
-  result.list <- apply( DF , 1 , function( x ) traitS( x = x, y = DF , z = trait_db , w = ref.na ) )
-  result.data.frame <- do.call( rbind , result.list )
-  result.data.frame <- result.data.frame[ result.data.frame$Taxa_db != "" , ]
+  DFtaxa <- as.character(DF[11])
+  result.list <- apply(DF, 1, function(x) traitS(x = x, y = DF, z = trait_db, w = ref.na))
+  result.data.frame <- do.call(rbind, result.list)
+  result.data.frame <- result.data.frame[result.data.frame$Taxa_db != "", ]
   result.data.frame.single <- result.data.frame
 
-  unique.taxa <- unique( result.data.frame.single$Taxa_db )
+  unique.taxa <- unique(result.data.frame.single$Taxa_db)
 
   # deleting row for the following reason. It happens that traits are present for a species
   # and also for the genus of this species. If the user sample
   # contains a species other than that reported in the trait list we want only to keep the
   # trait at genus level
 
-  for( i in 1:length( unique.taxa ) ){
-    res <- result.data.frame.single[ result.data.frame.single$Taxa_db %in% unique.taxa[ i ] , 1:3 ]
-    res.sum <- ( res[ , 1 ] == res[ , 2 ] ) + ( res[ , 1 ] == res[ , 3 ] ) + ( res[ , 2 ] == res[ , 3 ] )
-    if( any( res.sum == 0 ) ){
-      if( sum( res.sum )!= 0){
-        to.del <- which( result.data.frame.single$Taxa_db %in% unique.taxa[ i ] )[ res.sum == 0 ]
-        result.data.frame.single <- result.data.frame.single[ -to.del , ]
+  for (i in 1:length(unique.taxa)) {
+    res <- result.data.frame.single[result.data.frame.single$Taxa_db %in% unique.taxa[i], 1:3]
+    res.sum <- (res[, 1] == res[, 2]) + (res[, 1] == res[, 3]) + (res[, 2] == res[, 3])
+    if (any(res.sum == 0)) {
+      if (sum(res.sum) != 0) {
+        to.del <- which(result.data.frame.single$Taxa_db %in% unique.taxa[i])[res.sum == 0]
+        result.data.frame.single <- result.data.frame.single[-to.del, ]
       }
     }
   }
 
-  ref_long <- data.frame( Taxonomic_level = character( ) , Taxa = character( ) , stringsAsFactors = FALSE )
+  ref_long <- data.frame(Taxonomic_level = character(), Taxa = character(), stringsAsFactors = FALSE)
 
-  for( i in 10:1 ){
-    temp <- as.character( dfref[ , i ] )
-    temp <- temp[ temp != ""]
-    temp.rep <- rep( names(ref[ , i , drop = FALSE] ) , length( temp ) )
-    temp.df <- data.frame( Taxonomic_level = temp.rep , Taxa = temp )
-    ref_long <- rbind( ref_long , temp.df )
+  for (i in 10:1) {
+    temp <- as.character(dfref[, i])
+    temp <- temp[temp != ""]
+    temp.rep <- rep(names(ref[, i, drop = FALSE]), length(temp))
+    temp.df <- data.frame(Taxonomic_level = temp.rep, Taxa = temp)
+    ref_long <- rbind(ref_long, temp.df)
   }
 
-  ref_long <- ref_long[ !duplicated( ref_long ) , ]
+  ref_long <- ref_long[!duplicated(ref_long), ]
 
-  taxa_db.taxlev <- ref_long[ match( ref_long$Taxa , result.data.frame.single$Taxa_db ) ,  ]
+  taxa_db.taxlev <- ref_long[match(ref_long$Taxa, result.data.frame.single$Taxa_db), ]
 
-  result.data.frame.single$Taxa_db <- as.character( result.data.frame.single$Taxa_db )
-  result.data.frame.single$Traits_real <- as.character( result.data.frame.single$Traits_real )
-  ref_long$Taxa <- as.character( ref_long$Taxa )
+  result.data.frame.single$Taxa_db <- as.character(result.data.frame.single$Taxa_db)
+  result.data.frame.single$Traits_real <- as.character(result.data.frame.single$Traits_real)
+  ref_long$Taxa <- as.character(ref_long$Taxa)
 
-  taxa_db.taxlev <- inner_join( result.data.frame.single[ , 1 , drop = FALSE ] , ref_long , by = c( "Taxa_db" = "Taxa"))
-  traits.taxlev <- inner_join( result.data.frame.single[ , 2 , drop = FALSE ] , ref_long , by = c( "Traits_real" = "Taxa"))
-  names( taxa_db.taxlev ) <- c( "Taxa_taxlev" , "Taxa_db" )
-  names( traits.taxlev ) <- c("Traits_taxlev" , "Traits_real" )
+  taxa_db.taxlev <- inner_join(result.data.frame.single[, 1, drop = FALSE], ref_long, by = c("Taxa_db" = "Taxa"))
+  traits.taxlev <- inner_join(result.data.frame.single[, 2, drop = FALSE], ref_long, by = c("Traits_real" = "Taxa"))
+  names(taxa_db.taxlev) <- c("Taxa_taxlev", "Taxa_db")
+  names(traits.taxlev) <- c("Traits_taxlev", "Traits_real")
 
 
-  taxLev.info <- data.frame( taxa_db.taxlev , traits.taxlev , stringsAsFactors = FALSE )
+  taxLev.info <- data.frame(taxa_db.taxlev, traits.taxlev, stringsAsFactors = FALSE)
 
-  dist.taxlev <- data.frame( taxLev = names( dfref )[ -11 ] , distance = c(10:1) )
-  dist.taxlev$taxLev <- as.character( dist.taxlev$taxLev )
-  taxLev.info$Taxa_db <- as.character( taxLev.info$Taxa_db )
-  taxLev.info$Traits_real <- as.character( taxLev.info$Traits_real )
+  dist.taxlev <- data.frame(taxLev = names(dfref)[-11], distance = c(10:1))
+  dist.taxlev$taxLev <- as.character(dist.taxlev$taxLev)
+  taxLev.info$Taxa_db <- as.character(taxLev.info$Taxa_db)
+  taxLev.info$Traits_real <- as.character(taxLev.info$Traits_real)
 
-  a <- inner_join( taxLev.info[ , c( 2 , 4 ) ] , dist.taxlev , by = c( "Taxa_db" = "taxLev"))[ , 3 ]
-  b <- inner_join( taxLev.info[ , c( 2 , 4 ) ] , dist.taxlev , by = c( "Traits_real" = "taxLev"))[ , 3 ]
+  a <- inner_join(taxLev.info[, c(2, 4)], dist.taxlev, by = c("Taxa_db" = "taxLev"))[, 3]
+  b <- inner_join(taxLev.info[, c(2, 4)], dist.taxlev, by = c("Traits_real" = "taxLev"))[, 3]
 
-  taxLev.info$Taxonomic_distance <- a-b
+  taxLev.info$Taxonomic_distance <- a - b
 
-  names( taxLev.info )[ 1 ] <- "Taxa"
-  final.traits <- data.frame( taxLev.info , result.data.frame.single[ , -c(1:3) ])
-  rownames( final.traits ) <- NULL
-  if( is.null( filter_by_distance ) ){
+  names(taxLev.info)[1] <- "Taxa"
+  final.traits <- data.frame(taxLev.info, result.data.frame.single[, -c(1:3)])
+  rownames(final.traits) <- NULL
+  if (is.null(filter_by_distance)) {
     final.traits
   } else {
-    if( is.character( filter_by_distance) ){
-      if( filter_by_distance == "pos" ){ final.traits[ final.traits$Taxonomic_distance >= 0, ] } else { if( filter_by_distance == "neg" )
-      { final.traits[ final.traits$Taxonomic_distance <= 0 , ] } else {
-        stop("pos, neg or an integer are needed when filter_by_distance is not NULL") }
+    if (is.character(filter_by_distance)) {
+      if (filter_by_distance == "pos") {
+        final.traits[final.traits$Taxonomic_distance >= 0, ]
+      } else {
+        if (filter_by_distance == "neg") {
+          final.traits[final.traits$Taxonomic_distance <= 0, ]
+        } else {
+          stop("pos, neg or an integer are needed when filter_by_distance is not NULL")
+        }
       }
     } else {
-      final.traits[ abs( final.traits$Taxonomic_distance ) <= abs( filter_by_distance )  , ]
+      final.traits[abs(final.traits$Taxonomic_distance) <= abs(filter_by_distance), ]
     }
   }
 }
-

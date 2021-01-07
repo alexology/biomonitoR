@@ -16,47 +16,46 @@
 #' ept(data_agr)
 #'
 #' # ept should return the same results as the function get_taxa_richness
-#' ept( data_agr , tax_lev = "Family" )
-#' get_taxa_richness( data_agr ,
-#'   taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) , tax_lev = "Family" )
-
-
-ept <- function ( x, tax_lev = "Taxa" ){
+#' ept(data_agr, tax_lev = "Family")
+#' get_taxa_richness(data_agr,
+#'   taxa = c("Ephemeroptera", "Plecoptera", "Trichoptera"), tax_lev = "Family"
+#' )
+ept <- function(x, tax_lev = "Taxa") {
 
   # check if the object x is of class "biomonitoR"
-  classCheck( x )
+  classCheck(x)
 
   # get the tree from the aggregatoR object
-  x_ept <- x[[ "Tree" ]]
+  x_ept <- x[["Tree"]]
 
   # list the taxonomic levels in the Tree
-  tx <- c( "Phylum" , "Class" , "Subclass" , "Order" , "Family" , "Subfamily" , "Tribus" , "Genus" , "Species" , "Subspecies" , "Taxa" )
+  tx <- c("Phylum", "Class", "Subclass", "Order", "Family", "Subfamily", "Tribus", "Genus", "Species", "Subspecies", "Taxa")
 
   # stop the calculation if tax_lev is coarser than Family
-  if( which( tax_lev == tx ) <= 4 ) ( stop( "Taxonomic level cannot be equal or higher than Order" ) )
+  if (which(tax_lev == tx) <= 4) (stop("Taxonomic level cannot be equal or higher than Order"))
 
   # get sample names
-  stz <- x_ept[ ! ( names( x_ept ) %in% tx ) ]
-  stz_n <- names( stz )
+  stz <- x_ept[!(names(x_ept) %in% tx)]
+  stz_n <- names(stz)
 
   # subset the EPT orders from the Tree
-  ept_taxa <- x_ept[ which( x_ept$Order == "Plecoptera" | x_ept$Order == "Ephemeroptera" | x_ept$Order == "Trichoptera" ) , , drop = F ]
+  ept_taxa <- x_ept[which(x_ept$Order == "Plecoptera" | x_ept$Order == "Ephemeroptera" | x_ept$Order == "Trichoptera"), , drop = F]
 
   # if EPT are absent from the database returns 0 otherwise return the results
-  if( nrow( ept_taxa ) == 0 ){
-    res_null <- rep( 0 , length( stz_n ) )
-    names( res_null ) <- stz_n
-    return( res_null )
+  if (nrow(ept_taxa) == 0) {
+    res_null <- rep(0, length(stz_n))
+    names(res_null) <- stz_n
+    return(res_null)
   } else {
-    ept_temp <- ept_taxa[ ,c( tax_lev , stz_n ) ]
-    colnames( ept_temp )[ 1 ] <- "selection"
-    levels( ept_temp$selection )[ levels( ept_temp$selection ) == "" ] <- "unassigned"
-    ept_temp.agg <- aggregate( . ~ selection , ept_temp , FUN = sum )
-    if( "unassigned" %in% ept_temp.agg[ , 1 ] ){
-      z <- which( ept_temp.agg[ , 1 ] == "unassigned" )
-      ept_temp.agg <- ept_temp.agg[ -z , ] # remove unassigned row from the species count
+    ept_temp <- ept_taxa[, c(tax_lev, stz_n)]
+    colnames(ept_temp)[1] <- "selection"
+    levels(ept_temp$selection)[levels(ept_temp$selection) == ""] <- "unassigned"
+    ept_temp.agg <- aggregate(. ~ selection, ept_temp, FUN = sum)
+    if ("unassigned" %in% ept_temp.agg[, 1]) {
+      z <- which(ept_temp.agg[, 1] == "unassigned")
+      ept_temp.agg <- ept_temp.agg[-z, ] # remove unassigned row from the species count
     }
-    temp <- colSums( ept_temp.agg[ , -1 , drop = F ] > 0)
+    temp <- colSums(ept_temp.agg[, -1, drop = F] > 0)
     temp
   }
 }

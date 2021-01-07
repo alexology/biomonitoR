@@ -40,19 +40,20 @@
 #'
 #' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
-#' data_ts <- assign_traits( data_agr )
+#' data_ts <- assign_traits(data_agr)
 #'
 #' # averaging
-#' data_ts_av <- average_traits( data_ts )
+#' data_ts_av <- average_traits(data_ts)
 #'
 #' # community specialization index
 #' cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa", trans = log1p)
-#' cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa",
-#'     trans = function(x) {
-#'         ifelse(x > 0, 1, 0)
-#'     })
+#' cwm(
+#'   x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa",
+#'   trans = function(x) {
+#'     ifelse(x > 0, 1, 0)
+#'   }
+#' )
 #' cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Genus", trans = log1p)
-#'
 #' @seealso [aggregate_taxa]
 #'
 #' @references Tachet, H., Richoux, P., Bournaud, M., & Usseglio-Polatera, P.
@@ -65,18 +66,17 @@
 #'
 #' @export
 
-cwm <- function( x , trait_db = NULL, tax_lev = "Taxa" , trans = log1p , traceB = FALSE ) {
+cwm <- function(x, trait_db = NULL, tax_lev = "Taxa", trans = log1p, traceB = FALSE) {
+  classCheck(x)
 
-  classCheck( x )
-
-  if( is.null( trait_db )){
-    trait_db = traitsTachet
+  if (is.null(trait_db)) {
+    trait_db <- traitsTachet
   } else {
-    trait_db = trait_db
+    trait_db <- trait_db
   }
 
 
-  if (! tax_lev %in% c("Family", "Genus", "Species", "Taxa")) {
+  if (!tax_lev %in% c("Family", "Genus", "Species", "Taxa")) {
     return("tax_lev should be one of the following: Family, Genus, Species or Taxa")
   }
 
@@ -89,54 +89,59 @@ cwm <- function( x , trait_db = NULL, tax_lev = "Taxa" , trans = log1p , traceB 
   abundances <- x[[tax_lev]]
   colnames(abundances)[1] <- "Taxa"
 
-  if( inherits( x , "bin" ) ){
-    abundances <- to_bin( abundances )
+  if (inherits(x, "bin")) {
+    abundances <- to_bin(abundances)
   }
 
   # remove unassigned taxa from abundances
-  if("unassigned" %in% abundances[ , "Taxa"]){
-    z <- which(abundances[ , "Taxa" ] == "unassigned")
-    abundances <- abundances[ -z ,] # remove unassigned row from the species count
+  if ("unassigned" %in% abundances[, "Taxa"]) {
+    z <- which(abundances[, "Taxa"] == "unassigned")
+    abundances <- abundances[-z, ] # remove unassigned row from the species count
   }
 
-  abundances <- merge( abundances , trait_db[ , "Taxa" , drop = FALSE ] )
-  trait_db <- merge( trait_db , abundances[ , "Taxa" , drop = FALSE ] )
+  abundances <- merge(abundances, trait_db[, "Taxa", drop = FALSE])
+  trait_db <- merge(trait_db, abundances[, "Taxa", drop = FALSE])
 
-  abundances$Taxa <- as.character( abundances$Taxa )
-  trait_db <- trait_db %>% mutate( Taxa = as.character( Taxa ) )
-  res <- abundances                                       %>%
+  abundances$Taxa <- as.character(abundances$Taxa)
+  trait_db <- trait_db %>% mutate(Taxa = as.character(Taxa))
+  res <- abundances %>%
     gather(key = Sample, value = Abundance, -Taxa) %>%
-    mutate(Sample = factor(Sample,
-                           levels = colnames(abundances)[-1]),
-           Taxa   = as.character(Taxa),
-           Weight = trans(Abundance))              %>%
-    left_join(group_by(., Sample)                  %>%
-                summarise(totWeight = sum(Weight)),
-              by = "Sample")                       %>%
+    mutate(
+      Sample = factor(Sample,
+        levels = colnames(abundances)[-1]
+      ),
+      Taxa = as.character(Taxa),
+      Weight = trans(Abundance)
+    ) %>%
+    left_join(group_by(., Sample) %>%
+      summarise(totWeight = sum(Weight)),
+    by = "Sample"
+    ) %>%
     left_join(gather(trait_db,
-                     key   = Category,
-                     value = Affinity, -Taxa),
-              by = "Taxa")                         %>%
+      key   = Category,
+      value = Affinity, -Taxa
+    ),
+    by = "Taxa"
+    ) %>%
     mutate(weightedAffinity = (Weight * Affinity) /
-             totWeight)                            %>%
-    group_by(Sample, Category)                     %>%
+      totWeight) %>%
+    group_by(Sample, Category) %>%
     summarise(Affinity = sum(weightedAffinity,
-                             na.rm = TRUE))        %>%
-    spread(key = Category, value = Affinity)       %>%
+      na.rm = TRUE
+    )) %>%
+    spread(key = Category, value = Affinity) %>%
     as.data.frame()
 
 
-  if( traceB == FALSE ){
+  if (traceB == FALSE) {
     res
   } else {
-
-    df1 <- trait_db %>% semi_join( abundances , "Taxa" )
-    df2 <- abundances %>% semi_join( trait_db , "Taxa" )
-    df3 <- abundances[ ! abundances$Taxa %in% df2$Taxa , "Taxa" ]
-    if( length( df3) == 0) ( df3 <- NA )
-    res.list <- list( res , df1 , df2 , df3 )
-    names( res.list ) <- c( "results" , "traits" , "taxa" , "taxa_excluded" )
+    df1 <- trait_db %>% semi_join(abundances, "Taxa")
+    df2 <- abundances %>% semi_join(trait_db, "Taxa")
+    df3 <- abundances[!abundances$Taxa %in% df2$Taxa, "Taxa"]
+    if (length(df3) == 0) (df3 <- NA)
+    res.list <- list(res, df1, df2, df3)
+    names(res.list) <- c("results", "traits", "taxa", "taxa_excluded")
     res.list
-
   }
 }

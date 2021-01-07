@@ -21,7 +21,6 @@
 #' data_agr <- aggregate_taxa(data_bio)
 #' abundance(data_agr, tax_lev = "Family")
 #' abundance(data_agr, tax_lev = "Family", unassigned = TRUE)
-
 abundance <- function(x, tax_lev = "Taxa", unassigned = FALSE) {
 
   # check if the object d is of class "biomonitoR"
@@ -34,7 +33,7 @@ abundance <- function(x, tax_lev = "Taxa", unassigned = FALSE) {
     tax <- to_bin(tax)
   }
 
-  if (! unassigned) {
+  if (!unassigned) {
     if ("unassigned" %in% tax[, 1]) {
       z <- which(tax[, 1] == "unassigned") # find the row corresponding to the unassigned
       tax <- tax[-z, ] # remove unassigned row from the species count

@@ -18,33 +18,32 @@
 #' @seealso \code{\link{aggregatoR}}
 
 
-combTaxa <- function( x, ntaxa = 2 , taxLev = "Taxa" ){
-
+combTaxa <- function(x, ntaxa = 2, taxLev = "Taxa") {
   .Deprecated("combine_taxa", package = "biomonitoR")
 
   # check if the object x is of class "biomonitoR"
-  classCheck( x )
+  classCheck(x)
 
   # get the data.frame at the desired taxonomic level
-  DF <- x[[ taxLev ]]
+  DF <- x[[taxLev]]
 
-  if( inherits( x , "bin" ) ){
-    DF <- to_bin( DF )
+  if (inherits(x, "bin")) {
+    DF <- to_bin(DF)
   }
 
   # remove unassigned row from the species count if present
-  if( "unassigned" %in% DF[ , 1 ] ){
-    z <- which( DF[ , 1 ] == "unassigned" )
-    DF <- DF[ -z , ] # remove unassigned row from the species count
+  if ("unassigned" %in% DF[, 1]) {
+    z <- which(DF[, 1] == "unassigned")
+    DF <- DF[-z, ] # remove unassigned row from the species count
   }
 
   # list all the combination of x taxa taken n at time
-  cbn <- combn( nrow( DF ) , ntaxa )
-  DF.sub <- lapply( seq( ncol( cbn ) ) , function( x ) DF[ cbn[ , x ] , ] )
+  cbn <- combn(nrow(DF), ntaxa)
+  DF.sub <- lapply(seq(ncol(cbn)), function(x) DF[cbn[, x], ])
 
   # sum the abundances of the n-th combination of DF.sub and change the label
-  DF.agg <- lapply( DF.sub , FUN = agg_fun )
+  DF.agg <- lapply(DF.sub, FUN = agg_fun)
 
   # create a data.frame to store the results
-  return( do.call( rbind, DF.agg ) )
+  return(do.call(rbind, DF.agg))
 }

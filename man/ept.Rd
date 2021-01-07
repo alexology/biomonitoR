@@ -25,9 +25,10 @@ data_agr <- aggregate_taxa(data_bio)
 ept(data_agr)
 
 # ept should return the same results as the function get_taxa_richness
-ept( data_agr , tax_lev = "Family" )
-get_taxa_richness( data_agr ,
-  taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) , tax_lev = "Family" )
+ept(data_agr, tax_lev = "Family")
+get_taxa_richness(data_agr,
+  taxa = c("Ephemeroptera", "Plecoptera", "Trichoptera"), tax_lev = "Family"
+)
 }
 \seealso{
 \link{aggregate_taxa} \link{get_taxa_richness}

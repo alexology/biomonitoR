@@ -50,8 +50,6 @@
 #'
 #' # base 2
 #' shannon(data_agr, base = 2)
-#'
-#'
 #' @export simpson
 #' @export esimpson
 #' @export invsimpson

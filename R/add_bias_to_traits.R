@@ -31,9 +31,7 @@
 #'
 #' add_bias_to_traits(data_ts_av, fuzzy = TRUE, col_blocks = col_blocks)[1:5, 1:5]
 #' add_bias_to_traits(data_ts_av, fuzzy = TRUE, col_blocks = col_blocks, SD = 0.01)[1:5, 1:5]
-
-
-add_bias_to_traits <- function(x, fuzzy = TRUE, col_blocks = NULL,  SD = 0.001) {
+add_bias_to_traits <- function(x, fuzzy = TRUE, col_blocks = NULL, SD = 0.001) {
 
   # simulate modalities of duplicated traits
   # at first a small bias is addedd to the original traits with rnorm

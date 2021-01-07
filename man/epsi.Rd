@@ -66,15 +66,17 @@ All the information used for \code{epsi()} calculation can be retrieved with the
 data(macro_ex)
 data_bio <- as_biomonitor(macro_ex)
 data_agr <- aggregate_taxa(data_bio)
-epsi( data_agr )
+epsi(data_agr)
 
 # provide your own score sistem. Scores and aggregation rules are for example purpose only.
 
-epsi_scores <- data.frame( Taxon = c( "Ephemerellidae" , "Leuctridae" , "Chironomidae" ) ,
- Scores = c( 0.1 , 0.5 , 0.2 ) )
-epsi_acc <- data.frame( Taxon = "Ephemerellidae" , Correct_Taxon = "Chironomidae" )
+epsi_scores <- data.frame(
+  Taxon = c("Ephemerellidae", "Leuctridae", "Chironomidae"),
+  Scores = c(0.1, 0.5, 0.2)
+)
+epsi_acc <- data.frame(Taxon = "Ephemerellidae", Correct_Taxon = "Chironomidae")
 
-epsi( data_agr , method = epsi_scores , agg = epsi_acc , traceB = TRUE )
+epsi(data_agr, method = epsi_scores, agg = epsi_acc, traceB = TRUE)
 }
 \references{
 Turley MD, Bilotta GS, Chadd RP, Extence CA, Brazier RE, Burnside NG, Pickwell AG. 2016. A sediment-specific family-level biomonitoring tool to identify the impacts of fine sediment in temperate rivers and streams. Ecological Indicators 70, 151-165.

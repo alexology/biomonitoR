@@ -57,7 +57,6 @@
 #'
 #' # traits random sampling
 #' data_ts_st <- sample_traits(data_ts)
-#'
 #' @seealso [aggregate_taxa]
 #'
 #' @export

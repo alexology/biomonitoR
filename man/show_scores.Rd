@@ -15,8 +15,8 @@ show_scores(index = NULL, method = NULL)
 This function print the databases used for the calculation of several indices implemented in biomonitoR.
 }
 \examples{
-show_scores( index = "aspt", method = "spa" )
-show_scores( index = "life", method = "extence" )
+show_scores(index = "aspt", method = "spa")
+show_scores(index = "life", method = "extence")
 }
 \seealso{
 \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}, \code{\link{psi}}, \code{\link{epsi}}

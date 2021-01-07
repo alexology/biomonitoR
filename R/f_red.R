@@ -103,26 +103,25 @@
 #' data_agr <- aggregate_taxa(data_bio)
 #' data_ts <- assign_traits(data_agr)
 #' # averaging
-#' data_ts_av <- average_traits( data_ts )
+#' data_ts_av <- average_traits(data_ts)
 #'
-#' col_blocks <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+#' col_blocks <- c(8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8)
 #'
-#' f_red( data_agr , trait_db = data_ts_av , type = "F" , col_blocks = col_blocks )
-#' f_red( data_agr , trait_db = data_ts_av , type = "F" , col_blocks = col_blocks ,
-#'        correction = "cailliez" )
+#' f_red(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+#' f_red(data_agr,
+#'   trait_db = data_ts_av, type = "F", col_blocks = col_blocks,
+#'   correction = "cailliez"
+#' )
 #'
-#' library( ade4 )
+#' library(ade4)
 #'
-#' rownames( data_ts_av ) <- data_ts_av$Taxa
-#' traits_prep <- prep.fuzzy( data_ts_av[ , -1 ], col.blocks = col_blocks )
+#' rownames(data_ts_av) <- data_ts_av$Taxa
+#' traits_prep <- prep.fuzzy(data_ts_av[, -1], col.blocks = col_blocks)
 #'
-#' traits_dist <- ktab.list.df( list( traits_prep ) )
-#' traits_dist <- dist.ktab( traits_dist , type = "F" )
+#' traits_dist <- ktab.list.df(list(traits_prep))
+#' traits_dist <- dist.ktab(traits_dist, type = "F")
 #'
-#' f_red( data_agr , trait_db = traits_dist   )
-#'
-#'
-#'
+#' f_red(data_agr, trait_db = traits_dist)
 #' @seealso [aggregatoR]
 #'
 #' @references Biggs, R., Schluter, M., Biggs, D., Bohensky, E. L., BurnSilver, S.,
@@ -171,221 +170,222 @@
 #'
 #' @export
 
-f_red <- function( x , trait_db = NULL, tax_lev = "Taxa" , type = NULL , traitSel = FALSE , col_blocks = NULL,  distance = "gower", zerodist_rm = FALSE , traceB = FALSE , correction = "none" , set_param = NULL ){
+f_red <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel = FALSE, col_blocks = NULL, distance = "gower", zerodist_rm = FALSE, traceB = FALSE, correction = "none", set_param = NULL) {
 
   #  check if the object x is of class "biomonitoR"
-  classCheck( x )
+  classCheck(x)
 
   # useful for transforming data to 0-1 later
-  if( inherits( x , "bin" ) ){
+  if (inherits(x, "bin")) {
     BIN <- TRUE
-  } else { BIN <- FALSE }
+  } else {
+    BIN <- FALSE
+  }
 
 
   # list set_param for fine tuning of some functions
-  if( is.null( set_param ) ){
-    set_param <- list( tol = 1e-07 , cor.zero = TRUE )
+  if (is.null(set_param)) {
+    set_param <- list(tol = 1e-07, cor.zero = TRUE)
   } else {
-    set_param_def <- list( tol = 1e-07 , cor.zero = TRUE )
-    set_param_def[ names( set_param ) ] <- set_param
+    set_param_def <- list(tol = 1e-07, cor.zero = TRUE)
+    set_param_def[names(set_param)] <- set_param
     set_param <- set_param_def
   }
 
-  if( is.null( trait_db ) ) stop( "Please provide trait_db" )
+  if (is.null(trait_db)) stop("Please provide trait_db")
 
-  if( ! is.data.frame( trait_db ) & ! class( trait_db ) %in% "dist"  ) stop( "trait_db must be a data.frame or a dist object" )
+  if (!is.data.frame(trait_db) & !class(trait_db) %in% "dist") stop("trait_db must be a data.frame or a dist object")
 
-  if( is.null( type ) & is.data.frame( trait_db ) ) stop( "Please specify a type when trait_db is a data.frame" )
+  if (is.null(type) & is.data.frame(trait_db)) stop("Please specify a type when trait_db is a data.frame")
 
-  if( ! identical( type , "F" ) & ! identical( type , "C" ) & is.data.frame( trait_db )  ) stop( "type must be C or F when trait_db is a data.frame" )
+  if (!identical(type, "F") & !identical(type, "C") & is.data.frame(trait_db)) stop("type must be C or F when trait_db is a data.frame")
 
-  if( identical( type , "C" ) & identical( distance , "gower" ) ) ( warning( "Are you sure to use gower distance when type is C?" ) )
+  if (identical(type, "C") & identical(distance, "gower")) (warning("Are you sure to use gower distance when type is C?"))
 
-  if( identical( type , "F" ) & identical( distance , "euclidean" ) ) ( warning( "Are you sure to use euclidean distance when type is F?" ) )
+  if (identical(type, "F") & identical(distance, "euclidean")) (warning("Are you sure to use euclidean distance when type is F?"))
 
 
-  if( is.data.frame( trait_db ) ){
+  if (is.data.frame(trait_db)) {
 
     # trim and capitalise the first letter in the DB provided by the user
-    trait_db[ , "Taxa"] <- as.factor( sapply( trim( trait_db[ , "Taxa"] ), capWords, USE.NAMES = F ) )
+    trait_db[, "Taxa"] <- as.factor(sapply(trim(trait_db[, "Taxa"]), capWords, USE.NAMES = F))
 
-    if( identical( type , "F" ) ){
-      if( is.null( col_blocks ) ) ( stop( "Please provide col_blocks" ) )
+    if (identical(type, "F")) {
+      if (is.null(col_blocks)) (stop("Please provide col_blocks"))
       # check if the number of traits in trait_db equals the sum of col_blocks, otherwise stop
-      if( ( ncol( trait_db ) - 1 ) != sum( col_blocks ) ) ( stop( "The number of traits in trait_db is not equal to the sum of col_blocks" ) )
+      if ((ncol(trait_db) - 1) != sum(col_blocks)) (stop("The number of traits in trait_db is not equal to the sum of col_blocks"))
     }
   }
 
 
-  if( traitSel & is.data.frame( trait_db ) ){
-    Index <- rep( 1:length( col_blocks ) , col_blocks )
-    rma <- select.list( names( trait_db[ -which( names( trait_db ) %in% "Taxa")] ) , title = "Traits selection"  , graphics = TRUE , multiple = T )
+  if (traitSel & is.data.frame(trait_db)) {
+    Index <- rep(1:length(col_blocks), col_blocks)
+    rma <- select.list(names(trait_db[-which(names(trait_db) %in% "Taxa")]), title = "Traits selection", graphics = TRUE, multiple = T)
     # new col_blocks based on user trait selection, -1 because there is the column called Taxa
-    col_blocks <- as.vector( table( Index[ which( names( trait_db ) %in% rma ) - 1 ] ) )
+    col_blocks <- as.vector(table(Index[which(names(trait_db) %in% rma) - 1]))
 
     #  trait must have at least two modalities
-    if( any( col_blocks < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
+    if (any(col_blocks < 2)) (stop("a trait must have at least two modalities"))
 
     trait_db <- trait_db %>%
-      select( c("Taxa", rma) )
+      select(c("Taxa", rma))
     # trim and capitalise the column Taxa of the user' trait database
-    trait_db$Taxa <- apply( as.data.frame( trim( trait_db$Taxa ) ) , 1 , capWords)
-
+    trait_db$Taxa <- apply(as.data.frame(trim(trait_db$Taxa)), 1, capWords)
   }
 
 
-  st.names <- names( x[[ 1 ]][ -1 ] )
+  st.names <- names(x[[1]][-1])
 
-  DF <- x[[ tax_lev ]]
-  names( DF )[ 1 ] <- "Taxon"
+  DF <- x[[tax_lev]]
+  names(DF)[1] <- "Taxon"
 
-  taxa <- as.character( DF$Taxon )
-  DF$Taxon <- as.character( DF$Taxon )
+  taxa <- as.character(DF$Taxon)
+  DF$Taxon <- as.character(DF$Taxon)
 
 
-  if( is.data.frame( trait_db ) ) {
-
-    trait_db$Taxa <- as.character( trait_db$Taxa )
-    names( trait_db )[ names( trait_db ) %in% "Taxa" ] <- "Taxon"
+  if (is.data.frame(trait_db)) {
+    trait_db$Taxa <- as.character(trait_db$Taxa)
+    names(trait_db)[names(trait_db) %in% "Taxa"] <- "Taxon"
 
     # be sure that taxonomic and functional database have the same order and taxa
-    DF <- merge( DF , trait_db[ , "Taxon" , drop = FALSE ] , by = "Taxon" )
+    DF <- merge(DF, trait_db[, "Taxon", drop = FALSE], by = "Taxon")
 
 
     # transform the data.frame from abundance to presence-absence if needed
-    if( BIN ){
-      DF <- to_bin( DF )
+    if (BIN) {
+      DF <- to_bin(DF)
     }
 
-    trait_db <- merge( trait_db , DF[ , "Taxon" , drop = FALSE ] , by = "Taxon" )
+    trait_db <- merge(trait_db, DF[, "Taxon", drop = FALSE], by = "Taxon")
 
-    if( any( ! DF$Taxon == trait_db$Taxon ) ) stop( "Taxonomic and traits taxa does not match, ask the maintainer" )
+    if (any(!DF$Taxon == trait_db$Taxon)) stop("Taxonomic and traits taxa does not match, ask the maintainer")
 
     # just to be sure we are doing the right things
-    rownames( trait_db ) <- trait_db$Taxon
+    rownames(trait_db) <- trait_db$Taxon
 
-    if( identical( type , "F" ) ) ( tr_prep <- prep.fuzzy( trait_db[ , -1 ], col.blocks = col_blocks ) )
-    if( identical( type , "B" ) ) ( tr_prep <- prep.binary( trait_db[ , -1 ], col.blocks = col_blocks ) )
-    if( identical( type , "C" ) ) ( tr_prep <- trait_db[ , -1 ] )
+    if (identical(type, "F")) (tr_prep <- prep.fuzzy(trait_db[, -1], col.blocks = col_blocks))
+    if (identical(type, "B")) (tr_prep <- prep.binary(trait_db[, -1], col.blocks = col_blocks))
+    if (identical(type, "C")) (tr_prep <- trait_db[, -1])
 
-    rownames( tr_prep ) <- trait_db$Taxon
+    rownames(tr_prep) <- trait_db$Taxon
 
 
     # computing functional dissimilarity between species given their traits values
-    if ( identical( distance  ,"gower" ) ) {
-      mat_dissim <- ktab.list.df( list( tr_prep ) )
-      mat_dissim <- dist.ktab( mat_dissim , type = "F")
+    if (identical(distance, "gower")) {
+      mat_dissim <- ktab.list.df(list(tr_prep))
+      mat_dissim <- dist.ktab(mat_dissim, type = "F")
     }
 
-    if ( identical( distance  , "euclidean" ) ) mat_dissim <- dist( scale( tr_prep ) ) # scaling if continuous traits
+    if (identical(distance, "euclidean")) mat_dissim <- dist(scale(tr_prep)) # scaling if continuous traits
   }
 
-  if( class( trait_db ) %in% "dist" ){
+  if (class(trait_db) %in% "dist") {
 
     # keep only common taxa between taxonomic and traits database
     # to do this the dist object is transformed into matrix
-    trait_db <- as.matrix( trait_db )
-    DF <- merge( DF , data.frame( Taxon = rownames( trait_db ) ) , by = "Taxon" )
+    trait_db <- as.matrix(trait_db)
+    DF <- merge(DF, data.frame(Taxon = rownames(trait_db)), by = "Taxon")
 
     # transform the data.frame from abundance to presence-absence if needed
-    if( BIN ){
-      DF <- to_bin( DF )
+    if (BIN) {
+      DF <- to_bin(DF)
     }
 
-    trait_db <- trait_db[ rownames( trait_db ) %in% DF$Taxon ,  ]
-    trait_db <- trait_db[ , colnames( trait_db ) %in% DF$Taxon , drop = FALSE  ]
-    trait_db <- trait_db[ match( DF$Taxon , rownames( trait_db ) ) , ]
-    trait_db <- trait_db[ , match( DF$Taxon , colnames( trait_db ) ) , drop = FALSE ]
+    trait_db <- trait_db[rownames(trait_db) %in% DF$Taxon, ]
+    trait_db <- trait_db[, colnames(trait_db) %in% DF$Taxon, drop = FALSE]
+    trait_db <- trait_db[match(DF$Taxon, rownames(trait_db)), ]
+    trait_db <- trait_db[, match(DF$Taxon, colnames(trait_db)), drop = FALSE]
 
     # check if names are in the same order, both on rows and columns
-    if( any( ! DF$Taxon == rownames( trait_db ) ) ) stop( "Taxonomic and traits taxa does not match, ask the maintainer" )
-    if( any( ! DF$Taxon == colnames( trait_db ) ) ) stop( "Taxonomic and traits taxa does not match, ask the maintainer" )
+    if (any(!DF$Taxon == rownames(trait_db))) stop("Taxonomic and traits taxa does not match, ask the maintainer")
+    if (any(!DF$Taxon == colnames(trait_db))) stop("Taxonomic and traits taxa does not match, ask the maintainer")
 
-    mat_dissim <- as.dist( trait_db )
-
-
+    mat_dissim <- as.dist(trait_db)
   }
 
-  if( zerodist_rm & any( mat_dissim < set_param$tol ) ){
-    zero_corr <- zero_dist_traits( x = DF , mat_dissim = mat_dissim , BIN = BIN  )
-    DF <- zero_corr[[ 1 ]]
-    mat_dissim <- zero_corr[[ 2 ]]
+  if (zerodist_rm & any(mat_dissim < set_param$tol)) {
+    zero_corr <- zero_dist_traits(x = DF, mat_dissim = mat_dissim, BIN = BIN)
+    DF <- zero_corr[[1]]
+    mat_dissim <- zero_corr[[2]]
     df1 <- zero_corr[[3]]
   }
 
 
-  if( identical( distance , "gower" ) ){
-    if( identical( correction , "cailliez" ) ) mat_dissim <- suppressWarnings( cailliez( mat_dissim , tol = set_param$tol , cor.zero = set_param$cor.zero ) )
-    if( identical( correction , "lingoes" ) ) mat_dissim <- suppressWarnings( lingoes( mat_dissim  , tol = set_param$tol , cor.zero = set_param$cor.zero ) )
-    if( identical( correction , "sqrt" ) ) mat_dissim <- suppressWarnings( sqrt( mat_dissim ) )
-    if( identical( correction , "quasi" ) ) mat_dissim <- suppressWarnings( quasieuclid( mat_dissim ) )
+  if (identical(distance, "gower")) {
+    if (identical(correction, "cailliez")) mat_dissim <- suppressWarnings(cailliez(mat_dissim, tol = set_param$tol, cor.zero = set_param$cor.zero))
+    if (identical(correction, "lingoes")) mat_dissim <- suppressWarnings(lingoes(mat_dissim, tol = set_param$tol, cor.zero = set_param$cor.zero))
+    if (identical(correction, "sqrt")) mat_dissim <- suppressWarnings(sqrt(mat_dissim))
+    if (identical(correction, "quasi")) mat_dissim <- suppressWarnings(quasieuclid(mat_dissim))
   }
 
-  suppressWarnings( euclid.dist.mat <- is.euclid( mat_dissim , tol = set_param$tol ) )
+  suppressWarnings(euclid.dist.mat <- is.euclid(mat_dissim, tol = set_param$tol))
 
-  if( any( mat_dissim < set_param$tol ) ){
+  if (any(mat_dissim < set_param$tol)) {
     MES <- "At least a pair of species has the same traits. Depending on your needs, this could be an issue."
-    message( MES )
+    message(MES)
   } else {
     MES <- "no taxa with the same traits"
   }
 
 
-  rownames( DF ) <- DF[ , "Taxon" ]
+  rownames(DF) <- DF[, "Taxon"]
 
-  tax_sim <- divc( DF[ , -1 ] )$diversity
-  raoQ <- divc( DF[ , -1 ]  , mat_dissim , scale = T)$diversity
+  tax_sim <- divc(DF[, -1])$diversity
+  raoQ <- divc(DF[, -1], mat_dissim, scale = T)$diversity
 
 
   FRed <- tax_sim - raoQ
-  FRed[ FRed < 0 ] <- 0
+  FRed[FRed < 0] <- 0
 
-  res <- data.frame( GS_rich = tax_sim , raoQ = raoQ, fred = FRed )
-  rownames( res ) <- st.names
+  res <- data.frame(GS_rich = tax_sim, raoQ = raoQ, fred = FRed)
+  rownames(res) <- st.names
 
-  if( ! traceB ){
-    return( res )
+  if (!traceB) {
+    return(res)
   }
 
-  if( traceB ){
+  if (traceB) {
     # chech for NA, it could happen that a trait is filled with NAs
     # but this can be done only when trait_db is a data.frame
-    if( is.data.frame( trait_db ) ){
-      if( any( is.na( tr_prep ) ) ){
-        tax.na <- as.data.frame( which( is.na( tr_prep ) , arr.ind = TRUE ) )
-        tax.na[ , 1 ] <- trait_db[ tax.na[ , 1 ] , 1 ]
-        tax.na[ , 2 ] <- colnames( trait_db[ , -1 ] )[ tax.na[ , 2 ]  ]
-        colnames( tax.na ) <- c( "Taxa" , "Traits" )
-        tax.na <- tax.na[ order( tax.na[ , 1 ] ) ,  ]
-        rownames( tax.na ) <- NULL
-      } else { tax.na <- "No NAs detected" }
-
+    if (is.data.frame(trait_db)) {
+      if (any(is.na(tr_prep))) {
+        tax.na <- as.data.frame(which(is.na(tr_prep), arr.ind = TRUE))
+        tax.na[, 1] <- trait_db[tax.na[, 1], 1]
+        tax.na[, 2] <- colnames(trait_db[, -1])[tax.na[, 2]]
+        colnames(tax.na) <- c("Taxa", "Traits")
+        tax.na <- tax.na[order(tax.na[, 1]), ]
+        rownames(tax.na) <- NULL
+      } else {
+        tax.na <- "No NAs detected"
+      }
     } else {
       tax.na <- "NAs cannot be detected when trait_db is a dist object"
     }
 
     # prepare traits to be returned
-    if( ! is.data.frame( trait_db ) ){
+    if (!is.data.frame(trait_db)) {
       # returns the distance matrix used for the calculation as a dist object
-      trait_db <- as.dist( trait_db )
+      trait_db <- as.dist(trait_db)
     }
 
     # prepare traits to be returned
-    if( is.data.frame( trait_db ) ){
+    if (is.data.frame(trait_db)) {
       # returns the distance matrix used for the calculation as a dist object
-      rownames( trait_db ) <- NULL
+      rownames(trait_db) <- NULL
     }
 
 
-    if(  exists( "df1" , inherits = FALSE  ) ){
+    if (exists("df1", inherits = FALSE)) {
       df1 <- df1
-    } else { df1 <- MES }
+    } else {
+      df1 <- MES
+    }
 
 
-    rownames( DF ) <- NULL
+    rownames(DF) <- NULL
 
-    res.list <- list( res , trait_db , DF ,  correction = correction , tax.na , df1 )
-    names( res.list ) <- c( "results" , "traits" , "taxa" , "correction" , "NA_detection" , "duplicated_traits" )
-    return( res.list )
+    res.list <- list(res, trait_db, DF, correction = correction, tax.na, df1)
+    names(res.list) <- c("results", "traits", "taxa", "correction", "NA_detection", "duplicated_traits")
+    return(res.list)
   }
 }

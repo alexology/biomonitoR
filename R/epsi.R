@@ -51,62 +51,63 @@
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
-#' epsi( data_agr )
+#' epsi(data_agr)
 #'
 #' # provide your own score sistem. Scores and aggregation rules are for example purpose only.
 #'
-#' epsi_scores <- data.frame( Taxon = c( "Ephemerellidae" , "Leuctridae" , "Chironomidae" ) ,
-#'  Scores = c( 0.1 , 0.5 , 0.2 ) )
-#' epsi_acc <- data.frame( Taxon = "Ephemerellidae" , Correct_Taxon = "Chironomidae" )
+#' epsi_scores <- data.frame(
+#'   Taxon = c("Ephemerellidae", "Leuctridae", "Chironomidae"),
+#'   Scores = c(0.1, 0.5, 0.2)
+#' )
+#' epsi_acc <- data.frame(Taxon = "Ephemerellidae", Correct_Taxon = "Chironomidae")
 #'
-#' epsi( data_agr , method = epsi_scores , agg = epsi_acc , traceB = TRUE )
-
-
-epsi <- function( x , method = "uk" ,  agg = FALSE , abucl = c( 1 , 9 , 99 , 999 ) , exceptions = NULL , traceB = FALSE ){
+#' epsi(data_agr, method = epsi_scores, agg = epsi_acc, traceB = TRUE)
+epsi <- function(x, method = "uk", agg = FALSE, abucl = c(1, 9, 99, 999), exceptions = NULL, traceB = FALSE) {
 
   # check if the object x is of class "biomonitoR"
-  classCheck( x )
+  classCheck(x)
 
   # useful for transforming data to 0-1 later
-  if( inherits( x , "bin" ) ){
+  if (inherits(x, "bin")) {
     BIN <- TRUE
-  } else { BIN <- FALSE }
+  } else {
+    BIN <- FALSE
+  }
 
 
-  if( ! identical( method , "uk" ) & !( is.data.frame( method ) ) ) ( stop( "Please provide a valid method" )  )
-  if( ! any( isFALSE( agg ) | isTRUE( agg ) | is.data.frame( agg ) ) ) stop( "agg is not one of TRUE, FALSE or a custom data.frame" )
+  if (!identical(method, "uk") & !(is.data.frame(method))) (stop("Please provide a valid method"))
+  if (!any(isFALSE(agg) | isTRUE(agg) | is.data.frame(agg))) stop("agg is not one of TRUE, FALSE or a custom data.frame")
 
   # Store tree for searching for inconsistencies
-  Tree <- x[[ "Tree" ]][ , 1:10 ]
+  Tree <- x[["Tree"]][, 1:10]
 
-  numb <- c( which( names( x ) == "Tree" ) , which( names( x ) == "Taxa" ) ) # position of the Tree and Taxa data.frame in the biomonitoR object that need to be removed
+  numb <- c(which(names(x) == "Tree"), which(names(x) == "Taxa")) # position of the Tree and Taxa data.frame in the biomonitoR object that need to be removed
 
   # remove Tree and Taxa data.frame
-  x <- x[ -numb ]
-  st.names <- names( x[[ 1 ]][ -1 ] ) # names of the sampled sites
+  x <- x[-numb]
+  st.names <- names(x[[1]][-1]) # names of the sampled sites
   # initialize the aggregation method
   z <- NULL
 
 
   # the following if statement is to allow the users to provide their own bmwp scores and aggregation rules.
   # y represents the method to be used
-  if( is.data.frame( method ) == TRUE ){
-    if( isFALSE( agg ) ){
+  if (is.data.frame(method) == TRUE) {
+    if (isFALSE(agg)) {
       y <- method
     } else {
       y <- method
       z <- agg
     }
   } else {
-
-    if( ! ( isTRUE( agg ) | isFALSE( agg ) ) ) stop( "When using the deafult method agg can only be TRUE or FALSE")
+    if (!(isTRUE(agg) | isFALSE(agg))) stop("When using the deafult method agg can only be TRUE or FALSE")
 
     # assign the default scores and aggregation rules as needed by the user
 
-    if( identical( method , "uk" ) ) {
+    if (identical(method, "uk")) {
       y <- epsi_scores_fam_uk
 
-      if( isTRUE( agg ) ){
+      if (isTRUE(agg)) {
         z <- epsi_acc_fam_uk
       }
     }
@@ -118,74 +119,79 @@ epsi <- function( x , method = "uk" ,  agg = FALSE , abucl = c( 1 , 9 , 99 , 999
   # The first step is to change the column name of the first column of each data.frame to
   # an unique name
 
-  for( i in 1:length( x ) ){
-    colnames( x[[ i ]] )[ 1 ] <- "Taxon"
+  for (i in 1:length(x)) {
+    colnames(x[[i]])[1] <- "Taxon"
   }
 
   # rbind the data.frames representing a taxonomic level each
   # aggregate is not necessary here
-  DF <- do.call( "rbind" , x )
-  rownames( DF ) <- NULL
-  DF <- aggregate(. ~ Taxon, DF , sum)
+  DF <- do.call("rbind", x)
+  rownames(DF) <- NULL
+  DF <- aggregate(. ~ Taxon, DF, sum)
 
-  if( ! is.null( exceptions ) ){
-    DF <- manage_exceptions( DF = DF , Tree = Tree , y = y , Taxon = exceptions )
-    if( ! is.data.frame( DF ) ){
-      exce <- DF[[ 2 ]]
-      DF <- DF[[ 1 ]]
+  if (!is.null(exceptions)) {
+    DF <- manage_exceptions(DF = DF, Tree = Tree, y = y, Taxon = exceptions)
+    if (!is.data.frame(DF)) {
+      exce <- DF[[2]]
+      DF <- DF[[1]]
     }
   }
 
   # merge the new data.frame with the score data.frame and change
   # the names of the taxa according to the aggregation rules if needed
-  DF <- merge( DF, y[ , "Taxon" , drop = FALSE ] )
-  if( ! is.null( z ) ){
-    taxa.to.change <- as.character( DF$Taxon[ DF$Taxon %in% z$Taxon  ] )
-    DF <- checkBmwpFam( DF = DF , famNames = z , stNames = st.names )
+  DF <- merge(DF, y[, "Taxon", drop = FALSE])
+  if (!is.null(z)) {
+    taxa.to.change <- as.character(DF$Taxon[DF$Taxon %in% z$Taxon])
+    DF <- checkBmwpFam(DF = DF, famNames = z, stNames = st.names)
   } else {
     DF <- DF
   }
 
-  DF <- manage_inconsistencies( DF = DF , Tree = Tree )
-  if( ! is.data.frame( DF ) ){
-    incon <- DF[[ 2 ]]
-    DF <- DF[[ 1 ]]
+  DF <- manage_inconsistencies(DF = DF, Tree = Tree)
+  if (!is.data.frame(DF)) {
+    incon <- DF[[2]]
+    DF <- DF[[1]]
   }
 
-  if( BIN ){
-    DF <- to_bin( DF )
+  if (BIN) {
+    DF <- to_bin(DF)
   }
 
-  if( traceB == "TRUE" ){
+  if (traceB == "TRUE") {
     df2 <- DF
   }
 
-  class.fun <- function( x ) cut( x , breaks = c( abucl , 10^18 ) , labels = 1:length( abucl ) , include.lowest = TRUE , right = TRUE )
-  abu.class <- apply( apply( DF[ , - 1 , drop = FALSE ] , 2 , class.fun ) , 2 , as.numeric )
-  abu.class[ is.na( abu.class ) ] <- 0
-  DF <- data.frame( Taxon = DF[ , 1 ] , abu.class , check.names = FALSE )
-  tot.mer <- merge( y , DF )
+  class.fun <- function(x) cut(x, breaks = c(abucl, 10^18), labels = 1:length(abucl), include.lowest = TRUE, right = TRUE)
+  abu.class <- apply(apply(DF[, -1, drop = FALSE], 2, class.fun), 2, as.numeric)
+  abu.class[is.na(abu.class)] <- 0
+  DF <- data.frame(Taxon = DF[, 1], abu.class, check.names = FALSE)
+  tot.mer <- merge(y, DF)
 
-  EPSI <- data.frame( tot.mer[ , "Scores" ] * tot.mer[ , st.names , drop = FALSE ] )
-  epsi.sens <- apply( EPSI[ tot.mer[ , "Scores" ] >= 0.5 , , drop = FALSE] , 2 , sum )
-  epsi.insens <- apply( EPSI , 2 , sum )
+  EPSI <- data.frame(tot.mer[, "Scores"] * tot.mer[, st.names, drop = FALSE])
+  epsi.sens <- apply(EPSI[tot.mer[, "Scores"] >= 0.5, , drop = FALSE], 2, sum)
+  epsi.insens <- apply(EPSI, 2, sum)
   res <- epsi.sens / epsi.insens * 100
-  names( res ) <- st.names
+  names(res) <- st.names
 
-  if( traceB == FALSE ){
+  if (traceB == FALSE) {
     res
   } else {
-    if(  ! exists( "taxa.to.change" ) ){
+    if (!exists("taxa.to.change")) {
       df3 <- NA
-    } else { df3 <- taxa.to.change }
-    if( exists( "exce" , inherits = FALSE  ) ){
+    } else {
+      df3 <- taxa.to.change
+    }
+    if (exists("exce", inherits = FALSE)) {
       df4 <- exce
-    } else { df4 <- "none" }
-    if( exists( "incon" , inherits = FALSE  ) ){
+    } else {
+      df4 <- "none"
+    }
+    if (exists("incon", inherits = FALSE)) {
       df5 <- incon
-    } else { df5 <- "none" }
-    res <- list( results = res , taxa_df = df2 , epsi_df = tot.mer , composite_taxa = df3 , exceptions = df4 ,  parent_child_pairs = df5 )
+    } else {
+      df5 <- "none"
+    }
+    res <- list(results = res, taxa_df = df2, epsi_df = tot.mer, composite_taxa = df3, exceptions = df4, parent_child_pairs = df5)
     res
   }
-
 }

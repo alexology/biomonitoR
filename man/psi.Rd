@@ -74,28 +74,31 @@ All the information used for \code{psi} calculation can be retrieved with \code{
 data(macro_ex)
 data_bio <- as_biomonitor(macro_ex)
 data_agr <- aggregate_taxa(data_bio)
-psi( data_agr )
+psi(data_agr)
 
 # change abundance classes
-psi( data_agr , abucl = c( 1 , 9 , 99 , 999 , 9999 ) )
+psi(data_agr, abucl = c(1, 9, 99, 999, 9999))
 
 # provide your own score system. Scores and aggregation rules are for example purpose only.
 
-psi_fssr <- data.frame( Taxon = c( "Ephemerellidae" , "Leuctridae" , "Chironomidae" ) ,
- FSSR_Score = c( 1 , 2 , 3 ) )
+psi_fssr <- data.frame(
+  Taxon = c("Ephemerellidae", "Leuctridae", "Chironomidae"),
+  FSSR_Score = c(1, 2, 3)
+)
 
-psi_acc <- data.frame( Taxon = "Ephemerellidae" , Correct_Taxon = "Chironomidae" )
+psi_acc <- data.frame(Taxon = "Ephemerellidae", Correct_Taxon = "Chironomidae")
 
-fssr_scores <- data.frame( FSSR = rep( 1:3 , each = 3 ) , ABUCLASS = rep( 1:3 , 3 ) ,
-SCORE = c( 9 , 10 , 11 , 8 , 9 , 10 , 7 , 7 , 7 ) )
+fssr_scores <- data.frame(
+  FSSR = rep(1:3, each = 3), ABUCLASS = rep(1:3, 3),
+  SCORE = c(9, 10, 11, 8, 9, 10, 7, 7, 7)
+)
 
 # without aggregation rules
-psi( data_agr , method = psi_fssr , fssr_scores = fssr_scores , traceB = TRUE )
+psi(data_agr, method = psi_fssr, fssr_scores = fssr_scores, traceB = TRUE)
 
 # with aggregation
 
-psi( data_agr , method = psi_fssr , agg = psi_acc , fssr_scores = fssr_scores , traceB = TRUE )
-
+psi(data_agr, method = psi_fssr, agg = psi_acc, fssr_scores = fssr_scores, traceB = TRUE)
 }
 \references{
 Extence CA, Chadd RP, England J, Dunbar MJ, Wood PJ, Taylor ED. 2013. The assessment of fine sediment accumulation in rivers using macro-invertebrate community response. River Research and Applications 29, 17-55.

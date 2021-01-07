@@ -29,8 +29,6 @@
 #' richness(oglio_agg, tax_lev = "Species")
 #' richness(oglio_agg, tax_lev = "Genus")
 #' richness(oglio_agg, tax_lev = "Family")
-
-
 aggregate_taxa <- function(x, FUN = sum) {
 
   # check if the object x is of class "biomonitoR"

@@ -80,8 +80,6 @@
 #' data_agr <- aggregate_taxa(data_bio)
 #' aspt(data_agr)
 #' aspt(data_agr, method = "spa")
-
-
 aspt <- function(x, method = "ita", agg = FALSE, exceptions = NULL, traceB = FALSE) {
 
   # check if the object x is of class "biomonitoR"

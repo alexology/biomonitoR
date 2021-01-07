@@ -3,6 +3,7 @@
 * Function names changed according to the tidiverse style guide.
 * Argument `fuzzy` added to the `add_bias_to_traits()` function. This option allows to add bias also to non-fuzzy data. Argument `traceB` removed.
 * Code styled according to the tidyverse style guide with the `styler` package.
+* Tests added with the testthat package.
 
 2# biomonitoR 0.9
 

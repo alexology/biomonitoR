@@ -12,52 +12,54 @@
 #' @examples
 #' data(macro_ex)
 #' macro_ex_mod <- quick_rename(macro_ex, group = "mi")
-
-
-
-quick_rename <- function( x , group = "mi", write_table = FALSE ){
-
-  if( is.null( group ) == TRUE ){
+quick_rename <- function(x, group = "mi", write_table = FALSE) {
+  if (is.null(group) == TRUE) {
     stop("Please provide a valid group")
   }
 
-  if( ! any( names( x ) %in% "Taxa" ) ) ( stop( " A column called Taxa is missing" ) )
+  if (!any(names(x) %in% "Taxa")) (stop(" A column called Taxa is missing"))
 
-  dfName <- deparse( substitute( x ) )
-  tempNames <- suggestUserNames( x , group = group )
+  dfName <- deparse(substitute(x))
+  tempNames <- suggestUserNames(x, group = group)
 
-  if(length(tempNames) == 0){
+  if (length(tempNames) == 0) {
     message("All names are correct")
     return(x)
   }
-  else{
+  else {
     wrong <- tempNames$wrongNames
     correct <- tempNames$correctNames
     result <- as.character(x$Taxa)
     n <- length(wrong)
-    if ( length( wrong ) != length( correct ) ) {
+    if (length(wrong) != length(correct)) {
       stop("pattern and replacement do not have the same length.")
     }
-    for(i in 1:n){
+    for (i in 1:n) {
       result[which(result == wrong[i])] <- correct[i]
     }
 
     x$Taxa <- result
-    if( any( x$Taxa == "REMOVe" ) ){
-      x <- x[ x$Taxa != "REMOVe" , ]
+    if (any(x$Taxa == "REMOVe")) {
+      x <- x[x$Taxa != "REMOVe", ]
     }
 
-    x$Taxa <- factor( sub( "_" , " ", x$Taxa ) )
+    x$Taxa <- factor(sub("_", " ", x$Taxa))
 
     # write.table if needed by the user, allowing to overwrite or not
-    if( write_table ){
-      dfNameChange <- paste0( dfName , "_mod" , ".txt" )
-      if( dfNameChange %in% list.files(path = ".") ){
-        choice.list <-  c( "Overwrite" , "Quit" )
-        res <- menu( choice.list , title = paste( "Overwrite the existing " , dfNameChange , " file?" , sep = ""  ) )
-        if( res == 1) { write.table( x , file = dfNameChange , quote = TRUE , append = FALSE , row.names = FALSE ) }
-        else { stop( "Operation stopped by the user" ) }
-      } else{ write.table( x , file = dfNameChange , quote = TRUE , append = FALSE , row.names = FALSE ) }
+    if (write_table) {
+      dfNameChange <- paste0(dfName, "_mod", ".txt")
+      if (dfNameChange %in% list.files(path = ".")) {
+        choice.list <- c("Overwrite", "Quit")
+        res <- menu(choice.list, title = paste("Overwrite the existing ", dfNameChange, " file?", sep = ""))
+        if (res == 1) {
+          write.table(x, file = dfNameChange, quote = TRUE, append = FALSE, row.names = FALSE)
+        }
+        else {
+          stop("Operation stopped by the user")
+        }
+      } else {
+        write.table(x, file = dfNameChange, quote = TRUE, append = FALSE, row.names = FALSE)
+      }
     }
 
     x

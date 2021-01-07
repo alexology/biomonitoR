@@ -37,8 +37,6 @@
 #' # Toy example:
 #' alien <- c("Laccobius", "Setodes bulgaricus", "Caenidae")
 #' bioco(data_agr, alien = alien, dfref = "mi")
-
-
 bioco <- function(x, alien = NULL, dfref = NULL, digits = 2) {
 
   #  check if the object x is of class "biomonitoR"

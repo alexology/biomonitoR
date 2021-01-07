@@ -16,8 +16,6 @@
 #' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
 #' get_taxa_richness(data_agr, taxa = "Ephemeroptera", tax_lev = "Family")
-
-
 get_taxa_richness <- function(x, taxa = NULL, tax_lev = NULL) {
 
   # check if the object x is of class "biomonitoR"

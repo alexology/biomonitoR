@@ -83,27 +83,27 @@ data(macro_ex)
 
 data_bio <- as_biomonitor(macro_ex)
 data_agr <- aggregate_taxa(data_bio)
-data_ts <- assign_traits( data_agr )
+data_ts <- assign_traits(data_agr)
 # averaging
-data_ts_av <- average_traits( data_ts )
+data_ts_av <- average_traits(data_ts)
 
-col_blocks <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+col_blocks <- c(8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8)
 
-f_disp( data_agr , trait_db = data_ts_av , type = "F" , col_blocks = col_blocks )
-f_disp( data_agr , trait_db = data_ts_av , type = "F" , col_blocks = col_blocks ,
-       nbdim = 10 , correction = "cailliez" )
+f_disp(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+f_disp(data_agr,
+  trait_db = data_ts_av, type = "F", col_blocks = col_blocks,
+  nbdim = 10, correction = "cailliez"
+)
 
-library( ade4 )
+library(ade4)
 
-rownames( data_ts_av ) <- data_ts_av$Taxa
-traits_prep <- prep.fuzzy( data_ts_av[ , -1 ], col.blocks = col_blocks )
+rownames(data_ts_av) <- data_ts_av$Taxa
+traits_prep <- prep.fuzzy(data_ts_av[, -1], col.blocks = col_blocks)
 
-traits_dist <- ktab.list.df( list( traits_prep ) )
-traits_dist <- dist.ktab( traits_dist , type = "F" )
+traits_dist <- ktab.list.df(list(traits_prep))
+traits_dist <- dist.ktab(traits_dist, type = "F")
 
-f_disp( data_agr , trait_db = traits_dist   )
-
-
+f_disp(data_agr, trait_db = traits_dist)
 }
 \references{
 Barber, C. B., Dobkin, D. P., & Huhdanpaa, H. (1996).

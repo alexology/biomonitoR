@@ -30,8 +30,6 @@
 #' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
 #' richness(data_agr, tax_lev = "Family")
-
-
 allrich <- function(x) {
 
   # check if the object x is of class "biomonitoR"

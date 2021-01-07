@@ -86,7 +86,6 @@ data_ts_av <- average_traits(data_ts_sub)
 
 # traits random sampling
 data_ts_st <- sample_traits(data_ts)
-
 }
 \seealso{
 \link{aggregate_taxa}

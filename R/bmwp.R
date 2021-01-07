@@ -74,67 +74,68 @@
 #' data_agr <- aggregate_taxa(data_bio)
 #' bmwp(data_agr)
 #' bmwp(data_agr, method = "spa")
-
-bmwp <- function( x , method = "ita" , agg = FALSE , exceptions = NULL , traceB = FALSE ) {
+bmwp <- function(x, method = "ita", agg = FALSE, exceptions = NULL, traceB = FALSE) {
 
   # check if the object x is of class "biomonitoR"
-  classCheck( x )
+  classCheck(x)
 
   # useful for transforming data to 0-1 later
-  if( inherits( x , "bin" ) ){
+  if (inherits(x, "bin")) {
     BIN <- TRUE
-  } else { BIN <- FALSE }
+  } else {
+    BIN <- FALSE
+  }
 
-  if( !  any( identical( method , "ita" ) , identical( method , "spa" ) , identical( method , "a" ) , identical( method , "uk" ) ) & !( is.data.frame( method ) ) ) ( stop( "Please provide a valid method" )  )
-  if( ! any( isFALSE( agg ) | isTRUE( agg ) | is.data.frame( agg ) ) ) stop( "agg is not one of TRUE, FALSE or a custom data.frame" )
+  if (!any(identical(method, "ita"), identical(method, "spa"), identical(method, "a"), identical(method, "uk")) & !(is.data.frame(method))) (stop("Please provide a valid method"))
+  if (!any(isFALSE(agg) | isTRUE(agg) | is.data.frame(agg))) stop("agg is not one of TRUE, FALSE or a custom data.frame")
 
-  numb <- c( which( names( x ) == "Tree" ) , which( names( x ) == "Taxa" ) ) # position of the Tree and Taxa data.frame in the biomonitoR object that need to be removed
+  numb <- c(which(names(x) == "Tree"), which(names(x) == "Taxa")) # position of the Tree and Taxa data.frame in the biomonitoR object that need to be removed
 
   # Store tree for searching for inconsistencies
-  Tree <- x[[ "Tree" ]][ , 1:10 ]
+  Tree <- x[["Tree"]][, 1:10]
 
   # remove Tree and Taxa data.frame
-  x <- x[ -numb ]
-  st.names <- names( x[[ 1 ]][ -1 ]) # names of the sampled sites
+  x <- x[-numb]
+  st.names <- names(x[[1]][-1]) # names of the sampled sites
   # initialize the aggregation method
   z <- NULL
 
   # the following if statement is to allow the users to provide their own bmwp scores and aggregation rules.
   # y represents the method to be used
-  if( is.data.frame( method ) ){
-
-    if( ! ( isFALSE( agg ) | is.data.frame( agg ) ) ){
-      stop( "When method is a data.frame agg needs to be FALSE or a data.frame containing the aggregation rules")
+  if (is.data.frame(method)) {
+    if (!(isFALSE(agg) | is.data.frame(agg))) {
+      stop("When method is a data.frame agg needs to be FALSE or a data.frame containing the aggregation rules")
     }
-    if( isFALSE( agg ) ){
+    if (isFALSE(agg)) {
       y <- method
     } else {
       y <- method
       z <- agg
     }
   } else {
-
-    if( ! ( isTRUE( agg ) | isFALSE( agg ) ) ) stop( "When using the deafult method agg can only be TRUE or FALSE")
+    if (!(isTRUE(agg) | isFALSE(agg))) stop("When using the deafult method agg can only be TRUE or FALSE")
 
     # assign the default scores and aggregation rules as needed by the user
 
 
-    if( identical( method , "a" ) ) ( y <- aspt_scores_fam_armitage )
+    if (identical(method, "a")) (y <- aspt_scores_fam_armitage)
 
-    if( identical( method , "ita" ) ) {
+    if (identical(method, "ita")) {
       y <- aspt_scores_fam_ita
 
-      if( isTRUE( agg ) ){
+      if (isTRUE(agg)) {
         z <- aspt_acc_fam_ita
       }
     }
 
-    if( identical( method , "spa" ) ) { y <- aspt_scores_fam_spa }
+    if (identical(method, "spa")) {
+      y <- aspt_scores_fam_spa
+    }
 
-    if( identical( method , "uk" ) ) {
+    if (identical(method, "uk")) {
       y <- aspt_scores_fam_uk
 
-      if( isTRUE( agg ) ){
+      if (isTRUE(agg)) {
         z <- aspt_acc_fam_uk
       }
     }
@@ -146,78 +147,83 @@ bmwp <- function( x , method = "ita" , agg = FALSE , exceptions = NULL , traceB 
   # The first step is to change the column name of the first column of each data.frame to
   # an unique name
 
-  for( i in 1:length( x ) ){
-    colnames( x[[ i ]] )[ 1 ] <- "Taxon"
+  for (i in 1:length(x)) {
+    colnames(x[[i]])[1] <- "Taxon"
   }
 
   # rbind the data.frames representing a taxonomic level each
   # aggregate is not necessary here
-  DF <- do.call( "rbind" , x )
-  rownames( DF ) <- NULL
-  DF <- aggregate(. ~ Taxon, DF , sum)
+  DF <- do.call("rbind", x)
+  rownames(DF) <- NULL
+  DF <- aggregate(. ~ Taxon, DF, sum)
 
-  if( ! is.null( exceptions ) ){
-    DF <- manage_exceptions( DF = DF , Tree = Tree , y = y , Taxon = exceptions )
-    if( ! is.data.frame( DF ) ){
-      exce <- DF[[ 2 ]]
-      DF <- DF[[ 1 ]]
+  if (!is.null(exceptions)) {
+    DF <- manage_exceptions(DF = DF, Tree = Tree, y = y, Taxon = exceptions)
+    if (!is.data.frame(DF)) {
+      exce <- DF[[2]]
+      DF <- DF[[1]]
     }
   }
 
   # transform the data.frame from abundance to presence-absence if needed
-  if( BIN ){
-    DF <- to_bin( DF )
+  if (BIN) {
+    DF <- to_bin(DF)
   }
 
 
   # merge the new data.frame with the score data.frame and change
   # the names of the taxa according to the aggregation rules if needed
-  DF <- merge( DF, y[ , "Taxon" , drop = FALSE ] )
-  if( ! is.null( z ) ){
-    taxa.to.change <- as.character( DF$Taxon[ DF$Taxon %in% z$Taxon  ] )
-    DF <- checkBmwpFam( DF = DF , famNames = z , stNames = st.names )
+  DF <- merge(DF, y[, "Taxon", drop = FALSE])
+  if (!is.null(z)) {
+    taxa.to.change <- as.character(DF$Taxon[DF$Taxon %in% z$Taxon])
+    DF <- checkBmwpFam(DF = DF, famNames = z, stNames = st.names)
   } else {
     DF <- DF
   }
 
 
-  DF <- manage_inconsistencies( DF = DF , Tree = Tree )
-  if( ! is.data.frame( DF ) ){
-    incon <- DF[[ 2 ]]
-    DF <- DF[[ 1 ]]
+  DF <- manage_inconsistencies(DF = DF, Tree = Tree)
+  if (!is.data.frame(DF)) {
+    incon <- DF[[2]]
+    DF <- DF[[1]]
   }
 
   # transform the data.frame from abundance to presence-absence
-  DF <- merge( y , DF )
+  DF <- merge(y, DF)
 
-  if( traceB == TRUE ){
+  if (traceB == TRUE) {
     df1 <- DF
   }
 
-  tot.mer <- data.frame( DF[ , 1:2 , drop = FALSE ], ( DF[ , -c( 1:2 ) ] > 0 ) * 1 )
+  tot.mer <- data.frame(DF[, 1:2, drop = FALSE], (DF[, -c(1:2)] > 0) * 1)
 
-  names( tot.mer )[ -c( 1 , 2 ) ] <- st.names # assign site names, the first wo columns are taxa and scores
-  tot.st <- which( names( tot.mer ) %in% st.names ) # column numbers of the site columns
-  ntaxa <- colSums( tot.mer[ , -c( 1:2 ) , drop = F ] == 1 ) # taxa richness, used as denominator in the bmwp calculation
-  tot.aspt <- apply( tot.mer$Scores * tot.mer[ , tot.st, drop = F ] , 2 , sum ) # calculate the bmwp as bmwp times the taxa richness
+  names(tot.mer)[-c(1, 2)] <- st.names # assign site names, the first wo columns are taxa and scores
+  tot.st <- which(names(tot.mer) %in% st.names) # column numbers of the site columns
+  ntaxa <- colSums(tot.mer[, -c(1:2), drop = F] == 1) # taxa richness, used as denominator in the bmwp calculation
+  tot.aspt <- apply(tot.mer$Scores * tot.mer[, tot.st, drop = F], 2, sum) # calculate the bmwp as bmwp times the taxa richness
 
 
   # return the results
-  if( ! traceB ){
+  if (!traceB) {
     tot.aspt
   } else {
-    if( ! exists( "taxa.to.change" , inherits = FALSE ) ){
+    if (!exists("taxa.to.change", inherits = FALSE)) {
       df2 <- "none"
-    } else { df2 <- taxa.to.change }
-    if( exists( "exce" , inherits = FALSE  ) ){
+    } else {
+      df2 <- taxa.to.change
+    }
+    if (exists("exce", inherits = FALSE)) {
       df3 <- exce
-    } else { df3 <- "none" }
-    if( exists( "incon" , inherits = FALSE  ) ){
+    } else {
+      df3 <- "none"
+    }
+    if (exists("incon", inherits = FALSE)) {
       df4 <- incon
-    } else { df4 <- "none" }
+    } else {
+      df4 <- "none"
+    }
 
 
-    list( results = tot.aspt , taxa_df = df1 , composite_taxa = df2 , exceptions = df3 ,  parent_child_pairs = df4 )
+    list(results = tot.aspt, taxa_df = df1, composite_taxa = df2, exceptions = df3, parent_child_pairs = df4)
   }
-
 }

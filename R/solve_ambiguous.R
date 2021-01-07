@@ -19,27 +19,25 @@
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
-#' data_mcwp <- solve_ambiguous(data_agr, method = "MCWP" )
+#' data_mcwp <- solve_ambiguous(data_agr, method = "MCWP")
 #' data_mcwp_bio <- as_biomonitor(data_mcwp)
 #' data_mcwp <- aggregate_taxa(data_mcwp_bio)
-
-
-solve_ambiguous <- function( x , method = "MCWP" ){
+solve_ambiguous <- function(x, method = "MCWP") {
 
   # check if the object d is of class "biomonitoR"
-  classCheck( x )
+  classCheck(x)
 
   # Extract the taxonomic tree
-  tree <- x[[ "Tree" ]]
+  tree <- x[["Tree"]]
 
   # order tree from the rows containing species to the rows containing only Phylum ( if present, obviously )
   # order also alphabetically ( maybe not needed )
-  n.tl <- apply( tree[ , 1:10 ] , 1 , function( x ) max( which( x != "" ) ) )
-  tree <- tree[ order( n.tl , decreasing = TRUE ) , ]
+  n.tl <- apply(tree[, 1:10], 1, function(x) max(which(x != "")))
+  tree <- tree[order(n.tl, decreasing = TRUE), ]
 
   # Extract the taxa list as charcater and get the position of the column called taxa in the taxonomic tree
-  taxa <- as.character( tree$Taxa )
-  taxa.pos <- which( names( tree ) == "Taxa" )
+  taxa <- as.character(tree$Taxa)
+  taxa.pos <- which(names(tree) == "Taxa")
 
   # intialize the vector that will store the taxa already processed
   # this should speed up the computation time
@@ -50,29 +48,28 @@ solve_ambiguous <- function( x , method = "MCWP" ){
   # if any of the taxa along the tree from taxlev -1 until Phylum is present in the column taxa we have a problem of
   # ambiguous taxa and we store the results in the taxa.acc vector. The higher taxonomic levels are then deleted from the database.
 
-  if( method == "RPKC" ){
-
-    for( i in 1:length( taxa ) ){
-      temp <- tree[  i , 1:(taxa.pos - 1) ]
-      temp <- temp[ temp != "" ]
-      temp <- temp[ -length( temp ) ]
-      if( any( temp %in% taxa ) ){
-        taxa.acc <- c( taxa.acc , temp[ temp %in% taxa ] )
+  if (method == "RPKC") {
+    for (i in 1:length(taxa)) {
+      temp <- tree[i, 1:(taxa.pos - 1)]
+      temp <- temp[temp != ""]
+      temp <- temp[-length(temp)]
+      if (any(temp %in% taxa)) {
+        taxa.acc <- c(taxa.acc, temp[temp %in% taxa])
       }
     }
 
     # get unique higher taxa names
-    taxa.acc <- unique( taxa.acc )
+    taxa.acc <- unique(taxa.acc)
 
     # make a vector of the same length as the column taxa, set value to TRUE
     # and set ambiguous taxa to FALSE. The orignal taxa list is used
     # instead of the ordered
-    taxa.pc <- rep( TRUE, length( taxa ) )
-    taxa.pc[ x[[ "Taxa" ]][ , "Taxon" ] %in% taxa.acc ] <- FALSE
+    taxa.pc <- rep(TRUE, length(taxa))
+    taxa.pc[x[["Taxa"]][, "Taxon"] %in% taxa.acc] <- FALSE
 
     # parents are thus removed from the database
-    DF <- x[[ "Taxa" ]][ taxa.pc , ]
-    names( DF )[ 1 ] <- "Taxa"
+    DF <- x[["Taxa"]][taxa.pc, ]
+    names(DF)[1] <- "Taxa"
   }
 
   # MCWP: basically, the taxonomic tree of each taxon is retrieved. The presence of ambiguos taxa in the taxonomic tree is
@@ -80,39 +77,38 @@ solve_ambiguous <- function( x , method = "MCWP" ){
   # The taxon name of the i-th row is set to the highest taxonomic level if ambiguous parents are present, otherwise no.
 
 
-  if( method == "MCWP" ){
-    for( i in 1:length( taxa ) ){
-      if( any( taxa[ i ] %in% taxa.acc ) ){
+  if (method == "MCWP") {
+    for (i in 1:length(taxa)) {
+      if (any(taxa[i] %in% taxa.acc)) {
         next
       } else {
-        temp <- tree[ tree$Taxa %in% taxa[ i ] , -c( taxa.pos : ncol( tree ) ) ]
-        temp.tax_lev <- names( temp[ , temp != "" ] )
-        temp <- temp[ temp != "" ]
-        temp <- temp[ -length( temp ) ]
-        if( ! any( temp %in% taxa ) ){
-          taxa.acc <- c( taxa.acc , taxa[ i ] )
+        temp <- tree[tree$Taxa %in% taxa[i], -c(taxa.pos:ncol(tree))]
+        temp.tax_lev <- names(temp[, temp != ""])
+        temp <- temp[temp != ""]
+        temp <- temp[-length(temp)]
+        if (!any(temp %in% taxa)) {
+          taxa.acc <- c(taxa.acc, taxa[i])
           next
         } else {
-          t.taxa <- min( which( temp %in% taxa ) )
-          taxa.up <- temp[ t.taxa ]
-          tax_lev.up <- temp.tax_lev[ t.taxa ]
-          taxa[ tree[ , tax_lev.up ] %in% taxa.up ] <- taxa.up
-          taxa.acc <- c( taxa.acc , taxa.up )
+          t.taxa <- min(which(temp %in% taxa))
+          taxa.up <- temp[t.taxa]
+          tax_lev.up <- temp.tax_lev[t.taxa]
+          taxa[tree[, tax_lev.up] %in% taxa.up] <- taxa.up
+          taxa.acc <- c(taxa.acc, taxa.up)
         }
       }
     }
 
     # build the data.frame and order it as the original
-    DF <-  data.frame( Taxa = as.factor( taxa ) , tree[ , ( taxa.pos + 1 ):ncol( tree ) , drop = FALSE ] )
-    DF <- DF[ match( 1:nrow( tree ) , as.numeric( rownames( DF ) ) ) , ]
-
+    DF <- data.frame(Taxa = as.factor(taxa), tree[, (taxa.pos + 1):ncol(tree), drop = FALSE])
+    DF <- DF[match(1:nrow(tree), as.numeric(rownames(DF))), ]
   }
 
   # aggregate to avoid duplicated rownames
-  DF <- aggregate( . ~ Taxa , data = DF , FUN = sum )
+  DF <- aggregate(. ~ Taxa, data = DF, FUN = sum)
 
-  if( inherits( x , "bin" ) ){
-    DF <- to_bin( DF )
+  if (inherits(x, "bin")) {
+    DF <- to_bin(DF)
   }
 
   DF

@@ -44,55 +44,59 @@
 
 
 
-selectPcoaAxes <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 ){
+selectPcoaAxes <- function(x, method = "legendre", tresh = NULL, nbdim = 15) {
+  .Deprecated("select_pcoa_axes", package = "biomonitoR")
 
-  .Deprecated( "select_pcoa_axes" , package = "biomonitoR" )
-
-  if( identical( method , "cor" ) & is.null( tresh )  ) { tresh <- 0.7 }
-  if( identical( method , "legendre" ) & is.null( tresh )  ) { tresh <- 0.7 }
-  if( identical( method , "maire" ) & is.null( tresh )  ) { tresh <- 0.01 }
-
-  if( suppressWarnings( is.euclid( x ) )  & identical( method , "cor" ) ){
-    res <- pcoaQuality( x , "none" , method = "cor" , tresh = tresh  )
+  if (identical(method, "cor") & is.null(tresh)) {
+    tresh <- 0.7
+  }
+  if (identical(method, "legendre") & is.null(tresh)) {
+    tresh <- 0.7
+  }
+  if (identical(method, "maire") & is.null(tresh)) {
+    tresh <- 0.01
   }
 
-  if( suppressWarnings( is.euclid( x ) )  & identical( method , "legendre" ) ){
-    res <- pcoaQuality( x , "none" , method = "legendre" , tresh = tresh  )
+  if (suppressWarnings(is.euclid(x)) & identical(method, "cor")) {
+    res <- pcoaQuality(x, "none", method = "cor", tresh = tresh)
   }
 
-  if( suppressWarnings( is.euclid( x ) )  & identical( method , "maire" ) ){
-    res <- pcoaQuality( x , "none" , method = "maire" , tresh = tresh  )
+  if (suppressWarnings(is.euclid(x)) & identical(method, "legendre")) {
+    res <- pcoaQuality(x, "none", method = "legendre", tresh = tresh)
   }
 
-  if( ! suppressWarnings( is.euclid( x ) ) & identical( method , "cor" ) ){
-    res1 <- pcoaQuality( x , "none" , method = "cor" , tresh = tresh )
-    res2 <- pcoaQuality( x , "cailliez" , method = "cor" , tresh = tresh )
-    res3 <- pcoaQuality( x , "lingoes" , method = "cor" , tresh = tresh )
-    res4 <- pcoaQuality( x , "sqrt" , method = "cor" , tresh = tresh )
-    res5 <- pcoaQuality( x , "quasi" , method = "cor" , tresh = tresh )
-    res <- suppressWarnings( bind_rows( res1 , res2 , res3 , res4 , res5 ) )
+  if (suppressWarnings(is.euclid(x)) & identical(method, "maire")) {
+    res <- pcoaQuality(x, "none", method = "maire", tresh = tresh)
   }
 
-  if( ! suppressWarnings( is.euclid( x ) ) & identical( method , "legendre" ) ){
-    res1 <- pcoaQuality( x , "none" , method = "legendre" , tresh = tresh )
-    res2 <- pcoaQuality( x , "cailliez" , method = "legendre" , tresh = tresh )
-    res3 <- pcoaQuality( x , "lingoes" , method = "legendre" , tresh = tresh )
-    res4 <- pcoaQuality( x , "sqrt" , method = "legendre" , tresh = tresh )
-    res5 <- pcoaQuality( x , "quasi" , method = "legendre" , tresh = tresh )
-    res <- suppressWarnings( bind_rows( res1 , res2 , res3 , res4 , res5 ) )
+  if (!suppressWarnings(is.euclid(x)) & identical(method, "cor")) {
+    res1 <- pcoaQuality(x, "none", method = "cor", tresh = tresh)
+    res2 <- pcoaQuality(x, "cailliez", method = "cor", tresh = tresh)
+    res3 <- pcoaQuality(x, "lingoes", method = "cor", tresh = tresh)
+    res4 <- pcoaQuality(x, "sqrt", method = "cor", tresh = tresh)
+    res5 <- pcoaQuality(x, "quasi", method = "cor", tresh = tresh)
+    res <- suppressWarnings(bind_rows(res1, res2, res3, res4, res5))
+  }
+
+  if (!suppressWarnings(is.euclid(x)) & identical(method, "legendre")) {
+    res1 <- pcoaQuality(x, "none", method = "legendre", tresh = tresh)
+    res2 <- pcoaQuality(x, "cailliez", method = "legendre", tresh = tresh)
+    res3 <- pcoaQuality(x, "lingoes", method = "legendre", tresh = tresh)
+    res4 <- pcoaQuality(x, "sqrt", method = "legendre", tresh = tresh)
+    res5 <- pcoaQuality(x, "quasi", method = "legendre", tresh = tresh)
+    res <- suppressWarnings(bind_rows(res1, res2, res3, res4, res5))
   }
 
 
-  if( ! suppressWarnings( is.euclid( x ) ) & identical( method , "maire" ) ){
-    res1 <- pcoaQuality( x , "none" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res2 <- pcoaQuality( x , "cailliez" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res3 <- pcoaQuality( x , "lingoes" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res4 <- pcoaQuality( x , "sqrt" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res5 <- pcoaQuality( x , "quasi" , method = "maire" , nbdim = nbdim , tresh = tresh )
-    res <- suppressWarnings( bind_rows( res1 , res2 , res3 , res4 , res5 ) )
+  if (!suppressWarnings(is.euclid(x)) & identical(method, "maire")) {
+    res1 <- pcoaQuality(x, "none", method = "maire", nbdim = nbdim, tresh = tresh)
+    res2 <- pcoaQuality(x, "cailliez", method = "maire", nbdim = nbdim, tresh = tresh)
+    res3 <- pcoaQuality(x, "lingoes", method = "maire", nbdim = nbdim, tresh = tresh)
+    res4 <- pcoaQuality(x, "sqrt", method = "maire", nbdim = nbdim, tresh = tresh)
+    res5 <- pcoaQuality(x, "quasi", method = "maire", nbdim = nbdim, tresh = tresh)
+    res <- suppressWarnings(bind_rows(res1, res2, res3, res4, res5))
   }
 
 
   res
-
 }

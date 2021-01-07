@@ -44,10 +44,7 @@ print.asb <- function(x, ...) {
 #'
 #' # exclude Chironomidae
 #' subset(data_bio, exclude = "Chironomidae")
-
-
 subset.asb <- function(x, ..., taxa = NULL, exclude = NULL) {
-
   DF <- as.data.frame(x)
 
   if (is.null(taxa) & is.null(exclude)) {

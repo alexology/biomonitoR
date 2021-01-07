@@ -7,6 +7,6 @@
 #'
 #' @export
 
-bin <- function( x ){
-  sum( any( x > 0 ) )
+bin <- function(x) {
+  sum(any(x > 0))
 }

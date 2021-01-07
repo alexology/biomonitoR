@@ -119,8 +119,6 @@ shannon(data_agr)
 
 # base 2
 shannon(data_agr, base = 2)
-
-
 }
 \references{
 Magurran, A. E. (2004). Measuring biological diversity. Blackwell Science ltd.

@@ -25,33 +25,30 @@
 #' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
 #' eptd(data_agr)
-
-
-eptd <- function ( x , base = 10 , eptd_families = NULL , traceB = FALSE ){
+eptd <- function(x, base = 10, eptd_families = NULL, traceB = FALSE) {
 
   # check if the object x is of class "biomonitoR"
-  classCheck( x )
+  classCheck(x)
 
-  if( is.null( eptd_families ) ){
+  if (is.null(eptd_families)) {
     eptd_fam <- c("Heptageniidae", "Ephemeridae", "Leptophlebiidae", "Brachycentridae", "Goeridae", "Polycentropodidae", "Limnephilidae", "Odontoceridae", "Dolichopodidae", "Stratiomyidae", "Dixidae", "Empididae", "Athericidae", "Nemouridae")
   } else {
-    eptd_fam <- trimws( capWords( as.character( eptd_families ) ) )
+    eptd_fam <- trimws(capWords(as.character(eptd_families)))
   }
 
-  x_fam <- x[[ "Family" ]]
+  x_fam <- x[["Family"]]
 
-  if( inherits( x , "bin" ) ){
-    x_fam <- to_bin( x_fam )
+  if (inherits(x, "bin")) {
+    x_fam <- to_bin(x_fam)
   }
 
-  x_eptd <- x_fam[ which( x_fam$Family %in% eptd_fam ) , , drop = F ]
-  temp <- log( apply( x_eptd[ , -1 , drop = FALSE ] , 2 , sum ) + 1 , base = base )
+  x_eptd <- x_fam[which(x_fam$Family %in% eptd_fam), , drop = F]
+  temp <- log(apply(x_eptd[, -1, drop = FALSE], 2, sum) + 1, base = base)
 
-  if( ! traceB ){
+  if (!traceB) {
     temp
   } else {
-    rownames( x_eptd ) <- NULL
-    list( results = temp , taxa_df = x_eptd )
+    rownames(x_eptd) <- NULL
+    list(results = temp, taxa_df = x_eptd)
   }
-
 }
