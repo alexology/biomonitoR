@@ -1,12 +1,12 @@
 #' @describeIn allindices Shannon index
 
-shannon <- function( x , base = exp( 1 ) , taxLev = "Taxa" ){
+shannon <- function( x , base = exp( 1 ) , tax_lev = "Taxa" ){
 
   # check if the object x is of class "biomonitoR"
   classCheck( x )
 
   # get the data.frame at the desired taxonomic level
-  DF <-  x[[ taxLev ]]
+  DF <-  x[[ tax_lev ]]
 
   if( inherits( x , "bin" ) ){
     DF <- to_bin( DF )

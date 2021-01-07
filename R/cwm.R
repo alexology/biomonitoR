@@ -1,7 +1,9 @@
 #' Community-Weighted Mean values of traits
 #'
+#' @description
 #' This function calculates the community-weighted means of trait categories.
 #'
+#' @details
 #' This function first takes the abundance table corresponding to the desired
 #' taxonomic level from the `x` aggregatoR object.
 #'
@@ -13,22 +15,20 @@
 #' Finally, the community mean trait values are calculated using the transformed
 #' abundances (using the `trans` function) as weigths
 #'
-#' @param x results of function aggregatoR
-#' @param traitDB a trait data base with a column `Taxa` and the other columns
+#' @param x Results of the function `aggregate_taxa()`.
+#' @param trait_db A trait data base with a column `Taxa` and the other columns
 #'   containing the traits.
 #'   By default, the data base used is the one from Tachet *et al* (2010) that
 #'   can be retrieved from
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
-#' @param taxLev character string giving the taxonomic level used to retrieve
+#' @param tax_lev Character string giving the taxonomic level used to retrieve
 #'   trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #'   `"Family"` as returned by the [aggregatoR] function.
-#' @param trans the function used to transform the abundances, by default
+#' @param trans The function used to transform the abundances, by default
 #'   `log1p`.
-#' @param traceB when set to TRUE returns a list with the results of the cwm function
+#' @param traceB When set to TRUE returns a list with the results of the cwm function
 #'   and the traits value used for the calculation.
-#'
-#' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
 #'
 #' @return a table with the CWM values of each trait (trait modality)
 #'
@@ -38,20 +38,20 @@
 #' @examples
 #' data(macro_ex)
 #'
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' data.ts <- traitScaling( data.agR )
+#' data.bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' data_ts <- assign_traits( data_agR )
 #'
 #' # averaging
-#' data.ts.av <- traitsMean( data.ts )
+#' data_ts_av <- traitsMean( data_ts )
 #'
 #' # community specialization index
-#' cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa", trans = log1p)
-#' cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa",
+#' cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa", trans = log1p)
+#' cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa",
 #'     trans = function(x) {
 #'         ifelse(x > 0, 1, 0)
 #'     })
-#' cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Genus", trans = log1p)
+#' cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Genus", trans = log1p)
 #'
 #' @seealso [aggregatoR]
 #'
@@ -65,19 +65,19 @@
 #'
 #' @export
 
-cwm <- function( x , traitDB = NULL, taxLev = "Taxa" , trans = log1p , traceB = FALSE ) {
+cwm <- function( x , trait_db = NULL, tax_lev = "Taxa" , trans = log1p , traceB = FALSE ) {
 
   classCheck( x )
 
-  if( is.null( traitDB )){
+  if( is.null( trait_db )){
     trait_db = traitsTachet
   } else {
-    trait_db = traitDB
+    trait_db = trait_db
   }
 
 
-  if (! taxLev %in% c("Family", "Genus", "Species", "Taxa")) {
-    return("taxLev should be one of the following: Family, Genus, Species or Taxa")
+  if (! tax_lev %in% c("Family", "Genus", "Species", "Taxa")) {
+    return("tax_lev should be one of the following: Family, Genus, Species or Taxa")
   }
 
   # create dummy variables to avoid R CMD check NOTES
@@ -86,7 +86,7 @@ cwm <- function( x , traitDB = NULL, taxLev = "Taxa" , trans = log1p , traceB = 
     Abundance <- Sample <- Weight <- Affinity <- totWeight <-
     weightedAffinity <- Category <- . <- NULL
 
-  abundances <- x[[taxLev]]
+  abundances <- x[[tax_lev]]
   colnames(abundances)[1] <- "Taxa"
 
   if( inherits( x , "bin" ) ){

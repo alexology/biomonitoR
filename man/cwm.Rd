@@ -4,26 +4,26 @@
 \alias{cwm}
 \title{Community-Weighted Mean values of traits}
 \usage{
-cwm(x, traitDB = NULL, taxLev = "Taxa", trans = log1p, traceB = FALSE)
+cwm(x, trait_db = NULL, tax_lev = "Taxa", trans = log1p, traceB = FALSE)
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{Results of the function \code{aggregate_taxa()}.}
 
-\item{traitDB}{a trait data base with a column \code{Taxa} and the other columns
+\item{trait_db}{A trait data base with a column \code{Taxa} and the other columns
 containing the traits.
 By default, the data base used is the one from Tachet \emph{et al} (2010) that
 can be retrieved from
 \href{https://www.freshwaterecology.info/}{freshwaterecology.info} website
 (Schmidt-Kloiber & Hering, 2015).}
 
-\item{taxLev}{character string giving the taxonomic level used to retrieve
+\item{tax_lev}{Character string giving the taxonomic level used to retrieve
 trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
 \code{"Family"} as returned by the \link{aggregatoR} function.}
 
-\item{trans}{the function used to transform the abundances, by default
+\item{trans}{The function used to transform the abundances, by default
 \code{log1p}.}
 
-\item{traceB}{when set to TRUE returns a list with the results of the cwm function
+\item{traceB}{When set to TRUE returns a list with the results of the cwm function
 and the traits value used for the calculation.}
 }
 \value{
@@ -44,26 +44,23 @@ trait values from taxa with trait information within this family).
 Finally, the community mean trait values are calculated using the transformed
 abundances (using the \code{trans} function) as weigths
 }
-\note{
-USE WITH CAUTION, STILL IN DEVELOPMENT.
-}
 \examples{
 data(macro_ex)
 
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-data.ts <- traitScaling( data.agR )
+data.bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+data_ts <- assign_traits( data_agR )
 
 # averaging
-data.ts.av <- traitsMean( data.ts )
+data_ts_av <- traitsMean( data_ts )
 
 # community specialization index
-cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa", trans = log1p)
-cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa",
+cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa", trans = log1p)
+cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa",
     trans = function(x) {
         ifelse(x > 0, 1, 0)
     })
-cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Genus", trans = log1p)
+cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Genus", trans = log1p)
 
 }
 \references{

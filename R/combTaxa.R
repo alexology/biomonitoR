@@ -23,6 +23,8 @@
 
 combTaxa <- function( x, ntaxa = 2 , taxLev = "Taxa" ){
 
+  .Deprecated("combine_taxa", package = "biomonitoR")
+
   # check if the object x is of class "biomonitoR"
   classCheck( x )
 

@@ -2,10 +2,10 @@
 #'
 #' This function calculates the taxonomic diversity, taxonomic distinctness and variation of taxonomic distinctness.
 #' @param x results of function aggregatoR
-#' @param complete if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with taxLev
-#' @param taxLev taxonomic level from which the indices are to be calculated
+#' @param complete if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with tax_lev
+#' @param tax_lev taxonomic level from which the indices are to be calculated
 #' @param method available methods are delta (taxonomic diversity), delta.st (taxonomic distinctness) and delta.bin (variation in taxonomic distinctness)
-#' @param taxatree if TRUE dness return a list where the first element is the taxonomic diversity, taxonomic distinctness or variation of taxonomic distinctness and the second elemnt the taxonomic tree
+#' @param taxa_tree if TRUE dness return a list where the first element is the taxonomic diversity, taxonomic distinctness or variation of taxonomic distinctness and the second elemnt the taxonomic tree
 #' @keywords ept
 #' @references Clarke, K. R., & Warwick, R. M. (1998). A taxonomic distinctness index and its statistical properties. Journal of applied ecology, 35(4), 523-531.
 #' @references Clarke, K. R., & Warwick, R. M. (2001). A further biodiversity index applicable to species lists: variation in taxonomic distinctness. Marine ecology Progress series, 216, 265-278.
@@ -22,7 +22,7 @@
 
 
 
-dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxatree = FALSE) {
+dness <- function(x, complete = FALSE, tax_lev = "Genus", method = "delta", taxa_tree = FALSE) {
 
   # check if the object x is of class "biomonitoR"
   classCheck(x)
@@ -30,22 +30,22 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   # check if there are unassigned taxon in the taxonomic tree
   # if present stop the function, unless the user specify unassigned = T
 
-  df <- x[[taxLev]]
+  df <- x[[tax_lev]]
 
   # check if the selected taxonomic level contains a least one taxa
   if( nrow( df ) == 1 & df[ 1 , 1 ] == "unassigned" ){ stop("The selected taxonomic level is empty") }
-  if( taxLev == "Taxa"){ stop("taxLev cannot be equal to Taxa") }
+  if( tax_lev == "Taxa"){ stop("tax_lev cannot be equal to Taxa") }
 
 
-  st.names <- names(df[, -which(names(df) %in% c(taxLev)), drop = FALSE])   # sites name
-  tax <- df[ , taxLev]    # taxa names at the desired taxonomic level taxLev
+  st.names <- names(df[, -which(names(df) %in% c(tax_lev)), drop = FALSE])   # sites name
+  tax <- df[ , tax_lev]    # taxa names at the desired taxonomic level tax_lev
   che.ck <- "unassigned" %in% tax   # check if unassigned is present at the desired taxonomic level
   tree.c <- x[["Tree"]]
   # exclude taxonomic levels with missing information. This feature could be improved in the next future
   exclude <- -which(names(tree.c) %in% c("Taxa", "Subclass", "Subfamily", "Tribus", "Subspecies"))
   tree <- tree.c[ , exclude, drop = FALSE]
   # taxonomic levels to retain
-  tax.pos <- names(tree[, 1:which(names(tree) == taxLev)])
+  tax.pos <- names(tree[, 1:which(names(tree) == tax_lev)])
   # ref.c <- tree.c[ , c(which(names(tree.c) %in%  c( tax.pos, "Taxa" ) ))]
   ref.c <- tree.c[ , c(which(names(tree.c) %in%  tax.pos ))]
   # remove duplicated rows
@@ -53,19 +53,19 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
 
   if(complete == FALSE & che.ck == TRUE) {stop("Unassigned taxon at the desired taxonomic level")}
   if(complete == FALSE & che.ck == FALSE){
-    # retain only the taxonomic levels from order to taxLev and sites
-    taxtree <- merge(ref.c, df, by = taxLev, all = FALSE)
+    # retain only the taxonomic levels from order to tax_lev and sites
+    taxtree <- merge(ref.c, df, by = tax_lev, all = FALSE)
     taxtree <- taxtree[, c( tax.pos , st.names ), drop = FALSE]
   }
 
   if(complete == TRUE & che.ck == TRUE){
-    df <- df[ -which( df[ , taxLev] == "unassigned" ) , ]
-    taxtree <- merge(ref.c, df, by = taxLev, all = FALSE)
+    df <- df[ -which( df[ , tax_lev] == "unassigned" ) , ]
+    taxtree <- merge(ref.c, df, by = tax_lev, all = FALSE)
     taxtree <- taxtree[, c( tax.pos , st.names ), drop = FALSE]
   }
 
   if(complete == TRUE & che.ck == FALSE){
-    taxtree <- merge(ref.c, df, by = taxLev, all = FALSE)
+    taxtree <- merge(ref.c, df, by = tax_lev, all = FALSE)
     taxtree <- taxtree[, c( tax.pos , st.names ), drop = FALSE]
   }
 
@@ -78,9 +78,9 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
     taxtree <- taxtree[, - which(check.col != 1), drop = FALSE]
   }
 
-  # remove columns distinct for all species or with the same taxa name for all the rows (excluding taxLev)
-  # -1 is to eclude taxLev from this computation
-  tax.pos2 <- 1:(which(names(taxtree) == taxLev) - 1)
+  # remove columns distinct for all species or with the same taxa name for all the rows (excluding tax_lev)
+  # -1 is to eclude tax_lev from this computation
+  tax.pos2 <- 1:(which(names(taxtree) == tax_lev) - 1)
   tax.uniq <- apply( taxtree[ , tax.pos2 , drop = FALSE] , 2 , function(x) ( length(unique(x) ) ) )
   col.rm <- -which(tax.uniq == 1 | tax.uniq == nrow(taxtree) )
   if(length(col.rm) != 0) (taxtree <- taxtree[ , col.rm , drop = FALSE ])
@@ -101,6 +101,6 @@ dness <- function(x, complete = FALSE, taxLev = "Genus", method = "delta", taxat
   if(method == "delta.bin") {res <- apply(sites.bin, 2, function( x ) ( delta(x, dis = tax.dis)))}
   if(method == "delta.st") {res <- apply(sites, 2, function( x ) ( delta.st(x, dis = tax.dis)))}
 
-  if(taxatree == FALSE) return(res)
-  if(taxatree == TRUE) return(list(res, taxtree))
+  if(taxa_tree == FALSE) return(res)
+  if(taxa_tree == TRUE) return(list(res, taxtree))
 }

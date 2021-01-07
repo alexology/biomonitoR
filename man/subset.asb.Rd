@@ -7,7 +7,7 @@
 \method{subset}{asb}(x, ..., taxa = NULL, exclude = NULL)
 }
 \arguments{
-\item{x}{results of function \code{asBiomonitor}.}
+\item{x}{results of function \code{as_biomonitor()}.}
 
 \item{...}{further arguments to be passed to or from other methods.}
 
@@ -21,17 +21,17 @@
 }
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
+data_bio <- as_biomonitor(macro_ex)
 
 # select EPT Taxa (Ephemeroptera, Plecoptera and Trichoptera)
 
-subset(data.bio, taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) )
+subset(data_bio, taxa = c("Ephemeroptera", "Plecoptera", "Trichoptera"))
 
 # select Trichoptera excluding the trichopteran family Hydropsychidae
 
-tricho <- subset(data.bio, taxa = "Trichoptera" , exclude = "Hydropsychidae" )
-tricho.agg <- aggregatoR( tricho )
+tricho <- subset(data_bio, taxa = "Trichoptera", exclude = "Hydropsychidae")
+tricho_agg <- aggregate_taxa(tricho)
 
 # exclude Chironomidae
-subset( data.bio , exclude = "Chironomidae" )
+subset(data_bio, exclude = "Chironomidae")
 }

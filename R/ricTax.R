@@ -1,6 +1,11 @@
 #' ricTax
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+#'
 #' This function calculates the absolute richness of a taxon or of a set taxa at the taxonomic level provided by the user.
+#'
+#'
 #' @param x result of the function aggregatoR.
 #' @param taxa a taxon or a vector of taxa.
 #' @param taxLev taxonomic level at which the richness has to be calculated. It could be also a vector of taxonomic levels.
@@ -14,6 +19,8 @@
 #' ricTax(data.agR, taxa = "Ephemeroptera", taxLev = "Family")
 
 ricTax <-  function(x , taxa = NULL , taxLev = NULL ){
+
+  .Deprecated("get_taxa_richness", package = "biomonitoR")
 
   # check if the object x is of class "biomonitoR"
   classCheck( x )

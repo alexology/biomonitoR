@@ -1,5 +1,8 @@
 #' ambiguousSolver
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+#'
 #' Solve the ambiguous assignment of taxa.
 #'
 #' @param x result of the function aggregatoR.
@@ -10,20 +13,15 @@
 #' Currently ambiguousSolver two only one algorithms to solve the problem of ambiguous assignments.
 #' `RPKC` means Remove Parents - Keep Children. It works by removing all the higher taxonomic levels while keeping children.
 #' `MCWP` means Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of higher taxonomic levels.
-#' @keywords aggregatoR
+#' @keywords aggregate_taxa
 #' @references Cuffney, T. F., Bilger, M. D., & Haigler, A. M. (2007). Ambiguous taxa: effects on the characterization and interpretation of invertebrate assemblages. Journal of the North American Benthological Society, 26(2), 286-307.
 #' @export
 #' @seealso \code{\link{aggregatoR}}
-#' @examples
-#' data( macro_ex )
-#' data.bio <- asBiomonitor( macro_ex )
-#' data.agR <- aggregatoR( data.bio )
-#' data_amb_solved <- ambiguousSolver( data.agR )
-#' data_amb_solved.bio <- asBiomonitor( data_amb_solved )
-#' data_amb_solved.agR <- aggregatoR( data_amb_solved.bio )
 
 
 ambiguousSolver <- function( x , method = "MCWP" ){
+
+  .Deprecated("solve_ambiguous")
 
   # check if the object d is of class "biomonitoR"
   classCheck( x )

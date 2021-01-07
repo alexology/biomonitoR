@@ -103,7 +103,7 @@ When you are satisfied with the list of taxa you can finalize your trait dataset
 
 
 ```{r mean traitScaling}
-# take the average. If colB is set to NULL the default values will be used.
+# take the average. If col_blocks is set to NULL the default values will be used.
 # Please consider that the default value is correct only for the default trait dataset!
 # only the first 5 rows and columns will be showed
 
@@ -123,22 +123,22 @@ Now we have obtained a trait dataset that can be used for calculating functional
 The calculation of functional dispersion, diversity, evenness, redundancy and richness are straightforward.
 
 ```{r functional indices }
-colB <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+col_blocks <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
 
 # functional dispersion
-f_disp( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , colB = colB )
+f_disp( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , col_blocks = col_blocks )
 
 # functional diversity 
-f_divs( data.agR , traitDB = data.ts.av , type = "F" , colB = colB )
+f_divs( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
 
 # functional evenness
-f_eve( data.agR , traitDB = data.ts.av , type = "F" , colB = colB )
+f_eve( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
 
 # functional redundancy
-f_red( data.agR , traitDB = data.ts.av , type = "F" , colB = colB )
+f_red( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
 
 # functional richness on 2 dimensions
-f_rich( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , colB = colB )
+f_rich( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , col_blocks = col_blocks )
 ```
 
 
@@ -147,7 +147,7 @@ f_rich( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , colB = colB )
 Some information on the calculation is provided by the traceB option. This option is implemented in several biomonitoR functions to have a feedback on the calculation and to check if functions beahved as intended. It is particularly important for functional indices.
 
 ```{r traceB }
-frich <- f_rich( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , colB = colB , traceB = TRUE )
+frich <- f_rich( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , col_blocks = col_blocks , traceB = TRUE )
 
 # look at the traits with NA values
 head( frich$NA_detection )
@@ -174,7 +174,7 @@ Distance matrices can be provided instead of the functional database for calcula
 library( ade4 )
 
 rownames( data.ts.av ) <- data.ts.av$Taxa
-traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = colB )
+traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = col_blocks )
 
 traits.dist <- ktab.list.df( list( traits.prep ) )
 traits.dist <- dist.ktab( traits.dist , type = "F" )
@@ -203,7 +203,7 @@ data_fam.ts <- traitScaling( data.agR , taxLev = "Family" )
 data_fam.ts.av <- traitsMean( data_fam.ts )
 
 # functional richness
-f_rich( data.agR , traitDB = data_fam.ts.av , taxLev = "Family" , nbdim = 2 , type = "F" , colB = colB )
+f_rich( data.agR , traitDB = data_fam.ts.av , taxLev = "Family" , nbdim = 2 , type = "F" , col_blocks = col_blocks )
 
 ```
 

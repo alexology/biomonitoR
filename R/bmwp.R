@@ -2,7 +2,7 @@
 #'
 #' This function calculates the *Biological Monitoring Working Party* index following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 #'
-#' @param x result of the function aggregatoR.
+#' @param x result of the function `aggregate_taxa()`.
 #' @param method the implementation of BMWP. Possible choices are `a` (Armitage et al. 1983), `uk` (Davy-Bowker et al. 2010), `spa` (MAGRAMA 2011), `ita` (Buffagni et al . 2014).
 #'  Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Scores*.
 #' @param agg this option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
@@ -41,7 +41,7 @@
 #' Astacidae \tab 8 \cr
 #' }
 #'
-#' Optional aggregation data.frame provided by the user needs to be formatted like following:
+#' Optional aggregation `data.frame` provided by the user needs to be formatted like following:
 #' \tabular{ll}{
 #'  Taxon \tab Correct_Taxon \cr
 #'  Glossomatidae \tab Rhyachopilidae \cr
@@ -52,8 +52,8 @@
 #' }
 #'
 #'
-#' The `bmwp` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-#' All the information used for `bmwp` calculation can be retrieved with the function \code{\link{showscores}}.
+#' The `bmwp()` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+#' All the information used for `bmwp()` calculation can be retrieved with the function \code{\link{showscores}}.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{

@@ -5,7 +5,7 @@
 #' @aliases  shannon simpson margalef menhinick pielou berpar brill esimpson invberpar invsimpson mcintosh fisher allindices
 #' @param x result of the function aggregatoR
 #' @param base the base of the logarithm
-#' @param taxLev taxonomic level on which the calculation has to be made.
+#' @param tax_lev taxonomic level on which the calculation has to be made.
 #' @details Shannon index:
 #' \deqn{H'=-\sum_{i=1}^{S} p_{i}\log(p_{i})}
 #' Pielou index:
@@ -40,10 +40,10 @@
 #' @references Magurran, A. E. (2004). Measuring biological diversity. Blackwell Science ltd.
 #' @examples
 #' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' allindices(data.agR)
-#' shannon(data.agR)
+#' data_bio <- asBiomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' allindices(data_agr)
+#' shannon(data_agr)
 #'
 #' # base 2
 #' shannon(data.agR, base = 2)
@@ -60,34 +60,35 @@
 #' @export shannon
 #' @export fisher
 
-allindices <- function( x, taxLev = "Taxa", base = exp( 1 ) ){
+allindices <- function(x, tax_lev = "Taxa", base = exp(1)) {
 
   # check if the object x is of class "biomonitoR"
-  classCheck( x )
+  classCheck(x)
 
-  st.names <- names( x[[ "Taxa" ]][ , -1 , drop = FALSE ] )
+  st.names <- names(x[["Taxa"]][, -1, drop = FALSE])
 
-  f1 <- function( x ) ( shannon( x , taxLev = taxLev , base = base ) )
-  f2 <- function( x ) ( berpar( x , taxLev = taxLev ) )
-  f3 <- function( x ) ( brill( x , taxLev = taxLev ) )
-  f4 <- function( x ) ( invberpar( x , taxLev = taxLev ) )
-  f5 <- function( x ) ( invsimpson( x , taxLev = taxLev ) )
-  f6 <- function( x ) ( margalef( x , taxLev = taxLev ) )
-  f7 <- function( x ) ( mcintosh( x , taxLev = taxLev ) )
-  f8 <- function( x ) ( menhinick( x , taxLev = taxLev ) )
-  f9 <- function( x ) ( pielou( x , taxLev = taxLev, base = base ) )
-  f10 <- function( x ) ( simpson( x , taxLev = taxLev ) )
-  f11 <- function( x ) ( esimpson( x , taxLev = taxLev ) )
-  f12 <- function( x ) ( fisher( x , taxLev = taxLev ) )
+  f1 <- function(x) (shannon(x, tax_lev = tax_lev, base = base))
+  f2 <- function(x) (berpar(x, tax_lev = tax_lev))
+  f3 <- function(x) (brill(x, tax_lev = tax_lev))
+  f4 <- function(x) (invberpar(x, tax_lev = tax_lev))
+  f5 <- function(x) (invsimpson(x, tax_lev = tax_lev))
+  f6 <- function(x) (margalef(x, tax_lev = tax_lev))
+  f7 <- function(x) (mcintosh(x, tax_lev = tax_lev))
+  f8 <- function(x) (menhinick(x, tax_lev = tax_lev))
+  f9 <- function(x) (pielou(x, tax_lev = tax_lev, base = base))
+  f10 <- function(x) (simpson(x, tax_lev = tax_lev))
+  f11 <- function(x) (esimpson(x, tax_lev = tax_lev))
+  f12 <- function(x) (fisher(x, tax_lev = tax_lev))
 
-  funs <- list( f1 , f2 , f3 , f4 , f5 , f6 , f7 , f8 , f9 , f10 , f11 , f12 )
-  indices <- lapply( funs , function( f ) f( x ) )
+  funs <- list(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12)
+  indices <- lapply(funs, function(f) f(x))
   # from list to data.frame
-  res <- data.frame( t( matrix( unlist( indices ) , ncol = length( st.names ), byrow = T ) ) )
-  rownames( res ) <- st.names
-  colnames( res ) <- c( "shannon", "berpar", "brill", "invberpar", "invsimpson",
-                        "margalef", "mcintosh", "menhinick", "pielou",
-                        "simpson", "esimpson", "fisher")
+  res <- data.frame(t(matrix(unlist(indices), ncol = length(st.names), byrow = T)))
+  rownames(res) <- st.names
+  colnames(res) <- c(
+    "shannon", "berpar", "brill", "invberpar", "invsimpson",
+    "margalef", "mcintosh", "menhinick", "pielou",
+    "simpson", "esimpson", "fisher"
+  )
   res
-
 }

@@ -1,11 +1,44 @@
-#' Functional richness
+#' f_rich
 #'
 #' @description
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 #'
-#' This function calculates the functional richness based on trait categories.
+#' Functional richness calculated as the hypervolume enclosing the functional space.
+#'
+#' @param x results of function aggregatoR
+#' @param traitDB a trait database. Can be a `data.frame` ot a `dist` object.
+#' Taxonomic level of the traits database must match those of the taxonomic database.
+#' No automatic check is done by the `function`.
+#' @param taxLev character string giving the taxonomic level used to retrieve
+#' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
+#' `"Family"` as returned by the [aggregatoR] function.
+#' @param type the type of variables speciefied in `traitDB`.
+#' Must be one of `F`, fuzzy, or `C`, continuous.
+#' If more control is needed please consider to provide `traitDB` as a `dist` object.
+#' It works only when `traitDB` is a `data.frame`, otherwise ingored.
+#' @param traitSel interactively select traits.
+#' @param col_blocks A vector that contains the number of modalities for each trait.
+#' Not needed when `euclidean` distance is used.
+#' @param nbdim number of dimensions for the multidimensional functional spaces.
+#' We suggest to keep `nbdim` as low as possible.
+#' By default `biomonitoR` set the number of dimensions to 2. Select `auto` if you want the automated selection
+#' approach according to Maire et al. (2015).
+#' @param distance to be used to compute functional distances, `euclidean` or `gower`. Default to `gower`.
+#' @param zerodist_rm If `TRUE` aggregates taxa with the same traits.
+#' @param correction Correction methods for negative eigenvalues, can be one of `none`, `lingoes`, `cailliez`, `sqrt` and `quasi`.
+#' Ignored when type is set to `C`.
+#' @param traceB if `TRUE` ffrich will return a list as specified in details.
+#' @param set_param a list of parameters for fine tuning the calculations.
+#' `max_nbdim` set the maximum number of dimension for evaluating the quality of the functional space.
+#' `prec` can be `Qt` or `QJ`, please refere to the `convhulln` documentation for more information.
+#' Deafault to `QJ`, less accurate but less prone to errors.
+#' `tol` a tolerance threshold for zero, see the function `is.euclid`, `lingoes` and `cailliez` from the `ade4` for more details. Default to 1e-07.
+#' `cor.zero` = `TRUE` if TRUE, zero distances are not modified. see the function `is.euclid`, `lingoes` and `cailliez` from the `ade4` for more details. Default to `TRUE`.
 #'
 #'
+#'
+#'
+#' @details
 #' Functional richness (FRic) represents the amount of functional space filled by
 #' the community (Villeger et al., 2008) and it is related to the community use of
 #' resources and productivity (Mason et al., 2005). FRic is defined by the trait
@@ -41,36 +74,6 @@
 #'  be considered that the number of taxa must be higher than the number of traits
 #'  to have reliable FRic values (Villeger et al., 2008).
 #'
-#' @param x results of function aggregatoR
-#' @param traitDB a trait database. Can be a `data.frame` ot a `dist` object.
-#' Taxonomic level of the traits database must match those of the taxonomic database.
-#' No automatic check is done by the `function`.
-#' @param taxLev character string giving the taxonomic level used to retrieve
-#' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
-#' `"Family"` as returned by the [aggregatoR] function.
-#' @param type the type of variables speciefied in `traitDB`.
-#' Must be one of `F`, fuzzy, or `C`, continuous.
-#' If more control is needed please consider to provide `traitDB` as a `dist` object.
-#' It works only when `traitDB` is a `data.frame`, otherwise ingored.
-#' @param traitSel interactively select traits.
-#' @param colB A vector that contains the number of modalities for each trait.
-#' Not needed when `euclidean` distance is used.
-#' @param nbdim number of dimensions for the multidimensional functional spaces.
-#' We suggest to keep `nbdim` as low as possible.
-#' By default `biomonitoR` set the number of dimensions to 2. Select `auto` if you want the automated selection
-#' approach according to Maire et al. (2015).
-#' @param distance to be used to compute functional distances, `euclidean` or `gower`. Default to `gower`.
-#' @param zerodist_rm If `TRUE` aggregates taxa with the same traits.
-#' @param correction Correction methods for negative eigenvalues, can be one of `none`, `lingoes`, `cailliez`, `sqrt` and `quasi`.
-#' Ignored when type is set to `C`.
-#' @param traceB if `TRUE` ffrich will return a list as specified in details.
-#' @param set_param a list of parameters for fine tuning the calculations.
-#' `max_nbdim` set the maximum number of dimension for evaluating the quality of the functional space.
-#' `prec` can be `Qt` or `QJ`, please refere to the `convhulln` documentation for more information.
-#' Deafault to `QJ`, less accurate but less prone to errors.
-#' `tol` a tolerance threshold for zero, see the function `is.euclid`, `lingoes` and `cailliez` from the `ade4` for more details. Default to 1e-07.
-#' `cor.zero` = `TRUE` if TRUE, zero distances are not modified. see the function `is.euclid`, `lingoes` and `cailliez` from the `ade4` for more details. Default to `TRUE`.
-#'
 #' @return a vector with fuzzy functional richness results.
 #' \enumerate{
 #'  \item **results**: results of the ffred function;
@@ -92,22 +95,22 @@
 #' @examples
 #' data(macro_ex)
 #'
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' data.ts <- traitScaling( data.agR )
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregatoR(data_bio)
+#' data_ts <- traitScaling( data_agr )
 #' # averaging
-#' data.ts.av <- traitsMean( data.ts )
+#' data_ts_av <- traitsMean( data_ts )
 #'
-#' colB <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+#' col_blocks <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
 #'
-#' f_rich( data.agR , traitDB = data.ts.av , type = "F" , colB = colB )
-#' f_rich( data.agR , traitDB = data.ts.av , type = "F" , colB = colB ,
+#' f_rich( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
+#' f_rich( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks ,
 #'        nbdim = 10 , correction = "cailliez" )
 #'
-#' library( ade4 )
+#' library(ade4)
 #'
-#' rownames( data.ts.av ) <- data.ts.av$Taxa
-#' traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = colB )
+#' rownames(data_ts_av) <- data_ts_av$Taxa
+#' traits_prep <- prep.fuzzy( data_ts_av[ , -1 ], col.blocks = col_blocks )
 #'
 #' traits.dist <- ktab.list.df( list( traits.prep ) )
 #' traits.dist <- dist.ktab( traits.dist , type = "F" )
@@ -137,7 +140,7 @@
 #'
 #' @export
 
-f_rich <- function( x , traitDB = NULL , taxLev = "Taxa" , type = NULL , traitSel = FALSE , colB = NULL,  nbdim = 2 , distance = "gower", zerodist_rm = FALSE , correction = "none" , traceB = FALSE , set_param = NULL ){
+f_rich <- function( x , traitDB = NULL , taxLev = "Taxa" , type = NULL , traitSel = FALSE , col_blocks = NULL,  nbdim = 2 , distance = "gower", zerodist_rm = FALSE , correction = "none" , traceB = FALSE , set_param = NULL ){
 
   #  check if the object x is of class "biomonitoR"
   classCheck( x )
@@ -177,22 +180,22 @@ f_rich <- function( x , traitDB = NULL , taxLev = "Taxa" , type = NULL , traitSe
     traitDB[ , "Taxa"] <- as.factor( sapply( trim( traitDB[ , "Taxa"] ), capWords, USE.NAMES = F ) )
 
     if( identical( type , "F" ) ){
-      if( is.null( colB ) ) ( stop( "Please provide colB" ) )
-      # check if the number of traits in traitDB equals the sum of colB, otherwise stop
-      if( ( ncol( traitDB ) - 1 ) != sum( colB ) ) ( stop( "The number of traits in traitDB is not equal to the sum of colB" ) )
+      if( is.null( col_blocks ) ) ( stop( "Please provide col_blocks" ) )
+      # check if the number of traits in traitDB equals the sum of col_blocks, otherwise stop
+      if( ( ncol( traitDB ) - 1 ) != sum( col_blocks ) ) ( stop( "The number of traits in traitDB is not equal to the sum of col_blocks" ) )
     }
 
   }
 
 
   if( traitSel & is.data.frame( traitDB ) ){
-    Index <- rep( 1:length( colB ) , colB )
+    Index <- rep( 1:length( col_blocks ) , col_blocks )
     rma <- select.list( names( traitDB[ -which( names( traitDB ) %in% "Taxa")] ) , title = "Traits selection"  , graphics = TRUE , multiple = T )
-    # new colB based on user trait selection, -1 because there is the column called Taxa
-    colB <- as.vector( table( Index[ which( names( traitDB ) %in% rma ) - 1 ] ) )
+    # new col_blocks based on user trait selection, -1 because there is the column called Taxa
+    col_blocks <- as.vector( table( Index[ which( names( traitDB ) %in% rma ) - 1 ] ) )
 
     #  trait must have at least two modalities
-    if( any( colB < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
+    if( any( col_blocks < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
 
     traitDB <- traitDB %>%
       select( c("Taxa", rma) )
@@ -232,8 +235,8 @@ f_rich <- function( x , traitDB = NULL , taxLev = "Taxa" , type = NULL , traitSe
     # just to be sure we are doing the right things
     rownames( traitDB ) <- traitDB$Taxon
 
-    if( identical( type , "F" ) ) ( tr_prep <- prep.fuzzy( traitDB[ , -1 ], col.blocks = colB ) )
-    if( identical( type , "B" ) ) ( tr_prep <- prep.binary( traitDB[ , -1 ], col.blocks = colB ) )
+    if( identical( type , "F" ) ) ( tr_prep <- prep.fuzzy( traitDB[ , -1 ], col.blocks = col_blocks ) )
+    if( identical( type , "B" ) ) ( tr_prep <- prep.binary( traitDB[ , -1 ], col.blocks = col_blocks ) )
     if( identical( type , "C" ) ) ( tr_prep <- traitDB[ , -1 ] )
 
     rownames( tr_prep ) <- traitDB$Taxon

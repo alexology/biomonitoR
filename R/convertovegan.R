@@ -13,14 +13,10 @@
 #' @export
 #' @export convertobiotic
 #' @seealso \code{\link{asBiomonitor}}
-#' @examples
-#' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' data.cv <- convertovegan(data.agR, taxLev = "Family")
-
 
 convertovegan <- function(x, taxLev = "Family"){
+
+  .Deprecated("convert_to_vegan", package = "biomonitoR")
 
   # check if the object x is of class "biomonitoR"
   classCheck( x )

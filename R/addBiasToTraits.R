@@ -1,4 +1,9 @@
-#' Add bias to duplicated fuzzy traits
+#' addBiasToTraits
+#'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+#'
+#' Add bias to duplicated traits.
 #'
 #' @param x results of `traitsMean` or a `data.frame` with a similar structure.
 #' @param colB A vector that contains the number of modalities for each trait
@@ -13,6 +18,8 @@
 #' @importFrom stats rnorm
 
 addBiasToTraits <- function( x , colB = NULL , SD = 0.001 , traceB = FALSE ){
+
+  .Deprecated( "add_bias_to_traits" )
 
   # avoid RCMD check
   n <- NULL

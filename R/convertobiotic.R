@@ -1,6 +1,9 @@
 #' @describeIn convertovegan convert data to biotic format
 
 convertobiotic <- function( x ){
+
+  .Deprecated("convert_to_biotic", package = "biomonitoR")
+
   classCheck( x )
 
   temp <- x$Tree

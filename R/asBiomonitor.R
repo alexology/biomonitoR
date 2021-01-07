@@ -1,6 +1,10 @@
-#' asBiomonitor
+#' asBiomonitor - deprecated
+#'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
 #'
 #' This function merge the user dataframe with a reference database and suggest corrections for mispelled names.
+#'
 #'
 #' @param x a data.frame with a column called "Taxa" where store taxa names and samples on the other columns (see the example macro_ex).
 #' @param group biotic group of interest. Possible values are `mi` for macroinvertebrates, `mf` for macrophytes and `fi` for fish. The choice will set the right reference database for the specified group.
@@ -38,12 +42,11 @@
 #' An online tool that unifies, standardises and codifies more than
 #' 20,000 European freshwater organisms and their ecological preferences.
 #' Ecological indicators, 53, 271-282.
-#' @examples
-#' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex, group = "mi")
 
 
-asBiomonitor <- function ( x , group = "mi" , dfref = NULL , to_change = "default" , FUN = sum , correct_names = FALSE , traceB = FALSE ){
+asBiomonitor <- function (x , group = "mi", dfref = NULL, to_change = "default", FUN = sum, correct_names = FALSE, traceB = FALSE){
+
+  .Deprecated("as_biomonitor", package = "biomonitoR")
 
   # check if user database contains a column called Taxa
   if( ! "Taxa" %in% names( x ) ){

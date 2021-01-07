@@ -2,7 +2,7 @@
 % Please edit documentation in R/f_rich.R
 \name{f_rich}
 \alias{f_rich}
-\title{Functional richness}
+\title{f_rich}
 \usage{
 f_rich(
   x,
@@ -10,7 +10,7 @@ f_rich(
   taxLev = "Taxa",
   type = NULL,
   traitSel = FALSE,
-  colB = NULL,
+  col_blocks = NULL,
   nbdim = 2,
   distance = "gower",
   zerodist_rm = FALSE,
@@ -37,7 +37,7 @@ It works only when \code{traitDB} is a \code{data.frame}, otherwise ingored.}
 
 \item{traitSel}{interactively select traits.}
 
-\item{colB}{A vector that contains the number of modalities for each trait.
+\item{col_blocks}{A vector that contains the number of modalities for each trait.
 Not needed when \code{euclidean} distance is used.}
 
 \item{nbdim}{number of dimensions for the multidimensional functional spaces.
@@ -78,8 +78,9 @@ Abundances of the higher taxonomic level need therefore to be adjusted by subtra
 \description{
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 
-This function calculates the functional richness based on trait categories.
-
+Functional richness calculated as the hypervolume enclosing the functional space.
+}
+\details{
 Functional richness (FRic) represents the amount of functional space filled by
 the community (Villeger et al., 2008) and it is related to the community use of
 resources and productivity (Mason et al., 2005). FRic is defined by the trait
@@ -118,22 +119,22 @@ to have reliable FRic values (Villeger et al., 2008).
 \examples{
 data(macro_ex)
 
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-data.ts <- traitScaling( data.agR )
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregatoR(data_bio)
+data_ts <- traitScaling( data_agr )
 # averaging
-data.ts.av <- traitsMean( data.ts )
+data_ts_av <- traitsMean( data_ts )
 
-colB <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+col_blocks <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
 
-f_rich( data.agR , traitDB = data.ts.av , type = "F" , colB = colB )
-f_rich( data.agR , traitDB = data.ts.av , type = "F" , colB = colB ,
+f_rich( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
+f_rich( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks ,
        nbdim = 10 , correction = "cailliez" )
 
-library( ade4 )
+library(ade4)
 
-rownames( data.ts.av ) <- data.ts.av$Taxa
-traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = colB )
+rownames(data_ts_av) <- data_ts_av$Taxa
+traits_prep <- prep.fuzzy( data_ts_av[ , -1 ], col.blocks = col_blocks )
 
 traits.dist <- ktab.list.df( list( traits.prep ) )
 traits.dist <- dist.ktab( traits.dist , type = "F" )

@@ -1,5 +1,8 @@
 #' traitScaling
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+#'
 #' A function for scaling traits across taxonomic levels.
 #'
 #' This function allows to obtain missing traits for a target taxon by taking traits from lower or to upper taxomic levels.
@@ -63,6 +66,8 @@
 
 
 traitScaling <-  function( x , traitDB = NULL , group = "mi" , taxLev = "Taxa" , dfref = NULL , filter_by_distance = NULL ){
+
+  .Deprecated("assign_traits")
 
   if( is.null( traitDB ) ){
     # check if x is of class biomonitoR and mi

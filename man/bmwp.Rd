@@ -7,7 +7,7 @@
 bmwp(x, method = "ita", agg = FALSE, exceptions = NULL, traceB = FALSE)
 }
 \arguments{
-\item{x}{result of the function aggregatoR.}
+\item{x}{result of the function \code{aggregate_taxa()}.}
 
 \item{method}{the implementation of BMWP. Possible choices are \code{a} (Armitage et al. 1983), \code{uk} (Davy-Bowker et al. 2010), \code{spa} (MAGRAMA 2011), \code{ita} (Buffagni et al . 2014).
 Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
@@ -62,7 +62,7 @@ Asellidae \tab 3 \cr
 Astacidae \tab 8 \cr
 }
 
-Optional aggregation data.frame provided by the user needs to be formatted like following:
+Optional aggregation \code{data.frame} provided by the user needs to be formatted like following:
 \tabular{ll}{
 Taxon \tab Correct_Taxon \cr
 Glossomatidae \tab Rhyachopilidae \cr
@@ -72,8 +72,8 @@ Crangonyctidae \tab Gammaridae \cr
 Niphargidae \tab Gammaridae \cr
 }
 
-The \code{bmwp} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-All the information used for \code{bmwp} calculation can be retrieved with the function \code{\link{showscores}}.
+The \code{bmwp()} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for \code{bmwp()} calculation can be retrieved with the function \code{\link{showscores}}.
 }
 \examples{
 data(macro_ex)

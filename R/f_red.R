@@ -63,7 +63,7 @@
 #' If more control is needed please consider to provide `traitDB` as a `dist` object.
 #' It works only when `traitDB` is a `data.frame`, otherwise ingored.
 #' @param traitSel interactively select traits.
-#' @param colB A vector that contains the number of modalities for each trait.
+#' @param col_blocks A vector that contains the number of modalities for each trait.
 #' Not needed when `euclidean` distance is used.
 #' By default `biomonitoR` select the optimal number of dimensions with the quality of the functional space approach.
 #' @param distance to be used to compute functional distances, `euclidean` or `gower`. Default to `gower`.
@@ -104,16 +104,16 @@
 #' # averaging
 #' data.ts.av <- traitsMean( data.ts )
 #'
-#' colB <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+#' col_blocks <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
 #'
-#' f_red( data.agR , traitDB = data.ts.av , type = "F" , colB = colB )
-#' f_red( data.agR , traitDB = data.ts.av , type = "F" , colB = colB ,
+#' f_red( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
+#' f_red( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks ,
 #'        correction = "cailliez" )
 #'
 #' library( ade4 )
 #'
 #' rownames( data.ts.av ) <- data.ts.av$Taxa
-#' traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = colB )
+#' traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = col_blocks )
 #'
 #' traits.dist <- ktab.list.df( list( traits.prep ) )
 #' traits.dist <- dist.ktab( traits.dist , type = "F" )
@@ -170,7 +170,7 @@
 #'
 #' @export
 
-f_red <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel = FALSE , colB = NULL,  distance = "gower", zerodist_rm = FALSE , traceB = FALSE , correction = "none" , set_param = NULL ){
+f_red <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel = FALSE , col_blocks = NULL,  distance = "gower", zerodist_rm = FALSE , traceB = FALSE , correction = "none" , set_param = NULL ){
 
   #  check if the object x is of class "biomonitoR"
   classCheck( x )
@@ -209,21 +209,21 @@ f_red <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel 
     traitDB[ , "Taxa"] <- as.factor( sapply( trim( traitDB[ , "Taxa"] ), capWords, USE.NAMES = F ) )
 
     if( identical( type , "F" ) ){
-      if( is.null( colB ) ) ( stop( "Please provide colB" ) )
-      # check if the number of traits in traitDB equals the sum of colB, otherwise stop
-      if( ( ncol( traitDB ) - 1 ) != sum( colB ) ) ( stop( "The number of traits in traitDB is not equal to the sum of colB" ) )
+      if( is.null( col_blocks ) ) ( stop( "Please provide col_blocks" ) )
+      # check if the number of traits in traitDB equals the sum of col_blocks, otherwise stop
+      if( ( ncol( traitDB ) - 1 ) != sum( col_blocks ) ) ( stop( "The number of traits in traitDB is not equal to the sum of col_blocks" ) )
     }
   }
 
 
   if( traitSel & is.data.frame( traitDB ) ){
-    Index <- rep( 1:length( colB ) , colB )
+    Index <- rep( 1:length( col_blocks ) , col_blocks )
     rma <- select.list( names( traitDB[ -which( names( traitDB ) %in% "Taxa")] ) , title = "Traits selection"  , graphics = TRUE , multiple = T )
-    # new colB based on user trait selection, -1 because there is the column called Taxa
-    colB <- as.vector( table( Index[ which( names( traitDB ) %in% rma ) - 1 ] ) )
+    # new col_blocks based on user trait selection, -1 because there is the column called Taxa
+    col_blocks <- as.vector( table( Index[ which( names( traitDB ) %in% rma ) - 1 ] ) )
 
     #  trait must have at least two modalities
-    if( any( colB < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
+    if( any( col_blocks < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
 
     traitDB <- traitDB %>%
       select( c("Taxa", rma) )
@@ -263,8 +263,8 @@ f_red <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel 
     # just to be sure we are doing the right things
     rownames( traitDB ) <- traitDB$Taxon
 
-    if( identical( type , "F" ) ) ( tr_prep <- prep.fuzzy( traitDB[ , -1 ], col.blocks = colB ) )
-    if( identical( type , "B" ) ) ( tr_prep <- prep.binary( traitDB[ , -1 ], col.blocks = colB ) )
+    if( identical( type , "F" ) ) ( tr_prep <- prep.fuzzy( traitDB[ , -1 ], col.blocks = col_blocks ) )
+    if( identical( type , "B" ) ) ( tr_prep <- prep.binary( traitDB[ , -1 ], col.blocks = col_blocks ) )
     if( identical( type , "C" ) ) ( tr_prep <- traitDB[ , -1 ] )
 
     rownames( tr_prep ) <- traitDB$Taxon

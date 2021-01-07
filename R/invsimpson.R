@@ -1,12 +1,12 @@
 #' @describeIn allindices Inverse Simpson
 
-invsimpson <- function( x , taxLev = "Taxa" ){
+invsimpson <- function( x , tax_lev = "Taxa" ){
 
   # check if the object x is of class "biomonitoR"
   classCheck( x )
 
   # get the data.frame at the desired taxonomic level
-  DF <-  x[[ taxLev ]]
+  DF <-  x[[ tax_lev ]]
 
   if( inherits( x , "bin" ) ){
     DF <- to_bin( DF )

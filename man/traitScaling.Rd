@@ -45,9 +45,10 @@ Default to \code{Taxa}, the maximum taxonomic level is \code{Family}.}
 \item{colB}{A vector that contains the number of modalities for each trait}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 A function for scaling traits across taxonomic levels.
-}
-\details{
+
 This function allows to obtain missing traits for a target taxon by taking traits from lower or to upper taxomic levels.
 For instance, consider the case where the genus Acroloxus is present in the user dataset and the species Acroloxus lacustris
 in the traits database. A simple merge would exclude Acroloxus from the tha analysis since Acroloxus and A. lacustris

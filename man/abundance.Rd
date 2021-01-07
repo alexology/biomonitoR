@@ -4,29 +4,30 @@
 \alias{abundance}
 \title{abundance}
 \usage{
-abundance(x, taxLev = "Family", unassigned = FALSE)
+abundance(x, tax_lev = "Taxa", unassigned = FALSE)
 }
 \arguments{
-\item{x}{result of the function aggregatoR}
+\item{x}{Result of the function \code{aggregate_taxa()}.}
 
-\item{taxLev}{taxonomic level on which the calculation has to be made.}
+\item{tax_lev}{Taxonomic level.}
 
-\item{unassigned}{Does unassigned taxa need to be taken into account? If yes set unassigned to TRUE, otherwise FALSE.}
+\item{unassigned}{Does unassigned taxa need to be taken into account? If yes set unassigned to \code{TRUE}, otherwise \code{FALSE}.}
 }
 \description{
-This function allows the calculation of abundances with the possibility to exclude unassigned taxa at the desired taxonomic level.
+Calculates taxa abundances at the desired taxonomic level.
+Unassigned taxa can be included or excluded from the calculation.
 }
 \details{
-If unassigned is set to TRUE abundances are equal among taxonomic levels.
+If unassigned is set to \code{TRUE} abundances are equal among taxonomic levels.
 }
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-abundance(data.agR, taxLev = "Family" )
-abundance(data.agR, taxLev = "Family" , unassigned = TRUE)
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+abundance(data_agr, tax_lev = "Family")
+abundance(data_agr, tax_lev = "Family", unassigned = TRUE)
 }
 \seealso{
-\code{\link{aggregatoR}}
+\code{\link{aggregate_taxa}} \code{\link{get_taxa_abundance}}
 }
 \keyword{abundance}

@@ -7,12 +7,12 @@
 \usage{
 allrich(x)
 
-richness(x, taxLev = "Taxa")
+richness(x, tax_lev = "Taxa")
 }
 \arguments{
 \item{x}{result of the function aggregatoR}
 
-\item{taxLev}{taxonomic level on which the calculation has to be made.}
+\item{tax_lev}{taxonomic level on which the calculation has to be made.}
 }
 \description{
 This function allows the calculation of richness at different taxonomic levels and of the total abundance.
@@ -32,9 +32,9 @@ Mollusca orders are not present because there is no consensus among taxonomist (
 
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-richness(data.agR, taxLev = "Family" )
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+richness(data_agr, tax_lev = "Family")
 }
 \seealso{
 \code{\link{aggregatoR}}

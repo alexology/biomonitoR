@@ -10,7 +10,7 @@ f_disp(
   taxLev = "Taxa",
   type = NULL,
   traitSel = FALSE,
-  colB = NULL,
+  col_blocks = NULL,
   nbdim = 2,
   distance = "gower",
   zerodist_rm = FALSE,
@@ -37,7 +37,7 @@ It works only when \code{traitDB} is a \code{data.frame}, otherwise ingored.}
 
 \item{traitSel}{interactively select traits.}
 
-\item{colB}{A vector that contains the number of modalities for each trait.
+\item{col_blocks}{A vector that contains the number of modalities for each trait.
 Not needed when \code{euclidean} distance is used.}
 
 \item{nbdim}{number of dimensions for the multidimensional functional spaces.
@@ -122,16 +122,16 @@ data.ts <- traitScaling( data.agR )
 # averaging
 data.ts.av <- traitsMean( data.ts )
 
-colB <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+col_blocks <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
 
-f_disp( data.agR , traitDB = data.ts.av , type = "F" , colB = colB )
-f_disp( data.agR , traitDB = data.ts.av , type = "F" , colB = colB ,
+f_disp( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
+f_disp( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks ,
        nbdim = 10 , correction = "cailliez" )
 
 library( ade4 )
 
 rownames( data.ts.av ) <- data.ts.av$Taxa
-traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = colB )
+traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = col_blocks )
 
 traits.dist <- ktab.list.df( list( traits.prep ) )
 traits.dist <- dist.ktab( traits.dist , type = "F" )

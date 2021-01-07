@@ -1,26 +1,26 @@
 #' ept
 #'
 #' This function calculates the richness of Ephemeroptera, Plecotera and Trichoptera (EPT) taxa at the desired taxonomic level.
-#' @param x result of the function aggregatoR
-#' @param taxLev the taxonomic level for calculating EPT richness.
+#' @param x Result of the function `aggregate_taxa`.
+#' @param tax_lev The taxonomic level for calculating EPT richness.
 #' @keywords ept
-#' @details taxLev must be finer than Order (e.g. Species, Genus, Family ).
-#' The `ept` function works if Ephemeroptera, Trichoptera and Plecoptera are set as orders in the reference database. Otherwise try with \code{\link{ricTax}}.
+#' @details `tax_lev` must be finer than Order (e.g. Species, Genus, Family ).
+#' The `ept()` function works if Ephemeroptera, Trichoptera and Plecoptera are set as orders in the reference database. Otherwise try with \code{\link{ricTax}}.
 #' @importFrom stats aggregate
 #' @export
 #' @seealso \code{\link{aggregatoR}} \code{\link{ricTax}}
 #' @examples
 #' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' ept(data.agR)
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' ept(data_agr)
 #'
-#' # ept should return the same results as the function ricTax
-#' ept( data.agR , taxLev = "Family" )
-#' ricTax( data.agR , taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) , taxLev = "Family" )
+#' # ept should return the same results as the function get_taxa_richness
+#' ept( data_agr , tax_lev = "Family" )
+#' get_taxa_richness( data_agR , taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) , tax_lev = "Family" )
 
 
-ept <- function ( x, taxLev = "Taxa" ){
+ept <- function ( x, tax_lev = "Taxa" ){
 
   # check if the object x is of class "biomonitoR"
   classCheck( x )
@@ -31,8 +31,8 @@ ept <- function ( x, taxLev = "Taxa" ){
   # list the taxonomic levels in the Tree
   tx <- c( "Phylum" , "Class" , "Subclass" , "Order" , "Family" , "Subfamily" , "Tribus" , "Genus" , "Species" , "Subspecies" , "Taxa" )
 
-  # stop the calculation if taxLev is coarser than Family
-  if( which( taxLev == tx ) <= 4 ) ( stop( "Taxonomic level cannot be equal or higher than Order" ) )
+  # stop the calculation if tax_lev is coarser than Family
+  if( which( tax_lev == tx ) <= 4 ) ( stop( "Taxonomic level cannot be equal or higher than Order" ) )
 
   # get sample names
   stz <- x_ept[ ! ( names( x_ept ) %in% tx ) ]
@@ -47,7 +47,7 @@ ept <- function ( x, taxLev = "Taxa" ){
     names( res_null ) <- stz_n
     return( res_null )
   } else {
-    ept_temp <- ept_taxa[ ,c( taxLev , stz_n ) ]
+    ept_temp <- ept_taxa[ ,c( tax_lev , stz_n ) ]
     colnames( ept_temp )[ 1 ] <- "selection"
     levels( ept_temp$selection )[ levels( ept_temp$selection ) == "" ] <- "unassigned"
     ept_temp.agg <- aggregate( . ~ selection , ept_temp , FUN = sum )

@@ -7,13 +7,13 @@
 bioco(x, alien = NULL, dfref = NULL, digits = 2)
 }
 \arguments{
-\item{x}{result of function aggregatoR.}
+\item{x}{Result of function \code{aggregate_taxa()}.}
 
 \item{alien}{a vector containing the alien taxa name. Only taxa up to family level will be considered.}
 
 \item{dfref}{reference database.
 If a default reference database was used use \code{mi} for macroinvertebrates or \code{mf} for macrophytes.
-Use the same reference database you used for \code{\link{asBiomonitor}} otherwise.}
+Use the same reference database you used for \code{as_biomonitor} otherwise.}
 
 \item{digits}{number of decimal places, default to 2 as in the original work of Arbaciauskas et al. (2008).}
 }
@@ -30,12 +30,12 @@ A global alien species dataset cannot be provided because alien species may vary
 Applications and examples of these indices are available in Cuk et al. (2019) for Croatian rivers and MacNeil et al. 2010 (The Isle of Man).
 }
 \examples{
-data( macro_ex )
-data.bio <- asBiomonitor( macro_ex )
-data.agR <- aggregatoR( data.bio )
+data(macro_ex)
+data_bio <- asBiomonitor(macro_ex)
+data_agr <- aggregatoR(data_bio)
 # Toy example:
-alien <- c( "Laccobius" , "Setodes bulgaricus" , "Caenidae" )
-bioco( data.agR , alien = alien , dfref = "mi" )
+alien <- c("Laccobius", "Setodes bulgaricus", "Caenidae")
+bioco(data_agr, alien = alien, dfref = "mi")
 }
 \references{
 Arbaciauskas, K., Semenchenko, V., Grabowski, M., Leuven, R.S.E.W., Paunovic, M., Son, M.O., Csanyi, B., Gumuliauskaite, S., Konopacka, A., Nehring, S., Van der Velde, G., Vezhnovetz, V., Panov, V.E. (2008). Assessment of biocontamination of benthic macroinvertebrate communities in European inland waterways. Aquatic Invasions 3 (2): 211-230.
@@ -45,6 +45,6 @@ Cuk, R., Milisa, M., Atanackovic, A., Dekic, S., Blazekovic, L., & Zganec, K. (2
 MacNeil, C., Briffa, M., Leuven, R.S., Gell, F.R. and Selman, R. (2010). An appraisal of a biocontamination assessment method for freshwater macroinvertebrate assemblages; a practical way to measure a significant biological pressure? Hydrobiologia 638:151-159
 }
 \seealso{
-\code{\link{aggregatoR}}
+\code{\link{aggregate_taxa}}
 }
-\keyword{aggregatoR}
+\keyword{aggregate_taxa}

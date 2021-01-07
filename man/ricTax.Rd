@@ -14,6 +14,8 @@ ricTax(x, taxa = NULL, taxLev = NULL)
 \item{taxLev}{taxonomic level at which the richness has to be calculated. It could be also a vector of taxonomic levels.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 This function calculates the absolute richness of a taxon or of a set taxa at the taxonomic level provided by the user.
 }
 \examples{

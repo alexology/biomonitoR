@@ -2,7 +2,7 @@
 % Please edit documentation in R/asBiomonitor.R
 \name{asBiomonitor}
 \alias{asBiomonitor}
-\title{asBiomonitor}
+\title{asBiomonitor - deprecated}
 \usage{
 asBiomonitor(
   x,
@@ -35,6 +35,8 @@ It should be \code{sum} for abundances, while it should be \code{bin} for presen
 \item{traceB}{track changes in taxa names.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 This function merge the user dataframe with a reference database and suggest corrections for mispelled names.
 }
 \details{
@@ -51,10 +53,6 @@ a data.frame without the biomonitoR format.
 \code{asBiomonitor} aggregates all the rows with the same name with the option \code{FUN} and converts all the \code{NA} to 0.
 If only 1 and 0 are present \code{x} will be imported as presence-absence.
 When \code{group = mi} Hydracarina, Hydracnidia or Acariformes are changed to Trombidiformes given the uncertain taxonomic status of this group.
-}
-\examples{
-data(macro_ex)
-data.bio <- asBiomonitor(macro_ex, group = "mi")
 }
 \references{
 Schmidt-Kloiber, A., & Hering, D. (2015). www.freshwaterecology.info -

@@ -4,7 +4,7 @@
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 #'
 #' This function calculates the Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index (ePSI) according to the most recent version used in UK.
-#' @param x results of aggregatoR function
+#' @param x results of the function `aggregate_taxa`.
 #' @param method method `uk`.
 #'  Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Scores*.
 #' @param agg this option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
@@ -20,19 +20,19 @@
 #' `agg` cannot be `TRUE` when a data.frame is provided as `method`.
 #' @param traceB if set to `TRUE` a list as specified below will be returned.
 #' @keywords epsi
-#' @details `epsi` implementation take into account composite taxa as follow:
+#' @details `epsi()` implementation take into account composite taxa as follow:
 #' \enumerate{
 #'  \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
 #'  \item Siphlonuridae (inc. Ameletidae)
 #'  \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
 #'  }
 #'
-#' The `epsi` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-#' All the information used for `epsi` calculation can be retrieved with the function \code{\link{showscores}}.
+#' The `epsi()` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+#' All the information used for `epsi()` calculation can be retrieved with the function \code{\link{showscores}}.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
-#'  \item `results` Results of the `epsi` index.
+#'  \item `results` Results of `epsi()`.
 #'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
 #'  \item `epsi_df` The data.frame used for the calculation containing scores and abundance classes for each site.
 #'  \item `composite_taxa` Taxa aggregated following the aggregation rules of the `uk_agg` method or set in the `agg` option.

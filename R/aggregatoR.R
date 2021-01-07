@@ -1,6 +1,10 @@
-#' aggregatoR
+#' aggregatoR - deprecated
+#'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
 #'
 #' This function prepares data for further calculations.
+#'
 #' @param x results of function asBiomonitor
 #' @param FUN the function to be applied for aggregating to higher taxonomic levels.
 #' Must be sum for both abundances and presence-absence data.
@@ -8,23 +12,13 @@
 #' @keywords aggregatoR
 #' @importFrom stats aggregate
 #' @export
-#' @seealso \code{\link{asBiomonitor}}
-#' @examples
-#' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#'
-#' # example for macrophytes
-#' data(oglio)
-#'
-#' oglio.asb <- asBiomonitor(oglio, group = "mf")
-#' oglio.agg <- aggregatoR(oglio.asb)
-#' richness(oglio.agg , taxLev = "Species")
-#' richness(oglio.agg , taxLev = "Genus")
-#' richness(oglio.agg , taxLev = "Family")
+#' @seealso \code{\link{aggregate_taxa}}
 
-aggregatoR <- function ( x , FUN = sum )
+
+aggregatoR <- function (x , FUN = sum)
 {
+
+  .Deprecated("aggregate_taxa")
 
   # check if the object x is of class "biomonitoR"
   if( ! inherits( x , "asb" ) ) stop( "x is not an object created with asBiomonitor" )
