@@ -1,4 +1,6 @@
 #' totInfo
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
 #'
 #' Function to calculate the overall richness at different taxonomic level.
 #' @param x results of the function [aggregatoR]
@@ -6,14 +8,12 @@
 #' @keywords totInfo
 #' @export
 #' @seealso \code{\link{asBiomonitor}}
-#' @examples
-#' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' totInfo( data.agR )
+
 
 
 totInfo <- function( x , taxalist = FALSE ){
+
+  .Deprecated( "general_info" , package = "biomonitoR" )
 
   # check if the object x is of class "biomonitoR"
   classCheck( x )

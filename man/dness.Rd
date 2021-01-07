@@ -13,7 +13,7 @@ dness(
 )
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
 \item{complete}{if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with tax_lev}
 
@@ -24,19 +24,18 @@ dness(
 \item{taxa_tree}{if TRUE dness return a list where the first element is the taxonomic diversity, taxonomic distinctness or variation of taxonomic distinctness and the second elemnt the taxonomic tree}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
+
 This function calculates the taxonomic diversity, taxonomic distinctness and variation of taxonomic distinctness.
 }
 \details{
 see Clarke and Warwick (1998) an Clarke and Warwick (2001).
 }
-\note{
-USE WITH CAUTION, STILL IN DEVELOPMENT.
-}
 \examples{
 data(oglio)
-data.bio <- asBiomonitor(oglio, group = "mf")
-data.agR <- aggregatoR(data.bio)
-dness(data.agR, complete = TRUE)
+data_bio <- as_biomonitor(oglio, group = "mf")
+data_agr <- aggregate_taxa(data_bio)
+dness(data_agr, complete = TRUE)
 }
 \references{
 Clarke, K. R., & Warwick, R. M. (1998). A taxonomic distinctness index and its statistical properties. Journal of applied ecology, 35(4), 523-531.

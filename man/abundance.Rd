@@ -28,6 +28,6 @@ abundance(data_agr, tax_lev = "Family")
 abundance(data_agr, tax_lev = "Family", unassigned = TRUE)
 }
 \seealso{
-\code{\link{aggregate_taxa}} \code{\link{get_taxa_abundance}}
+\link{aggregate_taxa} \link{get_taxa_abundance}
 }
 \keyword{abundance}

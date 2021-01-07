@@ -26,7 +26,7 @@ of taxa in the user dataset is high.
 \examples{
 data(macro_ex)
 data_bio <- as_biomonitor(macro_ex)
-data_agr <- aggregate_taxa(data.bio)
+data_agr <- aggregate_taxa(data_bio)
 combine_taxa(data_agr, tax_lev = "Family")
 }
 \seealso{

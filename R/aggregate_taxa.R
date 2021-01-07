@@ -3,18 +3,18 @@
 #' @description
 #' This function prepares data for further calculations.
 #'
-#' @param x results of function asBiomonitor
+#' @param x Result of as_biomonitor
 #' @param FUN the function to be applied for aggregating to higher taxonomic levels.
 #' Must be sum for both abundances and presence-absence data.
 #' Default to `sum`.
 #'
-#' @keywords aggregatoR
+#' @keywords aggregate_taxa
 #'
 #' @importFrom stats aggregate
 #'
 #' @export
 #'
-#' @seealso \code{\link{asBiomonitor}}
+#' @seealso [as_biomonitor]
 #'
 #' @examples
 #' data(macro_ex)
@@ -26,9 +26,9 @@
 #'
 #' oglio_asb <- as_biomonitor(oglio, group = "mf")
 #' oglio_agg <- aggregate_taxa(oglio_asb)
-#' richness(oglio_agg, taxLev = "Species")
-#' richness(oglio_agg, taxLev = "Genus")
-#' richness(oglio_agg, taxLev = "Family")
+#' richness(oglio_agg, tax_lev = "Species")
+#' richness(oglio_agg, tax_lev = "Genus")
+#' richness(oglio_agg, tax_lev = "Family")
 
 
 aggregate_taxa <- function(x, FUN = sum) {

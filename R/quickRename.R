@@ -1,21 +1,25 @@
 #' quickRename
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+#'
 #' This function allow the user to change the wrong taxa names according to the deault reference databases implemented in `biomonitoR`.
+#'
 #' @param x a data.frame as specified in details
 #' @param group biotic group of interest. Possible values are `mi` for macroinvertebrates and `mf` for macrophytes. Default to `mi`.
-#' @param write.table if TRUE `quickRename` will save a txt file with changes provided by the user
+#' @param write.table if `TRUE` `quickRename` will save a txt file with changes provided by the user
+#'
 #' @keywords asBiomonitor
+#'
 #' @details data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
 #' The function `quickRename` will suggest correct name while allowing the user to insert a name (Enter taxon name).
 #' @export
 #' @seealso \code{\link{asBiomonitor}}
-#' @examples
-#' data(macro_ex)
-#' macro_ex.mod <- quickRename(macro_ex, group = "mi")
-
 
 
 quickRename <- function( x , group = "mi", write.table = FALSE ){
+
+  .Deprecated( "quick_traits" , package = "biomonitoR" )
 
   if( is.null( group ) == TRUE ){
     stop("Please provide a valid group")

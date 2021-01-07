@@ -72,22 +72,6 @@ taxonomic levels from Subspecies to Family (Subspecies, Species, Genus, Tribus, 
 \item \code{traitsMean}: average traits values for fuzzy data
 }}
 
-\examples{
-data(macro_ex)
-
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-data.ts <- traitScaling( data.agR )
-
-# select only the nearest traits
-data.ts.sub <- manageTraits( data.ts , method = "nearest+-" )
-
-# averaging
-data.ts.av <- traitsMean( data.ts.sub )
-
-# traits random sampling
-data.ts.st <- sampleTraits( data.ts )
-}
 \seealso{
 \link{aggregatoR}
 }

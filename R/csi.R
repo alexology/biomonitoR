@@ -7,7 +7,7 @@
 #'
 #' @param x results of function `aggregate_taxa()`.
 #' @param trait_db a trait data base with a column `Taxa` and the other columns
-#'   containing the traits.Please check [traitScaling] for building the trait database.
+#'   containing the traits.Please check `assign_traits()` for building the trait database.
 #' @param tax_lev character string giving the taxonomic level used to retrieve
 #'   trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #'   `"Family"` as returned by `aggregate_taxa()`.

@@ -1,5 +1,8 @@
 #' combTaxa
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+#'
 #' This function returns all the combinations of n taxa at the desired taxonomic resolution.
 #' @param x result of the function aggregatoR.
 #' @param ntaxa number of taxa.
@@ -13,12 +16,6 @@
 #' @importFrom utils combn
 #' @export
 #' @seealso \code{\link{aggregatoR}}
-#' @examples
-#' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' combTaxa(data.agR, taxLev = "Family")
-
 
 
 combTaxa <- function( x, ntaxa = 2 , taxLev = "Taxa" ){

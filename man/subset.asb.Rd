@@ -7,13 +7,13 @@
 \method{subset}{asb}(x, ..., taxa = NULL, exclude = NULL)
 }
 \arguments{
-\item{x}{results of function \code{as_biomonitor()}.}
+\item{x}{Results of function \code{as_biomonitor()}.}
 
-\item{...}{further arguments to be passed to or from other methods.}
+\item{...}{Rurther arguments to be passed to or from other methods.}
 
-\item{taxa}{a taxon or a vector of taxa to retain.}
+\item{taxa}{A taxon or a vector of taxa to retain.}
 
-\item{exclude}{a taxon or a vector of taxa to exclude. For example, this option is useful to exclude alien taxa.}
+\item{exclude}{A taxon or a vector of taxa to exclude. For example, this option is useful to exclude alien taxa.}
 }
 \description{
 \code{summary} method for class \code{asb}.

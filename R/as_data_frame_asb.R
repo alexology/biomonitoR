@@ -23,10 +23,10 @@ print.asb <- function(x, ...) {
 #' @description `summary` method for class `asb`.
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
 #'
-#' @param x results of function `as_biomonitor()`.
-#' @param ... further arguments to be passed to or from other methods.
-#' @param taxa a taxon or a vector of taxa to retain.
-#' @param exclude a taxon or a vector of taxa to exclude. For example, this option is useful to exclude alien taxa.
+#' @param x Results of function `as_biomonitor()`.
+#' @param ... Rurther arguments to be passed to or from other methods.
+#' @param taxa A taxon or a vector of taxa to retain.
+#' @param exclude A taxon or a vector of taxa to exclude. For example, this option is useful to exclude alien taxa.
 #'
 #' @export
 #' @examples
@@ -47,6 +47,7 @@ print.asb <- function(x, ...) {
 
 
 subset.asb <- function(x, ..., taxa = NULL, exclude = NULL) {
+
   DF <- as.data.frame(x)
 
   if (is.null(taxa) & is.null(exclude)) {
@@ -103,7 +104,7 @@ subset.asb <- function(x, ..., taxa = NULL, exclude = NULL) {
       exclude <- exclude[exclude %in% df.vec]
     }
 
-    if (length(taxa) == 0 & length(exlcude) == 0) {
+    if (length(taxa) == 0 & length(exclude) == 0) {
       stop("None of the taxa provided were found in the ", x.name, " database")
     }
   }

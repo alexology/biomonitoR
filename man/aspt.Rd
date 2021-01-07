@@ -7,7 +7,7 @@
 aspt(x, method = "ita", agg = FALSE, exceptions = NULL, traceB = FALSE)
 }
 \arguments{
-\item{x}{Result of the function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
 \item{method}{The implementation of BMWP needed to calculate ASPT. Possible choices are \code{a} (Armitage et al. 1983), \code{uk} (Davy-Bowker et al. 2010), \code{spa} (MAGRAMA 2011), \code{ita} (Buffagni et al . 2014).
 Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
@@ -26,11 +26,11 @@ This option can be useful, for instance, to exclude an alien species belonging t
 \value{
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
-\item \code{results} Results of the \code{aspt} index.
+\item \code{results} Results of \code{aspt()}.
 \item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
 \item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{NULL}.
 \item \code{exceptions} A data.frame containing the containing changes made by excluding the taxa included in \code{exceptions}.
-\item \code{parent_child_pairs} For instance in Spanish \code{aspt} both Ferrissia and Planorbidae receive a score.
+\item \code{parent_child_pairs} For instance in Spanish aspt both Ferrissia and Planorbidae receive a score.
 Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 }
 }
@@ -75,7 +75,7 @@ Niphargidae \tab Gammaridae \cr
 }
 
 The \code{aspt()} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-All the information used for \code{aspt()} calculation can be retrieved with the function \code{\link{showscores}}.
+All the information used for \code{aspt()} calculation can be retrieved with the function \code{\link{show_scores}}.
 }
 \examples{
 data(macro_ex)
@@ -92,6 +92,6 @@ Davy-Bowker J., Clarke R., Corbin T., Vincent H, Pretty J., Hawczak A., Blackbur
 MAGRAMA-Ministerio de Agricultura y medio Ambiente (2011) Protocolo de muestreo y laboratorio de fauna bentonica de invertebrados en rios vadeables. ML-Rv-I-2011, Cod, 23 pp.
 }
 \seealso{
-\code{\link{aggregatoR}}
+\link{aggregate_taxa} \link{bmwp}
 }
 \keyword{aspt}

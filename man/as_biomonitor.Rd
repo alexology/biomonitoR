@@ -44,9 +44,9 @@ This behaviour is to assure consistency with other functions implemented in biom
 Default references databases are provided for macroinvertebrates and macrophytes.
 Both databases heavily rely on the information provided by the \href{https://www.freshwaterecology.info/}{freshwaterecology.info} website.
 If \code{dfref} is not NULL a custom dictionary will be saved in the working directory to let the \code{as_biomonitor ()} function work correctly.
-If you are unable to build a reference database by your own please check the function \code{\link{refFromTree}} for a possible solution.
+If you are unable to build a reference database by your own please check the function \code{\link{ref_from_tree}} for a possible solution.
 \code{as_biomonitor()}  returns an object of class \code{asb} togheter with one of the classes \code{abundance} or \code{bin}.
-The function \code{\link{quickRename}} works as the \code{as_biomonitor()} but returns
+The function \code{\link{quick_rename}} works as the \code{as_biomonitor()} but returns
 a data.frame without the biomonitoR format.
 \code{as_biomonitor()} aggregates all the rows with the same name with the option \code{FUN} and converts all the \code{NA} to 0.
 If only 1 and 0 are present \code{x} will be imported as presence-absence.
@@ -63,6 +63,6 @@ An online tool that unifies, standardises and codifies more than
 Ecological indicators, 53, 271-282.
 }
 \seealso{
-\code{\link{quickRename}} \code{\link{refFromTree}} \code{\link{quickRename}}
+\link{quick_rename} \link{ref_from_tree}
 }
-\keyword{asBiomonitor}
+\keyword{as_biomonitor}

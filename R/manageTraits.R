@@ -1,5 +1,8 @@
 #' manageTraits
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+#'
 #' A function to select traits based on taxonomic distance.
 #'
 #' @param x result of the `traitScaling` function.
@@ -16,18 +19,10 @@
 #' taxonomic level equal or finer than the target one. Method `nearest-+` do the opposite.
 #'
 #' @export
-#' @examples
-#' data(macro_ex)
-#'
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' data.ts <- traitScaling( data.agR )
-#'
-#' # select only the nearest traits
-#' data.ts.sub <- manageTraits( data.ts , method = "nearest+-" )
-#'
 
 manageTraits <- function( x , method = "nearest+-" , traceB =  FALSE ){
+
+  .Deprecated( "manage_traits" , package = "biomonitoR" )
 
   taxa <- x$Taxa
   x.split <- split( x , taxa )

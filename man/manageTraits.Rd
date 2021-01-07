@@ -16,6 +16,8 @@ Please see details for further information.}
 because they did not meet the requirments of the selection.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 A function to select traits based on taxonomic distance.
 }
 \details{
@@ -25,15 +27,4 @@ Method \verb{nearest+} select the traits belonging to the nearest taxa that have
 than the target one. Method \verb{nearest-} do the opposite.
 Method \verb{nearest+} select the traits belonging to the nearest taxa giving priority to taxa having
 taxonomic level equal or finer than the target one. Method \verb{nearest-+} do the opposite.
-}
-\examples{
-data(macro_ex)
-
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-data.ts <- traitScaling( data.agR )
-
-# select only the nearest traits
-data.ts.sub <- manageTraits( data.ts , method = "nearest+-" )
-
 }

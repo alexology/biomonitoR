@@ -77,16 +77,16 @@ All the information used for \code{whpt} calculation can be retrieved with the f
 
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-whpt( data.agR )
-whpt( data.agR , metric = "bmwp" )
-whpt( data.agR , type = "po"  , metric = "bmwp" )
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+whpt( data_agr )
+whpt( data_agr , metric = "bmwp" )
+whpt( data_agr , type = "po"  , metric = "bmwp" )
 
 # take a look to the metrics used for whpt calculation
 # only the first 6 rows of each database are shown
 
-lapply( showscores( "whpt" , "uk" ) , head )
+lapply( show_scores( "whpt" , "uk" ) , head )
 }
 \seealso{
 \code{\link{asBiomonitor}}, \code{\link{aspt}}, \code{\link{bmwp}}

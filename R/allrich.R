@@ -7,11 +7,10 @@
 #'
 #' @aliases  richness
 #'
-#' @param x result of the function aggregatoR
+#' @param x Result of `aggregate_taxa()`.
+#' @param tax_lev Taxonomic level on which the calculation has to be made.
 #'
-#' @param tax_lev taxonomic level on which the calculation has to be made.
-#'
-#' @details The function `richness` returns a warning meassage if unassigned taxa are detected at the desired taxonomic level. Unassigned taxa can be present
+#' @details `richness()` returns a warning meassage if unassigned taxa are detected at the desired taxonomic level. Unassigned taxa can be present
 #' because some taxa are entered at higher taxonomic levels than those at which the calculation is performed.
 #' For instance this problem appears when the calculation is done at genus level and some taxa has been entered at family level.
 #' Unassigned taxa can be present also because of missing levels in the reference database at the desired taxonomic level.
@@ -24,13 +23,15 @@
 #'
 #' @export richness
 #'
-#' @seealso \code{\link{aggregatoR}}
+#' @seealso [aggregate_taxa]
 #'
 #' @examples
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
 #' richness(data_agr, tax_lev = "Family")
+
+
 allrich <- function(x) {
 
   # check if the object x is of class "biomonitoR"

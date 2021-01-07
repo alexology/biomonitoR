@@ -47,12 +47,12 @@ abundances (using the \code{trans} function) as weigths
 \examples{
 data(macro_ex)
 
-data.bio <- as_biomonitor(macro_ex)
+data_bio <- as_biomonitor(macro_ex)
 data_agr <- aggregate_taxa(data_bio)
-data_ts <- assign_traits( data_agR )
+data_ts <- assign_traits( data_agr )
 
 # averaging
-data_ts_av <- traitsMean( data_ts )
+data_ts_av <- average_traits( data_ts )
 
 # community specialization index
 cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa", trans = log1p)
@@ -74,5 +74,5 @@ info-An online tool that unifies, standardises and codifies more than
 Ecological indicators, 53, 271-282.
 }
 \seealso{
-\link{aggregatoR}
+\link{aggregate_taxa}
 }

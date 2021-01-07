@@ -45,11 +45,11 @@ shannon(x, base = exp(1), tax_lev = "Taxa")
 simpson(x, tax_lev = "Taxa")
 }
 \arguments{
-\item{x}{result of the function aggregatoR}
+\item{x}{Result of the function \code{aggregate_taxa()}.}
 
-\item{tax_lev}{taxonomic level on which the calculation has to be made.}
+\item{tax_lev}{Taxonomic level on which the calculation has to be made.}
 
-\item{base}{the base of the logarithm}
+\item{base}{The base of the logarithm}
 }
 \description{
 Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
@@ -112,19 +112,21 @@ N the number of individuals and N_max the number of individuals in the most abun
 
 \examples{
 data(macro_ex)
-data_bio <- asBiomonitor(macro_ex)
+data_bio <- as_biomonitor(macro_ex)
 data_agr <- aggregate_taxa(data_bio)
 allindices(data_agr)
 shannon(data_agr)
 
 # base 2
-shannon(data.agR, base = 2)
+shannon(data_agr, base = 2)
+
+
 }
 \references{
 Magurran, A. E. (2004). Measuring biological diversity. Blackwell Science ltd.
 }
 \seealso{
-\code{\link{aggregatoR}}
+\link{aggregate_taxa}
 }
 \keyword{margalef,}
 \keyword{menhinick,}

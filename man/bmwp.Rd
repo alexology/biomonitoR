@@ -26,7 +26,7 @@ This option can be useful, for instance, to exclude an alien species belonging t
 \value{
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
-\item \code{results} Results of the \code{bmwp} index.
+\item \code{results} Results of \code{bmwp()}.
 \item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
 \item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{NULL}.
 \item \code{exceptions} A data.frame containing the containing changes made by excluding the taxa included in \code{exceptions}.
@@ -73,14 +73,14 @@ Niphargidae \tab Gammaridae \cr
 }
 
 The \code{bmwp()} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-All the information used for \code{bmwp()} calculation can be retrieved with the function \code{\link{showscores}}.
+All the information used for \code{bmwp()} calculation can be retrieved with the function \code{show_scores()}.
 }
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-bmwp(data.agR)
-bmwp(data.agR, method = "spa")
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+bmwp(data_agr)
+bmwp(data_agr, method = "spa")
 }
 \references{
 Armitage, P. D., Moss, D., Wright, J. F., & Furse, M. T. (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. Water research, 17(3), 333-347.
@@ -90,6 +90,6 @@ Davy-Bowker J., Clarke R., Corbin T., Vincent H, Pretty J., Hawczak A., Blackbur
 MAGRAMA-Ministerio de Agricultura y medio Ambiente (2011) Protocolo de muestreo y laboratorio de fauna bentonica de invertebrados en rios vadeables. ML-Rv-I-2011, Cod, 23 pp.
 }
 \seealso{
-\code{\link{aggregatoR}}
+\link{aggregate_taxa} \link{aspt} \link{show_scores}
 }
 \keyword{aggregatoR}

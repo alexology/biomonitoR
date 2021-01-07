@@ -13,7 +13,7 @@ bioco(x, alien = NULL, dfref = NULL, digits = 2)
 
 \item{dfref}{reference database.
 If a default reference database was used use \code{mi} for macroinvertebrates or \code{mf} for macrophytes.
-Use the same reference database you used for \code{as_biomonitor} otherwise.}
+Use the same reference database you used for \code{as_biomonitor()} otherwise.}
 
 \item{digits}{number of decimal places, default to 2 as in the original work of Arbaciauskas et al. (2008).}
 }
@@ -31,8 +31,8 @@ Applications and examples of these indices are available in Cuk et al. (2019) fo
 }
 \examples{
 data(macro_ex)
-data_bio <- asBiomonitor(macro_ex)
-data_agr <- aggregatoR(data_bio)
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
 # Toy example:
 alien <- c("Laccobius", "Setodes bulgaricus", "Caenidae")
 bioco(data_agr, alien = alien, dfref = "mi")
@@ -45,6 +45,6 @@ Cuk, R., Milisa, M., Atanackovic, A., Dekic, S., Blazekovic, L., & Zganec, K. (2
 MacNeil, C., Briffa, M., Leuven, R.S., Gell, F.R. and Selman, R. (2010). An appraisal of a biocontamination assessment method for freshwater macroinvertebrate assemblages; a practical way to measure a significant biological pressure? Hydrobiologia 638:151-159
 }
 \seealso{
-\code{\link{aggregate_taxa}}
+\link{aggregate_taxa}
 }
 \keyword{aggregate_taxa}

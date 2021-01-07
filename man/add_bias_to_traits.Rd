@@ -7,7 +7,7 @@
 add_bias_to_traits(x, fuzzy = TRUE, col_blocks = NULL, SD = 0.001)
 }
 \arguments{
-\item{x}{Result of \code{traitsMean()} or a \code{data.frame} with a similar structure.}
+\item{x}{Result of \code{average_traits()} or a \code{data.frame} with a similar structure.}
 
 \item{fuzzy}{Are you working with fuzzy traits? Default to \code{TRUE}.}
 
@@ -29,7 +29,7 @@ data(macro_ex)
 data_bio <- as_biomonitor(macro_ex)
 data_agr <- aggregate_taxa(data_bio)
 data_ts <- assign_traits(data_agr)
-data_ts_av <- traitsMean(data_ts)
+data_ts_av <- average_traits(data_ts)
 
 data_ts_av[1:5, 1:5]
 

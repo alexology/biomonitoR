@@ -3,6 +3,8 @@
 
 traitsMean <- function( x , colB = NULL  ){
 
+  .Deprecated("average_traits" , package = "biomonitoR")
+
   if( is.null( colB ) ) {
     colB <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
   } else {

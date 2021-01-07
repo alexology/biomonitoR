@@ -1,7 +1,12 @@
 #' dness
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
+#'
 #' This function calculates the taxonomic diversity, taxonomic distinctness and variation of taxonomic distinctness.
-#' @param x results of function aggregatoR
+#'
+#'
+#' @param x Result of `aggregate_taxa()`.
 #' @param complete if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with tax_lev
 #' @param tax_lev taxonomic level from which the indices are to be calculated
 #' @param method available methods are delta (taxonomic diversity), delta.st (taxonomic distinctness) and delta.bin (variation in taxonomic distinctness)
@@ -10,14 +15,13 @@
 #' @references Clarke, K. R., & Warwick, R. M. (1998). A taxonomic distinctness index and its statistical properties. Journal of applied ecology, 35(4), 523-531.
 #' @references Clarke, K. R., & Warwick, R. M. (2001). A further biodiversity index applicable to species lists: variation in taxonomic distinctness. Marine ecology Progress series, 216, 265-278.
 #' @details see Clarke and Warwick (1998) an Clarke and Warwick (2001).
-#' @note USE WITH CAUTION, STILL IN DEVELOPMENT.
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
 #' data(oglio)
-#' data.bio <- asBiomonitor(oglio, group = "mf")
-#' data.agR <- aggregatoR(data.bio)
-#' dness(data.agR, complete = TRUE)
+#' data_bio <- as_biomonitor(oglio, group = "mf")
+#' data_agr <- aggregate_taxa(data_bio)
+#' dness(data_agr, complete = TRUE)
 
 
 

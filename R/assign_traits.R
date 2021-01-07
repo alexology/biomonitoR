@@ -21,7 +21,7 @@
 #' taxonomic levels from Subspecies to Family (Subspecies, Species, Genus, Tribus, Subfamily, Family).
 #'
 #'
-#' @param x Results of function `aggregate_taxa()`
+#' @param x Results of `aggregate_taxa()`
 #' @param trait_db A trait data base with a column `Taxa` and the other columns
 #'   containing the traits.
 #'   By default, the database used is the one from Tachet *et al* (2010) that
@@ -50,7 +50,7 @@
 #' data_ts <- assign_traits(data_agr)
 #'
 #' # select only the nearest traits
-#' data_ts_sub <- manageTraits(data_ts, method = "nearest+-")
+#' data_ts_sub <- manage_traits(data_ts, method = "nearest+-")
 #'
 #' # averaging
 #' data_ts_av <- average_traits(data_ts_sub)

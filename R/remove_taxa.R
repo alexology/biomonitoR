@@ -16,9 +16,9 @@
 #' @seealso \code{\link{aggregatoR}} \code{\link{ambiguousSolver}}
 #' @examples
 #' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' remove_taxa(data.agR, taxa = "Ephemeroptera")
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' remove_taxa(data_agr, taxa = "Ephemeroptera")
 
 
 remove_taxa <- function( x , taxa = NULL ){

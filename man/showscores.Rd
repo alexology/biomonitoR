@@ -12,11 +12,9 @@ showscores(index = NULL, method = NULL)
 \item{method}{method of the index specified in \code{index}.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 This function print the databases used for the calculation of several indices implemented in biomonitoR.
-}
-\examples{
-showscores( index = "aspt", method = "spa" )
-showscores( index = "life", method = "extence" )
 }
 \seealso{
 \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}, \code{\link{psi}}, \code{\link{epsi}}

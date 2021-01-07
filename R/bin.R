@@ -1,8 +1,10 @@
 #' bin
 #'
+#' @description
+#' Function for calculating presence-absence from a vector. It does not take into account NAs.
+#'
 #' @param x A vector of numbers.
 #'
-#' Function for calculating presence-absence from a vector. It does not take into account NAs.
 #' @export
 
 bin <- function( x ){

@@ -5,7 +5,7 @@
 #'
 #' This function calculates the *Average Score Per Taxon* index following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 #'
-#' @param x Result of the function `aggregate_taxa()`.
+#' @param x Result of `aggregate_taxa()`.
 #' @param method The implementation of BMWP needed to calculate ASPT. Possible choices are `a` (Armitage et al. 1983), `uk` (Davy-Bowker et al. 2010), `spa` (MAGRAMA 2011), `ita` (Buffagni et al . 2014).
 #'  Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Scores*.
 #' @param agg This option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
@@ -59,21 +59,21 @@
 #'
 #'
 #' The `aspt()` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-#' All the information used for `aspt()` calculation can be retrieved with the function \code{\link{showscores}}.
+#' All the information used for `aspt()` calculation can be retrieved with the function \code{\link{show_scores}}.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
-#'  \item `results` Results of the `aspt` index.
+#'  \item `results` Results of `aspt()`.
 #'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
 #'  \item `composite_taxa` Taxa aggregated following the aggregation rules when agg is not `NULL`.
 #'  \item `exceptions` A data.frame containing the containing changes made by excluding the taxa included in `exceptions`.
-#'  \item `parent_child_pairs` For instance in Spanish `aspt` both Ferrissia and Planorbidae receive a score.
+#'  \item `parent_child_pairs` For instance in Spanish aspt both Ferrissia and Planorbidae receive a score.
 #'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 #' }
 #'
 #' @importFrom stats aggregate
 #' @export
-#' @seealso \code{\link{aggregatoR}}
+#' @seealso [aggregate_taxa] [bmwp]
 #' @examples
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)

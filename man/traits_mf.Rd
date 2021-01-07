@@ -4,7 +4,9 @@
 \name{traits_mf}
 \alias{traits_mf}
 \title{Traits for macrophytes}
-\format{A data frame with 48 rows and 24 variables.}
+\format{
+A data frame with 48 rows and 24 variables.
+}
 \usage{
 data( traits_mf )
 }

@@ -12,11 +12,7 @@
 #' @keywords aggregatoR
 #' @export
 #' @seealso \code{\link{aggregatoR}}
-#' @examples
-#' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' ricTax(data.agR, taxa = "Ephemeroptera", taxLev = "Family")
+
 
 ricTax <-  function(x , taxa = NULL , taxLev = NULL ){
 

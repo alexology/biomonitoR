@@ -28,7 +28,7 @@
 #'  }
 #'
 #' The `epsi()` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-#' All the information used for `epsi()` calculation can be retrieved with the function \code{\link{showscores}}.
+#' All the information used for `epsi()` calculation can be retrieved with the function \code{\link{show_scores}}.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
@@ -46,12 +46,12 @@
 #' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated ePSI scores and algorithms.
 #' @importFrom stats aggregate reshape
 #' @export
-#' @seealso \code{\link{asBiomonitor}}
+#' @seealso \code{\link{aggregate_taxa}}
 #' @examples
 #' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' epsi( data.agR )
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' epsi( data_agr )
 #'
 #' # provide your own score sistem. Scores and aggregation rules are for example purpose only.
 #'
@@ -59,7 +59,7 @@
 #'  Scores = c( 0.1 , 0.5 , 0.2 ) )
 #' epsi_acc <- data.frame( Taxon = "Ephemerellidae" , Correct_Taxon = "Chironomidae" )
 #'
-#' epsi( data.agR , method = epsi_scores , agg = epsi_acc , traceB = TRUE )
+#' epsi( data_agr , method = epsi_scores , agg = epsi_acc , traceB = TRUE )
 
 
 epsi <- function( x , method = "uk" ,  agg = FALSE , abucl = c( 1 , 9 , 99 , 999 ) , exceptions = NULL , traceB = FALSE ){

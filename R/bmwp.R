@@ -53,11 +53,11 @@
 #'
 #'
 #' The `bmwp()` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-#' All the information used for `bmwp()` calculation can be retrieved with the function \code{\link{showscores}}.
+#' All the information used for `bmwp()` calculation can be retrieved with the function `show_scores()`.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
-#'  \item `results` Results of the `bmwp` index.
+#'  \item `results` Results of `bmwp()`.
 #'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
 #'  \item `composite_taxa` Taxa aggregated following the aggregation rules when agg is not `NULL`.
 #'  \item `exceptions` A data.frame containing the containing changes made by excluding the taxa included in `exceptions`.
@@ -67,13 +67,13 @@
 #'
 #' @importFrom stats aggregate
 #' @export
-#' @seealso \code{\link{aggregatoR}}
+#' @seealso [aggregate_taxa] [aspt] [show_scores]
 #' @examples
 #' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' bmwp(data.agR)
-#' bmwp(data.agR, method = "spa")
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' bmwp(data_agr)
+#' bmwp(data_agr, method = "spa")
 
 bmwp <- function( x , method = "ita" , agg = FALSE , exceptions = NULL , traceB = FALSE ) {
 

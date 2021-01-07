@@ -7,9 +7,9 @@
 eptd(x, base = 10, eptd_families = NULL, traceB = FALSE)
 }
 \arguments{
-\item{x}{result of the function \link{aggregatoR}}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{base}{Default to 10.}
+\item{base}{Base of the logarithm. Default to 10.}
 
 \item{eptd_families}{a vector of selected EPTD taxa at family level. Optional, default to \code{NULL}.}
 
@@ -28,17 +28,17 @@ This function calculates the log10(Sel_EPTD + 1) metric, where EPTD stands for E
 \details{
 log10(Sel_EPTD + 1) is the base-10 logarithm of the abundance of the selected EPTD families plus 1. Selected EPTD families are Heptageniidae, Ephemeridae, Leptophlebiidae, Brachycentridae, Goeridae, Polycentropodidae, Limnephilidae, Odontoceridae, Dolichopodidae, Stratiomyidae, Dixidae, Empididae, Athericidae and Nemouridae.
 This metric is part of the italian STAR_ICMi index, where it is supposed to be relate to habitat integrity.
-The function \code{eptd} will search for the selected EPT within Ephemeroptera, Plecoptera, Trichoptera and Diptera set at Order level.
+The function \code{eptd()} will search for the selected EPT within Ephemeroptera, Plecoptera, Trichoptera and Diptera set at Order level.
 If you plan to store Ephemeroptera, Plecoptera, Trichoptera and Diptera at other taxonomic levels this function will
-not work properly, see \link{abuTax} instead.
+not work properly, see \code{get_taxa_abundance()} instead.
 }
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-eptd(data.agR)
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+eptd(data_agr)
 }
 \seealso{
-\code{\link{aggregatoR}}
+\link{aggregate_taxa} \link{get_taxa_abundance}
 }
 \keyword{eptd}

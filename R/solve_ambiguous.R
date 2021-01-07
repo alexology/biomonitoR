@@ -19,7 +19,7 @@
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
-#' data_mcwp <- solve_ambiguous(data.agr,  , method = "MCWP" )
+#' data_mcwp <- solve_ambiguous(data_agr, method = "MCWP" )
 #' data_mcwp_bio <- as_biomonitor(data_mcwp)
 #' data_mcwp <- aggregate_taxa(data_mcwp_bio)
 

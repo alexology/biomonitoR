@@ -15,14 +15,14 @@
 #'
 #' @export
 #'
-#' @seealso \code{\link{aggregatoR}} \code{\link{ambiguousSolver}}
+#' @seealso \code{\link{aggregate_taxa}} \code{\link{solve_ambiguous}}
 #'
 #' @examples
 #' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' get_taxa_abundance(data.agR, taxa = "Ephemeroptera")
-#' get_taxa_abundance(data.agR, taxa = c("Setodes", "Orthocladiinae"), rel = TRUE)
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' get_taxa_abundance(data_agr, taxa = "Ephemeroptera")
+#' get_taxa_abundance(data_agr, taxa = c("Setodes", "Orthocladiinae"), rel = TRUE)
 
 get_taxa_abundance <- function (x, taxa = NULL, rel = FALSE)
 {

@@ -18,12 +18,6 @@ ricTax(x, taxa = NULL, taxLev = NULL)
 
 This function calculates the absolute richness of a taxon or of a set taxa at the taxonomic level provided by the user.
 }
-\examples{
-data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-ricTax(data.agR, taxa = "Ephemeroptera", taxLev = "Family")
-}
 \seealso{
 \code{\link{aggregatoR}}
 }

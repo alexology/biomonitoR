@@ -5,7 +5,7 @@
 #' @param traceB if set to `TRUE` a list as specified below will be returned.
 #' @keywords ept
 #' @details The metric 1 - GOLD is calculated as 1 minus the relative abundance of Gastropoda, Oligochaeta and Diptera. If a custom database is provided (see \code{\link{aggregatoR}}) please be sure that Gastropoda are at Class, Oligochaeta at Sublclass and Diptera at Order level, otherwise the gold calculation will be meaningless.
-#' If this is the case please see [abuTax].
+#' If this is the case please see `get_taxa_abundance()`.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
@@ -19,9 +19,9 @@
 #' @seealso \code{\link{aggregatoR}}
 #' @examples
 #' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' igold(data.agR)
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' igold(data_agr)
 
 
 igold <- function( x , traceB = FALSE ){

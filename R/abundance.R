@@ -1,7 +1,7 @@
 #' abundance
 #'
 #' @description Calculates taxa abundances at the desired taxonomic level.
-#'  Unassigned taxa can be included or excluded from the calculation.
+#' Unassigned taxa can be included or excluded from the calculation.
 #'
 #' @param x Result of the function `aggregate_taxa()`.
 #' @param tax_lev Taxonomic level.
@@ -13,7 +13,7 @@
 #'
 #' @export
 #'
-#' @seealso \code{\link{aggregate_taxa}} \code{\link{get_taxa_abundance}}
+#' @seealso [aggregate_taxa] [get_taxa_abundance]
 #'
 #' @examples
 #' data(macro_ex)

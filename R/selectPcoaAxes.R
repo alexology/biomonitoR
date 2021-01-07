@@ -2,7 +2,7 @@
 #'
 #'
 #' @description
-#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
 #'
 #' Select the number of the axis for the calculation of functional richness.
 #'
@@ -32,28 +32,6 @@
 #' @export
 #' @importFrom dplyr bind_rows
 #' @seealso \code{\link{aggregatoR}}
-#' @examples
-#'
-#' library( ade4 )
-#'
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' data.ts <- traitScaling( data.agR )
-#'
-#' # averaging
-#' data.ts.av <- traitsMean( data.ts )
-#'
-#' colB <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
-#'
-#' rownames( data.ts.av ) <- data.ts.av$Taxa
-#' traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = colB )
-#'
-#' traits.dist <- ktab.list.df( list( traits.prep ) )
-#' traits.dist <- dist.ktab( traits.dist , type = "F" )
-#'
-#' selectPcoaAxes( traits.dist , method = "cor" , tresh = 0.7)
-#' selectPcoaAxes( traits.dist , method = "legendre" , tresh = 0.7)
-#' selectPcoaAxes( traits.dist , method = "maire" , tresh = 0.01)
 #'
 #' @references Maire, E., Grenouillet, G., Brosse, S., & Villeger, S. (2015).
 #'   How many dimensions are needed to accurately assess functional diversity?
@@ -67,6 +45,8 @@
 
 
 selectPcoaAxes <- function( x , method = "legendre" , tresh = NULL , nbdim = 15 ){
+
+  .Deprecated( "select_pcoa_axes" , package = "biomonitoR" )
 
   if( identical( method , "cor" ) & is.null( tresh )  ) { tresh <- 0.7 }
   if( identical( method , "legendre" ) & is.null( tresh )  ) { tresh <- 0.7 }

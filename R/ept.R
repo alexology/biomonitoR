@@ -1,14 +1,14 @@
 #' ept
 #'
 #' This function calculates the richness of Ephemeroptera, Plecotera and Trichoptera (EPT) taxa at the desired taxonomic level.
-#' @param x Result of the function `aggregate_taxa`.
+#' @param x Result of `aggregate_taxa()`.
 #' @param tax_lev The taxonomic level for calculating EPT richness.
 #' @keywords ept
 #' @details `tax_lev` must be finer than Order (e.g. Species, Genus, Family ).
-#' The `ept()` function works if Ephemeroptera, Trichoptera and Plecoptera are set as orders in the reference database. Otherwise try with \code{\link{ricTax}}.
+#' The `ept()` function works if Ephemeroptera, Trichoptera and Plecoptera are set as orders in the reference database. Otherwise try with `aggregate_richness()`.
 #' @importFrom stats aggregate
 #' @export
-#' @seealso \code{\link{aggregatoR}} \code{\link{ricTax}}
+#' @seealso [aggregate_taxa] [get_taxa_richness]
 #' @examples
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)
@@ -17,7 +17,8 @@
 #'
 #' # ept should return the same results as the function get_taxa_richness
 #' ept( data_agr , tax_lev = "Family" )
-#' get_taxa_richness( data_agR , taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) , tax_lev = "Family" )
+#' get_taxa_richness( data_agr ,
+#'   taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) , tax_lev = "Family" )
 
 
 ept <- function ( x, tax_lev = "Taxa" ){

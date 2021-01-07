@@ -1,5 +1,8 @@
 #' showscores
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+#'
 #' This function print the databases used for the calculation of several indices implemented in biomonitoR.
 #' @param index name of the index for which information are needed.
 #' @param method method of the index specified in `index`.
@@ -7,11 +10,11 @@
 #' @importFrom utils write.csv menu
 #' @export
 #' @seealso \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}, \code{\link{psi}}, \code{\link{epsi}}
-#' @examples
-#' showscores( index = "aspt", method = "spa" )
-#' showscores( index = "life", method = "extence" )
+
 
 showscores <- function( index = NULL , method = NULL ){
+
+  .Deprecated( "show_scores" , package = "biomonitoR" )
 
   to.print <- file_list[ file_list$Index == index & file_list$Method == method , , drop = FALSE ]
 

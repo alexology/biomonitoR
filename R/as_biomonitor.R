@@ -15,16 +15,17 @@
 #' @param correct_names if `TRUE` alternative names will be suggested for taxa not found in the reference database. Default to
 #' `FALSE`, with which the unrecognized taxa will be removed.
 #' @param traceB track changes in taxa names.
-#' @keywords asBiomonitor
+#'
+#' @keywords as_biomonitor
 #' @details The function `as_biomonitor()` checks the taxonomy of the data.frame provided by the user and suggests correction for mispelled names.
 #' If one or more taxa names of `x` are not present in the reference database or the spell checker is not able to find any suggestion the user is asked to exit.
 #' This behaviour is to assure consistency with other functions implemented in biomonitoR.
 #' Default references databases are provided for macroinvertebrates and macrophytes.
 #' Both databases heavily rely on the information provided by the [freshwaterecology.info](https://www.freshwaterecology.info/) website.
 #' If `dfref` is not NULL a custom dictionary will be saved in the working directory to let the `as_biomonitor ()` function work correctly.
-#' If you are unable to build a reference database by your own please check the function \code{\link{refFromTree}} for a possible solution.
+#' If you are unable to build a reference database by your own please check the function \code{\link{ref_from_tree}} for a possible solution.
 #' `as_biomonitor()`  returns an object of class `asb` togheter with one of the classes `abundance` or `bin`.
-#' The function \code{\link{quickRename}} works as the `as_biomonitor()` but returns
+#' The function \code{\link{quick_rename}} works as the `as_biomonitor()` but returns
 #' a data.frame without the biomonitoR format.
 #' `as_biomonitor()` aggregates all the rows with the same name with the option `FUN` and converts all the `NA` to 0.
 #' If only 1 and 0 are present `x` will be imported as presence-absence.
@@ -34,7 +35,7 @@
 #' @importFrom utils select.list stack
 #' @importFrom hunspell dictionary hunspell_check hunspell_suggest
 #' @export
-#' @seealso \code{\link{quickRename}} \code{\link{refFromTree}} \code{\link{quickRename}}
+#' @seealso [quick_rename] [ref_from_tree]
 #' @references Schmidt-Kloiber, A., & Hering, D. (2015). www.freshwaterecology.info -
 #' An online tool that unifies, standardises and codifies more than
 #' 20,000 European freshwater organisms and their ecological preferences.

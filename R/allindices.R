@@ -2,10 +2,13 @@
 #' @title Functions for calculating diversity, eveness and dominance indices.
 #'
 #' @description Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
+#'
 #' @aliases  shannon simpson margalef menhinick pielou berpar brill esimpson invberpar invsimpson mcintosh fisher allindices
-#' @param x result of the function aggregatoR
-#' @param base the base of the logarithm
-#' @param tax_lev taxonomic level on which the calculation has to be made.
+#'
+#' @param x Result of the function `aggregate_taxa()`.
+#' @param base The base of the logarithm
+#' @param tax_lev Taxonomic level on which the calculation has to be made.
+#'
 #' @details Shannon index:
 #' \deqn{H'=-\sum_{i=1}^{S} p_{i}\log(p_{i})}
 #' Pielou index:
@@ -36,17 +39,19 @@
 #'  N the number of individuals and N_max the number of individuals in the most abundant species. All the indices are calculated according to Magurran (2004).
 #' @keywords shannon, simpson, margalef, menhinick, pielou
 #' @export
-#' @seealso \code{\link{aggregatoR}}
+#' @seealso [aggregate_taxa]
 #' @references Magurran, A. E. (2004). Measuring biological diversity. Blackwell Science ltd.
 #' @examples
 #' data(macro_ex)
-#' data_bio <- asBiomonitor(macro_ex)
+#' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
 #' allindices(data_agr)
 #' shannon(data_agr)
 #'
 #' # base 2
-#' shannon(data.agR, base = 2)
+#' shannon(data_agr, base = 2)
+#'
+#'
 #' @export simpson
 #' @export esimpson
 #' @export invsimpson

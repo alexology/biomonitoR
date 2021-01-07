@@ -7,7 +7,7 @@
 ept(x, tax_lev = "Taxa")
 }
 \arguments{
-\item{x}{Result of the function \code{aggregate_taxa}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
 \item{tax_lev}{The taxonomic level for calculating EPT richness.}
 }
@@ -16,7 +16,7 @@ This function calculates the richness of Ephemeroptera, Plecotera and Trichopter
 }
 \details{
 \code{tax_lev} must be finer than Order (e.g. Species, Genus, Family ).
-The \code{ept()} function works if Ephemeroptera, Trichoptera and Plecoptera are set as orders in the reference database. Otherwise try with \code{\link{ricTax}}.
+The \code{ept()} function works if Ephemeroptera, Trichoptera and Plecoptera are set as orders in the reference database. Otherwise try with \code{aggregate_richness()}.
 }
 \examples{
 data(macro_ex)
@@ -26,9 +26,10 @@ ept(data_agr)
 
 # ept should return the same results as the function get_taxa_richness
 ept( data_agr , tax_lev = "Family" )
-get_taxa_richness( data_agR , taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) , tax_lev = "Family" )
+get_taxa_richness( data_agr ,
+  taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) , tax_lev = "Family" )
 }
 \seealso{
-\code{\link{aggregatoR}} \code{\link{ricTax}}
+\link{aggregate_taxa} \link{get_taxa_richness}
 }
 \keyword{ept}

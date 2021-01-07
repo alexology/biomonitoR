@@ -1,5 +1,8 @@
 #' refFromTree
 #'
+#' @description
+#' \Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+#'
 #' This function transforms a taxonomic tree to a reference database suitable for biomonitoR.
 #' @param x taxonomic tree. See \code{\link{Tree}} for an example.
 #' @param group merge the user database with one of the biomonitoR reference databases, default to `none`.
@@ -7,13 +10,11 @@
 #'  Check the reliability of results when using group = `mi` for macroinvertebrates or group = `mf` for macrophytes.
 #' @keywords refFromTree
 #' @export
-#' @examples
-#' data(Tree)
-#' ref_custom <- refFromTree(Tree)
-
 
 
 refFromTree <- function( x , group = "none" ){
+
+  .Deprecated( "ref_from_tree" , package = "biomonitoR" )
 
   n <- ncol( x )
 

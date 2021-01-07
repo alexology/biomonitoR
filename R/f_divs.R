@@ -5,6 +5,7 @@
 #'
 #' This function calculates the functional diversity.
 #'
+#' @details
 #' Rao quadratic entropy (Q; Rao, 1982) is used to estimate Functional Diversity
 #' because it has been considered more appropriate than other indices (Botta-Dukat,
 #' 2005; Ricotta, 2005). In this formula (Q) dij is the dissimilarity (ranging
@@ -19,17 +20,17 @@
 #' \deqn{Q = \sum_{i=1}^{S} \sum_{j=1}^{S} d_{ij} \ p_i \ p_j}
 #'
 #'
-#' @param x results of function aggregatoR
-#' @param traitDB a trait database. Can be a `data.frame` ot a `dist` object.
+#' @param x results of function `aggregate_taxa()`.
+#' @param trait_db a trait database. Can be a `data.frame` ot a `dist` object.
 #' Taxonomic level of the traits database must match those of the taxonomic database.
-#' No automatic check is done by the `function`.
-#' @param taxLev character string giving the taxonomic level used to retrieve
+#' No automatic check is done.
+#' @param tax_lev character string giving the taxonomic level used to retrieve
 #' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #' `"Family"` as returned by the [aggregatoR] function.
-#' @param type the type of variables speciefied in `traitDB`.
+#' @param type the type of variables speciefied in `trait_db`.
 #' Must be one of `F`, fuzzy, or `C`, continuous.
-#' If more control is needed please consider to provide `traitDB` as a `dist` object.
-#' It works only when `traitDB` is a `data.frame`, otherwise ingored.
+#' If more control is needed please consider to provide `trait_db` as a `dist` object.
+#' It works only when `trait_db` is a `data.frame`, otherwise ingored.
 #' @param traitSel interactively select traits.
 #' @param col_blocks A vector that contains the number of modalities for each trait.
 #' Not needed when `euclidean` distance is used.
@@ -67,27 +68,27 @@
 #' @examples
 #' data(macro_ex)
 #'
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' data.ts <- traitScaling( data.agR )
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' data_ts <- assign_traits( data_agr )
 #' # averaging
-#' data.ts.av <- traitsMean( data.ts )
+#' data_ts_av <- average_traits( data_ts )
 #'
 #' col_blocks <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
 #'
-#' f_divs( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
-#' f_divs( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks ,
+#' f_divs( data_agr , trait_db = data_ts_av , type = "F" , col_blocks = col_blocks )
+#' f_divs( data_agr , trait_db = data_ts_av , type = "F" , col_blocks = col_blocks ,
 #'        correction = "cailliez" )
 #'
 #' library( ade4 )
 #'
-#' rownames( data.ts.av ) <- data.ts.av$Taxa
-#' traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = col_blocks )
+#' rownames( data_ts_av ) <- data_ts_av$Taxa
+#' traits_prep <- prep.fuzzy( data_ts_av[ , -1 ], col.blocks = col_blocks )
 #'
-#' traits.dist <- ktab.list.df( list( traits.prep ) )
-#' traits.dist <- dist.ktab( traits.dist , type = "F" )
+#' traits_dist <- ktab.list.df( list( traits_prep ) )
+#' traits_dist <- dist.ktab( traits_dist , type = "F" )
 #'
-#' f_divs( data.agR , traitDB = traits.dist   )
+#' f_divs( data_agr , trait_db = traits_dist   )
 #'
 #'
 #'
@@ -139,7 +140,7 @@
 #'
 #' @export
 
-f_divs <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel = FALSE , col_blocks = NULL,  distance = "gower", zerodist_rm = FALSE , traceB = FALSE , correction = "none" ,  set_param = NULL ){
+f_divs <- function( x , trait_db = NULL, tax_lev = "Taxa" , type = NULL , traitSel = FALSE , col_blocks = NULL,  distance = "gower", zerodist_rm = FALSE , traceB = FALSE , correction = "none" ,  set_param = NULL ){
 
   #  check if the object x is of class "biomonitoR"
   classCheck( x )
@@ -159,45 +160,45 @@ f_divs <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel
     set_param <- set_param_def
   }
 
-  if( is.null( traitDB ) ) stop( "Please provide traitDB" )
+  if( is.null( trait_db ) ) stop( "Please provide trait_db" )
 
-  if( ! is.data.frame( traitDB ) & ! class( traitDB ) %in% "dist"  ) stop( "traitDB must be a data.frame or a dist object" )
+  if( ! is.data.frame( trait_db ) & ! class( trait_db ) %in% "dist"  ) stop( "trait_db must be a data.frame or a dist object" )
 
-  if( is.null( type ) & is.data.frame( traitDB ) ) stop( "Please specify a type when traitDB is a data.frame" )
+  if( is.null( type ) & is.data.frame( trait_db ) ) stop( "Please specify a type when trait_db is a data.frame" )
 
-  if( ! identical( type , "F" ) & ! identical( type , "C" ) & is.data.frame( traitDB )  ) stop( "type must be C or F when traitDB is a data.frame" )
+  if( ! identical( type , "F" ) & ! identical( type , "C" ) & is.data.frame( trait_db )  ) stop( "type must be C or F when trait_db is a data.frame" )
 
   if( identical( type , "C" ) & identical( distance , "gower" ) ) ( warning( "Are you sure to use gower distance when type is C?" ) )
 
   if( identical( type , "F" ) & identical( distance , "euclidean" ) ) ( warning( "Are you sure to use euclidean distance when type is F?" ) )
 
 
-  if( is.data.frame( traitDB ) ){
+  if( is.data.frame( trait_db ) ){
 
     # trim and capitalise the first letter in the DB provided by the user
-    traitDB[ , "Taxa"] <- as.factor( sapply( trim( traitDB[ , "Taxa"] ), capWords, USE.NAMES = F ) )
+    trait_db[ , "Taxa"] <- as.factor( sapply( trim( trait_db[ , "Taxa"] ), capWords, USE.NAMES = F ) )
 
     if( identical( type , "F" ) ){
       if( is.null( col_blocks ) ) ( stop( "Please provide col_blocks" ) )
-      # check if the number of traits in traitDB equals the sum of col_blocks, otherwise stop
-      if( ( ncol( traitDB ) - 1 ) != sum( col_blocks ) ) ( stop( "The number of traits in traitDB is not equal to the sum of col_blocks" ) )
+      # check if the number of traits in trait_db equals the sum of col_blocks, otherwise stop
+      if( ( ncol( trait_db ) - 1 ) != sum( col_blocks ) ) ( stop( "The number of traits in trait_db is not equal to the sum of col_blocks" ) )
     }
   }
 
 
-  if( traitSel & is.data.frame( traitDB ) ){
+  if( traitSel & is.data.frame( trait_db ) ){
     Index <- rep( 1:length( col_blocks ) , col_blocks )
-    rma <- select.list( names( traitDB[ -which( names( traitDB ) %in% "Taxa")] ) , title = "Traits selection"  , graphics = TRUE , multiple = T )
+    rma <- select.list( names( trait_db[ -which( names( trait_db ) %in% "Taxa")] ) , title = "Traits selection"  , graphics = TRUE , multiple = T )
     # new col_blocks based on user trait selection, -1 because there is the column called Taxa
-    col_blocks <- as.vector( table( Index[ which( names( traitDB ) %in% rma ) - 1 ] ) )
+    col_blocks <- as.vector( table( Index[ which( names( trait_db ) %in% rma ) - 1 ] ) )
 
     #  trait must have at least two modalities
     if( any( col_blocks < 2 ) ) ( stop( "a trait must have at least two modalities" ) )
 
-    traitDB <- traitDB %>%
+    trait_db <- trait_db %>%
       select( c("Taxa", rma) )
     # trim and capitalise the column Taxa of the user' trait database
-    traitDB$Taxa <- apply( as.data.frame( trim( traitDB$Taxa ) ) , 1 , capWords)
+    trait_db$Taxa <- apply( as.data.frame( trim( trait_db$Taxa ) ) , 1 , capWords)
 
   }
 
@@ -205,20 +206,20 @@ f_divs <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel
 
   st.names <- names( x[[ 1 ]][ -1 ] )
 
-  DF <- x[[ taxLev ]]
+  DF <- x[[ tax_lev ]]
   names( DF )[ 1 ] <- "Taxon"
 
   taxa <- as.character( DF$Taxon )
   DF$Taxon <- as.character( DF$Taxon )
 
 
-  if( is.data.frame( traitDB ) ) {
+  if( is.data.frame( trait_db ) ) {
 
-    traitDB$Taxa <- as.character( traitDB$Taxa )
-    names( traitDB )[ names( traitDB ) %in% "Taxa" ] <- "Taxon"
+    trait_db$Taxa <- as.character( trait_db$Taxa )
+    names( trait_db )[ names( trait_db ) %in% "Taxa" ] <- "Taxon"
 
     # be sure that taxonomic and functional database have the same order and taxa
-    DF <- merge( DF , traitDB[ , "Taxon" , drop = FALSE ] , by = "Taxon" )
+    DF <- merge( DF , trait_db[ , "Taxon" , drop = FALSE ] , by = "Taxon" )
 
 
     # transform the data.frame from abundance to presence-absence if needed
@@ -226,18 +227,18 @@ f_divs <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel
       DF <- to_bin( DF )
     }
 
-    traitDB <- merge( traitDB , DF[ , "Taxon" , drop = FALSE ] , by = "Taxon" )
+    trait_db <- merge( trait_db , DF[ , "Taxon" , drop = FALSE ] , by = "Taxon" )
 
-    if( any( ! DF$Taxon == traitDB$Taxon ) ) stop( "Taxonomic and traits taxa does not match, ask the maintainer" )
+    if( any( ! DF$Taxon == trait_db$Taxon ) ) stop( "Taxonomic and traits taxa does not match, ask the maintainer" )
 
     # just to be sure we are doing the right things
-    rownames( traitDB ) <- traitDB$Taxon
+    rownames( trait_db ) <- trait_db$Taxon
 
-    if( identical( type , "F" ) ) ( tr_prep <- prep.fuzzy( traitDB[ , -1 ], col.blocks = col_blocks ) )
-    if( identical( type , "B" ) ) ( tr_prep <- prep.binary( traitDB[ , -1 ], col.blocks = col_blocks ) )
-    if( identical( type , "C" ) ) ( tr_prep <- traitDB[ , -1 ] )
+    if( identical( type , "F" ) ) ( tr_prep <- prep.fuzzy( trait_db[ , -1 ], col.blocks = col_blocks ) )
+    if( identical( type , "B" ) ) ( tr_prep <- prep.binary( trait_db[ , -1 ], col.blocks = col_blocks ) )
+    if( identical( type , "C" ) ) ( tr_prep <- trait_db[ , -1 ] )
 
-    rownames( tr_prep ) <- traitDB$Taxon
+    rownames( tr_prep ) <- trait_db$Taxon
 
 
     # computing functional dissimilarity between species given their traits values
@@ -249,12 +250,12 @@ f_divs <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel
     if ( identical( distance  , "euclidean" ) ) mat_dissim <- dist( scale( tr_prep ) ) # scaling if continuous traits
   }
 
-  if( class( traitDB ) %in% "dist" ){
+  if( class( trait_db ) %in% "dist" ){
 
     # keep only common taxa between taxonomic and traits database
     # to do this the dist object is transformed into matrix
-    traitDB <- as.matrix( traitDB )
-    DF <- merge( DF , data.frame( Taxon = rownames( traitDB ) ) , by = "Taxon" )
+    trait_db <- as.matrix( trait_db )
+    DF <- merge( DF , data.frame( Taxon = rownames( trait_db ) ) , by = "Taxon" )
 
 
     # transform the data.frame from abundance to presence-absence if needed
@@ -262,16 +263,16 @@ f_divs <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel
       DF <- to_bin( DF )
     }
 
-    traitDB <- traitDB[ rownames( traitDB ) %in% DF$Taxon ,  ]
-    traitDB <- traitDB[ , colnames( traitDB ) %in% DF$Taxon , drop = FALSE  ]
-    traitDB <- traitDB[ match( DF$Taxon , rownames( traitDB ) ) , ]
-    traitDB <- traitDB[ , match( DF$Taxon , colnames( traitDB ) ) , drop = FALSE ]
+    trait_db <- trait_db[ rownames( trait_db ) %in% DF$Taxon ,  ]
+    trait_db <- trait_db[ , colnames( trait_db ) %in% DF$Taxon , drop = FALSE  ]
+    trait_db <- trait_db[ match( DF$Taxon , rownames( trait_db ) ) , ]
+    trait_db <- trait_db[ , match( DF$Taxon , colnames( trait_db ) ) , drop = FALSE ]
 
     # check if names are in the same order, both on rows and columns
-    if( any( ! DF$Taxon == rownames( traitDB ) ) ) stop( "Taxonomic and traits taxa does not match, ask the maintainer" )
-    if( any( ! DF$Taxon == colnames( traitDB ) ) ) stop( "Taxonomic and traits taxa does not match, ask the maintainer" )
+    if( any( ! DF$Taxon == rownames( trait_db ) ) ) stop( "Taxonomic and traits taxa does not match, ask the maintainer" )
+    if( any( ! DF$Taxon == colnames( trait_db ) ) ) stop( "Taxonomic and traits taxa does not match, ask the maintainer" )
 
-    mat_dissim <- as.dist( traitDB )
+    mat_dissim <- as.dist( trait_db )
 
 
   }
@@ -318,31 +319,31 @@ f_divs <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel
 
   if( traceB ){
     # chech for NA, it could happen that a trait is filled with NAs
-    # but this can be done only when traitDB is a data.frame
-    if( is.data.frame( traitDB ) ){
+    # but this can be done only when trait_db is a data.frame
+    if( is.data.frame( trait_db ) ){
       if( any( is.na( tr_prep ) ) ){
         tax.na <- as.data.frame( which( is.na( tr_prep ) , arr.ind = TRUE ) )
-        tax.na[ , 1 ] <- traitDB[ tax.na[ , 1 ] , 1 ]
-        tax.na[ , 2 ] <- colnames( traitDB[ , -1 ] )[ tax.na[ , 2 ]  ]
+        tax.na[ , 1 ] <- trait_db[ tax.na[ , 1 ] , 1 ]
+        tax.na[ , 2 ] <- colnames( trait_db[ , -1 ] )[ tax.na[ , 2 ]  ]
         colnames( tax.na ) <- c( "Taxa" , "Traits" )
         tax.na <- tax.na[ order( tax.na[ , 1 ] ) ,  ]
         rownames( tax.na ) <- NULL
       } else { tax.na <- "No NAs detected" }
 
     } else {
-      tax.na <- "NAs cannot be detected when traitDB is a dist object"
+      tax.na <- "NAs cannot be detected when trait_db is a dist object"
     }
 
     # prepare traits to be returned
-    if( ! is.data.frame( traitDB ) ){
+    if( ! is.data.frame( trait_db ) ){
       # returns the distance matrix used for the calculation as a dist object
-      traitDB <- as.dist( traitDB )
+      trait_db <- as.dist( trait_db )
     }
 
     # prepare traits to be returned
-    if( is.data.frame( traitDB ) ){
+    if( is.data.frame( trait_db ) ){
       # returns the distance matrix used for the calculation as a dist object
-      rownames( traitDB ) <- NULL
+      rownames( trait_db ) <- NULL
     }
 
     if(  exists( "df1" , inherits = FALSE  ) ){
@@ -352,7 +353,7 @@ f_divs <- function( x , traitDB = NULL, taxLev = "Taxa" , type = NULL , traitSel
 
     rownames( DF ) <- NULL
 
-    res.list <- list( res , traitDB , DF ,  correction = correction , tax.na , df1 )
+    res.list <- list( res , trait_db , DF ,  correction = correction , tax.na , df1 )
     names( res.list ) <- c( "results" , "traits" , "taxa" , "correction" , "NA_detection" , "duplicated_traits" )
     return( res.list )
   }

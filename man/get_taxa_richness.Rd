@@ -19,8 +19,8 @@ This function calculates the absolute richness of a taxon or of a set taxa at th
 \examples{
 data(macro_ex)
 data_bio <- as_biomonitor(macro_ex)
-data_agR <- aggregate_taxa(data_bio)
-get_taxa_richness(data_agR, taxa = "Ephemeroptera", tax_lev = "Family")
+data_agr <- aggregate_taxa(data_bio)
+get_taxa_richness(data_agr, taxa = "Ephemeroptera", tax_lev = "Family")
 }
 \seealso{
 \code{\link{aggregate_taxa}}

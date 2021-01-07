@@ -15,7 +15,7 @@ psi(
 )
 }
 \arguments{
-\item{x}{result of the function aggregatoR.}
+\item{x}{result of the function \code{aggregate_taxa()}.}
 
 \item{method}{the only choice is \code{extence}. Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Score}.}
 
@@ -39,13 +39,13 @@ This option can be useful, for instance, to exclude an alien species belonging t
 \value{
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
-\item \code{results} Results of the \code{psi} index.
+\item \code{results} Results of \code{psi()}.
 \item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
 \item \code{abu_df} The data.frame containing fssr scores and abundance classes for each site.
 \item \code{psi_df} The data.frame used for the calculation containing scores for each site.
 \item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{NULL}.
 \item \code{exceptions} A data.frame containing the con.
-\item \code{parent_child_pairs} For instance in Spanish \code{aspt} both Ferrissia and Planorbidae receive a score.
+\item \code{parent_child_pairs} For instance in Spanish \code{aspt()} both Ferrissia and Planorbidae receive a score.
 Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 }
 }
@@ -55,7 +55,7 @@ Abundances of the higher taxonomic level need therefore to be adjusted by subtra
 This function calculates the \emph{Proportion of Sediment-sensitive Invertebrates index} (PSI) according to the most recent version used in UK.
 }
 \details{
-Despite Extence et al 2013 did not suggest nay aggregation rule, the \code{psi} implementation of \code{biomonitoR}
+Although Extence et al 2013 did not suggest any aggregation rule, the \code{psi()} implementation of \code{biomonitoR}
 allows for a default aggregation as specified below. Custom aggregation rules can be provided as a \code{data.frame}.
 \enumerate{
 \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
@@ -63,8 +63,8 @@ allows for a default aggregation as specified below. Custom aggregation rules ca
 \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
 }
 
-The \code{psi} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-All the information used for \code{psi} calculation can be retrieved with the function \code{\link{showscores}}.
+The \code{psi()} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for \code{psi} calculation can be retrieved with \code{showscores()}.
 }
 \section{Acknowledgements}{
  We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated PSI scores and algorithms.
@@ -72,12 +72,12 @@ All the information used for \code{psi} calculation can be retrieved with the fu
 
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-psi( data.agR )
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+psi( data_agr )
 
 # change abundance classes
-psi( data.agR , abucl = c( 1 , 9 , 99 , 999 , 9999 ) )
+psi( data_agr , abucl = c( 1 , 9 , 99 , 999 , 9999 ) )
 
 # provide your own score system. Scores and aggregation rules are for example purpose only.
 
@@ -90,11 +90,11 @@ fssr_scores <- data.frame( FSSR = rep( 1:3 , each = 3 ) , ABUCLASS = rep( 1:3 , 
 SCORE = c( 9 , 10 , 11 , 8 , 9 , 10 , 7 , 7 , 7 ) )
 
 # without aggregation rules
-psi( data.agR , method = psi_fssr , fssr_scores = fssr_scores , traceB = TRUE )
+psi( data_agr , method = psi_fssr , fssr_scores = fssr_scores , traceB = TRUE )
 
 # with aggregation
 
-psi( data.agR , method = psi_fssr , agg = psi_acc , fssr_scores = fssr_scores , traceB = TRUE )
+psi( data_agr , method = psi_fssr , agg = psi_acc , fssr_scores = fssr_scores , traceB = TRUE )
 
 }
 \references{

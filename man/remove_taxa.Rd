@@ -21,9 +21,9 @@ This function does not check for parent-child pairs but it should handle them pr
 }
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-remove_taxa(data.agR, taxa = "Ephemeroptera")
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+remove_taxa(data_agr, taxa = "Ephemeroptera")
 }
 \seealso{
 \code{\link{aggregatoR}} \code{\link{ambiguousSolver}}

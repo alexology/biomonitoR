@@ -66,12 +66,12 @@
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
 #' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' life( data.agR )
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' life( data_agr )
 #'
 #' # change abundance classes
-#' life( data.agR , abucl = c( 1, 9 , 99 , 999 ) )
+#' life( data_agr , abucl = c( 1, 9 , 99 , 999 ) )
 #'
 #' # provide your own score system. Scores and aggregation rules are for example purpose only.
 #'
@@ -84,11 +84,11 @@
 #' SCORE = c( 9 , 10 , 11 , 8 , 9 , 10 , 7 , 7 , 7 ) )
 #'
 #' # without aggregation rules
-#' life( data.agR , method = life_fg , fs_scores = fs_scores , traceB = TRUE )
+#' life( data_agr , method = life_fg , fs_scores = fs_scores , traceB = TRUE )
 #'
 #' # with aggregation
 #'
-#' life( data.agR , method = life_fg , agg = life_acc , fs_scores = fs_scores , traceB = TRUE )
+#' life( data_agr , method = life_fg , agg = life_acc , fs_scores = fs_scores , traceB = TRUE )
 
 life <- function( x , method = "extence" , abucl = c( 1 , 9 , 99 , 999 , 9999 ) , agg = FALSE , fs_scores = NULL , exceptions = NULL , traceB = FALSE ) {
 

@@ -2,7 +2,7 @@
 title: "Trait-based analysis with biomonitoR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{functional}
+  %\VignetteIndexEntry{Trait-based analysis with biomonitoR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -28,17 +28,17 @@ library(biomonitoR)
 
 data(macro_ex)
 
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
 
 
 # use the traitScaling function
 
-data.ts <- traitScaling( data.agR , taxLev = "Taxa" )
+data_ts <- assign_traits( data_agr , tax_lev = "Taxa" )
 
 # we can use traitScaling at the desired taxonomic level
-# for example setting taxLev = "Family"
-# traitscaling does not allow taxonomic levels higher than families
+# for example setting tax_lev = "Family"
+# assign_traits does not allow taxonomic levels higher than families
 
 
 ```
@@ -51,7 +51,7 @@ data.ts <- traitScaling( data.agR , taxLev = "Taxa" )
 # data.ts has more rows because more entries have been found for one or more taxa.
 # only the first two traits are showed to not fill the page with numbers
 
-data.ts[ 1:5 , 1:7 ]
+data_ts[ 1:5 , 1:7 ]
 
 
 ```
@@ -61,15 +61,15 @@ The `traitScaling` function links available traits to a taxon by looking at the 
 
 
 ```{r dim traitScaling}
-# data.ts has more rows because more entries have been found for one or more taxa.
+# data_ts has more rows because more entries have been found for one or more taxa.
 
 dim( macro_ex )
-dim( data.ts )
+dim( data_ts )
 
 # look at Beraeidae for which five taxa of the trait dataset have been associated
 # to one taxon of the taxonomic dataset
 
-data.ts[ data.ts$Taxa %in% "Beraeidae" , 1:5 ]
+data_ts[ data_ts$Taxa %in% "Beraeidae" , 1:5 ]
 
 
 ```
@@ -78,9 +78,9 @@ Taxonomic distance can be useful, for example when only exact matches are needed
 
 
 ```{r filter traitScaling}
-traitScaling( data.agR , filter_by_distance = 0 )[, 1:5 ]
+assign_traits( data_agr , filter_by_distance = 0 )[, 1:5 ]
 
-data.ts[ data.ts$Taxonomic_distance == 0 , 1:5 ]
+data_ts[ data_ts$Taxonomic_distance == 0 , 1:5 ]
 
 ```
 
@@ -89,12 +89,12 @@ What to do next? `biomonitoR` offers a more advanced subsetting tool with the fu
 ```{r manage traitScaling}
 # select the traits belonging to the nearest taxa that have a taxonomic level equal or finer than the target one
 
-data.ts_plus <- manageTraits( data.ts , method = "nearest+" , traceB = TRUE )
+data_ts_plus <- manageTraits( data_ts , method = "nearest+" , traceB = TRUE )
 
 # with the traceB option set to TRUE you can check the taxa removed because they did not meet the requirments
 # Here Serratella ignita is at species level while the trait at genus level (Serratella)
 
-data.ts_plus$taxa_excluded
+data_ts_plus$taxa_excluded
 
 
 ```
@@ -107,13 +107,13 @@ When you are satisfied with the list of taxa you can finalize your trait dataset
 # Please consider that the default value is correct only for the default trait dataset!
 # only the first 5 rows and columns will be showed
 
-data.ts.av <- traitsMean( data.ts )
-data.ts.av[ 1:5 , 1:5 ]
+data_ts_av <- traitsMean( data_ts )
+data_ts_av[ 1:5 , 1:5 ]
 
 # alternatively a random selection can be done
 # only the first 5 rows and  columns will be showed
 
-sampleTraits( data.ts )[ 1:5 , 1:5 ]
+sampleTraits( data_ts )[ 1:5 , 1:5 ]
 ```
 
 Now we have obtained a trait dataset that can be used for calculating functional metrics.
@@ -126,19 +126,19 @@ The calculation of functional dispersion, diversity, evenness, redundancy and ri
 col_blocks <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
 
 # functional dispersion
-f_disp( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , col_blocks = col_blocks )
+f_disp( data_agr , trait_db = data_ts_av , nbdim = 2 , type = "F" , col_blocks = col_blocks )
 
 # functional diversity 
-f_divs( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
+f_divs( data_agr , trait_db = data_ts_av , type = "F" , col_blocks = col_blocks )
 
 # functional evenness
-f_eve( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
+f_eve( data_agr , trait_db = data_ts_av , type = "F" , col_blocks = col_blocks )
 
 # functional redundancy
-f_red( data.agR , traitDB = data.ts.av , type = "F" , col_blocks = col_blocks )
+f_red( data_agr , trait_db = data_ts_av , type = "F" , col_blocks = col_blocks )
 
 # functional richness on 2 dimensions
-f_rich( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , col_blocks = col_blocks )
+f_rich( data_agr , trait_db = data_ts_av, nbdim = 2, type = "F", col_blocks = col_blocks )
 ```
 
 
@@ -147,7 +147,7 @@ f_rich( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , col_blocks = 
 Some information on the calculation is provided by the traceB option. This option is implemented in several biomonitoR functions to have a feedback on the calculation and to check if functions beahved as intended. It is particularly important for functional indices.
 
 ```{r traceB }
-frich <- f_rich( data.agR , traitDB = data.ts.av , nbdim = 2 , type = "F" , col_blocks = col_blocks , traceB = TRUE )
+frich <- f_rich( data_agr , trait_db = data_ts_av , nbdim = 2 , type = "F" , col_blocks = col_blocks , traceB = TRUE )
 
 # look at the traits with NA values
 head( frich$NA_detection )
@@ -161,8 +161,8 @@ head( frich$NA_detection )
 # community weighted mean and community specialization index
 # only the first 5 columns are showed
 
-cwm(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa", trans = log1p )[ , 1:5 ]
-csi(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa", trans = log1p )[ , 1:5 ]
+cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa", trans = log1p )[ , 1:5 ]
+csi(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa", trans = log1p )[ , 1:5 ]
 
 ```
 
@@ -173,22 +173,22 @@ Distance matrices can be provided instead of the functional database for calcula
 ```{r dist ma }
 library( ade4 )
 
-rownames( data.ts.av ) <- data.ts.av$Taxa
-traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = col_blocks )
+rownames( data_ts_av ) <- data_ts_av$Taxa
+traits_prep <- prep.fuzzy( data_ts_av[ , -1 ], col.blocks = col_blocks )
 
-traits.dist <- ktab.list.df( list( traits.prep ) )
-traits.dist <- dist.ktab( traits.dist , type = "F" )
+traits_dist <- ktab.list.df( list( traits_prep ) )
+traits_dist <- dist.ktab( traits_dist , type = "F" )
 
-f_rich( data.agR , traitDB = traits.dist , nbdim = 2 )
+f_rich( data_agr , trait_db = traits_dist , nbdim = 2 )
 ```
 
 Functional richness and dispersion require the construction of a functional space from distance/dissimilarity matrices. `f_rich` and `f_disp` do it internally through when a trait dataset is provided, but more control can be obtained by providing a distance matrix. The fuction `selectPcoaAxes` is a useful tool to select the number of axes needed to build the functional space with a desired quality. Three methods for evaluating the qauality of the functional space are proposed. `selectPcoaAxes` also evaluates the performances of different correction algorhitms when negative eigenvalues are found during the construction of the functional space.
 
 
 ```{r pcoaAxes }
-selectPcoaAxes( traits.dist , method = "cor" , tresh = 0.7)
-selectPcoaAxes( traits.dist , method = "legendre" , tresh = 0.65)
-selectPcoaAxes( traits.dist , method = "maire" , tresh = 0.01)
+selectPcoaAxes( traits_dist , method = "cor" , tresh = 0.7)
+selectPcoaAxes( traits_dist , method = "legendre" , tresh = 0.65)
+selectPcoaAxes( traits_dist , method = "maire" , tresh = 0.01)
 ```
 
 
@@ -198,12 +198,12 @@ we can repeat the analysis by specifying famly in both `traitScaling` and `indic
 
 
 ```{r family }
-data_fam.ts <- traitScaling( data.agR , taxLev = "Family" )
+data_fam_ts <- assign_traits( data_agr , tax_lev = "Family" )
 
-data_fam.ts.av <- traitsMean( data_fam.ts )
+data_fam_ts_av <- average_traits( data_fam_ts )
 
 # functional richness
-f_rich( data.agR , traitDB = data_fam.ts.av , taxLev = "Family" , nbdim = 2 , type = "F" , col_blocks = col_blocks )
+f_rich( data_agr , trait_db = data_fam_ts_av , tax_lev = "Family" , nbdim = 2 , type = "F" , col_blocks = col_blocks )
 
 ```
 
@@ -219,11 +219,11 @@ data( oglio )
 data( traits_mf )
 
 # importing data in the biomonitoR format
-oglio.asb <- asBiomonitor( oglio , group = "mf" , FUN = bin )
-oglio.agg <- aggregatoR( oglio.asb )
+oglio.asb <- as_biomonitor( oglio , group = "mf" , FUN = bin )
+oglio.agg <- aggregate_taxa( oglio.asb )
 
 # no need to run traitScaling, just to show its use
-oglio.ts <- traitScaling( oglio.agg , traitDB = traits_mf , group = "mf" )
+oglio.ts <- assign_traits( oglio.agg , trait_db = traits_mf , group = "mf" )
 oglio.ts[ 1:5 , 1:5 ]
 
 # create a distance matrix using the gowdis distance in the package FD
@@ -244,7 +244,7 @@ oglio.dist <- gowdis( oglio_traits )
 selectPcoaAxes( oglio.dist , method = "legendre" )
 
 # calculate functional richness
-f_rich( oglio.agg , traitDB = oglio.dist , taxLev = "Taxa" , nbdim = 4 , correction = "quasi" )
+f_rich( oglio.agg , trait_db = oglio.dist , tax_lev = "Taxa" , nbdim = 4 , correction = "quasi" )
 
 
 

@@ -7,7 +7,7 @@
 aggregate_taxa(x, FUN = sum)
 }
 \arguments{
-\item{x}{results of function asBiomonitor}
+\item{x}{Result of as_biomonitor}
 
 \item{FUN}{the function to be applied for aggregating to higher taxonomic levels.
 Must be sum for both abundances and presence-absence data.
@@ -26,11 +26,11 @@ data(oglio)
 
 oglio_asb <- as_biomonitor(oglio, group = "mf")
 oglio_agg <- aggregate_taxa(oglio_asb)
-richness(oglio_agg, taxLev = "Species")
-richness(oglio_agg, taxLev = "Genus")
-richness(oglio_agg, taxLev = "Family")
+richness(oglio_agg, tax_lev = "Species")
+richness(oglio_agg, tax_lev = "Genus")
+richness(oglio_agg, tax_lev = "Family")
 }
 \seealso{
-\code{\link{asBiomonitor}}
+\link{as_biomonitor}
 }
-\keyword{aggregatoR}
+\keyword{aggregate_taxa}

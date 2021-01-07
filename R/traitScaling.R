@@ -43,21 +43,6 @@
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread
 #'
-#' @examples
-#' data(macro_ex)
-#'
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' data.ts <- traitScaling( data.agR )
-#'
-#' # select only the nearest traits
-#' data.ts.sub <- manageTraits( data.ts , method = "nearest+-" )
-#'
-#' # averaging
-#' data.ts.av <- traitsMean( data.ts.sub )
-#'
-#' # traits random sampling
-#' data.ts.st <- sampleTraits( data.ts )
 #' @seealso [aggregatoR]
 #' @export
 #' @export sampleTraits

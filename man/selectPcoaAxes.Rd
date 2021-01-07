@@ -17,7 +17,7 @@ selectPcoaAxes(x, method = "legendre", tresh = NULL, nbdim = 15)
 \item{nbdim}{the maximum number of dimension when the option is set to \code{maire}. Default to 15.}
 }
 \description{
-\Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
 
 Select the number of the axis for the calculation of functional richness.
 }
@@ -38,30 +38,6 @@ The function selectPcoaAxis provide also information about the euclidean propert
 distance. The lack of this property can lead to biases and some solutions are proposed here and
 described in Legendre and Legendre (2008). Please take a look also to the help of the FD
 function dbFD for further information.
-}
-\examples{
-
-library( ade4 )
-
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-data.ts <- traitScaling( data.agR )
-
-# averaging
-data.ts.av <- traitsMean( data.ts )
-
-colB <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
-
-rownames( data.ts.av ) <- data.ts.av$Taxa
-traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = colB )
-
-traits.dist <- ktab.list.df( list( traits.prep ) )
-traits.dist <- dist.ktab( traits.dist , type = "F" )
-
-selectPcoaAxes( traits.dist , method = "cor" , tresh = 0.7)
-selectPcoaAxes( traits.dist , method = "legendre" , tresh = 0.7)
-selectPcoaAxes( traits.dist , method = "maire" , tresh = 0.01)
-
 }
 \references{
 Maire, E., Grenouillet, G., Brosse, S., & Villeger, S. (2015).

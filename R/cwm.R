@@ -38,12 +38,12 @@
 #' @examples
 #' data(macro_ex)
 #'
-#' data.bio <- as_biomonitor(macro_ex)
+#' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
-#' data_ts <- assign_traits( data_agR )
+#' data_ts <- assign_traits( data_agr )
 #'
 #' # averaging
-#' data_ts_av <- traitsMean( data_ts )
+#' data_ts_av <- average_traits( data_ts )
 #'
 #' # community specialization index
 #' cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa", trans = log1p)
@@ -53,7 +53,7 @@
 #'     })
 #' cwm(x = data_agr, trait_db = data_ts_av, tax_lev = "Genus", trans = log1p)
 #'
-#' @seealso [aggregatoR]
+#' @seealso [aggregate_taxa]
 #'
 #' @references Tachet, H., Richoux, P., Bournaud, M., & Usseglio-Polatera, P.
 #'   (2010). Invertebres d'eau douce: systematique, biologie, ecologie. Paris:

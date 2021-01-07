@@ -13,7 +13,7 @@ tsi(x, trait_db = NULL, tax_lev = "Taxa")
 \item{x}{results of function \code{aggregate_taxa()}.}
 
 \item{trait_db}{a trait data base with a column \code{Taxa} and the other columns
-containing the traits.Please check \link{traitScaling} for building the trait database.}
+containing the traits.Please check \code{assign_traits()} for building the trait database.}
 
 \item{tax_lev}{character string giving the taxonomic level used to retrieve
 trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},

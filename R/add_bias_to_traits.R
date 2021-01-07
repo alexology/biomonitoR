@@ -3,7 +3,7 @@
 #' @description
 #' Add bias to traits to avoid duplicates.
 #'
-#' @param x Result of `traitsMean()` or a `data.frame` with a similar structure.
+#' @param x Result of `average_traits()` or a `data.frame` with a similar structure.
 #' @param fuzzy Are you working with fuzzy traits? Default to `TRUE`.
 #' @param col_blocks A vector that contains the number of modalities for each trait
 #' @param SD The amount of bias.
@@ -22,7 +22,7 @@
 #' data_bio <- as_biomonitor(macro_ex)
 #' data_agr <- aggregate_taxa(data_bio)
 #' data_ts <- assign_traits(data_agr)
-#' data_ts_av <- traitsMean(data_ts)
+#' data_ts_av <- average_traits(data_ts)
 #'
 #' data_ts_av[1:5, 1:5]
 #'

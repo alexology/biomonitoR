@@ -7,7 +7,7 @@
 #' @param alien a vector containing the alien taxa name. Only taxa up to family level will be considered.
 #' @param dfref reference database.
 #' If a default reference database was used use `mi` for macroinvertebrates or `mf` for macrophytes.
-#' Use the same reference database you used for `as_biomonitor` otherwise.
+#' Use the same reference database you used for `as_biomonitor()` otherwise.
 #' @param digits number of decimal places, default to 2 as in the original work of Arbaciauskas et al. (2008).
 #'
 #' @details Biocontamination of sampling sites was assessed using a site-specific biocontamination index (SBCI) derived from two metrics: abundance contamination index (ACI) and richness contamination index (RCI) at family/ordinal rank. These indices were calculated as:
@@ -28,12 +28,12 @@
 #'
 #' @importFrom stats as.formula
 #'
-#' @seealso \code{\link{aggregate_taxa}}
+#' @seealso [aggregate_taxa]
 #'
 #' @examples
 #' data(macro_ex)
-#' data_bio <- asBiomonitor(macro_ex)
-#' data_agr <- aggregatoR(data_bio)
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
 #' # Toy example:
 #' alien <- c("Laccobius", "Setodes bulgaricus", "Caenidae")
 #' bioco(data_agr, alien = alien, dfref = "mi")
@@ -121,8 +121,8 @@ bioco <- function(x, alien = NULL, dfref = NULL, digits = 2) {
     x.taxa <- aggregate(as.formula(paste(". ~ ", as.name("Family"))), data = x.taxa, FUN = sum)
     abu.alien <- apply(x.taxa[, -1, drop = FALSE], 2, sum)
     tax.alien <- apply(x.taxa[, -1, drop = FALSE], 2, function(x) sum(x > 0))
-    aci <- round(abu.alien / abundance(x, taxLev = "Taxa", unassigned = TRUE), digits)
-    rci <- suppressWarnings(round(tax.alien / richness(x, taxLev = "Family"), digits))
+    aci <- round(abu.alien / abundance(x, tax_lev = "Taxa", unassigned = TRUE), digits)
+    rci <- suppressWarnings(round(tax.alien / richness(x, tax_lev = "Family"), digits))
     cl.lim <- c(1, 0.5, 0.2, 0.1, 0.01, 0)
     cl.lab <- c(0:4)
     cl.abu <- cut(aci, cl.lim, cl.lab, right = TRUE, include.lowest = T)

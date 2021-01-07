@@ -21,7 +21,7 @@ average_traits(x, col_blocks = NULL)
 sample_traits(x)
 }
 \arguments{
-\item{x}{Results of function \code{aggregate_taxa()}}
+\item{x}{Results of \code{aggregate_taxa()}}
 
 \item{trait_db}{A trait data base with a column \code{Taxa} and the other columns
 containing the traits.
@@ -79,7 +79,7 @@ data_agr <- aggregate_taxa(data_bio)
 data_ts <- assign_traits(data_agr)
 
 # select only the nearest traits
-data_ts_sub <- manageTraits(data_ts, method = "nearest+-")
+data_ts_sub <- manage_traits(data_ts, method = "nearest+-")
 
 # averaging
 data_ts_av <- average_traits(data_ts_sub)

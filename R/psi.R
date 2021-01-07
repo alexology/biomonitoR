@@ -4,7 +4,7 @@
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 #'
 #' This function calculates the *Proportion of Sediment-sensitive Invertebrates index* (PSI) according to the most recent version used in UK.
-#' @param x result of the function aggregatoR.
+#' @param x result of the function `aggregate_taxa()`.
 #' @param method the only choice is `extence`. Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Score*.
 #' @param abucl Log abundance categories. Treshold are set to 1, 9, 99 and 999 as in the original paper of Extence et al. (2013).
 #' @param agg this option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
@@ -20,7 +20,7 @@
 #' @param traceB if set to `TRUE` a list as specified below will be returned.
 #'
 #' @keywords psi
-#' @details Despite Extence et al 2013 did not suggest nay aggregation rule, the `psi` implementation of `biomonitoR`
+#' @details Although Extence et al 2013 did not suggest any aggregation rule, the `psi()` implementation of `biomonitoR`
 #' allows for a default aggregation as specified below. Custom aggregation rules can be provided as a `data.frame`.
 #' \enumerate{
 #'  \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
@@ -28,18 +28,18 @@
 #'  \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
 #'  }
 #'
-#' The `psi` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-#' All the information used for `psi` calculation can be retrieved with the function \code{\link{showscores}}.
+#' The `psi()` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+#' All the information used for `psi` calculation can be retrieved with `showscores()`.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
-#'  \item `results` Results of the `psi` index.
+#'  \item `results` Results of `psi()`.
 #'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
 #'  \item `abu_df` The data.frame containing fssr scores and abundance classes for each site.
 #'  \item `psi_df` The data.frame used for the calculation containing scores for each site.
 #'  \item `composite_taxa` Taxa aggregated following the aggregation rules when agg is not `NULL`.
 #'  \item `exceptions` A data.frame containing the con.
-#'  \item `parent_child_pairs` For instance in Spanish `aspt` both Ferrissia and Planorbidae receive a score.
+#'  \item `parent_child_pairs` For instance in Spanish `aspt()` both Ferrissia and Planorbidae receive a score.
 #'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 #' }
 #'
@@ -53,12 +53,12 @@
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
 #' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' psi( data.agR )
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' psi( data_agr )
 #'
 #' # change abundance classes
-#' psi( data.agR , abucl = c( 1 , 9 , 99 , 999 , 9999 ) )
+#' psi( data_agr , abucl = c( 1 , 9 , 99 , 999 , 9999 ) )
 #'
 #' # provide your own score system. Scores and aggregation rules are for example purpose only.
 #'
@@ -71,11 +71,11 @@
 #' SCORE = c( 9 , 10 , 11 , 8 , 9 , 10 , 7 , 7 , 7 ) )
 #'
 #' # without aggregation rules
-#' psi( data.agR , method = psi_fssr , fssr_scores = fssr_scores , traceB = TRUE )
+#' psi( data_agr , method = psi_fssr , fssr_scores = fssr_scores , traceB = TRUE )
 #'
 #' # with aggregation
 #'
-#' psi( data.agR , method = psi_fssr , agg = psi_acc , fssr_scores = fssr_scores , traceB = TRUE )
+#' psi( data_agr , method = psi_fssr , agg = psi_acc , fssr_scores = fssr_scores , traceB = TRUE )
 #'
 
 psi <- function( x , method = "extence" , abucl = c( 1 , 9 , 99 , 999 ) , agg = FALSE , fssr_scores = NULL , exceptions = NULL , traceB = FALSE ){
