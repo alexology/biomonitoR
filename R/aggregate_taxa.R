@@ -49,8 +49,13 @@ aggregate_taxa <- function(x, FUN = sum) {
     temp.agg <- aggregate(stz, by = list(x[, i]), FUN)
     temp.agg[temp.agg$Group.1 == "", "Group.1"] <- "unassigned"
     names(temp.agg) <- c(tx[i], stz_n)
+    # name the first column of the Taxa data.frame "Taxon" for consistency with previous function
+    if( identical(tx[i], "Taxa")) {
+      names(temp.agg)[1] <- "Taxon"
+    }
     agg_list[[i]] <- temp.agg
   }
+
 
   agg_list$Tree <- x
 

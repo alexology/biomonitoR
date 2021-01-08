@@ -9,8 +9,8 @@
 #' @param SD The amount of bias.
 #'
 #' @details This function works by adding a small bias to traits.
-#' The bias is added with the \link[stats]{rnorm} function.
-#' Fuzzy data are prepared with the function \link[ade4]{prep.fuzzy} of the `ade4` package.
+#' The bias is added with the [stats::rnorm()] function.
+#' Fuzzy data are prepared with the function [ade4::prep.fuzzy()] of the `ade4` package.
 #'
 #' @export
 #' @importFrom stats rnorm

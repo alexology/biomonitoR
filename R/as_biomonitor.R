@@ -296,7 +296,7 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
 
   class(taxa_def) <- c("asb")
 
-  if (check.pa) {
+  if (identical(asb.call, "bin")) {
     class(taxa_def) <- c(class(taxa_def), "bin")
   }
 

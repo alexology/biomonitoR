@@ -20,8 +20,8 @@ Add bias to traits to avoid duplicates.
 }
 \details{
 This function works by adding a small bias to traits.
-The bias is added with the \link[stats]{rnorm} function.
-Fuzzy data are prepared with the function \link[ade4]{prep.fuzzy} of the \code{ade4} package.
+The bias is added with the \code{\link[stats:Normal]{stats::rnorm()}} function.
+Fuzzy data are prepared with the function \code{\link[ade4:dist.ktab]{ade4::prep.fuzzy()}} of the \code{ade4} package.
 }
 \examples{
 

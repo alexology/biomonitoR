@@ -100,12 +100,13 @@ solve_ambiguous <- function(x, method = "MCWP") {
     }
 
     # build the data.frame and order it as the original
-    DF <- data.frame(Taxa = as.factor(taxa), tree[, (taxa.pos + 1):ncol(tree), drop = FALSE])
+    DF <- data.frame(Taxa = taxa, tree[, (taxa.pos + 1):ncol(tree), drop = FALSE])
     DF <- DF[match(1:nrow(tree), as.numeric(rownames(DF))), ]
   }
 
   # aggregate to avoid duplicated rownames
   DF <- aggregate(. ~ Taxa, data = DF, FUN = sum)
+  DF <- DF[ order(DF$Taxa), ]
 
   if (inherits(x, "bin")) {
     DF <- to_bin(DF)
@@ -113,3 +114,6 @@ solve_ambiguous <- function(x, method = "MCWP") {
 
   DF
 }
+
+
+
