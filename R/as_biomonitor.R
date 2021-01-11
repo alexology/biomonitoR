@@ -169,7 +169,7 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
     if (any(to_change[, "Taxon"] %in% x$Taxa)) {
 
       # store results for traceB
-      to_store <- to_change[to_change$Taxon %in% x$Taxa, ]
+      to_store <- as.character( to_change[to_change$Taxon %in% x$Taxa, ] )
 
 
       change_uni <- x[x$Taxa %in% to_change$Taxon, "Taxa", drop = TRUE]
