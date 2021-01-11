@@ -7,18 +7,18 @@
 \usage{
 allrich(x)
 
-richness(x, taxLev = "Taxa")
+richness(x, tax_lev = "Taxa")
 }
 \arguments{
-\item{x}{result of the function aggregatoR}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{taxLev}{taxonomic level on which the calculation has to be made.}
+\item{tax_lev}{Taxonomic level on which the calculation has to be made.}
 }
 \description{
 This function allows the calculation of richness at different taxonomic levels and of the total abundance.
 }
 \details{
-The function \code{richness} returns a warning meassage if unassigned taxa are detected at the desired taxonomic level. Unassigned taxa can be present
+\code{richness()} returns a warning meassage if unassigned taxa are detected at the desired taxonomic level. Unassigned taxa can be present
 because some taxa are entered at higher taxonomic levels than those at which the calculation is performed.
 For instance this problem appears when the calculation is done at genus level and some taxa has been entered at family level.
 Unassigned taxa can be present also because of missing levels in the reference database at the desired taxonomic level.
@@ -32,12 +32,12 @@ Mollusca orders are not present because there is no consensus among taxonomist (
 
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-richness(data.agR, taxLev = "Family" )
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+richness(data_agr, tax_lev = "Family")
 }
 \seealso{
-\code{\link{aggregatoR}}
+\link{aggregate_taxa}
 }
 \keyword{allrich,}
 \keyword{richness}

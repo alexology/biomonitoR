@@ -11,18 +11,16 @@ quickRename(x, group = "mi", write.table = FALSE)
 
 \item{group}{biotic group of interest. Possible values are \code{mi} for macroinvertebrates and \code{mf} for macrophytes. Default to \code{mi}.}
 
-\item{write.table}{if TRUE \code{quickRename} will save a txt file with changes provided by the user}
+\item{write.table}{if \code{TRUE} \code{quickRename} will save a txt file with changes provided by the user}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 This function allow the user to change the wrong taxa names according to the deault reference databases implemented in \code{biomonitoR}.
 }
 \details{
 data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
 The function \code{quickRename} will suggest correct name while allowing the user to insert a name (Enter taxon name).
-}
-\examples{
-data(macro_ex)
-macro_ex.mod <- quickRename(macro_ex, group = "mi")
 }
 \seealso{
 \code{\link{asBiomonitor}}

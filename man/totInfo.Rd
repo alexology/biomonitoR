@@ -12,13 +12,9 @@ totInfo(x, taxalist = FALSE)
 \item{taxalist}{if \code{TRUE} returns the list of taxa for each taxonomic level.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 Function to calculate the overall richness at different taxonomic level.
-}
-\examples{
-data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-totInfo( data.agR )
 }
 \seealso{
 \code{\link{asBiomonitor}}

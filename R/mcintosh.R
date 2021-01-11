@@ -1,24 +1,26 @@
 #' @describeIn allindices McIntosh dominance index
 
-mcintosh <- function( x , taxLev = "Taxa" ){
+mcintosh <- function(x, tax_lev = "Taxa") {
 
   # check if the object x is of class "biomonitoR"
-  classCheck( x )
+  classCheck(x)
 
   # get the data.frame at the desired taxonomic level
-  DF <-  x[[ taxLev ]]
+  DF <- x[[tax_lev]]
 
-  if( inherits( x , "bin" ) ){
-    DF <- to_bin( DF )
+  if (inherits(x, "bin")) {
+    DF <- to_bin(DF)
   }
 
   # remove unassigned row from the species count if present
-  if( "unassigned" %in% DF[ , 1 ] ){
-    z <- which( DF[ , 1 ] == "unassigned" )
-    DF <- DF[ -z , ]
+  if ("unassigned" %in% DF[, 1]) {
+    z <- which(DF[, 1] == "unassigned")
+    DF <- DF[-z, ]
   }
 
   # apply the function for calculating the McIntosh dominance index that is stored in the Pi.R file
-  res <- apply( DF[ , -1 , drop = FALSE ], 2 , FUN = function( x ){ Pi( x , index = "Mcintosh" ) } )
+  res <- apply(DF[, -1, drop = FALSE], 2, FUN = function(x) {
+    Pi(x, index = "Mcintosh")
+  })
   res
 }

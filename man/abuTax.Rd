@@ -2,7 +2,7 @@
 % Please edit documentation in R/abuTax.R
 \name{abuTax}
 \alias{abuTax}
-\title{abuTax}
+\title{abuTax - deprecated}
 \usage{
 abuTax(x, taxa = NULL, rel = FALSE)
 }
@@ -14,6 +14,8 @@ abuTax(x, taxa = NULL, rel = FALSE)
 \item{rel}{if TRUE calculates relative abundance. Default to FALSE.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 This function calculates the absolute or relative abundance of a taxon or of a set taxa.
 }
 \details{
@@ -21,14 +23,7 @@ This function does not check for parent-child pairs. For instance if the vector 
 family Baetidae, the abundance of the genus \emph{Baetis} will be double counted. Check the function \code{\link{ambiguousSolver}} for a solution
 to this problem.
 }
-\examples{
-data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-abuTax(data.agR, taxa = "Ephemeroptera")
-abuTax(data.agR, taxa = c("Setodes", "Orthocladiinae"), rel = TRUE)
-}
 \seealso{
-\code{\link{aggregatoR}} \code{\link{ambiguousSolver}}
+\code{\link{get_taxa_abundance}}
 }
 \keyword{aggregatoR}

@@ -7,30 +7,30 @@
 aspt(x, method = "ita", agg = FALSE, exceptions = NULL, traceB = FALSE)
 }
 \arguments{
-\item{x}{result of the function aggregatoR.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{method}{the implementation of BMWP needed to calculate ASPT. Possible choices are \code{a} (Armitage et al. 1983), \code{uk} (Davy-Bowker et al. 2010), \code{spa} (MAGRAMA 2011), \code{ita} (Buffagni et al . 2014).
+\item{method}{The implementation of BMWP needed to calculate ASPT. Possible choices are \code{a} (Armitage et al. 1983), \code{uk} (Davy-Bowker et al. 2010), \code{spa} (MAGRAMA 2011), \code{ita} (Buffagni et al . 2014).
 Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
 
-\item{agg}{this option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
+\item{agg}{This option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
 If \code{FALSE} no aggregation will be performed, while if \code{TRUE} aggregation will be performed according to the rules described in Details.
 A \code{data.frame} containing the aggregation rules can be provided by the user.
 This \code{data.frame} needs a column called \emph{Taxon} containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
 \code{agg} cannot be \code{TRUE} when a \code{data.frame} is provided as method.}
 
-\item{exceptions}{taxa that need to be exluded from the calculation.
+\item{exceptions}{Taxa that need to be excluded from the calculation.
 This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.}
 
-\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+\item{traceB}{If set to \code{TRUE} a list as specified below will be returned.}
 }
 \value{
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
-\item \code{results} Results of the \code{aspt} index.
+\item \code{results} Results of \code{aspt()}.
 \item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
 \item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{NULL}.
 \item \code{exceptions} A data.frame containing the containing changes made by excluding the taxa included in \code{exceptions}.
-\item \code{parent_child_pairs} For instance in Spanish \code{aspt} both Ferrissia and Planorbidae receive a score.
+\item \code{parent_child_pairs} For instance in Spanish aspt both Ferrissia and Planorbidae receive a score.
 Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 }
 }
@@ -64,7 +64,7 @@ Asellidae \tab 3 \cr
 Astacidae \tab 8 \cr
 }
 
-Optional aggregation data.frame provided by the user needs to be formatted like following:
+Optional aggregation \code{data.frame} provided by the user needs to be formatted like following:
 \tabular{ll}{
 Taxon \tab Correct_Taxon \cr
 Glossomatidae \tab Rhyachopilidae \cr
@@ -74,15 +74,15 @@ Crangonyctidae \tab Gammaridae \cr
 Niphargidae \tab Gammaridae \cr
 }
 
-The \code{aspt} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-All the information used for \code{aspt} calculation can be retrieved with the function \code{\link{showscores}}.
+The \code{aspt()} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for \code{aspt()} calculation can be retrieved with the function \code{\link{show_scores}}.
 }
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-aspt(data.agR)
-aspt(data.agR, method = "spa")
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+aspt(data_agr)
+aspt(data_agr, method = "spa")
 }
 \references{
 Armitage, P. D., Moss, D., Wright, J. F., & Furse, M. T. (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. Water research, 17(3), 333-347.
@@ -92,6 +92,6 @@ Davy-Bowker J., Clarke R., Corbin T., Vincent H, Pretty J., Hawczak A., Blackbur
 MAGRAMA-Ministerio de Agricultura y medio Ambiente (2011) Protocolo de muestreo y laboratorio de fauna bentonica de invertebrados en rios vadeables. ML-Rv-I-2011, Cod, 23 pp.
 }
 \seealso{
-\code{\link{aggregatoR}}
+\link{aggregate_taxa} \link{bmwp}
 }
-\keyword{aggregatoR}
+\keyword{aspt}

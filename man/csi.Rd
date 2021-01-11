@@ -5,19 +5,19 @@
 \alias{tsi}
 \title{Community trait specialization}
 \usage{
-csi(x, traitDB = NULL, taxLev = "Taxa", trans = log1p, traceB = FALSE)
+csi(x, trait_db = NULL, tax_lev = "Taxa", trans = log1p, traceB = FALSE)
 
-tsi(x, traitDB = NULL, taxLev = "Taxa")
+tsi(x, trait_db = NULL, tax_lev = "Taxa")
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{results of function \code{aggregate_taxa()}.}
 
-\item{traitDB}{a trait data base with a column \code{Taxa} and the other columns
-containing the traits.Please check \link{traitScaling} for building the trait database.}
+\item{trait_db}{a trait data base with a column \code{Taxa} and the other columns
+containing the traits.Please check \code{assign_traits()} for building the trait database.}
 
-\item{taxLev}{character string giving the taxonomic level used to retrieve
+\item{tax_lev}{character string giving the taxonomic level used to retrieve
 trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
-\code{"Family"} as returned by the \link{aggregatoR} function.}
+\code{"Family"} as returned by \code{aggregate_taxa()}.}
 
 \item{trans}{the function used to transform the abundances, by default
 \code{log1p}.}
@@ -35,7 +35,7 @@ This function calculates the community trait specialization.
 }
 \details{
 This function first takes the abundance table corresponding to the desired
-taxonomic level from the \code{x} aggregatoR object.
+taxonomic level in \code{x}.
 
 For each taxon and each trait, a taxon specialization index is calculated
 using the following formula:
@@ -55,31 +55,29 @@ index.
 \item \code{tsi}: taxon specialization index
 }}
 
-\note{
-USE WITH CAUTION, STILL IN DEVELOPMENT.
-}
 \examples{
 data(macro_ex)
 
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-data.ts <- traitScaling( data.agR )
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+data_ts <- assign_traits(data_agr)
 
 # averaging
-data.ts.av <- traitsMean( data.ts )
+data_ts_av <- average_traits(data_ts)
 
 # taxon specialization index
 
-tsi(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa")
+tsi(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa")
 
 # community specialization index
-csi(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa", trans = log1p)
-csi(x = data.agR, traitDB = data.ts.av, taxLev = "Taxa",
-    trans = function(x) {
-        ifelse(x > 0, 1, 0)
-    })
-csi(x = data.agR, traitDB = data.ts.av, taxLev = "Genus", trans = log1p)
-
+csi(x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa", trans = log1p)
+csi(
+  x = data_agr, trait_db = data_ts_av, tax_lev = "Taxa",
+  trans = function(x) {
+    ifelse(x > 0, 1, 0)
+  }
+)
+csi(x = data_agr, trait_db = data_ts_av, tax_lev = "Genus", trans = log1p)
 }
 \references{
 Mondy, C. P., & Usseglio-Polatera P. (2013) Using Fuzzy-Coded
@@ -97,5 +95,5 @@ info-An online tool that unifies, standardises and codifies more than
 Ecological indicators, 53, 271-282.
 }
 \seealso{
-\link{aggregatoR}
+\link{aggregate_taxa}
 }

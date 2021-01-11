@@ -14,7 +14,7 @@ epsi(
 )
 }
 \arguments{
-\item{x}{results of aggregatoR function}
+\item{x}{results of the function \code{aggregate_taxa}.}
 
 \item{method}{method \code{uk}.
 Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
@@ -33,7 +33,7 @@ This option can be useful, for instance, to exclude an alien species belonging t
 \value{
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
-\item \code{results} Results of the \code{epsi} index.
+\item \code{results} Results of \code{epsi()}.
 \item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
 \item \code{epsi_df} The data.frame used for the calculation containing scores and abundance classes for each site.
 \item \code{composite_taxa} Taxa aggregated following the aggregation rules of the \code{uk_agg} method or set in the \code{agg} option.
@@ -48,15 +48,15 @@ Abundances of the higher taxonomic level need therefore to be adjusted by subtra
 This function calculates the Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index (ePSI) according to the most recent version used in UK.
 }
 \details{
-\code{epsi} implementation take into account composite taxa as follow:
+\code{epsi()} implementation take into account composite taxa as follow:
 \enumerate{
 \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
 \item Siphlonuridae (inc. Ameletidae)
 \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
 }
 
-The \code{epsi} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-All the information used for \code{epsi} calculation can be retrieved with the function \code{\link{showscores}}.
+The \code{epsi()} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for \code{epsi()} calculation can be retrieved with the function \code{\link{show_scores}}.
 }
 \section{Acknowledgements}{
  We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated ePSI scores and algorithms.
@@ -64,17 +64,19 @@ All the information used for \code{epsi} calculation can be retrieved with the f
 
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-epsi( data.agR )
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+epsi(data_agr)
 
 # provide your own score sistem. Scores and aggregation rules are for example purpose only.
 
-epsi_scores <- data.frame( Taxon = c( "Ephemerellidae" , "Leuctridae" , "Chironomidae" ) ,
- Scores = c( 0.1 , 0.5 , 0.2 ) )
-epsi_acc <- data.frame( Taxon = "Ephemerellidae" , Correct_Taxon = "Chironomidae" )
+epsi_scores <- data.frame(
+  Taxon = c("Ephemerellidae", "Leuctridae", "Chironomidae"),
+  Scores = c(0.1, 0.5, 0.2)
+)
+epsi_acc <- data.frame(Taxon = "Ephemerellidae", Correct_Taxon = "Chironomidae")
 
-epsi( data.agR , method = epsi_scores , agg = epsi_acc , traceB = TRUE )
+epsi(data_agr, method = epsi_scores, agg = epsi_acc, traceB = TRUE)
 }
 \references{
 Turley MD, Bilotta GS, Chadd RP, Extence CA, Brazier RE, Burnside NG, Pickwell AG. 2016. A sediment-specific family-level biomonitoring tool to identify the impacts of fine sediment in temperate rivers and streams. Ecological Indicators 70, 151-165.
@@ -82,6 +84,6 @@ Turley MD, Bilotta GS, Chadd RP, Extence CA, Brazier RE, Burnside NG, Pickwell A
 Turley MD, Bilotta GS, Krueger T, Brazier RE, Extence CA. 2015. Developing an improved biomonitoring tool for fine sediment: combining expert knowledge and empirical data. Ecological indicators 54, 82-86.
 }
 \seealso{
-\code{\link{asBiomonitor}}
+\code{\link{aggregate_taxa}}
 }
 \keyword{epsi}

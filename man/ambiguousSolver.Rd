@@ -12,6 +12,8 @@ ambiguousSolver(x, method = "MCWP")
 \item{method}{only methods \code{RPKC} and \code{MCWP} are currently implemented in \code{biomonitoR}. See details.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 Solve the ambiguous assignment of taxa.
 }
 \details{
@@ -22,18 +24,10 @@ Currently ambiguousSolver two only one algorithms to solve the problem of ambigu
 \code{RPKC} means Remove Parents - Keep Children. It works by removing all the higher taxonomic levels while keeping children.
 \code{MCWP} means Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of higher taxonomic levels.
 }
-\examples{
-data( macro_ex )
-data.bio <- asBiomonitor( macro_ex )
-data.agR <- aggregatoR( data.bio )
-data_amb_solved <- ambiguousSolver( data.agR )
-data_amb_solved.bio <- asBiomonitor( data_amb_solved )
-data_amb_solved.agR <- aggregatoR( data_amb_solved.bio )
-}
 \references{
 Cuffney, T. F., Bilger, M. D., & Haigler, A. M. (2007). Ambiguous taxa: effects on the characterization and interpretation of invertebrate assemblages. Journal of the North American Benthological Society, 26(2), 286-307.
 }
 \seealso{
 \code{\link{aggregatoR}}
 }
-\keyword{aggregatoR}
+\keyword{aggregate_taxa}

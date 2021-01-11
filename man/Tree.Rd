@@ -4,7 +4,9 @@
 \name{Tree}
 \alias{Tree}
 \title{Taxonomic tree example}
-\format{A data.frame with 5 rows and 6 variables:}
+\format{
+A data.frame with 5 rows and 6 variables:
+}
 \usage{
 Tree
 }

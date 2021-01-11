@@ -54,49 +54,50 @@
 #' @seealso \code{\link{asBiomonitor}}, \code{\link{aspt}}, \code{\link{bmwp}}
 #' @examples
 #' data(macro_ex)
-#' data.bio <- asBiomonitor(macro_ex)
-#' data.agR <- aggregatoR(data.bio)
-#' whpt( data.agR )
-#' whpt( data.agR , metric = "bmwp" )
-#' whpt( data.agR , type = "po"  , metric = "bmwp" )
+#' data_bio <- as_biomonitor(macro_ex)
+#' data_agr <- aggregate_taxa(data_bio)
+#' whpt(data_agr)
+#' whpt(data_agr, metric = "bmwp")
+#' whpt(data_agr, type = "po", metric = "bmwp")
 #'
 #' # take a look to the metrics used for whpt calculation
 #' # only the first 6 rows of each database are shown
 #'
-#' lapply( showscores( "whpt" , "uk" ) , head )
-
-whpt <- function(x, method = "uk" , type = "ab", metric = "aspt", agg = FALSE , abucl = c( 1 , 9 , 99 , 999 ) , exceptions = NULL , traceB = FALSE  ){
+#' lapply(show_scores("whpt", "uk"), head)
+whpt <- function(x, method = "uk", type = "ab", metric = "aspt", agg = FALSE, abucl = c(1, 9, 99, 999), exceptions = NULL, traceB = FALSE) {
 
   # check if the object x is of class "biomonitoR"
-  classCheck( x )
+  classCheck(x)
 
   # useful for transforming data to 0-1 later
-  if( inherits( x , "bin" ) ){
+  if (inherits(x, "bin")) {
     BIN <- TRUE
-  } else { BIN <- FALSE }
-
-
-  if( ! identical( method , "uk" ) & !is.data.frame( method )  ){
-    stop( "Method need to be set to uk or a custom data.frame" )
+  } else {
+    BIN <- FALSE
   }
 
-  if( ! identical( type , "po" ) & ! identical( type , "ab" ) ){
-    stop( "Please provide a valide type: po or ab" )
+
+  if (!identical(method, "uk") & !is.data.frame(method)) {
+    stop("Method need to be set to uk or a custom data.frame")
   }
 
-  if( ! identical( metric , "aspt" ) & ! identical( metric , "ntaxa" )  & ! identical( metric , "bmwp" ) ){
+  if (!identical(type, "po") & !identical(type, "ab")) {
+    stop("Please provide a valide type: po or ab")
+  }
+
+  if (!identical(metric, "aspt") & !identical(metric, "ntaxa") & !identical(metric, "bmwp")) {
     stop("Please provide a valide metric: aspt, ntaxa or bmwp")
   }
 
 
   # Store tree for searching for inconsistencies
-  Tree <- x[[ "Tree" ]][ , 1:10 ]
+  Tree <- x[["Tree"]][, 1:10]
 
-  numb <- c( which( names( x ) == "Tree" ) , which( names( x ) == "Taxa" ) ) # position of the Tree and Taxa data.frame in the biomonitoR object that need to be removed
+  numb <- c(which(names(x) == "Tree"), which(names(x) == "Taxa")) # position of the Tree and Taxa data.frame in the biomonitoR object that need to be removed
 
   # remove Tree and Taxa data.frame
-  x <- x[ -numb ]
-  st.names <- names( x[[ 1 ]][ -1 ] ) # names of the sampled sites
+  x <- x[-numb]
+  st.names <- names(x[[1]][-1]) # names of the sampled sites
 
   # create dummy variables to avoid R CMD check NOTES
 
@@ -111,27 +112,26 @@ whpt <- function(x, method = "uk" , type = "ab", metric = "aspt", agg = FALSE , 
   # y represents the method to be used
 
 
-  if( is.data.frame( method ) == TRUE ){
-    if( ! ( isFALSE( agg ) | is.data.frame( agg ) ) ){
-      stop( "When method is a data.frame agg needs to be FALSE or a data.frame containing the aggregation rules")
+  if (is.data.frame(method) == TRUE) {
+    if (!(isFALSE(agg) | is.data.frame(agg))) {
+      stop("When method is a data.frame agg needs to be FALSE or a data.frame containing the aggregation rules")
     }
 
-    if( isFALSE( agg ) ){
+    if (isFALSE(agg)) {
       y <- method
     } else {
       y <- method
       z <- agg
     }
   } else {
-
-    if( ! ( isTRUE( agg ) | isFALSE( agg ) ) ) stop( "When using the deafult method agg can only be TRUE or FALSE")
+    if (!(isTRUE(agg) | isFALSE(agg))) stop("When using the deafult method agg can only be TRUE or FALSE")
 
     # assign the default scores and aggregation rules as needed by the user
 
-    if( identical( method , "uk" ) ) {
+    if (identical(method, "uk")) {
       y <- whpt_scores_fam_uk
 
-      if( isTRUE( agg ) ){
+      if (isTRUE(agg)) {
         z <- whpt_acc_fam_uk
       }
     }
@@ -144,117 +144,138 @@ whpt <- function(x, method = "uk" , type = "ab", metric = "aspt", agg = FALSE , 
   # The first step is to change the column name of the first column of each data.frame to
   # an unique name
 
-  for( i in 1:length( x ) ){
-    colnames( x[[ i ]] )[ 1 ] <- "Taxon"
+  for (i in 1:length(x)) {
+    colnames(x[[i]])[1] <- "Taxon"
   }
 
   # rbind the data.frames representing a taxonomic level each
   # aggregate is not necessary here
-  DF <- do.call( "rbind" , x )
-  rownames( DF ) <- NULL
-  DF <- aggregate(. ~ Taxon, DF , sum)
+  DF <- do.call("rbind", x)
+  rownames(DF) <- NULL
+  DF <- aggregate(. ~ Taxon, DF, sum)
 
-  if( ! is.null( exceptions ) ){
-    DF <- manage_exceptions( DF = DF , Tree = Tree , y = y , Taxon = exceptions )
-    if( ! is.data.frame( DF ) ){
-      exce <- DF[[ 2 ]]
-      DF <- DF[[ 1 ]]
+  if (!is.null(exceptions)) {
+    DF <- manage_exceptions(DF = DF, Tree = Tree, y = y, Taxon = exceptions)
+    if (!is.data.frame(DF)) {
+      exce <- DF[[2]]
+      DF <- DF[[1]]
     }
   }
 
   # WHPT scores have a long format, unsuitable for merging with DF
   # make a temp data.frame to store unique taxa names.
 
-  y.temp <- data.frame( Taxon = unique( y[ , "Taxon" ] )  )
+  y.temp <- data.frame(Taxon = unique(y[, "Taxon"]))
 
   # merge the new data.frame with the score data.frame and change
   # the names of the taxa according to the aggregation rules if needed
-  DF <- merge( DF, y.temp[ , "Taxon" , drop = FALSE ] )
-  if( ! is.null( z ) ){
-    taxa.to.change <- as.character( DF$Taxon[ DF$Taxon %in% z$Taxon  ] )
-    DF <- checkBmwpFam( DF = DF , famNames = z , stNames = st.names )
+  DF <- merge(DF, y.temp[, "Taxon", drop = FALSE])
+  if (!is.null(z)) {
+    taxa.to.change <- as.character(DF$Taxon[DF$Taxon %in% z$Taxon])
+    DF <- checkBmwpFam(DF = DF, famNames = z, stNames = st.names)
   } else {
     DF <- DF
   }
 
 
-  DF <- manage_inconsistencies( DF = DF , Tree = Tree )
-  if( ! is.data.frame( DF ) ){
-    incon <- DF[[ 2 ]]
-    DF <- DF[[ 1 ]]
+  DF <- manage_inconsistencies(DF = DF, Tree = Tree)
+  if (!is.data.frame(DF)) {
+    incon <- DF[[2]]
+    DF <- DF[[1]]
   }
 
   # transform the data.frame from abundance to presence-absence if needed
-  if( BIN ){
-    DF <- to_bin( DF )
+  if (BIN) {
+    DF <- to_bin(DF)
   }
 
-  if( traceB ){
+  if (traceB) {
     df2 <- DF
   }
 
 
-  class.fun <- function( x ) cut( x , breaks = c( abucl , 10^18 ) , labels = 1:length( abucl ) , include.lowest = TRUE , right = TRUE )
-  abu.class <- apply( apply( DF[ , -1 , drop = FALSE ] , 2 , class.fun ) , 2 , as.numeric )
-  abu.class[ is.na( abu.class ) ] <- 0
-  tot.mer <- data.frame( DF[ , 1 , drop = FALSE ] , abu.class , check.names = FALSE )
+  class.fun <- function(x) cut(x, breaks = c(abucl, 10^18), labels = 1:length(abucl), include.lowest = TRUE, right = TRUE)
+  abu.class <- apply(apply(DF[, -1, drop = FALSE], 2, class.fun), 2, as.numeric)
+  abu.class[is.na(abu.class)] <- 0
+  tot.mer <- data.frame(DF[, 1, drop = FALSE], abu.class, check.names = FALSE)
 
   # to avoid warning from inner_join
-  y$Taxon <- as.character( y$Taxon )
-  tot.mer$Taxon <- as.character( tot.mer$Taxon )
+  y$Taxon <- as.character(y$Taxon)
+  tot.mer$Taxon <- as.character(tot.mer$Taxon)
 
-  if( identical( type , "ab" ) & BIN ) stop( "Type cannot be set to abundance if presence-absence data are used")
+  if (identical(type, "ab") & BIN) stop("Type cannot be set to abundance if presence-absence data are used")
 
-  if( type == "po" ){
-    y <- subset( y , ABUCLASS == -1 )
-    res.tot <- tot.mer %>% pivot_longer( -c( Taxon ) , names_to = "Sample", values_to = "Abundance" ) %>%
-      filter( Abundance > 0 ) %>% inner_join( y , by = c( "Taxon" ) ) %>% select( c( "Sample" , "Scores" ) )
-    whpt_df <- tot.mer %>% pivot_longer( -c( Taxon ) , names_to = "Sample", values_to = "Abundance" ) %>%
-      filter( Abundance > 0 ) %>% inner_join( y , by = c( "Taxon" ) ) %>% as.data.frame( )
+  if (type == "po") {
+    y <- subset(y, ABUCLASS == -1)
+    res.tot <- tot.mer %>%
+      pivot_longer(-c(Taxon), names_to = "Sample", values_to = "Abundance") %>%
+      filter(Abundance > 0) %>%
+      inner_join(y, by = c("Taxon")) %>%
+      select(c("Sample", "Scores"))
+    whpt_df <- tot.mer %>%
+      pivot_longer(-c(Taxon), names_to = "Sample", values_to = "Abundance") %>%
+      filter(Abundance > 0) %>%
+      inner_join(y, by = c("Taxon")) %>%
+      as.data.frame()
   }
 
-  if(type == "ab"){
-    y <- subset( y , ABUCLASS != -1 )
-    res.tot <- tot.mer %>% pivot_longer( -c( Taxon ) , names_to = "Sample", values_to = "ABUCLASS" ) %>%
-      inner_join( y , by = c( "Taxon" , "ABUCLASS" ) )
-    whpt.df <- res.tot %>% as.data.frame( )
+  if (type == "ab") {
+    y <- subset(y, ABUCLASS != -1)
+    res.tot <- tot.mer %>%
+      pivot_longer(-c(Taxon), names_to = "Sample", values_to = "ABUCLASS") %>%
+      inner_join(y, by = c("Taxon", "ABUCLASS"))
+    whpt.df <- res.tot %>% as.data.frame()
   }
 
-  if(metric == "aspt"){
-    res <- res.tot %>% group_by( Sample ) %>% summarise( mean( Scores ) ) %>% deframe()
+  if (metric == "aspt") {
+    res <- res.tot %>%
+      group_by(Sample) %>%
+      summarise(mean(Scores)) %>%
+      deframe()
   }
-  if(metric == "ntaxa"){
-    res <- res.tot %>% group_by( Sample ) %>% summarise( length( Scores ) ) %>% deframe()
+  if (metric == "ntaxa") {
+    res <- res.tot %>%
+      group_by(Sample) %>%
+      summarise(length(Scores)) %>%
+      deframe()
   }
-  if(metric == "bmwp"){
-    res <- res.tot %>% group_by( Sample ) %>% summarise( sum( Scores ) ) %>% deframe()
+  if (metric == "bmwp") {
+    res <- res.tot %>%
+      group_by(Sample) %>%
+      summarise(sum(Scores)) %>%
+      deframe()
   }
 
   # assure to have results if all indicator taxa are missing from a sample
-  if( length( res ) != length( st.names ) ){
-    temp <- merge( data.frame( Sites = st.names ) , data.frame( Sites = names( res ) , res_tot = res ) , all = TRUE )
+  if (length(res) != length(st.names)) {
+    temp <- merge(data.frame(Sites = st.names), data.frame(Sites = names(res), res_tot = res), all = TRUE)
     res <- temp$res_tot
-    names( res ) <- temp$Sites
+    names(res) <- temp$Sites
   }
 
 
-  res <- res[ match( st.names , names( res ) ) ]
+  res <- res[match(st.names, names(res))]
 
-  if( traceB == FALSE ){
+  if (traceB == FALSE) {
     res
   } else {
-    if( ! exists( "taxa.to.change" , inherits = FALSE ) ){
+    if (!exists("taxa.to.change", inherits = FALSE)) {
       df3 <- "none"
-    } else { df3 <- taxa.to.change }
-    if( exists( "exce" , inherits = FALSE  ) ){
+    } else {
+      df3 <- taxa.to.change
+    }
+    if (exists("exce", inherits = FALSE)) {
       df1 <- exce
-    } else { df4 <- "none" }
-    if( exists( "incon" , inherits = FALSE  ) ){
+    } else {
+      df4 <- "none"
+    }
+    if (exists("incon", inherits = FALSE)) {
       df5 <- incon
-    } else { df5 <- "none" }
+    } else {
+      df5 <- "none"
+    }
 
-    res <- list( results = res , taxa_df = df2 , abu_cl = tot.mer , whpt_df = whpt_df , composite_taxa = df3 ,  exceptions = df4 ,  parent_child_pairs = df5 )
+    res <- list(results = res, taxa_df = df2, abu_cl = tot.mer, whpt_df = whpt_df, composite_taxa = df3, exceptions = df4, parent_child_pairs = df5)
     res
   }
-
 }

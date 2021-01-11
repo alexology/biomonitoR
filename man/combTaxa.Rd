@@ -14,6 +14,8 @@ combTaxa(x, ntaxa = 2, taxLev = "Taxa")
 \item{taxLev}{taxonomic level on which the calculation has to be made.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 This function returns all the combinations of n taxa at the desired taxonomic resolution.
 }
 \details{
@@ -22,12 +24,6 @@ Metrics based on a specific group of taxa (EPT, 1-GOLD, etc) are currently used 
 of the selected taxa to target strssors. The relationship between an environmental variable and a subset of taxa could exist and not detected due to the scarce
 availaibility of autoecological data. With more than 4 taxa the calculations should become infeasible, expecially when the number
 of taxa in the user dataset is high.
-}
-\examples{
-data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-combTaxa(data.agR, taxLev = "Family")
 }
 \seealso{
 \code{\link{aggregatoR}}

@@ -4,7 +4,9 @@
 \name{traits_mf}
 \alias{traits_mf}
 \title{Traits for macrophytes}
-\format{A data frame with 48 rows and 24 variables.}
+\format{
+A data frame with 48 rows and 24 variables.
+}
 \usage{
 data( traits_mf )
 }
@@ -14,6 +16,6 @@ Leaf area, Mode of reproduction and Perennetion.
 Modified from Willby et al. (2020).
 }
 \references{
-Willby, N.J., Abernethy, V.J., & Demars, B. O. (2000). Attribute‐based classification of European hydrophytes and its relationship to habitat utilization. Freshwater Biology, 43(1), 43-74.
+Willby, N.J., Abernethy, V.J., & Demars, B. O. (2000). Attribute-based classification of European hydrophytes and its relationship to habitat utilization. Freshwater Biology, 43(1), 43-74.
 }
 \keyword{datasets}

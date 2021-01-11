@@ -23,13 +23,13 @@ This function calculates the 1 - GOLD metric, where GOLD stands for Gastropoda, 
 }
 \details{
 The metric 1 - GOLD is calculated as 1 minus the relative abundance of Gastropoda, Oligochaeta and Diptera. If a custom database is provided (see \code{\link{aggregatoR}}) please be sure that Gastropoda are at Class, Oligochaeta at Sublclass and Diptera at Order level, otherwise the gold calculation will be meaningless.
-If this is the case please see \link{abuTax}.
+If this is the case please see \code{get_taxa_abundance()}.
 }
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-igold(data.agR)
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+igold(data_agr)
 }
 \references{
 Pinto, P., Rosado, J., Morais, M., & Antunes, I. (2004). Assessment methodology for southern siliceous basins in Portugal. In Integrated Assessment of Running Waters in Europe (pp. 191-214). Springer, Dordrecht.

@@ -18,38 +18,38 @@
 \alias{fisher}
 \title{Functions for calculating diversity, eveness and dominance indices.}
 \usage{
-allindices(x, taxLev = "Taxa", base = exp(1))
+allindices(x, tax_lev = "Taxa", base = exp(1))
 
-berpar(x, taxLev = "Taxa")
+berpar(x, tax_lev = "Taxa")
 
-brill(x, taxLev = "Taxa")
+brill(x, tax_lev = "Taxa")
 
-esimpson(x, taxLev = "Taxa")
+esimpson(x, tax_lev = "Taxa")
 
-fisher(x, taxLev = "Taxa")
+fisher(x, tax_lev = "Taxa")
 
-invberpar(x, taxLev = "Taxa")
+invberpar(x, tax_lev = "Taxa")
 
-invsimpson(x, taxLev = "Taxa")
+invsimpson(x, tax_lev = "Taxa")
 
-margalef(x, taxLev = "Taxa")
+margalef(x, tax_lev = "Taxa")
 
-mcintosh(x, taxLev = "Taxa")
+mcintosh(x, tax_lev = "Taxa")
 
-menhinick(x, taxLev = "Taxa")
+menhinick(x, tax_lev = "Taxa")
 
-pielou(x, base = exp(1), taxLev = "Taxa")
+pielou(x, base = exp(1), tax_lev = "Taxa")
 
-shannon(x, base = exp(1), taxLev = "Taxa")
+shannon(x, base = exp(1), tax_lev = "Taxa")
 
-simpson(x, taxLev = "Taxa")
+simpson(x, tax_lev = "Taxa")
 }
 \arguments{
-\item{x}{result of the function aggregatoR}
+\item{x}{Result of the function \code{aggregate_taxa()}.}
 
-\item{taxLev}{taxonomic level on which the calculation has to be made.}
+\item{tax_lev}{Taxonomic level on which the calculation has to be made.}
 
-\item{base}{the base of the logarithm}
+\item{base}{The base of the logarithm}
 }
 \description{
 Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
@@ -112,19 +112,19 @@ N the number of individuals and N_max the number of individuals in the most abun
 
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-allindices(data.agR)
-shannon(data.agR)
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+allindices(data_agr)
+shannon(data_agr)
 
 # base 2
-shannon(data.agR, base = 2)
+shannon(data_agr, base = 2)
 }
 \references{
 Magurran, A. E. (2004). Measuring biological diversity. Blackwell Science ltd.
 }
 \seealso{
-\code{\link{aggregatoR}}
+\link{aggregate_taxa}
 }
 \keyword{margalef,}
 \keyword{menhinick,}

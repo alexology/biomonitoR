@@ -4,7 +4,9 @@
 \name{macro_ex}
 \alias{macro_ex}
 \title{Apennine invertebrate dataset}
-\format{A data frame with 34 rows and 3 variables.}
+\format{
+A data frame with 34 rows and 3 variables.
+}
 \usage{
 macro_ex
 }

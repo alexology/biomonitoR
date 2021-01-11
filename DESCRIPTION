@@ -1,7 +1,7 @@
 Package: biomonitoR
 Type: Package
-Title: Calculates Indices and Metrics for Biomonitoring of Running Waters
-Version: 0.9
+Title: biomonitoring indices and metrics
+Version: 0.9.1
 Author: Alex Laini, Gemma Burgazzi, Rossano Bolpagni, Daniel Bruno, Simone Guareschi, Cédric Mondy, Tommaso Cancellario
 Maintainer: Alex Laini <alex.laini@gmail.com>
 Description: Provides a tool for calculating biomonitoring indices and metrics of running waters.
@@ -18,9 +18,11 @@ Imports: hunspell,
     tibble,
     ape,
     lifecycle
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3

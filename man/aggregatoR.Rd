@@ -2,7 +2,7 @@
 % Please edit documentation in R/aggregatoR.R
 \name{aggregatoR}
 \alias{aggregatoR}
-\title{aggregatoR}
+\title{aggregatoR - deprecated}
 \usage{
 aggregatoR(x, FUN = sum)
 }
@@ -14,23 +14,11 @@ Must be sum for both abundances and presence-absence data.
 Default to \code{sum}. Change if you know what you are doing.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 This function prepares data for further calculations.
 }
-\examples{
-data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-
-# example for macrophytes
-data(oglio)
-
-oglio.asb <- asBiomonitor(oglio, group = "mf")
-oglio.agg <- aggregatoR(oglio.asb)
-richness(oglio.agg , taxLev = "Species")
-richness(oglio.agg , taxLev = "Genus")
-richness(oglio.agg , taxLev = "Family")
-}
 \seealso{
-\code{\link{asBiomonitor}}
+\code{\link{aggregate_taxa}}
 }
 \keyword{aggregatoR}

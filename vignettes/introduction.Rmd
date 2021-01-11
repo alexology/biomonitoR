@@ -2,7 +2,7 @@
 title: "Introduction to biomonitoR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{introduction}
+  %\VignetteIndexEntry{Introduction to biomonitoR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,20 +23,19 @@ library(biomonitoR)
 
 # built-in example
 
-data( macro_ex )
+data(macro_ex)
 
-head( macro_ex )
-
+head(macro_ex)
 ```
 
-The first step is to import taxonomic dataset with the function `asBiomonitor` that return an object of class `asb`. Basically this function  adds the taxonomic tree to the taxonomic data. The taxonomic tree is built from a reference database, specified in the option `group`. `biomonitoR` implements 3 reference database for macroinvertebrates, macrophytes and fish but a reference database can be added by the user.
+The first step is to import taxonomic dataset with the function `as_biomonitor()` that return an object of class `asb`. Basically this function  adds the taxonomic tree to the taxonomic data. The taxonomic tree is built from a reference database, specified in the option `group`. `biomonitoR` implements 3 reference database for macroinvertebrates, macrophytes and fish but a reference database can be added by the user.
 
 
 ```{r import}
 # import macroinvertebrate data
-data.bio <- asBiomonitor( macro_ex , group = "mi" )
+data_bio <- as_biomonitor(macro_ex, group = "mi")
 
-data.bio
+data_bio
 ```
 
 
@@ -44,9 +43,9 @@ taxonomic dataset can be imported as presence-absence by levaragin on the `FUN` 
 
 ```{r import bin}
 # import macroinvertebrate data
-data.bio.bin <- asBiomonitor( macro_ex , group = "mi" , FUN = bin )
+data_bio_bin <- as_biomonitor(macro_ex, group = "mi", FUN = bin)
 
-data.bio.bin
+data_bio_bin
 ```
 
 An important feature of the `biomonitoR` package is the spell checker, built from the reference database. By default `biomonitoR` remove taxa that are not recognized by the reference database and will provide suggestion for unrecognized names. The taxonomic dataset can thus be corrected by modifying the original file, directly in R or by using the spell checker. The spell checker is enabled by setting the option `correct_names` to to `TRUE` and it will run interactively. Every taxon needs to be present in the reference database, otherwise the user is forced to exit. This behaviour is important to assure consistency with further calculations. The option `traceB` will list suggestions and correction.
@@ -56,49 +55,46 @@ An important feature of the `biomonitoR` package is the spell checker, built fro
 # introduce an error into taxonomic data
 
 macro_ex_wrong <- macro_ex
-macro_ex_wrong$Taxa <- as.character( macro_ex_wrong$Taxa )
-macro_ex_wrong[ macro_ex_wrong$Taxa %in% "Acentrella" , "Taxa" ] <- "Acentrela"
+macro_ex_wrong$Taxa <- as.character(macro_ex_wrong$Taxa)
+macro_ex_wrong[macro_ex_wrong$Taxa %in% "Acentrella", "Taxa"] <- "Acentrela"
 
-data.bio.wrong <- asBiomonitor( macro_ex_wrong , group = "mi" , traceB = TRUE )
+data_bio.wrong <- as_biomonitor(macro_ex_wrong, group = "mi", traceB = TRUE)
 
 # "Acentrela" has been removed and a suggestion is proposed
-data.bio.wrong
+data_bio.wrong
 ```
 
-`asBiomonitor` will create an object of class `asb` that is needed for perfroming further calculation in `biomonitoR`. It is possible to export both the taxonomic dataset and the suggestion/correction as data.frame objects using the function `as.data.frame`.
+`as_biomonitor()` will create an object of class `asb` that is needed for perfroming further calculation in `biomonitoR`. It is possible to export both the taxonomic dataset and the suggestion/correction as data.frame objects using the function `as.data.frame()`.
 
 ```{r as.data }
 # export taxonomic dataset and suggestions as data.frame
 
-macro_ex.df <- as.data.frame( data.bio.wrong )
-macro_ex_correction.df <- as.data.frame( data.bio.wrong , object = 2 )
+macro_ex.df <- as.data.frame(data_bio.wrong)
+macro_ex_correction.df <- as.data.frame(data_bio.wrong, object = 2)
 macro_ex_correction.df
-
 ```
 
 
-The calculation of biomonitoring indices in `biomonitoR` can be done by creating an object with the function `aggregatoR`. This function aggregates data at various taxonomic levels.
+The calculation of biomonitoring indices in `biomonitoR` can be done by creating an object with the function `aggregate_taxa()`. This function aggregates data at various taxonomic levels.
 
 ```{r aggrega }
-data.agg <- aggregatoR( data.bio )
-
+data_agg <- aggregate_taxa(data_bio)
 ```
 
-It is possible to subset data prior to import them with the `aggregatoR` function. This is useful, for example, when the calculations need to be done with some Orders only.
+It is possible to subset data prior to import them with the `aggregate_taxa()` function. This is useful, for example, when the calculations need to be done with some Orders only.
 
 ```{r subset }
 # select EPT Taxa (Ephemeroptera, Plecoptera and Trichoptera)
 
-subset(data.bio, taxa = c( "Ephemeroptera" , "Plecoptera" , "Trichoptera" ) )
+subset(data_bio, taxa = c("Ephemeroptera", "Plecoptera", "Trichoptera"))
 
 # select Trichoptera excluding the trichopteran family Hydropsychidae
 
-tricho <- subset(data.bio, taxa = "Trichoptera" , exclude = "Hydropsychidae" )
+tricho <- subset(data_bio, taxa = "Trichoptera", exclude = "Hydropsychidae")
 tricho
 
-# import tricho with the aggregatoR function
-tricho.agg <- aggregatoR( tricho )
-
+# import tricho with the aggregate_taxa() function
+tricho_agg <- aggregate_taxa(tricho)
 ```
 
 
@@ -109,7 +105,7 @@ Users can provide their own reference database, but they need to imported in the
 ```{r refe }
 # import data
 
-data( Tree )
+data(Tree)
 
 # Tree is a standard taxonomic tree that needs to be transformed into a reference database
 # We can use the function refFromTree
@@ -117,10 +113,6 @@ data( Tree )
 ref_custom <- refFromTree(Tree)
 
 ref_custom
-
-
 ```
 
 The number of taxonomic levels of the reference database is 11 and their number and names cannot be modified. There is the hope to change this beahviour in a next version of `biomonitoR`.
-
-

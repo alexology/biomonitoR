@@ -4,9 +4,9 @@
 # store the abundance of the taxa for all the samples in the data.frame
 # this function sum the abundances of the x-th combination of and change the label merging the taxa names (e.g. Simuliidae_Tanypodinae)
 
-agg_fun <- function( x , rel = F ){
-  lab <- paste( x[ , 1 ] , collapse = "_" )
-  temp <- apply( x[ , -1 ] , 2 , FUN = sum )
-  df <- data.frame( Taxa = lab, t( temp ) )
-  return( df )
+agg_fun <- function(x, rel = FALSE) {
+  lab <- paste(x[, 1], collapse = "_")
+  temp <- apply(x[, -1], 2, FUN = sum)
+  DF <- data.frame(Taxa = lab, t(temp))
+  return(DF)
 }

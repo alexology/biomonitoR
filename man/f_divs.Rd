@@ -6,11 +6,11 @@
 \usage{
 f_divs(
   x,
-  traitDB = NULL,
-  taxLev = "Taxa",
+  trait_db = NULL,
+  tax_lev = "Taxa",
   type = NULL,
   traitSel = FALSE,
-  colB = NULL,
+  col_blocks = NULL,
   distance = "gower",
   zerodist_rm = FALSE,
   traceB = FALSE,
@@ -19,24 +19,24 @@ f_divs(
 )
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{results of function \code{aggregate_taxa()}.}
 
-\item{traitDB}{a trait database. Can be a \code{data.frame} ot a \code{dist} object.
+\item{trait_db}{a trait database. Can be a \code{data.frame} ot a \code{dist} object.
 Taxonomic level of the traits database must match those of the taxonomic database.
-No automatic check is done by the \code{function}.}
+No automatic check is done.}
 
-\item{taxLev}{character string giving the taxonomic level used to retrieve
+\item{tax_lev}{character string giving the taxonomic level used to retrieve
 trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
 \code{"Family"} as returned by the \link{aggregatoR} function.}
 
-\item{type}{the type of variables speciefied in \code{traitDB}.
+\item{type}{the type of variables speciefied in \code{trait_db}.
 Must be one of \code{F}, fuzzy, or \code{C}, continuous.
-If more control is needed please consider to provide \code{traitDB} as a \code{dist} object.
-It works only when \code{traitDB} is a \code{data.frame}, otherwise ingored.}
+If more control is needed please consider to provide \code{trait_db} as a \code{dist} object.
+It works only when \code{trait_db} is a \code{data.frame}, otherwise ingored.}
 
 \item{traitSel}{interactively select traits.}
 
-\item{colB}{A vector that contains the number of modalities for each trait.
+\item{col_blocks}{A vector that contains the number of modalities for each trait.
 Not needed when \code{euclidean} distance is used.}
 
 \item{distance}{to be used to compute functional distances, \code{euclidean} or \code{gower}. Default to \code{gower}.}
@@ -70,7 +70,8 @@ a vector with fuzzy functional richness results.
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 
 This function calculates the functional diversity.
-
+}
+\details{
 Rao quadratic entropy (Q; Rao, 1982) is used to estimate Functional Diversity
 because it has been considered more appropriate than other indices (Botta-Dukat,
 2005; Ricotta, 2005). In this formula (Q) dij is the dissimilarity (ranging
@@ -83,37 +84,35 @@ because it can deal with traits of different nature and measuring scales
 (continuous, nominal, binary, ordinal, etc.; see Podani 1999 for more information)
 
 \deqn{Q = \sum_{i=1}^{S} \sum_{j=1}^{S} d_{ij} \ p_i \ p_j}
-}
-\details{
+
 Taxa without traits assigned in the trait database are removed from both the trait and abundance databases.
 }
 \examples{
 data(macro_ex)
 
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-data.ts <- traitScaling( data.agR )
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+data_ts <- assign_traits(data_agr)
 # averaging
-data.ts.av <- traitsMean( data.ts )
+data_ts_av <- average_traits(data_ts)
 
-colB <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+col_blocks <- c(8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8)
 
-f_divs( data.agR , traitDB = data.ts.av , type = "F" , colB = colB )
-f_divs( data.agR , traitDB = data.ts.av , type = "F" , colB = colB ,
-       correction = "cailliez" )
+f_divs(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+f_divs(data_agr,
+  trait_db = data_ts_av, type = "F", col_blocks = col_blocks,
+  correction = "cailliez"
+)
 
-library( ade4 )
+library(ade4)
 
-rownames( data.ts.av ) <- data.ts.av$Taxa
-traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = colB )
+rownames(data_ts_av) <- data_ts_av$Taxa
+traits_prep <- prep.fuzzy(data_ts_av[, -1], col.blocks = col_blocks)
 
-traits.dist <- ktab.list.df( list( traits.prep ) )
-traits.dist <- dist.ktab( traits.dist , type = "F" )
+traits_dist <- ktab.list.df(list(traits_prep))
+traits_dist <- dist.ktab(traits_dist, type = "F")
 
-f_divs( data.agR , traitDB = traits.dist   )
-
-
-
+f_divs(data_agr, trait_db = traits_dist)
 }
 \references{
 Biggs, R., Schluter, M., Biggs, D., Bohensky, E. L., BurnSilver, S.,

@@ -6,11 +6,11 @@
 \usage{
 f_eve(
   x,
-  traitDB = NULL,
-  taxLev = "Taxa",
+  trait_db = NULL,
+  tax_lev = "Taxa",
   type = NULL,
   traitSel = FALSE,
-  colB = NULL,
+  col_blocks = NULL,
   nbdim = 2,
   distance = "gower",
   zerodist_rm = FALSE,
@@ -20,32 +20,32 @@ f_eve(
 )
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{Results of function \code{aggregate_taxa()}.}
 
-\item{traitDB}{a trait database. Can be a \code{data.frame} ot a \code{dist} object.
+\item{trait_db}{A trait database. Can be a \code{data.frame} ot a \code{dist} object.
 Taxonomic level of the traits database must match those of the taxonomic database.
 No automatic check is done by the \code{function}.}
 
-\item{taxLev}{character string giving the taxonomic level used to retrieve
+\item{tax_lev}{Character string giving the taxonomic level used to retrieve
 trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
 \code{"Family"} as returned by the \link{aggregatoR} function.}
 
-\item{type}{the type of variables speciefied in \code{traitDB}.
+\item{type}{The type of variables speciefied in \code{trait_db}.
 Must be one of \code{F}, fuzzy, or \code{C}, continuous.
-If more control is needed please consider to provide \code{traitDB} as a \code{dist} object.
-It works only when \code{traitDB} is a \code{data.frame}, otherwise ingored.}
+If more control is needed please consider to provide \code{trait_db} as a \code{dist} object.
+It works only when \code{trait_db} is a \code{data.frame}, otherwise ingored.}
 
-\item{traitSel}{interactively select traits.}
+\item{traitSel}{Select traits interactively.}
 
-\item{colB}{A vector that contains the number of modalities for each trait.
+\item{col_blocks}{A vector that contains the number of modalities for each trait.
 Not needed when \code{euclidean} distance is used.}
 
-\item{nbdim}{number of dimensions for the multidimensional functional spaces.
+\item{nbdim}{Number of dimensions for the multidimensional functional spaces.
 We suggest to keep \code{nbdim} as low as possible.
 By default \code{biomonitoR} set the number of dimensions to 2. Select \code{auto} if you want the automated selection
 approach according to Maire et al. (2015).}
 
-\item{distance}{to be used to compute functional distances, \code{euclidean} or \code{gower}. Default to \code{gower}.}
+\item{distance}{To be used to compute functional distances, \code{euclidean} or \code{gower}. Default to \code{gower}.}
 
 \item{zerodist_rm}{If \code{TRUE} aggregates taxa with the same traits.}
 
@@ -59,13 +59,12 @@ Ignored when type is set to \code{C}.}
 \code{prec} can be \code{Qt} or \code{QJ}, please refere to the \code{convhulln} documentation for more information.
 Deafault to \code{QJ}, less accurate but less prone to errors.
 \code{tol} a tolerance threshold for zero, see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to 1e-07.
-\code{cor.zero} = \code{TRUE} if TRUE, zero distances are not modified. see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to \code{TRUE}.
-Please modify them if you know what you are doing.}
+\code{cor.zero} = \code{TRUE} if TRUE, zero distances are not modified. see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to \code{TRUE}.}
 }
 \value{
 a vector with fuzzy functional richness results.
 \enumerate{
-\item \strong{results}: results of the ffred function;
+\item \strong{results}: results of \code{ffeve()};
 \item \strong{traits}: a data.frame containing the traits used for the calculations;
 \item \strong{taxa}: a data.frame conaining the taxa used for th calculations;
 \item \strong{nbdim}: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
@@ -78,7 +77,8 @@ a vector with fuzzy functional richness results.
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 
 This function calculates the functional richness based on trait categories.
-
+}
+\details{
 Functional richness (FRic) represents the amount of functional space filled by
 the community (Villeger et al., 2008) and it is related to the community use of
 resources and productivity (Mason et al., 2005). FRic is defined by the trait
@@ -117,29 +117,29 @@ to have reliable FRic values (Villeger et al., 2008).
 \examples{
 data(macro_ex)
 
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-data.ts <- traitScaling( data.agR )
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+data_ts <- assign_traits(data_agr)
 # averaging
-data.ts.av <- traitsMean( data.ts )
+data_ts_av <- average_traits(data_ts)
 
-colB <- c( 8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8 )
+col_blocks <- c(8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8)
 
-f_eve( data.agR , traitDB = data.ts.av , type = "F" , colB = colB )
-f_eve( data.agR , traitDB = data.ts.av , type = "F" , colB = colB ,
-       nbdim = 10 , correction = "cailliez" )
+f_eve(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+f_eve(data_agr,
+  trait_db = data_ts_av, type = "F", col_blocks = col_blocks,
+  nbdim = 10, correction = "cailliez"
+)
 
-library( ade4 )
+library(ade4)
 
-rownames( data.ts.av ) <- data.ts.av$Taxa
-traits.prep <- prep.fuzzy( data.ts.av[ , -1 ], col.blocks = colB )
+rownames(data_ts_av) <- data_ts_av$Taxa
+traits_prep <- prep.fuzzy(data_ts_av[, -1], col.blocks = col_blocks)
 
-traits.dist <- ktab.list.df( list( traits.prep ) )
-traits.dist <- dist.ktab( traits.dist , type = "F" )
+traits_dist <- ktab.list.df(list(traits_prep))
+traits_dist <- dist.ktab(traits_dist, type = "F")
 
-f_eve( data.agR , traitDB = traits.dist   )
-
-
+f_eve(data_agr, trait_db = traits_dist)
 }
 \references{
 Barber, C. B., Dobkin, D. P., & Huhdanpaa, H. (1996).

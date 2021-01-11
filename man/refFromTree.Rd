@@ -14,10 +14,8 @@ If duplicated Taxa names are present this function keeps the name provided by th
 Check the reliability of results when using group = \code{mi} for macroinvertebrates or group = \code{mf} for macrophytes.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
 This function transforms a taxonomic tree to a reference database suitable for biomonitoR.
-}
-\examples{
-data(Tree)
-ref_custom <- refFromTree(Tree)
 }
 \keyword{refFromTree}

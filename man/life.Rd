@@ -82,29 +82,33 @@ All the information used for \code{life} calculation can be retrieved with the f
 
 \examples{
 data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-life( data.agR )
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
+life(data_agr)
 
 # change abundance classes
-life( data.agR , abucl = c( 1, 9 , 99 , 999 ) )
+life(data_agr, abucl = c(1, 9, 99, 999))
 
 # provide your own score system. Scores and aggregation rules are for example purpose only.
 
-life_fg <- data.frame( Taxon = c( "Ephemerellidae" , "Leuctridae" , "Chironomidae" ) ,
- FG_Score = c( 1 , 2 , 3 ) )
+life_fg <- data.frame(
+  Taxon = c("Ephemerellidae", "Leuctridae", "Chironomidae"),
+  FG_Score = c(1, 2, 3)
+)
 
-life_acc <- data.frame( Taxon = "Ephemerellidae" , Correct_Taxon = "Chironomidae" )
+life_acc <- data.frame(Taxon = "Ephemerellidae", Correct_Taxon = "Chironomidae")
 
-fs_scores <- data.frame( FS = rep( 1:3 , each = 3 ) , ABUCLASS = rep( 1:3 , 3 ) ,
-SCORE = c( 9 , 10 , 11 , 8 , 9 , 10 , 7 , 7 , 7 ) )
+fs_scores <- data.frame(
+  FS = rep(1:3, each = 3), ABUCLASS = rep(1:3, 3),
+  SCORE = c(9, 10, 11, 8, 9, 10, 7, 7, 7)
+)
 
 # without aggregation rules
-life( data.agR , method = life_fg , fs_scores = fs_scores , traceB = TRUE )
+life(data_agr, method = life_fg, fs_scores = fs_scores, traceB = TRUE)
 
 # with aggregation
 
-life( data.agR , method = life_fg , agg = life_acc , fs_scores = fs_scores , traceB = TRUE )
+life(data_agr, method = life_fg, agg = life_acc, fs_scores = fs_scores, traceB = TRUE)
 }
 \references{
 Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543-574.

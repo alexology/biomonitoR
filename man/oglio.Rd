@@ -4,7 +4,9 @@
 \name{oglio}
 \alias{oglio}
 \title{Oglio River macrophyte dataset}
-\format{A data frame with 67 rows and 31 variables.}
+\format{
+A data frame with 67 rows and 31 variables.
+}
 \usage{
 data(oglio)
 }

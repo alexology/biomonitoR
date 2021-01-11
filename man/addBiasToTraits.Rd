@@ -2,7 +2,7 @@
 % Please edit documentation in R/addBiasToTraits.R
 \name{addBiasToTraits}
 \alias{addBiasToTraits}
-\title{Add bias to duplicated fuzzy traits}
+\title{addBiasToTraits}
 \usage{
 addBiasToTraits(x, colB = NULL, SD = 0.001, traceB = FALSE)
 }
@@ -16,7 +16,9 @@ addBiasToTraits(x, colB = NULL, SD = 0.001, traceB = FALSE)
 \item{traceB}{if \code{TRUE} returns a vector of taxa with duplicated traits.}
 }
 \description{
-Add bias to duplicated fuzzy traits
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("deprecated") }
+
+Add bias to duplicated traits.
 }
 \details{
 This function works by adding a small bias to duplicated fuzzy traits.

@@ -7,10 +7,8 @@
 bin(x)
 }
 \arguments{
-\item{x}{a vector of numbers
-
-Function for calculating presence-absence from a vector. It does not take into account NAs.}
+\item{x}{A vector of numbers.}
 }
 \description{
-bin
+Function for calculating presence-absence from a vector. It does not take into account NAs.
 }

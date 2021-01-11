@@ -30,12 +30,6 @@ Be careful, for all the other taxa entered at taxonomic level higher than family
 \item \code{convertobiotic}: convert data to biotic format
 }}
 
-\examples{
-data(macro_ex)
-data.bio <- asBiomonitor(macro_ex)
-data.agR <- aggregatoR(data.bio)
-data.cv <- convertovegan(data.agR, taxLev = "Family")
-}
 \seealso{
 \code{\link{asBiomonitor}}
 }
