@@ -50,8 +50,8 @@
 #' Optional aggregation `data.frame` provided by the user needs to be formatted like following:
 #' \tabular{ll}{
 #'  Taxon \tab Correct_Taxon \cr
-#'  Glossomatidae \tab Rhyachopilidae \cr
-#'  Apatanidae \tab Limnephilidae \cr
+#'  Glossosomatidae \tab Rhyachopilidae \cr
+#'  Apataniidae \tab Limnephilidae \cr
 #'  Acroloxidae \tab Ancylidae \cr
 #'  Crangonyctidae \tab Gammaridae \cr
 #'  Niphargidae \tab Gammaridae \cr

@@ -23,6 +23,8 @@ Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    vegan,
+    abdiv
 VignetteBuilder: knitr
 Config/testthat/edition: 3

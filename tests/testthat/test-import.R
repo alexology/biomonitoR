@@ -8,6 +8,9 @@ test_that("unassigned", {
   data_agr_bin <- aggregate_taxa(data_bio_bin)
   data_bio_custom <- as_biomonitor(macro_ex, dfref = ref_def)
   data_agr_custom <- aggregate_taxa(data_bio_custom)
+  data_agr_genus <- data_agr[["Genus"]][-1, ]
+  names(data_agr_genus)[1] <- "Taxa"
+  rownames(data_agr_genus) <- NULL
   expect_equal(data_agr[["Genus"]][ 1 , 1 ] ,  "unassigned" )
   expect_equal(length( data_agr ) ,  12 )
   expect_equal(class( data_bio ) ,  "asb" )
@@ -18,6 +21,8 @@ test_that("unassigned", {
   expect_equal(any(as.data.frame(data_bio_bin)[,-c(1:11)]>1),  FALSE)
   expect_warning(as_biomonitor(macro_ex_bin, FUN = sum), "Presence-absence data detected but FUN is not set to bin. Is it this what you want?")
   expect_equal(class( data_agr_custom ) ,  c("biomonitoR","custom"))
+  load(system.file("testdata", "macro_ex_genus.rda", package="biomonitoR"))
+  expect_equal(data_agr_genus,  macro_ex_genus)
 })
 
 
