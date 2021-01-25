@@ -191,7 +191,7 @@ bmwp <- function(x, method = "ita", agg = FALSE, exceptions = NULL, traceB = FAL
   # transform the data.frame from abundance to presence-absence
   DF <- merge(y, DF)
 
-  if (traceB == TRUE) {
+  if (traceB) {
     df1 <- DF
   }
 

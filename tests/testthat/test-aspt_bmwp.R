@@ -3,7 +3,8 @@ test_that("spain", {
   data_bio <- as_biomonitor(aspt_bmwp_spain)
   data_agr <- aggregate_taxa(data_bio)
   spa_bmwp <- c(35, 18)
-  names(spa_bmwp) <- c("Sample_1", "Sample_2")
+  spa_bmwp_ex <- c(29, 12)
+  names(spa_bmwp) <- names(spa_bmwp_ex) <- c("Sample_1", "Sample_2")
   spa_aspt <- spa_bmwp / c(6, 3)
   tb_mes <- data.frame(Child = "Ferrissia", Parent = "Planorbidae")
   expect_equal(suppressMessages(bmwp(data_agr, method = "spa")),  spa_bmwp)
@@ -14,6 +15,8 @@ test_that("spain", {
   expect_equal(suppressMessages(aspt(data_agr, method = "spa", traceB = TRUE))$parent_child_pairs,  tb_mes)
   expect_equal(length(suppressMessages(bmwp(data_agr, method = "spa", traceB = TRUE))),  5)
   expect_equal(length(suppressMessages(aspt(data_agr, method = "spa", traceB = TRUE))),  5)
+  expect_equal(suppressMessages(bmwp(data_agr, method = "spa", exceptions = "Ferrissia")),  spa_bmwp_ex)
+  expect_equal(length(suppressMessages(bmwp(data_agr, method = "spa", exceptions = "Ferrissia", traceB = TRUE))),  5)
 })
 
 
@@ -35,6 +38,7 @@ test_that("italy", {
   expect_equal(length(suppressMessages(aspt(data_agr, method = "ita", traceB = TRUE))),  5)
   expect_equal(suppressMessages(bmwp(data_agr, method = "ita", agg = TRUE, traceB = TRUE))$composite_taxa,  c("Apataniidae", "Glossosomatidae"))
   expect_equal(suppressMessages(aspt(data_agr, method = "ita", agg = TRUE, traceB = TRUE))$composite_taxa,  c("Apataniidae", "Glossosomatidae"))
+
 })
 
 

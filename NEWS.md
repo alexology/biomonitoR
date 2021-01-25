@@ -5,6 +5,7 @@
 * Code styled according to the tidyverse style guide with the `styler` package.
 * Tests added with the testthat package.
 * Bug fixed. `as_biomonitor` always imported binary data as an object of class `bin`. Users are free to do whatever they want with their data and this behaviour has been removed.
+* Bug fixed. `psi` incorrectly assigned site names.
 
 2# biomonitoR 0.9
 

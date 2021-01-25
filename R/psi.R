@@ -227,7 +227,6 @@ psi <- function(x, method = "extence", abucl = c(1, 9, 99, 999), agg = FALSE, fs
     names(res) <- temp$Sites
   } else {
     res <- res.sen / res.tot * 100
-    names(res) <- st.names
   }
 
 
