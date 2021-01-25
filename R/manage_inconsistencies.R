@@ -117,9 +117,9 @@ manage_exceptions <- function(DF, Tree, y, Taxon) {
     tax.up <- higher.taxa[[i]]
     tax.lo <- lower.taxa[[i]]
     if (length(tax.up) > 0) {
-      to.rem <- DF.temp[DF.temp$Taxon == tax, -1, drop = FALSE]
+      to.rem <- DF.temp[DF.temp$Taxon %in% tax, -1, drop = FALSE]
       temp.up <- sweep(DF.temp[DF.temp$Taxon %in% tax.up, -1, drop = FALSE], 2, t(to.rem)[, 1], FUN = "-")
-      DF.temp[DF.temp$Taxon == tax.up, -1] <- temp.up
+      DF.temp[DF.temp$Taxon %in% tax.up, -1] <- temp.up
     }
 
     if (length(tax.lo) > 0) {
@@ -148,7 +148,8 @@ manage_exceptions <- function(DF, Tree, y, Taxon) {
 
   rownames(store.taxa) <- NULL
   store.taxa <- store.taxa[!duplicated(store.taxa), ]
+  store.taxa <- store.taxa[!store.taxa[, "tax_1"] == store.taxa[, "tax_2"], ]
 
   message(mes)
-  list(DF = DF.temp, Changes = store.taxa)
+  list(DF = DF.temp, Changes = store.taxa[, c("tax_1", "operation", "tax_2")])
 }

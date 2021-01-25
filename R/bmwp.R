@@ -44,8 +44,8 @@
 #' Optional aggregation `data.frame` provided by the user needs to be formatted like following:
 #' \tabular{ll}{
 #'  Taxon \tab Correct_Taxon \cr
-#'  Glossomatidae \tab Rhyachopilidae \cr
-#'  Apatanidae \tab Limnephilidae \cr
+#'  Glossosomatidae \tab Rhyachopilidae \cr
+#'  Apataniidae \tab Limnephilidae \cr
 #'  Acroloxidae \tab Ancylidae \cr
 #'  Crangonyctidae \tab Gammaridae \cr
 #'  Niphargidae \tab Gammaridae \cr
@@ -191,7 +191,7 @@ bmwp <- function(x, method = "ita", agg = FALSE, exceptions = NULL, traceB = FAL
   # transform the data.frame from abundance to presence-absence
   DF <- merge(y, DF)
 
-  if (traceB == TRUE) {
+  if (traceB) {
     df1 <- DF
   }
 

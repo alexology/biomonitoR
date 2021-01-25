@@ -55,6 +55,18 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
     asb.call <- "sum"
   }
 
+  # check if columns other than Taxa are numeric
+  # position of column Taxa
+  col.taxa <- which(names(x) == "Taxa")
+  col.class <- sapply(x[, -col.taxa], is.numeric)
+  if (any(col.class == FALSE)) {
+    stop("Non-numeric columns other than Taxa are not allowed")
+  }
+
+  # check if NAs are present. If present they are changed to 0.
+  check.na <- any(is.na(x))
+  x[is.na(x)] <- 0
+
   # initialize check.pa
   check.pa <- FALSE
 
@@ -75,17 +87,9 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
   if (any(x[, !colnames(x) %in% "Taxa"] %% 1 != 0)) warning("Decimal numbers detected. Please check carefully which FUN to use.")
 
 
-  # check if columns other than Taxa are numeric
-  # position of column Taxa
-  col.taxa <- which(names(x) == "Taxa")
-  col.class <- sapply(x[, -col.taxa], is.numeric)
-  if (any(col.class == FALSE)) {
-    stop("Non-numeric columns other than Taxa are not allowed")
-  }
 
-  # check if NAs are present. If present they are changed to 0.
-  check.na <- any(is.na(x))
-  x[is.na(x)] <- 0
+
+
 
   # set the reference database for the specified group
   if (group == "mi") {
@@ -140,7 +144,7 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
   x$Taxa <- as.character(x$Taxa)
 
   # change the name of taxa to lowercase and capital letter
-  x$Taxa <- trimws(sapply(x$Taxa, capWords, USE.NAMES = F))
+  x$Taxa <- trimws(sapply(x$Taxa, capWords, USE.NAMES = FALSE))
 
 
   # change the Hydracarina, Hydracnidia or Acariformes changed to Trombidiformes
@@ -177,6 +181,7 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
       for (i in 1:length(change_uni)) {
         x[x$Taxa %in% change_uni[i], "Taxa"] <- to_change[to_change$Taxon %in% change_uni[i], "Correct_Taxon"]
       }
+
     }
   }
 
@@ -302,6 +307,10 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
 
   if (!is.null(dfref)) {
     class(taxa_def) <- c(class(taxa_def), "custom")
+  }
+
+  if( length(wrong_taxa) > 0){
+    message("Some taxa were excluded, check with traceB = TRUE")
   }
 
   taxa_def
