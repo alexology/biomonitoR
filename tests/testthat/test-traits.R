@@ -55,11 +55,16 @@ test_that("fd_indices", {
   fd_res_3 <- FD::dbFD(trait_dist, taxa_comm, message = FALSE, stand.FRic = TRUE, scale.RaoQ = TRUE, corr = "none", m = 3)
   f_rich_ex3 <- f_rich(data_agr, trait_db = traits_dist, nbdim = 3)
   f_divs_ex3 <- f_divs(data_agr, trait_db = traits_dist)
+  f_red <- f_divs(data_agr, trait_db = traits_dist)
+  f_rich_ex3_df <- f_rich(data_agr, trait_db = data_ts_av, type = "F", nbdim = 3, col_blocks = col_blocks)
+  f_rich_ex3_df_tb <- f_rich(data_agr, trait_db = data_ts_av, type = "F", nbdim = 3, col_blocks = col_blocks, traceB = TRUE)
 
 
   expect_equal(f_rich_ex3, fd_res_3$FRic)
+  expect_equal(f_rich_ex3_df, fd_res_3$FRic)
   expect_equal(f_divs_ex3, fd_res_3$RaoQ)
   expect_equal(check_pcoa_nbdim$r2, fd_res$qual.FRic)
   expect_equal(check_pcoa_nbdim_3$r2, fd_res_3$qual.FRic)
+  expect_equal(length(f_rich_ex3_df_tb), 7)
 })
 
