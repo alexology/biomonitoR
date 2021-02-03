@@ -25,6 +25,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     vegan,
-    abdiv
+    abdiv,
+    covr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
