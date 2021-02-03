@@ -110,7 +110,7 @@ data(Tree)
 # Tree is a standard taxonomic tree that needs to be transformed into a reference database
 # We can use the function refFromTree
 
-ref_custom <- refFromTree(Tree)
+ref_custom <- ref_from_tree(Tree)
 
 ref_custom
 ```

@@ -53,8 +53,8 @@ If only 1 and 0 are present \code{x} will be imported as presence-absence.
 When \code{group = mi} Hydracarina, Hydracnidia or Acariformes are changed to Trombidiformes given the uncertain taxonomic status of this group.
 }
 \examples{
-data(macro_ex)
-data_bio <- as_biomonitor(macro_ex, group = "mi")
+data(mi_prin)
+data_bio <- as_biomonitor(mi_prin, group = "mi")
 }
 \references{
 Schmidt-Kloiber, A., & Hering, D. (2015). www.freshwaterecology.info -

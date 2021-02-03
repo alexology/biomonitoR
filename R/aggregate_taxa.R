@@ -32,7 +32,7 @@
 aggregate_taxa <- function(x, FUN = sum) {
 
   # check if the object x is of class "biomonitoR"
-  if (!inherits(x, "asb")) stop("x is not an object created with asBiomonitor")
+  if (!inherits(x, "asb")) stop("x is not an object created with as_biomonitor")
 
   class_x <- class(x)
   x <- as.data.frame(x, stringsAsFactors = FALSE)

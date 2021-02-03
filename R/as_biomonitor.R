@@ -41,8 +41,8 @@
 #' 20,000 European freshwater organisms and their ecological preferences.
 #' Ecological indicators, 53, 271-282.
 #' @examples
-#' data(macro_ex)
-#' data_bio <- as_biomonitor(macro_ex, group = "mi")
+#' data(mi_prin)
+#' data_bio <- as_biomonitor(mi_prin, group = "mi")
 as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", FUN = sum, correct_names = FALSE, traceB = FALSE) {
 
   # check if user database contains a column called Taxa
@@ -309,7 +309,7 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
     class(taxa_def) <- c(class(taxa_def), "custom")
   }
 
-  if( length(wrong_taxa) > 0){
+  if( length(wrong_taxa) > 0 & ! traceB){
     message("Some taxa were excluded, check with traceB = TRUE")
   }
 

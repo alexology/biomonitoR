@@ -1,3 +1,8 @@
+2# biomonitoR 0.9.2
+
+* Function deprecated in version 0.9.1 are now defunct.
+* Code coverage added.
+
 2# biomonitoR 0.9.1
 
 * Function names changed according to the tidiverse style guide.

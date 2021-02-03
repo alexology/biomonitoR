@@ -1,6 +1,8 @@
 # biomonitoR
 A package for calculating indices for biomonitoring of running water with a focus on macroinvertebrate community. Still in development.
 
+[![codecov](https://codecov.io/gh/alexology/biomonitoR/branch/master/graph/badge.svg?token=Ix3zzcWgko)](https://codecov.io/gh/alexology/biomonitoR)
+
 # Installation
 
 ```R
