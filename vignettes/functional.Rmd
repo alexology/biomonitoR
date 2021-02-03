@@ -18,7 +18,7 @@ Trait-based analysis is a standard procedure in community ecology and represents
 
 ## Macroinvertebrates
 
-For macroinvertebrates, `biomonitoR` provides by default the Tachet database (Tachet et al. 2010) available at [freshwaterecology.info](https://www.freshwaterecology.info/) website. Briefly, the Tachet database is a fuzzy-coded database with 21 categories and a total of 113 modalities. One of the first steps in trait-based analysis is to retrieve trait information for the taxa present in the taxonomic dataset. There are some time-consuming steps when retrieving traits for macroinvertebrates because of inconsistencies between taxonomic resolution of the taxonomic dataset and those of traits. `biomonitoR` accomplish this task with the function `traitScaling`.
+For macroinvertebrates, `biomonitoR` provides by default the Tachet database (Tachet et al. 2010) available at [freshwaterecology.info](https://www.freshwaterecology.info/) website. Briefly, the Tachet database is a fuzzy-coded database with 21 categories and a total of 113 modalities. One of the first steps in trait-based analysis is to retrieve trait information for the taxa present in the taxonomic dataset. There are some time-consuming steps when retrieving traits for macroinvertebrates because of inconsistencies between taxonomic resolution of the taxonomic dataset and those of traits. `biomonitoR` accomplish this task with the function `assign_traits`.
 
 ```{r setup}
 library(biomonitoR)
@@ -32,11 +32,11 @@ data_bio <- as_biomonitor(macro_ex)
 data_agr <- aggregate_taxa(data_bio)
 
 
-# use the traitScaling function
+# use the assign_traits function
 
 data_ts <- assign_traits( data_agr , tax_lev = "Taxa" )
 
-# we can use traitScaling at the desired taxonomic level
+# we can use assign_traits at the desired taxonomic level
 # for example setting tax_lev = "Family"
 # assign_traits does not allow taxonomic levels higher than families
 
@@ -44,10 +44,10 @@ data_ts <- assign_traits( data_agr , tax_lev = "Taxa" )
 ```
 
 
-`traitScaling` returns a `data.frame` reporting taxa names of the taxonomic dataset, the taxonomic level of each taxon of the taxonomic dataset, the name of the taxa whose traits have been associated to a taxon of the taxonomic dataset and the corresponding taxonomic level, the taxonomic distance between taxa of the taxonomic dataset and the one from trait dataset and traits. Taxonomic distance is calculated based on the taxonomic levels implemented in `biomonitoR`. There are some rules of aggregation that can be consulted on the help page of `traitScaling`.
+`assign_traits` returns a `data.frame` reporting taxa names of the taxonomic dataset, the taxonomic level of each taxon of the taxonomic dataset, the name of the taxa whose traits have been associated to a taxon of the taxonomic dataset and the corresponding taxonomic level, the taxonomic distance between taxa of the taxonomic dataset and the one from trait dataset and traits. Taxonomic distance is calculated based on the taxonomic levels implemented in `biomonitoR`. There are some rules of aggregation that can be consulted on the help page of `assign_traits`.
 
 
-```{r head traitScaling}
+```{r head assign_traits}
 # data.ts has more rows because more entries have been found for one or more taxa.
 # only the first two traits are showed to not fill the page with numbers
 
@@ -57,39 +57,39 @@ data_ts[ 1:5 , 1:7 ]
 ```
 
 
-The `traitScaling` function links available traits to a taxon by looking at the taxonomic tree. Multiple assignements for the same taxon can thus be obtained.
+The `assign_traits` function links available traits to a taxon by looking at the taxonomic tree. Multiple assignements for the same taxon can thus be obtained.
 
 
-```{r dim traitScaling}
+```{r dim assign_traits}
 # data_ts has more rows because more entries have been found for one or more taxa.
 
-dim( macro_ex )
-dim( data_ts )
+dim(macro_ex)
+dim(data_ts)
 
 # look at Beraeidae for which five taxa of the trait dataset have been associated
 # to one taxon of the taxonomic dataset
 
-data_ts[ data_ts$Taxa %in% "Beraeidae" , 1:5 ]
+data_ts[data_ts$Taxa %in% "Beraeidae", 1:5]
 
 
 ```
 
-Taxonomic distance can be useful, for example when only exact matches are needed. The `filter_by_distance` option of the `traitScaling` function or simple subsets can be used.
+Taxonomic distance can be useful, for example when only exact matches are needed. The `filter_by_distance` option of the `assign_traits` function or simple subsets can be used.
 
 
-```{r filter traitScaling}
+```{r filter assign_traits}
 assign_traits( data_agr , filter_by_distance = 0 )[, 1:5 ]
 
 data_ts[ data_ts$Taxonomic_distance == 0 , 1:5 ]
 
 ```
 
-What to do next? `biomonitoR` offers a more advanced subsetting tool with the function `manageTraits`.
+What to do next? `biomonitoR` offers a more advanced subsetting tool with the function `manage_traits`.
 
-```{r manage traitScaling}
+```{r manage assign_traits}
 # select the traits belonging to the nearest taxa that have a taxonomic level equal or finer than the target one
 
-data_ts_plus <- manageTraits( data_ts , method = "nearest+" , traceB = TRUE )
+data_ts_plus <- manage_traits( data_ts , method = "nearest+" , traceB = TRUE )
 
 # with the traceB option set to TRUE you can check the taxa removed because they did not meet the requirments
 # Here Serratella ignita is at species level while the trait at genus level (Serratella)
@@ -99,21 +99,21 @@ data_ts_plus$taxa_excluded
 
 ```
 
-When you are satisfied with the list of taxa you can finalize your trait dataset with two strategies. The function `traitsMean` allow the computation of the average traits for each Taxon. It is currently designed only for fuzzy data. For continuos data the default `aggregate` function can be used. Alternatively, taxa can be chosen randomly when multiple matches are available.
+When you are satisfied with the list of taxa you can finalize your trait dataset with two strategies. The function `average_traits` allow the computation of the average traits for each Taxon. It is currently designed only for fuzzy data. For continuos data the default `aggregate` function can be used. Alternatively, taxa can be chosen randomly when multiple matches are available.
 
 
-```{r mean traitScaling}
+```{r mean assign_traits}
 # take the average. If col_blocks is set to NULL the default values will be used.
 # Please consider that the default value is correct only for the default trait dataset!
 # only the first 5 rows and columns will be showed
 
-data_ts_av <- traitsMean( data_ts )
+data_ts_av <- average_traits( data_ts )
 data_ts_av[ 1:5 , 1:5 ]
 
 # alternatively a random selection can be done
 # only the first 5 rows and  columns will be showed
 
-sampleTraits( data_ts )[ 1:5 , 1:5 ]
+sample_traits(data_ts)[ 1:5 , 1:5 ]
 ```
 
 Now we have obtained a trait dataset that can be used for calculating functional metrics.
@@ -182,19 +182,19 @@ traits_dist <- dist.ktab( traits_dist , type = "F" )
 f_rich( data_agr , trait_db = traits_dist , nbdim = 2 )
 ```
 
-Functional richness and dispersion require the construction of a functional space from distance/dissimilarity matrices. `f_rich` and `f_disp` do it internally through when a trait dataset is provided, but more control can be obtained by providing a distance matrix. The fuction `selectPcoaAxes` is a useful tool to select the number of axes needed to build the functional space with a desired quality. Three methods for evaluating the qauality of the functional space are proposed. `selectPcoaAxes` also evaluates the performances of different correction algorhitms when negative eigenvalues are found during the construction of the functional space.
+Functional richness and dispersion require the construction of a functional space from distance/dissimilarity matrices. `f_rich` and `f_disp` do it internally through when a trait dataset is provided, but more control can be obtained by providing a distance matrix. The fuction `select_pcoa_axes` is a useful tool to select the number of axes needed to build the functional space with a desired quality. Three methods for evaluating the qauality of the functional space are proposed. `select_pcoa_axes` also evaluates the performances of different correction algorhitms when negative eigenvalues are found during the construction of the functional space.
 
 
 ```{r pcoaAxes }
-selectPcoaAxes( traits_dist , method = "cor" , tresh = 0.7)
-selectPcoaAxes( traits_dist , method = "legendre" , tresh = 0.65)
-selectPcoaAxes( traits_dist , method = "maire" , tresh = 0.01)
+select_pcoa_axes( traits_dist , method = "cor" , tresh = 0.7)
+select_pcoa_axes( traits_dist , method = "legendre" , tresh = 0.65)
+select_pcoa_axes( traits_dist , method = "maire" , tresh = 0.01)
 ```
 
 
 ### Working at different taxonomic levels
 One of the strength of `biomonitoR` is the ability to work at different taxonomic levels. The examples above were done at a mixed-taxonomic level (species, genus, family and order). If we wanto to look at the family level results,
-we can repeat the analysis by specifying famly in both `traitScaling` and `indices`.
+we can repeat the analysis by specifying famly in both `assign_traits` and `indices`.
 
 
 ```{r family }
@@ -215,14 +215,14 @@ The same approach used for macroinvertebrates can be used for other groups. The 
 
 ```{r macroph , warning = FALSE , message = FALSE }
 # load macrophyte data
-data( oglio )
-data( traits_mf )
+data(oglio)
+data(traits_mf)
 
 # importing data in the biomonitoR format
-oglio.asb <- as_biomonitor( oglio , group = "mf" , FUN = bin )
-oglio.agg <- aggregate_taxa( oglio.asb )
+oglio.asb <- as_biomonitor(oglio, group = "mf", FUN = bin)
+oglio.agg <- aggregate_taxa(oglio.asb)
 
-# no need to run traitScaling, just to show its use
+# no need to run assign_traits, just to show its use
 oglio.ts <- assign_traits( oglio.agg , trait_db = traits_mf , group = "mf" )
 oglio.ts[ 1:5 , 1:5 ]
 
@@ -241,13 +241,10 @@ oglio_traits <- oglio_traits[ , ! colnames( oglio_traits ) %in% "Taxa" ]
 oglio.dist <- gowdis( oglio_traits )
 
 # select the number of axis according to legendre
-selectPcoaAxes( oglio.dist , method = "legendre" )
+select_pcoa_axes( oglio.dist , method = "legendre" )
 
 # calculate functional richness
-f_rich( oglio.agg , trait_db = oglio.dist , tax_lev = "Taxa" , nbdim = 4 , correction = "quasi" )
-
-
-
+f_rich(oglio.agg, trait_db = oglio.dist, tax_lev = "Taxa", nbdim = 4, correction = "quasi")
 ```
 
 

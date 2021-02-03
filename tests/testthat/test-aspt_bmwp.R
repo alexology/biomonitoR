@@ -61,3 +61,34 @@ test_that("uk", {
   expect_equal(suppressMessages(bmwp(data_agr, method = "uk", agg = TRUE, traceB = TRUE))$composite_taxa,  c("Apataniidae", "Glossosomatidae"))
   expect_equal(suppressMessages(aspt(data_agr, method = "uk", agg = TRUE, traceB = TRUE))$composite_taxa,  c("Apataniidae", "Glossosomatidae"))
 })
+
+
+
+
+test_that("ita_bin", {
+  load(system.file("testdata", "aspt_bmwp_spain.rda", package="biomonitoR"))
+  data_bio <- suppressWarnings(as_biomonitor(aspt_bmwp_spain, FUN = bin))
+  data_agr <- aggregate_taxa(data_bio)
+  ita_bmwp <- c(35, 21)
+  names(ita_bmwp) <- c("Sample_1", "Sample_2")
+  ita_aspt <- ita_bmwp / c(6, 4)
+  ita_bmwp_agg <- c(21, 21)
+  names(ita_bmwp_agg) <- c("Sample_1", "Sample_2")
+  ita_aspt_agg <- ita_bmwp_agg / c(4, 4)
+  expect_equal(suppressMessages(bmwp(data_agr, method = "ita")),  ita_bmwp)
+  expect_equal(suppressMessages(aspt(data_agr, method = "ita")),  ita_aspt)
+})
+
+
+test_that("ita_custom", {
+  load(system.file("testdata", "aspt_bmwp_spain.rda", package="biomonitoR"))
+  data_bio <- as_biomonitor(macro_ex)
+  data_agr <- aggregate_taxa(data_bio)
+  ita_scores <- show_scores(index = "aspt", method = "ita")
+  ita_scores_agg <- show_scores(index = "aspt", method = "uk")
+
+  expect_equal(bmwp(data_agr, method = ita_scores_agg$scores, agg = ita_scores_agg$aggregation_rule),  bmwp(data_agr, method = "ita"))
+  expect_equal(aspt(data_agr, method = ita_scores_agg$scores, agg = ita_scores_agg$aggregation_rule),  aspt(data_agr, method = "ita"))
+
+})
+

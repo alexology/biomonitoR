@@ -8,6 +8,7 @@
 #' @details data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
 #' The function `quick_rename()` will suggest correct name while allowing the user to insert a name (Enter taxon name).
 #' @export
+#' @importFrom utils menu
 #' @seealso \code{\link{asBiomonitor}}
 #' @examples
 #' data(macro_ex)

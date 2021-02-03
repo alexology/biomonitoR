@@ -7,17 +7,17 @@
 #' This function allows to obtain missing traits for a target taxon by taking traits from lower or to upper taxomic levels.
 #' For instance, consider the case where the genus Acroloxus is present in the user dataset and the species Acroloxus lacustris
 #' in the traits database. A simple merge would exclude Acroloxus from the tha analysis since Acroloxus and A. lacustris
-#' would not match. The function traitScaling allows to assign Acroloxus lacustris traits to Acroloxus.
+#' would not match. The function assign_traits allows to assign Acroloxus lacustris traits to Acroloxus.
 #' This function works also in the opposite direction. Consider the case where there are no traits for the target taxon and
-#' the target taxon has not been identified at species level. The function traitScaling will assign the traits of the nearest taxonomic level
+#' the target taxon has not been identified at species level. The function assign_traits will assign the traits of the nearest taxonomic level
 #' to the target taxa (e.g. Tanypodinae traits assign to Ablabesmyia monilis). Consider also these examples to understand the behaviour of this
 #' function. For instance Anabolia lombarda is present in the user taxomic dataset while only Anabolia nervosa and Anabolia are present
-#' in the trait database. In this case traitScaling will assing to A. lombarda only the traits of Anabolia.
+#' in the trait database. In this case assign_traits will assing to A. lombarda only the traits of Anabolia.
 #' Moreover, let assume that Coelostoma is present in the user dataset while only Berosus and Crenitis punctatostriata are present in the traits database.
-#' Here traitScaling will assign to Coelostoma the scores of Berosus and C. punctatostriata since they belong to the same family and there are no information at family level. \cr \cr
-#' The function traitScaling will measure the taxonomic distance between the target taxa and the taxa used to assign the trait score. This distance
+#' Here assign_traits will assign to Coelostoma the scores of Berosus and C. punctatostriata since they belong to the same family and there are no information at family level. \cr \cr
+#' The function assign_traits will measure the taxonomic distance between the target taxa and the taxa used to assign the trait score. This distance
 #' can be negative (e.g. Species to Genus) and positive (e.g. Genus to Species). The distance is measured assigning values as follows:
-#' 1 (Species to Genus) , 2 (Species to family), -1 (Family to Genus), etc. traitScaling considers only the
+#' 1 (Species to Genus) , 2 (Species to family), -1 (Family to Genus), etc. assign_traits considers only the
 #' taxonomic levels from Subspecies to Family (Subspecies, Species, Genus, Tribus, Subfamily, Family).
 #'
 #'

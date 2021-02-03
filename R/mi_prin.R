@@ -1,0 +1,13 @@
+#' Apennine invertebrate dataset
+#'
+#'
+#' This dataset is derived from samples taken during the NOACQUA project aiming at evaluating "Community responses and ecosystem processes in
+#' intermittent streams".
+#' It consists of information taken at different taxonomic levels, mainly at genus and family levels.
+#' Macroinvertebrates were collected at ten points per site with a surber net with a frame of 0.05 m2 and a mesh net of 500 micrometers.
+#' All the available microhabitats were investigated. Data are reported as abundances.
+#' The NOACQUA project (Prot. 201572HW8F) was funded by the Italian Ministry of Education, University and Research.
+#'
+#' @format A data frame with 59 rows and 41 variables.
+#'
+"mi_prin"
