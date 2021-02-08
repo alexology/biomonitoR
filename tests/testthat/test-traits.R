@@ -58,7 +58,14 @@ test_that("fd_indices", {
   f_red <- f_divs(data_agr, trait_db = traits_dist)
   f_rich_ex3_df <- f_rich(data_agr, trait_db = data_ts_av, type = "F", nbdim = 3, col_blocks = col_blocks)
   f_rich_ex3_df_tb <- f_rich(data_agr, trait_db = data_ts_av, type = "F", nbdim = 3, col_blocks = col_blocks, traceB = TRUE)
+  f_eve_ex3 <- f_eve(data_agr, trait_db = traits_dist, nbdim = 33)
+  f_red_ex3 <- f_red(data_agr, trait_db = traits_dist)
+  f_red_ex3_rao <- f_red_ex3[, 2]
+  names(f_red_ex3_rao) <- rownames(f_red_ex3)
 
+  # FD uses all the PCoA dimensions
+  fdisp_2 <- FD::fdisp(trait_dist, as.matrix(taxa_comm))[[1]]
+  f_disp_ex2 <- f_disp(data_agr, trait_db = traits_dist, nbdim = 33)
 
   expect_equal(f_rich_ex3, fd_res_3$FRic)
   expect_equal(f_rich_ex3_df, fd_res_3$FRic)
@@ -66,5 +73,8 @@ test_that("fd_indices", {
   expect_equal(check_pcoa_nbdim$r2, fd_res$qual.FRic)
   expect_equal(check_pcoa_nbdim_3$r2, fd_res_3$qual.FRic)
   expect_equal(length(f_rich_ex3_df_tb), 7)
+  expect_equal(f_red_ex3_rao, fd_res_3$RaoQ)
+  expect_equal(f_disp_ex2, fdisp_2)
+  expect_equal(f_eve_ex3, fd_res_3$FEve)
 })
 

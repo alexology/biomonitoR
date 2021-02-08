@@ -86,7 +86,7 @@ subset.asb <- function(x, ..., taxa = NULL, exclude = NULL) {
   }
 
   if (length(taxa.sub) > 0) {
-    print(paste("The following taxon were not find in the ", x.name, " database and has been excluded: ", taxa.sub, sep = ""))
+
 
     if (!is.null(taxa) & is.null(exclude)) {
       taxa <- taxa[taxa %in% df.vec]
@@ -104,6 +104,8 @@ subset.asb <- function(x, ..., taxa = NULL, exclude = NULL) {
     if (length(taxa) == 0 & length(exclude) == 0) {
       stop("None of the taxa provided were found in the ", x.name, " database")
     }
+
+    message(paste("The following taxa were not find in the ", x.name, " database and has been excluded: ", paste(taxa.sub, collapse = ", "), sep = ""))
   }
 
   # list the row and column numbers at which the desired taxa are stored
