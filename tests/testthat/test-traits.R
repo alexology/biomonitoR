@@ -9,6 +9,27 @@ test_that("traits", {
   data_at_f <- assign_traits(data_agr, trait_db = traits, filter_by_distance = 0)
   expect_equal(assigned_traits, data_at)
   expect_equal(assigned_traits[assigned_traits$Taxonomic_distance == 0, ], data_at_f)
+  expect_equal(assign_traits(data_agr, trait_db = traits, filter_by_distance = "pos"), data_at[data_at[, "Taxonomic_distance"] >= 0, ] )
+  expect_equal(assign_traits(data_agr, trait_db = traits, filter_by_distance = "neg"), data_at[data_at[, "Taxonomic_distance"] <= 0, ] )
+  expect_error(assign_traits(data_agr, trait_db = traits, filter_by_distance = "eig"), "pos, neg or an integer are needed when filter_by_distance is not NULL" )
+
+  # macrophytes
+  # importing data in the biomonitoR format
+  oglio_asb <- as_biomonitor(oglio, group = "mf", FUN = bin)
+  oglio_agg <- aggregate_taxa(oglio_asb)
+  oglio_agg_cust <- oglio_agg
+  class(oglio_agg_cust) <- c("biomonitoR", "custom")
+
+  expect_warning(assign_traits(oglio_agg_cust, group = "mf"), "It seems that you used your own reference database. Please check the consistency of the taxonomy used for calculating the index with those of your reference database to have reliable results.")
+  expect_error(assign_traits(oglio_agg , trait_db = traits_mf , group = "mf", tax_lev = "Order"), "Maximum taxonomic level is family.")
+
+  # no need to run assign_traits, just to show its use
+  oglio_ts <- assign_traits(oglio_agg , trait_db = traits_mf , group = "mf")
+  oglio_ts_fam <- assign_traits(oglio_agg , trait_db = traits_mf , group = "mf", tax_lev = "Family")
+  expect_equal(dim(oglio_ts), c(40, 28))
+
+
+
 })
 
 

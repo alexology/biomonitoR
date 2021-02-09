@@ -10,7 +10,7 @@ test_that("basic_richness", {
 })
 
 
-test_that( "get_taxa_richness", {
+test_that( "get_taxa_abundance", {
   data(macro_ex)
   data_bio <- as_biomonitor(macro_ex)
   data_agr <- aggregate_taxa(data_bio)
@@ -29,5 +29,31 @@ test_that( "get_taxa_richness", {
   data_bio_bin <- as_biomonitor(macro_ex_bin, FUN = bin)
   data_agr_bin <- aggregate_taxa(data_bio_bin)
   expect_error(get_taxa_abundance( data_agr_bin , taxa = "Ancylus" ), "This function cannot be applied to presence-absence data.")
+
+})
+
+
+
+test_that( "get_taxa_richness", {
+  data(macro_ex)
+  data_bio <- as_biomonitor(macro_ex)
+  data_agr <- aggregate_taxa(data_bio)
+
+  data_tree <- to_bin(data_agr[["Tree"]])
+  data_tree_ephe <- subset(data_tree, Order == "Ephemeroptera")
+  data_tree_genus <- aggregate(. ~ Genus, data_tree_ephe[ , c("Genus", "Sample_1", "Sample_2")], FUN = bin)
+  data_tree_family <- aggregate(. ~ Family, data_tree_ephe[ , c("Family", "Sample_1", "Sample_2")], FUN = bin)
+  get_taxa_richness(data_agr, taxa = "Diptera", tax_lev = "Subfamily")
+
+
+  expect_equal(get_taxa_richness(data_agr, taxa = "Ephemeroptera", tax_lev = "Taxa"), apply(data_tree[ data_tree[, "Order"] %in% "Ephemeroptera" , ][, -c(1:11)], 2, sum))
+  expect_equal(get_taxa_richness(data_agr, taxa = "Ephemeroptera", tax_lev = "Genus"), apply(data_tree_genus[, -1], 2, sum))
+  expect_equal(get_taxa_richness(data_agr, taxa = "Ephemeroptera", tax_lev = "Family"), apply(data_tree_family[, -1], 2, sum))
+  expect_equal(get_taxa_richness(data_agr, taxa = c("Baetidae", "Caenidae", "Ephemerellidae", "Heptageniidae", "Leptophlebiidae"), tax_lev = "Family"), apply(data_tree_family[, -1], 2, sum))
+  expect_error(get_taxa_richness(data_agr, tax_lev = "Family"), "Please provide a taxon name and/or a taxonomic level")
+  expect_error(get_taxa_richness(data_agr), "Please provide a taxon name and/or a taxonomic level")
+  expect_error(get_taxa_richness(data_agr, taxa = c("Ephemeroptera", "Trichoptera", "Diptera"), tax_lev = c("Family", "Genus")), "tax_lev must be of the same length of taxa")
+  expect_error(suppressWarnings(get_taxa_richness(data_agr, taxa = "Baetis", tax_lev = "Family")), "Taxonomic level of taxa cannot be lower than taxonomic level of tax_lev")
+  expect_error(get_taxa_richness(data_agr, taxa = "Epemeroptera", tax_lev = "Family"), "Please provide a valid taxon name. Names provided can also be absent in your database.")
 
 })
