@@ -102,5 +102,6 @@ ref_from_tree <- function(x, group = "none") {
   }
 
   DF <- DF[, match(taxa.col, colnames(DF))]
+  rownames(DF) <- NULL
   DF
 }

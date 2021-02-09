@@ -44,7 +44,7 @@ get_taxa_richness <- function(x, taxa = NULL, tax_lev = NULL) {
   tax_lev <- unlist(lapply(as.list(tax_lev), capWords))
 
   # extract taxonomic information from the element Tree in the aggregatoR output
-  DF <- x[["Tree"]][, 1:10]
+  DF <- x[["Tree"]][, 1:11]
   df.names <- names(DF)
 
 

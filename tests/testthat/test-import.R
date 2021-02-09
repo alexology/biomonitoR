@@ -119,3 +119,30 @@ test_that("fish", {
 test_that("class_aggregate_taxa", {
   expect_error(aggregate_taxa(c(1:3)), "x is not an object created with as_biomonitor")
 })
+
+
+test_that("ref_from_tree", {
+  data(Tree)
+  load(system.file("testdata", "tree_ref.rda", package="biomonitoR"))
+  ref_custom <- ref_from_tree(Tree)
+
+  ref_custom_dos <- ref_from_tree(data.frame(Order = c("Ephemeroptera", "This_rock"), Family = c("Ephemerellidae", "")))
+  ref_custom_group <- ref_from_tree(data.frame(Order = c("Ephemeroptera", "This_rock"), Family = c("Ephemerellidae", ""), Genus = c(NA, NA)), group = "mi")
+  ref_custom_default <- ref_from_tree(data.frame(Order = c("", ""), Family = c("", "")), group = "mi")
+  ref_custom_default  <- rbind(ref_custom_dos, ref_custom_default)
+  ref_custom_default <- ref_custom_default[! duplicated(ref_custom_default[, "Taxa"]),]
+  rownames(ref_custom_default) <- NULL
+
+  expect_equal(ref_custom, tree_ref)
+  expect_equal(ref_custom_group, ref_custom_default)
+  expect_equal(ref_from_tree(data.frame(Order = c("Ephemeroptera", "This_rock"), Family = c("Ephemerellidae", NA))), ref_custom_dos)
+  expect_error(ref_from_tree(data.frame(Order = c("Ephemeroptera"))), "data.frame with 1 column are not allowed!")
+  expect_error(ref_from_tree(data.frame(Ordera = "Ephemeroptera", Family = "Baetidae")), "Provide valid column names")
+
+})
+
+
+
+
+
+
