@@ -56,6 +56,8 @@ get_taxa_richness <- function(x, taxa = NULL, tax_lev = NULL) {
     }
   }
 
+
+
   # Position of taxon in the df data.frame. 1:11 referes to the columns occupied by the tree
   taxind <- rep(0, ncol(x[["Tree"]][, -c(1:11)]))
 
@@ -64,8 +66,11 @@ get_taxa_richness <- function(x, taxa = NULL, tax_lev = NULL) {
     temp <- which(DF == taxa[i], arr.ind = TRUE)
     tax.lev <- tax_lev[i]
 
+
     # check if the taxa taxonomic level is lower than tax_lev taxonomic level
-    if (unique(temp[, "col"]) > which(df.names == tax.lev)) {
+    check_temp <- which(DF[, ! names(DF) %in% "Taxa"] == taxa[i], arr.ind = TRUE)
+
+    if (unique(check_temp[, "col"]) > which(df.names == tax.lev)) {
       stop("Taxonomic level of taxa cannot be lower than taxonomic level of tax_lev")
     }
 
