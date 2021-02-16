@@ -2,6 +2,7 @@
 
 * Function deprecated in version 0.9.1 are now defunct.
 * Code coverage added.
+* Bug fixed. `eptd_families` argument of `eptd` incorrectly managed taxa names.
 
 2# biomonitoR 0.9.1
 

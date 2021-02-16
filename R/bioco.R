@@ -42,21 +42,23 @@ bioco <- function(x, alien = NULL, dfref = NULL, digits = 2) {
   #  check if the object x is of class "biomonitoR"
   classCheck(x)
 
+  # check
+  if (is.null(alien)) (stop("Please provide a vector containing the names of alien taxa"))
+
   # format names with the first letter as capital letter and the others lowercase
 
   alien <- sapply(alien, capWords, USE.NAMES = FALSE)
 
   # if dfref = NULL check if x is of class biomonitor mi, mf or fi, otherwise dfref is needed
 
-  if (inherits(x, "custom") & (identical(dfref, "mi") | identical(dfref, "mf"))) (stop("Please provide the dfref you used for asBiomonitor."))
+  if (inherits(x, "custom") & (identical(dfref, "mi") | identical(dfref, "mf"))) (stop("Please provide the dfref you used for as_biomonitor"))
 
   if (is.null(dfref)) stop("Please set dfref")
   if (identical(dfref, "mi")) (ref <- mi_ref)
   if (identical(dfref, "mf")) (ref <- mf_ref)
   if (is.data.frame(dfref)) (ref <- dfref)
 
-  # check
-  if (is.null(alien)) (stop("Please provide a vector containing the names of alien taxa"))
+
 
   alien <- trimws(alien)
   st.names <- names(x[[1]][-1])
@@ -79,7 +81,7 @@ bioco <- function(x, alien = NULL, dfref = NULL, digits = 2) {
     } else {
       absent <- paste(absent, collapse = ", ")
       alien <- alien[alien %in% taxa.vec]
-      mes <- paste("The following taxa are absent from the reference database: ", absent)
+      mes <- paste("The following taxa are absent from the reference database:", absent)
       warning(mes)
     }
   }

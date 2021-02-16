@@ -3,3 +3,5 @@
 ^\.travis\.yml$
 ^codecov\.yml$
 ^vert.txt
+^custom_dictio.aff
+^custom_dictio.dic
