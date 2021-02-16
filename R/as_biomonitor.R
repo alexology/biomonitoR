@@ -202,6 +202,8 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
 
     name_suggest <- hunspell_suggest(wrong_taxa, dict = dictio)
 
+    name_suggest <- lapply(name_suggest, function(x)if(length(x) == 0) {"none"} else {x} )
+
     names(name_suggest) <- wrong_taxa
 
     names_suggest <- stack(name_suggest)

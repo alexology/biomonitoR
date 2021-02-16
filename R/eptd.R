@@ -33,7 +33,7 @@ eptd <- function(x, base = 10, eptd_families = NULL, traceB = FALSE) {
   if (is.null(eptd_families)) {
     eptd_fam <- c("Heptageniidae", "Ephemeridae", "Leptophlebiidae", "Brachycentridae", "Goeridae", "Polycentropodidae", "Limnephilidae", "Odontoceridae", "Dolichopodidae", "Stratiomyidae", "Dixidae", "Empididae", "Athericidae", "Nemouridae")
   } else {
-    eptd_fam <- trimws(capWords(as.character(eptd_families)))
+    eptd_fam <- trimws(sapply(as.character(eptd_families), capWords, USE.NAMES = FALSE))
   }
 
   x_fam <- x[["Family"]]
