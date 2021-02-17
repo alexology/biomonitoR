@@ -108,3 +108,36 @@ test_that("abdiv", {
   data_veg_gen_bin <- convert_to_vegan(data_agr_bin, tax_lev = "Genus")
   expect_equal(mcintosh(data_agr_bin, tax_lev = "Genus"), apply(data_veg_gen_bin, 1, function(x) abdiv::mcintosh_d(x)))
 })
+
+
+test_that("allindices", {
+  data(macro_ex)
+  data_bio <- as_biomonitor(macro_ex)
+  data_agr <- aggregate_taxa(data_bio)
+
+  data.sha <- shannon(data_agr)
+  data.berpar <- berpar(data_agr)
+  data.brill <- brill(data_agr)
+  data.invb <- invberpar(data_agr)
+  data.invs <- invsimpson(data_agr)
+  data.mar <- margalef(data_agr)
+  data.mch <- mcintosh(data_agr)
+  data.men <- menhinick(data_agr)
+  data.pie <- pielou(data_agr)
+  data.sim <- simpson(data_agr)
+  data.esi <- esimpson(data_agr)
+  data.fis <- fisher(data_agr)
+
+  res <- data.frame(data.sha, data.berpar, data.brill, data.invb, data.invs, data.mar, data.mch,
+                    data.men, data.pie, data.sim, data.esi, data.fis)
+
+  colnames(res) <- c(
+    "shannon", "berpar", "brill", "invberpar", "invsimpson",
+    "margalef", "mcintosh", "menhinick", "pielou",
+    "simpson", "esimpson", "fisher"
+  )
+
+  expect_equal(res, allindices(data_agr))
+
+})
+

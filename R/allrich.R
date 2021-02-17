@@ -36,7 +36,7 @@ allrich <- function(x) {
   classCheck(x)
 
   # extract the names of all the taxonomic levels on which perform the calculation
-  n.tree <- names(x[["Tree"]][, sapply(x[["Tree"]], is.factor)])
+  n.tree <- names(x[["Tree"]][, sapply(x[["Tree"]], is.character)])
 
   # initialize the data.frame to store the results
   res <- data.frame(matrix(NA, ncol = length(n.tree), nrow = sum(!names(x[["Tree"]]) %in% n.tree)))

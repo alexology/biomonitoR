@@ -57,3 +57,30 @@ test_that( "get_taxa_richness", {
   expect_error(get_taxa_richness(data_agr, taxa = "Epemeroptera", tax_lev = "Family"), "Please provide a valid taxon name. Names provided can also be absent in your database.")
 
 })
+
+
+
+test_that( "all_rich", {
+  data(macro_ex)
+  data_bio <- as_biomonitor(macro_ex)
+  data_agr <- aggregate_taxa(data_bio)
+
+  data_allrich <- suppressWarnings(allrich(data_agr))
+  data_phy <- suppressWarnings(richness(data_agr, tax_lev = "Phylum"))
+  data_cla <- suppressWarnings(richness(data_agr, tax_lev = "Class"))
+  data_scl <- suppressWarnings(richness(data_agr, tax_lev = "Subclass"))
+  data_ord <- suppressWarnings(richness(data_agr, tax_lev = "Order"))
+  data_fam <- suppressWarnings(richness(data_agr, tax_lev = "Family"))
+  data_sfa <- suppressWarnings(richness(data_agr, tax_lev = "Subfamily"))
+  data_tri <- suppressWarnings(richness(data_agr, tax_lev = "Tribus"))
+  data_gen <- suppressWarnings(richness(data_agr, tax_lev = "Genus"))
+  data_spe <- suppressWarnings(richness(data_agr, tax_lev = "Species"))
+  data_ssp <- suppressWarnings(richness(data_agr, tax_lev = "Subspecies"))
+  data_tax <- suppressWarnings(richness(data_agr, tax_lev = "Taxa"))
+
+  res <- data.frame(Phylum = data_phy, Class = data_cla, Subclass = data_scl, Order = data_ord,
+                    Family = data_fam, Subfamily = data_sfa, Tribus = data_tri, Genus = data_gen,
+                    Species = data_spe, Subspecies = data_ssp, Taxa = data_tax)
+
+  expect_equal(data_allrich, res)
+})
