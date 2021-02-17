@@ -4,6 +4,7 @@
 .Ruserdata
 .aff
 .dic
-**vert.txt
+vert.txt
 temp
 inst/doc
+tests/vert.txt
