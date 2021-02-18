@@ -84,3 +84,33 @@ test_that( "all_rich", {
 
   expect_equal(data_allrich, res)
 })
+
+
+
+test_that( "general_info", {
+  data(macro_ex)
+  data_bio <- as_biomonitor(macro_ex)
+  data_agr <- aggregate_taxa(data_bio)
+  data_tree <- data_agr$Tree
+
+  tx <- c("Phylum", "Class", "Subclass", "Order", "Family", "Subfamily", "Tribus", "Genus", "Species", "Subspecies", "Taxa")
+  res <- c()
+
+  st_names <- colnames(data_tree[, unlist(lapply(data_tree, is.numeric))])
+
+  for(i in 1:length(tx)){
+    temp <- data_tree[, names(data_tree) %in% c(tx[i], st_names)]
+    temp_res <- length(unique(temp[, 1]))
+    if(any("" %in% unique(temp[, 1]))){
+      temp_res <-  temp_res - 1
+    }
+    res <- c(res, temp_res)
+  }
+
+  abu_res <- sum(data_tree[, unlist(lapply(data_tree, is.numeric))])
+  res <- c(res, abu_res)
+  names(res) <- c(tx, "Abundance")
+
+
+  expect_equal(general_info(data_agr), res)
+})

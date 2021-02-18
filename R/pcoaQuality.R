@@ -290,7 +290,7 @@ pcoaQuality <- function(x, type = "none", method = NULL, tresh = 0.7, nbdim = 15
         r2.eig <- cumsum((res.eig))
         neg.eig <- max(abs(res.eig[which(res.eig < 0)]))
         r2.eig <- (r2.eig + (1:Order) * neg.eig) / (sum(res.eig) + (Order - 1) * neg.eig)
-        res <- data.frame(Transformation = "none", Euclidean = "no", nbdim = r2.ax, SD = qual_fs$meanSD[r2.ax], r2 = r2.eig[r2.ax])
+        res <- data.frame(Transformation = "none", Euclidean = "no", nbdim = r2.ax, SD = qual_fs$meanSD[r2.ax - 1], r2 = r2.eig[r2.ax])
         rownames(res) <- NULL
       }
 

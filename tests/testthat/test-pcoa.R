@@ -47,4 +47,40 @@ test_that("select_pcoa", {
   expect_equal(trait_spcoa_cor[5, 4], cor(dist(pcoa_quasi), traits_dist))
 
 
+  trait_spcoa_mai <- select_pcoa_axes(traits_dist, method = "maire", tresh = 0.05)
+
+  pcoa_none <- suppressWarnings(cmdscale(trait_dist, k = trait_spcoa_mai[1, 3]))
+  pcoa_cai <- suppressWarnings(cmdscale(ade4::cailliez(trait_dist), k = trait_spcoa_mai[2, 3]))
+  pcoa_lin <- suppressWarnings(cmdscale(ade4::lingoes(trait_dist), k = trait_spcoa_mai[3, 3]))
+  pcoa_sqrt <- suppressWarnings(cmdscale(sqrt(trait_dist), k = trait_spcoa_mai[4, 3]))
+  pcoa_quasi <- suppressWarnings(cmdscale(ade4::quasieuclid(trait_dist), k = trait_spcoa_mai[5, 3]))
+
+  S <- nrow(as.matrix(trait_dist))
+
+  dist_none_mai <- dist(pcoa_none, method = "euclidean")
+  y_none_mai <- dist_none_mai/ max(dist_none_mai) * max(trait_dist)
+  sd_none_mai <- round(((sum((trait_dist - y_none_mai)^2)) / (S * (S - 1) / 2)), 6)
+
+  dist_cai_mai <- dist(pcoa_cai, method = "euclidean")
+  y_cai_mai <- dist_cai_mai/ max(dist_cai_mai) * max(ade4::cailliez(trait_dist))
+  sd_cai_mai <- round(((sum((ade4::cailliez(trait_dist) - y_cai_mai)^2)) / (S * (S - 1) / 2)), 6)
+
+  dist_lin_mai <- dist(pcoa_lin, method = "euclidean")
+  y_lin_mai <- dist_lin_mai/ max(dist_lin_mai) * max(ade4::lingoes(trait_dist))
+  sd_lin_mai <- round(((sum((ade4::lingoes(trait_dist) - y_lin_mai)^2)) / (S * (S - 1) / 2)), 6)
+
+  dist_sqrt_mai <- dist(pcoa_sqrt, method = "euclidean")
+  y_sqrt_mai <- dist_sqrt_mai/ max(dist_sqrt_mai) * max(sqrt(trait_dist))
+  sd_sqrt_mai <- round(((sum((sqrt(trait_dist) - y_sqrt_mai)^2)) / (S * (S - 1) / 2)), 6)
+
+  dist_quasi_mai <- dist(pcoa_quasi, method = "euclidean")
+  y_quasi_mai <- dist_quasi_mai/ max(dist_quasi_mai) * max(ade4::quasieuclid(trait_dist))
+  sd_quasi_mai <- round(((sum((ade4::quasieuclid(trait_dist) - y_quasi_mai)^2)) / (S * (S - 1) / 2)), 6)
+
+  expect_equal(trait_spcoa_mai[1, 4], sd_none_mai)
+  expect_equal(trait_spcoa_mai[2, 4], sd_cai_mai)
+  expect_equal(trait_spcoa_mai[3, 4], sd_lin_mai)
+  expect_equal(trait_spcoa_mai[4, 4], sd_sqrt_mai)
+  expect_equal(trait_spcoa_mai[5, 4], sd_quasi_mai)
+
 })
