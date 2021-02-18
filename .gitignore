@@ -7,4 +7,4 @@
 vert.txt
 temp
 inst/doc
-tests/vert.txt
+tests/testthat/vert.txt

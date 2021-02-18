@@ -3,6 +3,7 @@
 * Function deprecated in version 0.9.1 are now defunct.
 * Code coverage added.
 * Bug fixed. `eptd_families` argument of `eptd` incorrectly managed taxa names.
+* Bug fixed. `select_pcoa_axes` incorrectly calculated the SD value for `none` correction option of the method method `maire`. It overestimated the SD value by assigning the value of the true number of axes plus 1. The estimated number of axes was right.  
 
 2# biomonitoR 0.9.1
 
