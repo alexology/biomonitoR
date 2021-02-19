@@ -51,3 +51,35 @@ test_that("subset", {
 
 
 })
+
+
+
+test_that("remove_taxa", {
+  data(macro_ex)
+  data_bio <- as_biomonitor(macro_ex)
+  data_agr <- aggregate_taxa(data_bio)
+
+  remove_hydroptilidae <- macro_ex[! macro_ex[, "Taxa"] %in% c("Hydroptilidae", "Hydroptila"), ]
+  remove_hydroptila <- macro_ex[! macro_ex[, "Taxa"] %in% "Hydroptila", ]
+  remove_hydroptila_dae <- macro_ex[! macro_ex[, "Taxa"] %in% c("Hydroptilidae", "Hydroptila"), ]
+  remove_hydroptilidae_acentrella <- macro_ex[! macro_ex[, "Taxa"] %in% c("Hydroptilidae", "Hydroptila",  "Acentrella"), ]
+  remove_hydrophilidae <- macro_ex[! macro_ex[, "Taxa"] %in% "Laccobius", ]
+
+  remove_hydroptilidae$Taxa <- as.character(remove_hydroptilidae$Taxa)
+  remove_hydroptila$Taxa <- as.character(remove_hydroptila$Taxa)
+  remove_hydroptila_dae$Taxa <- as.character(remove_hydroptila_dae$Taxa)
+  remove_hydroptilidae_acentrella$Taxa <- as.character(remove_hydroptilidae_acentrella$Taxa)
+  remove_hydrophilidae$Taxa <- as.character(remove_hydrophilidae$Taxa)
+
+  rownames(remove_hydroptilidae) <- rownames(remove_hydroptila) <- rownames(remove_hydroptila_dae) <-
+    rownames(remove_hydroptilidae_acentrella) <- rownames(remove_hydrophilidae) <- NULL
+
+  expect_equal(remove_taxa(data_agr, taxa = "Hydroptilidae"), remove_hydroptilidae)
+  expect_equal(remove_taxa(data_agr, taxa = "Hydroptila"), remove_hydroptila)
+  expect_equal(remove_taxa(data_agr, taxa = c("Hydroptilidae", "Hydroptila")), remove_hydroptila_dae)
+  expect_equal(remove_taxa(data_agr, taxa = c("Hydroptilidae",  "Acentrella")), remove_hydroptilidae_acentrella)
+  expect_equal(remove_taxa(data_agr, taxa = "Hydrophilidae"), remove_hydrophilidae)
+  expect_error(remove_taxa(data_agr, taxa = NULL), "Please provide at least taxon name")
+  expect_error(remove_taxa(data_agr, taxa = "ignita"), "None of the taxa provided were found in data_agr")
+  expect_message(remove_taxa(data_agr, taxa = c("Acentrella","ignita", "ergo")), "The following taxa were not find in data_agr and has been excluded: ignita, ergo")
+})
