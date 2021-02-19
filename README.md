@@ -1,8 +1,11 @@
 # biomonitoR
+
 A package for calculating indices for biomonitoring of running water with a focus on macroinvertebrate community. Still in development.
 
 [![codecov](https://codecov.io/gh/alexology/biomonitoR/branch/main/graph/badge.svg?token=Ix3zzcWgko)](https://codecov.io/gh/alexology/biomonitoR)
 [![Build Status](https://travis-ci.org/alexology/biomonitoR.svg?branch=main)](https://travis-ci.org/alexology/biomonitoR)
+
+
 
 # Installation
 
@@ -10,7 +13,7 @@ A package for calculating indices for biomonitoring of running water with a focu
 # install the devtools package and then
 library(devtools)
 
-install_github( "alexology/biomonitoR" , ref = "main" , build_vignettes = TRUE )
+install_github("alexology/biomonitoR", ref = "main", build_vignettes = TRUE)
 ```
 
 To install the newest version:
@@ -19,7 +22,7 @@ To install the newest version:
 # install the devtools package and then
 library(devtools)
 
-install_github("alexology/biomonitoR" , ref = "develop" , build_vignettes = TRUE )
+install_github("alexology/biomonitoR", ref = "develop", build_vignettes = TRUE)
 ```
 
 To install old and deprecated version:
@@ -28,37 +31,37 @@ To install old and deprecated version:
 # install the devtools package and then
 library(devtools)
 
-install_github("alexology/biomonitoR" , ref = "old_version" )
+install_github("alexology/biomonitoR", ref = "old_version")
 ```
 
-# Usage
+# Basic usage
 
 ```R
-library( biomonitoR )
+library(biomonitoR)
 
 # load example dataset. biomonitoR package needs a dataset with taxa names in the first column called "Taxa" and samples on the columns. Take a look to macro_ex for an example:
 
-data( macro_ex )
+data(macro_ex)
 
 # Prepare data for the analysis.
-data( macro_ex )
-data.bio <- asBiomonitor( macro_ex )
-data.agR <- aggregatoR( data.bio )
+
+data_bio <- as_biomonitor(macro_ex)
+data_agr <- aggregate_taxa(data_bio)
 
 # calculate genus and family richness
-richness( data.agR, taxLev = "Genus" )
-famNumb( data.agR, taxLev = "Family" )
+richness(data_agr, tax_lev = "Genus")
+richness(data_agr, tax_lev = "Family")
 
 # calculate shannon index
-shannon( data.agR, taxLev = "Family" )
+shannon(data_agr, tax_lev = "Family")
 
 # calculate italian bmwp and aspt
-bmwp( data.agR, method = "ita" , agg = TRUE )
-aspt( data.agR, method = "ita" , agg = TRUE  )
+bmwp(data_agr, method = "ita", agg = TRUE)
+aspt(data_agr, method = "ita", agg = TRUE)
 
 # calculate iberian bmwp and aspt
-bmwp( data.agR, method = "spa" )
-aspt( data.agR, method = "spa" )
+bmwp(data_agr, method = "spa")
+aspt(data_agr, method = "spa")
 
 ```
 
@@ -68,10 +71,10 @@ To have some more information on how to use biomonitoR take a look to the vignet
 
 ```R
 # import data in biomonitoR
-vignette( "introduction" , package = "biomonitoR" )
+vignette("introduction", package = "biomonitoR")
 
 # trait-based analysis
-vignette( "functional" , package = "biomonitoR" )
+vignette("functional", package = "biomonitoR")
 
 ```
 
