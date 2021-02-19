@@ -45,11 +45,11 @@ remove_taxa <- function(x, taxa = NULL) {
   # in the x object the function will be stopped, otherwise it will provide the list of missing taxa
   taxa.sub <- taxa[!taxa %in% df.vec]
   if (length(taxa.sub) > 0) {
-    print(paste("The following taxon were not find in the ", x.name, " database and has been excluded: ", taxa.sub, sep = ""))
     taxa <- taxa[taxa %in% df.vec]
     if (length(taxa) == 0) {
-      stop("None of the taxa provided were found in the ", x.name, " database")
+      stop("None of the taxa provided were found in ", x.name)
     }
+    message(paste("The following taxa were not find in ", x.name, " and has been excluded: ", paste(taxa.sub, collapse = ", "), sep = ""))
   }
 
   # list the row and column numbers at which the desired taxa are stored
@@ -62,5 +62,6 @@ remove_taxa <- function(x, taxa = NULL) {
 
 
   df_sub <- x[["Tree"]][-unique(taxind$row), -c(1:10)]
+  rownames(df_sub) <- NULL
   df_sub
 }
