@@ -171,7 +171,7 @@ f_rich <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel =
 
   if (!identical(type, "F") & !identical(type, "C") & is.data.frame(trait_db)) stop("type must be C or F when trait_db is a data.frame")
 
-  if (identical(type, "C") & identical(distance, "gower")) (warning("Are you sure to use gower distance when type is C?"))
+  if (identical(type, "C") & identical(distance, "gower")) (stop("Using gower distance when type is C is currently not allowed"))
 
   if (identical(type, "F") & identical(distance, "euclidean")) (warning("Are you sure to use euclidean distance when type is F?"))
 

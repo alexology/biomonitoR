@@ -1,0 +1,16 @@
+citHeader("To cite biomonitoR in publications use:")
+
+citEntry(entry = "Article",
+  title = "Taxonomic and functional responses of benthic macroinvertebrate communities to hydrological and water quality variations in a heavily regulated river",
+  author       = personList(as.person("Alex Laini"), as.person("Pierluigi Viaroli"), as.person("Alex rossano Bolpagni"), as.person("tommaso Cancellario"), as.person("Erica Racchetti"), as.person("Simone Guareschi")),
+  year         = "2019",
+  journal    = "Water",
+  volume = "11",
+  pages = "1478",
+  doi = "doi.org/10.3390/w11071478",
+
+  textVersion  =
+  paste("Laini Alex, Viaroli Pierluigi, Bolpagni Rossano, Cancellario Tommaso, Racchetti Erica, Guareschi Simone (2019).",
+        "Taxonomic and functional responses of benthic macroinvertebrate communities to hydrological and water quality                variations in a heavily regulated river.",
+        "Water, 11, 1478.")
+)
