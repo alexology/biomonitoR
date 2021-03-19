@@ -97,5 +97,57 @@ test_that("fd_indices", {
   expect_equal(f_red_ex3_rao, fd_res_3$RaoQ)
   expect_equal(f_disp_ex2, fdisp_2)
   expect_equal(f_eve_ex3, fd_res_3$FEve)
+
+  expect_error(f_rich(data_agr), "Please provide trait_db")
+  expect_error(f_rich(data_agr, trait_db = "argument"), "trait_db must be a data.frame or a dist object")
+  expect_error(f_rich(data_agr, trait_db = data_ts_av, type = NULL), "Please specify a type when trait_db is a data.frame")
+  expect_error(f_rich(data_agr, trait_db = data_ts_av, type = 42), "type must be C or F when trait_db is a data.frame")
+  expect_error(f_rich(data_agr, trait_db = data_ts_av, type = "C", distance = "gower"), "Using gower distance when type is C is currently not allowed")
+  expect_warning(f_rich(data_agr, trait_db = data_ts_av, type = "F", distance = "euclidean", col_blocks = col_blocks), "Are you sure to use euclidean distance when type is F?")
+  expect_error(f_rich(data_agr, trait_db = data_ts_av, type = "F"), "Please provide col_blocks")
+  expect_error(f_rich(data_agr, trait_db = data_ts_av, type = "F", col_blocks = c(1,1)), "The number of traits in trait_db is not equal to the sum of col_blocks")
+
+  f_rich_ex3_cai <- f_rich(data_agr, trait_db = traits_dist, nbdim = 3, correction = "cailliez")
+  f_rich_ex3_cai_dist <- suppressWarnings(f_rich(data_agr, trait_db = ade4::cailliez(traits_dist), nbdim = 3, correction = "cailliez"))
+  f_rich_ex3_lin <- f_rich(data_agr, trait_db = traits_dist, nbdim = 3, correction = "lingoes")
+  f_rich_ex3_lin_dist <- suppressWarnings(f_rich(data_agr, trait_db = ade4::lingoes(traits_dist), nbdim = 3, correction = "cailliez"))
+  f_rich_ex3_sqrt <- f_rich(data_agr, trait_db = traits_dist, nbdim = 3, correction = "sqrt")
+  f_rich_ex3_sqrt_dist <- suppressWarnings(f_rich(data_agr, trait_db = sqrt(traits_dist), nbdim = 3, correction = "cailliez"))
+  f_rich_ex3_quasi <- f_rich(data_agr, trait_db = traits_dist, nbdim = 3, correction = "quasi")
+  f_rich_ex3_quasi_dist <- suppressWarnings(f_rich(data_agr, trait_db = ade4::quasieuclid(traits_dist), nbdim = 3, correction = "cailliez"))
+
+
+
+  expect_equal(f_rich_ex3_cai_dist, f_rich_ex3_cai_dist)
+  expect_equal(f_rich_ex3_lin_dist, f_rich_ex3_lin_dist)
+  expect_equal(f_rich_ex3_sqrt_dist, f_rich_ex3_sqrt_dist)
+  expect_equal(f_rich_ex3_quasi_dist, f_rich_ex3_quasi_dist)
+
 })
 
+
+test_that("add_bias_to_traits", {
+
+  data(macro_ex)
+  data_bio <- as_biomonitor(macro_ex)
+  data_agr <- aggregate_taxa(data_bio)
+  data_ts <- assign_traits(data_agr)
+  data_ts_av <- average_traits(data_ts)
+
+  # set col_blocks
+  col_blocks <- c(8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8)
+
+  set.seed(42)
+  res <- add_bias_to_traits(data_ts_av, fuzzy = TRUE, col_blocks = col_blocks)[1:5, 1:5]
+
+  data_ts_av_temp <- data_ts_av[, -1]
+
+  set.seed(42)
+  res_test <- lapply(data_ts_av_temp, function(x) x + abs(rnorm(length(x), sd = 0.001)))
+  res_test <- t(do.call("rbind", res_test))
+  res_test <- as.data.frame(ade4::prep.fuzzy(as.data.frame(res_test), col.blocks = col_blocks))[1:5, 1:4]
+
+  expect_equal(res[, -1], res_test)
+  expect_error(add_bias_to_traits(data_ts_av, fuzzy = TRUE, col_blocks = NULL), "Please set col_blocks")
+  expect_warning(add_bias_to_traits(data_ts_av, fuzzy = FALSE, col_blocks = c(1,2)), "col_blocks will be ignored because fuzzy = FALSE")
+})

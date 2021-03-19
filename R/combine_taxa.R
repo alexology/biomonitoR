@@ -27,6 +27,7 @@ combine_taxa <- function(x, ntaxa = 2, tax_lev = "Taxa") {
   DF <- x[[tax_lev]]
 
   if (inherits(x, "bin")) {
+    warning("combine_taxa with presence-absence data can be meaningless")
     DF <- to_bin(DF)
   }
 

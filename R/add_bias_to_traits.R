@@ -11,6 +11,7 @@
 #' @details This function works by adding a small bias to traits.
 #' The bias is added with the [stats::rnorm()] function.
 #' Fuzzy data are prepared with the function [ade4::prep.fuzzy()] of the `ade4` package.
+#' This function works with positive numeric traits.
 #'
 #' @export
 #' @importFrom stats rnorm
@@ -40,13 +41,16 @@ add_bias_to_traits <- function(x, fuzzy = TRUE, col_blocks = NULL, SD = 0.001) {
   # are forced to sum to 1 by dividing for sum( abs( simDat ) )
 
   if (fuzzy & is.null(col_blocks)) stop("Please set col_blocks")
-  if (!fuzzy & !is.null(col_blocks)) stop("col_blocks will be ignored because fuzzy = FALSE")
+  if (!fuzzy & !is.null(col_blocks)) warning("col_blocks will be ignored because fuzzy = FALSE")
 
-  simTraits <- function(x, ...) {
-    simDat <- x + rnorm(length(x), ...)
-    simDat <- simDat * (x > 0)
-    abs(simDat) / sum(abs(simDat))
-  }
+  # simTraits <- function(x, ...) {
+  #   simDat <- x + rnorm(length(x), ...)
+  #   # previous version, use to set 0 modalities to 0. I am not currently sure this is
+  #   # the best way to tackle this issue. When using add_bias_to_traits
+  #   # we want biases also for these cases.
+  #   # simDat <- simDat * (x > 0)
+  #   abs(simDat) / sum(abs(simDat))
+  # }
 
 
   i <- unlist(lapply(x, is.numeric)) & !colnames(x) %in% "Taxonomic_distance"

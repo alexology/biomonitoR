@@ -22,6 +22,7 @@ Add bias to traits to avoid duplicates.
 This function works by adding a small bias to traits.
 The bias is added with the \code{\link[stats:Normal]{stats::rnorm()}} function.
 Fuzzy data are prepared with the function \code{\link[ade4:dist.ktab]{ade4::prep.fuzzy()}} of the \code{ade4} package.
+This function works with positive numeric traits.
 }
 \examples{
 

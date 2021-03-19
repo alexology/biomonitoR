@@ -1,4 +1,4 @@
-# helper function for combTaxa
+# helper function for combine_taxa
 # it takes as input a list of which each element is a subset of the data.frame with the x-th taxa combination
 # the first column of the input is thus composed by a vector of taxa (e.g. Simuliidae and Tanypodinae if n is equal to 2) while the other columns
 # store the abundance of the taxa for all the samples in the data.frame
