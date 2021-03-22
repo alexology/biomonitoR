@@ -17,7 +17,8 @@ Imports: hunspell,
     ade4,
     tibble,
     ape,
-    lifecycle
+    lifecycle,
+    plotly
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
