@@ -107,6 +107,8 @@ test_that("fd_indices", {
   expect_error(f_rich(data_agr, trait_db = data_ts_av, type = "F"), "Please provide col_blocks")
   expect_error(f_rich(data_agr, trait_db = data_ts_av, type = "F", col_blocks = c(1,1)), "The number of traits in trait_db is not equal to the sum of col_blocks")
 
+  # not really a good example because the trait matrix is euclidean
+
   f_rich_ex3_cai <- f_rich(data_agr, trait_db = traits_dist, nbdim = 3, correction = "cailliez")
   f_rich_ex3_cai_dist <- suppressWarnings(f_rich(data_agr, trait_db = ade4::cailliez(traits_dist), nbdim = 3, correction = "cailliez"))
   f_rich_ex3_lin <- f_rich(data_agr, trait_db = traits_dist, nbdim = 3, correction = "lingoes")
