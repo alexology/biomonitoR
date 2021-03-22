@@ -169,7 +169,7 @@ f_divs <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel =
 
   if (!identical(type, "F") & !identical(type, "C") & is.data.frame(trait_db)) stop("type must be C or F when trait_db is a data.frame")
 
-  if (identical(type, "C") & identical(distance, "gower")) (warning("Are you sure to use gower distance when type is C?"))
+  if (identical(type, "C") & identical(distance, "gower")) (stop("Using gower distance when type is C is currently not allowed"))
 
   if (identical(type, "F") & identical(distance, "euclidean")) (warning("Are you sure to use euclidean distance when type is F?"))
 
@@ -300,12 +300,14 @@ f_divs <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel =
 
   rownames(DF) <- DF[, "Taxon"]
 
-  suppressWarnings(raoQ <- divc(DF[, -1], mat_dissim, scale = T)$diversity)
-
   if (!euclid.dist.mat) {
-    warning("Non euclidean trait distance. Euclidean property is expected. Please use the correction options
+    stop("Non euclidean trait distance. Euclidean property is needed. Please use the correction options
              otherwise consider to remove taxa with the same traits.")
   }
+
+
+  suppressWarnings(raoQ <- divc(DF[, -1], mat_dissim, scale = T)$diversity)
+
 
   res <- raoQ
   names(res) <- st.names

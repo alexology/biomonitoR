@@ -52,6 +52,8 @@ test_that("fd_indices", {
   data(macro_ex)
   data_bio <- as_biomonitor(macro_ex)
   data_agr <- aggregate_taxa(data_bio)
+  data_bio_bin <- suppressWarnings(as_biomonitor(macro_ex, FUN = bin))
+  data_agr_bin <- aggregate_taxa(data_bio_bin)
   data_ts <- assign_traits(data_agr)
   data_ts_av <-average_traits(data_ts)
   data_ts_av_m <- data_ts_av
@@ -124,6 +126,100 @@ test_that("fd_indices", {
   expect_equal(f_rich_ex3_lin_dist, f_rich_ex3_lin_dist)
   expect_equal(f_rich_ex3_sqrt_dist, f_rich_ex3_sqrt_dist)
   expect_equal(f_rich_ex3_quasi_dist, f_rich_ex3_quasi_dist)
+
+
+
+  data(mi_prin)
+  data_bio_non_euclid <- as_biomonitor(mi_prin)
+  data_agr_non_euclid <- aggregate_taxa(data_bio_non_euclid)
+
+  data_ts_non_euclid <- assign_traits(data_agr_non_euclid)
+  data_ts_av_non_euclid <-average_traits(data_ts_non_euclid)
+  data_ts_av_m_non_euclid <- data_ts_av_non_euclid
+  col_blocks <- c(8, 7, 3, 9, 4, 3, 6, 2, 5, 3, 9, 8, 8, 5, 7, 5, 4, 4, 2, 3, 8)
+
+  rownames(data_ts_av_m_non_euclid) <- data_ts_av_non_euclid$Taxa
+  traits_prep_non_euclid <- ade4::prep.fuzzy(data_ts_av_m_non_euclid[, -1], col.blocks = col_blocks)
+
+  traits_dist_non_euclid <- ade4::ktab.list.df(list(traits_prep_non_euclid))
+  traits_dist_non_euclid <- ade4::dist.ktab(traits_dist_non_euclid, type = "F")
+  traits_dist_m_non_euclid <- as.matrix(traits_dist_non_euclid)
+
+  taxa_comm_non_euclid <- convert_to_vegan(data_agr_non_euclid, tax_lev = "Taxa")
+  taxa_comm_non_euclid <- taxa_comm_non_euclid[, colnames(taxa_comm_non_euclid) %in% rownames(traits_dist_m_non_euclid)]
+  traits_dist_m_non_euclid <- traits_dist_m_non_euclid[rownames(traits_dist_m_non_euclid) %in% colnames(taxa_comm_non_euclid), colnames(traits_dist_m_non_euclid) %in% colnames(taxa_comm_non_euclid)]
+  trait_dist_non_euclid <- as.dist(traits_dist_m_non_euclid)
+
+
+  # functional richness
+
+  trait_dist_0 <- trait_dist_0_test <- as.matrix(trait_dist)
+  trait_dist_0[4, 1] <- 0
+  trait_dist_0 <- as.dist(trait_dist_0)
+  trait_dist_0_test <- as.dist(trait_dist_0_test[rownames(trait_dist_0_test) != "Beraeamyia", colnames(trait_dist_0_test) != "Beraeamyia"])
+  comm_0_dist <- macro_ex[macro_ex$Taxa != "Beraeamyia",]
+  comm_0_dist[1, 3] <- 1
+  data_bio_0_dist <- as_biomonitor(comm_0_dist)
+  data_agr_0_dist <- aggregate_taxa(data_bio_0_dist)
+
+
+  frich_0_dist <- suppressWarnings(f_rich(data_agr, trait_db = trait_dist_0, nbdim = 3, zerodist_rm = TRUE, traceB = TRUE))
+  frich_0_dist_test <- f_rich(data_agr_0_dist, trait_db = trait_dist_0_test, nbdim = 3, traceB = TRUE)
+
+
+  expect_message(suppressWarnings(f_rich(data_agr, trait_db = trait_dist_0, nbdim = 3)), "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
+  expect_warning(suppressMessages(f_rich(data_agr, trait_db = trait_dist_0, nbdim = 3)), "Negative eigenvalues found, please consider to add a correction to the pcoa")
+  expect_equal(data.frame(Taxon = "Acentrella", name = "Beraeamyia"), frich_0_dist$duplicated_traits)
+  expect_equal(frich_0_dist$taxa, frich_0_dist_test$taxa)
+  expect_equal(as.matrix(frich_0_dist$traits), as.matrix(frich_0_dist_test$traits))
+
+
+
+  # functional diversity
+  expect_error(f_divs(data_agr), "Please provide trait_db")
+  expect_error(f_divs(data_agr, trait_db = "argument"), "trait_db must be a data.frame or a dist object")
+  expect_error(f_divs(data_agr, trait_db = data_ts_av, type = NULL), "Please specify a type when trait_db is a data.frame")
+  expect_error(f_divs(data_agr, trait_db = data_ts_av, type = 42), "type must be C or F when trait_db is a data.frame")
+  expect_error(f_divs(data_agr, trait_db = data_ts_av, type = "C", distance = "gower"), "Using gower distance when type is C is currently not allowed")
+  expect_warning(f_divs(data_agr, trait_db = data_ts_av, type = "F", distance = "euclidean", col_blocks = col_blocks), "Are you sure to use euclidean distance when type is F?")
+  expect_error(f_divs(data_agr, trait_db = data_ts_av, type = "F"), "Please provide col_blocks")
+  expect_error(f_divs(data_agr, trait_db = data_ts_av, type = "F", col_blocks = c(1,1)), "The number of traits in trait_db is not equal to the sum of col_blocks")
+
+  f_divs_dis <- f_divs(data_agr, trait_db = traits_dist)
+  f_divs_df <- f_divs(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+
+  f_divs_df_tb <- f_divs(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks, traceB = TRUE)
+
+  f_divs_dis_bin <- f_divs(data_agr_bin, trait_db = traits_dist)
+  f_divs_df_bin <- f_divs(data_agr_bin, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+
+  f_divs_dis_cai <- f_divs(data_agr_non_euclid, trait_db = cailliez(traits_dist_non_euclid))
+  f_divs_df_cai <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "cailliez")
+
+  f_divs_dis_lin <- f_divs(data_agr_non_euclid, trait_db = lingoes(traits_dist_non_euclid))
+  f_divs_df_lin <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "lingoes")
+
+  f_divs_dis_sqrt <- f_divs(data_agr_non_euclid, trait_db = sqrt(traits_dist_non_euclid))
+  f_divs_df_sqrt <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "sqrt")
+
+  f_divs_dis_quasi <- f_divs(data_agr_non_euclid, trait_db = quasieuclid(traits_dist_non_euclid))
+  f_divs_df_quasi <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "quasi")
+
+
+
+
+
+  expect_error(f_divs(data_agr_non_euclid, trait_db = traits_dist_non_euclid), "Non euclidean trait distance. Euclidean property is needed. Please use the correction options
+             otherwise consider to remove taxa with the same traits.")
+  expect_equal(f_divs_dis, f_divs_df)
+  expect_equal(f_divs_dis_cai, f_divs_df_cai)
+  expect_equal(f_divs_dis_lin, f_divs_df_lin)
+  expect_equal(f_divs_dis_sqrt, f_divs_df_sqrt)
+  expect_equal(f_divs_dis_quasi, f_divs_df_quasi)
+  expect_equal(f_divs_dis_bin, f_divs_df_bin)
+  expect_equal(f_divs_df, f_divs_df_tb$results)
+
+
 
 })
 

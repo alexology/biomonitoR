@@ -353,7 +353,7 @@ f_rich <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel =
     # prepare traits to be returned
     if (!is.data.frame(trait_db)) {
       # returns the distance matrix used for the calculation as a dist object
-      trait_db <- as.dist(trait_db)
+      trait_db <- mat_dissim
     }
 
     # prepare traits to be returned
