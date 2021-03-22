@@ -4,7 +4,7 @@ Title: biomonitoring indices and metrics
 Version: 0.9.2
 Author: Alex Laini, Gemma Burgazzi, Rossano Bolpagni, Daniel Bruno, Simone Guareschi, Cédric Mondy, Tommaso Cancellario
 Maintainer: Alex Laini <alex.laini@gmail.com>
-Description: Provides a tool for calculating biomonitoring indices and metrics of running waters.
+Description: Provides a tool for managing taxonomic and traits information and for calculating biomonitoring indices and metrics of running waters.
 License: GPL-2
 LazyData: true
 Encoding: UTF-8

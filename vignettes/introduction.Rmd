@@ -97,6 +97,11 @@ tricho
 tricho_agg <- aggregate_taxa(tricho)
 ```
 
+Data can be plotted to explore the taxonomic strucure of the data.
+
+```{r plot }
+plot(data_bio, type = "abundance", trans = log1p)
+```
 
 ## Building your own reference database
 

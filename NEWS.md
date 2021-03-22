@@ -6,6 +6,7 @@
 * Bug fixed. `select_pcoa_axes` incorrectly calculated the SD value for `none` correction option of the method method `maire`. It overestimated the SD value by assigning the value of the true number of axes plus 1. The estimated number of axes was right.
 * Citation file added.
 * Added a `plot` utility for objects generated with `as_biomonitor`.
+* Bug fixed. The option `zerodist_rm` of the `f_rich` function did not worked as expected when set to `TRUE`.
 
 2# biomonitoR 0.9.1
 
