@@ -151,27 +151,124 @@ test_that("fd_indices", {
   trait_dist_non_euclid <- as.dist(traits_dist_m_non_euclid)
 
 
-  # functional richness
+
+  # 0 distance testing
 
   trait_dist_0 <- trait_dist_0_test <- as.matrix(trait_dist)
   trait_dist_0[4, 1] <- 0
   trait_dist_0 <- as.dist(trait_dist_0)
   trait_dist_0_test <- as.dist(trait_dist_0_test[rownames(trait_dist_0_test) != "Beraeamyia", colnames(trait_dist_0_test) != "Beraeamyia"])
   comm_0_dist <- macro_ex[macro_ex$Taxa != "Beraeamyia",]
-  comm_0_dist[1, 3] <- 1
+  comm_0_dist[1, 3] <- 4
   data_bio_0_dist <- as_biomonitor(comm_0_dist)
   data_agr_0_dist <- aggregate_taxa(data_bio_0_dist)
+
+
+
+
+
+  # functional richness
 
 
   frich_0_dist <- suppressWarnings(f_rich(data_agr, trait_db = trait_dist_0, nbdim = 3, zerodist_rm = TRUE, traceB = TRUE))
   frich_0_dist_test <- f_rich(data_agr_0_dist, trait_db = trait_dist_0_test, nbdim = 3, traceB = TRUE)
 
 
-  expect_message(suppressWarnings(f_rich(data_agr, trait_db = trait_dist_0, nbdim = 3)), "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
-  expect_warning(suppressMessages(f_rich(data_agr, trait_db = trait_dist_0, nbdim = 3)), "Negative eigenvalues found, please consider to add a correction to the pcoa")
+  mess_f_rich <- capture_messages(f_rich(data_agr, trait_db = trait_dist_0, nbdim = 3))
+  mess_f_rich <- gsub("\\n", "", mess_f_rich)
+
+  expect_equal(mess_f_rich[1], "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
+  expect_equal(mess_f_rich[2], "Negative eigenvalues found, please consider to add a correction to the pcoa")
+
+
   expect_equal(data.frame(Taxon = "Acentrella", name = "Beraeamyia"), frich_0_dist$duplicated_traits)
   expect_equal(frich_0_dist$taxa, frich_0_dist_test$taxa)
   expect_equal(as.matrix(frich_0_dist$traits), as.matrix(frich_0_dist_test$traits))
+  expect_equal(frich_0_dist$results, frich_0_dist_test$results)
+
+
+  f_rich_dis <- f_rich(data_agr, trait_db = traits_dist)
+  f_rich_df <- f_rich(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+
+  f_rich_df_tb <- f_rich(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks, traceB = TRUE)
+
+  f_rich_dis_bin <- f_rich(data_agr_bin, trait_db = traits_dist)
+  f_rich_df_bin <- f_rich(data_agr_bin, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+
+  f_rich_dis_cai <- f_rich(data_agr_non_euclid, trait_db = cailliez(traits_dist_non_euclid))
+  f_rich_df_cai <- f_rich(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "cailliez")
+
+  f_rich_dis_lin <- f_rich(data_agr_non_euclid, trait_db = lingoes(traits_dist_non_euclid))
+  f_rich_df_lin <- f_rich(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "lingoes")
+
+  f_rich_dis_sqrt <- f_rich(data_agr_non_euclid, trait_db = sqrt(traits_dist_non_euclid))
+  f_rich_df_sqrt <- f_rich(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "sqrt")
+
+  f_rich_dis_quasi <- f_rich(data_agr_non_euclid, trait_db = quasieuclid(traits_dist_non_euclid))
+  f_rich_df_quasi <- f_rich(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "quasi")
+
+  expect_message(f_rich(data_agr_non_euclid, trait_db = traits_dist_non_euclid), "Negative eigenvalues found, please consider to add a correction to the pcoa")
+  expect_equal(f_rich_dis, f_rich_df)
+  expect_equal(f_rich_dis_cai, f_rich_df_cai)
+  expect_equal(f_rich_dis_lin, f_rich_df_lin)
+  expect_equal(f_rich_dis_sqrt, f_rich_df_sqrt)
+  expect_equal(f_rich_dis_quasi, f_rich_df_quasi)
+  expect_equal(f_rich_dis_bin, f_rich_df_bin)
+  expect_equal(f_rich_df, f_rich_df_tb$results)
+  expect_error(f_rich(data_agr_non_euclid, trait_db = cailliez(traits_dist_non_euclid), traceB = TRUE, nbdim = "auto", set_param = list(max_nbdim = 9)),
+               "there is no optimal number of dimension, please increase the number of dimensions")
+
+
+  # functional evenness
+
+  feve_0_dist <- suppressWarnings(f_eve(data_agr, trait_db = trait_dist_0, nbdim = 3, zerodist_rm = TRUE, traceB = TRUE))
+  feve_0_dist_test <- f_eve(data_agr_0_dist, trait_db = trait_dist_0_test, nbdim = 3, traceB = TRUE)
+
+
+  mess_f_eve <- capture_messages(f_eve(data_agr, trait_db = trait_dist_0, nbdim = 3))
+  mess_f_eve <- gsub("\\n", "", mess_f_eve)
+
+  expect_equal(mess_f_eve[1], "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
+  expect_equal(mess_f_eve[2], "Negative eigenvalues found, please consider to add a correction to the pcoa")
+  expect_equal(data.frame(Taxon = "Acentrella", name = "Beraeamyia"), feve_0_dist$duplicated_traits)
+  expect_equal(feve_0_dist$taxa, feve_0_dist_test$taxa)
+  expect_equal(as.matrix(feve_0_dist$traits), as.matrix(feve_0_dist_test$traits))
+  expect_equal(feve_0_dist$results, feve_0_dist_test$results)
+
+
+  f_eve_dis <- f_eve(data_agr, trait_db = traits_dist)
+  f_eve_df <- f_eve(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+
+  f_eve_df_tb <- f_eve(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks, traceB = TRUE)
+
+  f_eve_dis_bin <- f_eve(data_agr_bin, trait_db = traits_dist)
+  f_eve_df_bin <- f_eve(data_agr_bin, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+
+  f_eve_dis_cai <- f_eve(data_agr_non_euclid, trait_db = cailliez(traits_dist_non_euclid))
+  f_eve_df_cai <- f_eve(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "cailliez")
+
+  f_eve_dis_lin <- f_eve(data_agr_non_euclid, trait_db = lingoes(traits_dist_non_euclid))
+  f_eve_df_lin <- f_eve(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "lingoes")
+
+  f_eve_dis_sqrt <- f_eve(data_agr_non_euclid, trait_db = sqrt(traits_dist_non_euclid))
+  f_eve_df_sqrt <- f_eve(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "sqrt")
+
+  f_eve_dis_quasi <- f_eve(data_agr_non_euclid, trait_db = quasieuclid(traits_dist_non_euclid))
+  f_eve_df_quasi <- f_eve(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "quasi")
+
+  expect_message(f_eve(data_agr_non_euclid, trait_db = traits_dist_non_euclid), "Negative eigenvalues found, please consider to add a correction to the pcoa")
+  expect_equal(f_eve_dis, f_eve_df)
+  expect_equal(f_eve_dis_cai, f_eve_df_cai)
+  expect_equal(f_eve_dis_lin, f_eve_df_lin)
+  expect_equal(f_eve_dis_sqrt, f_eve_df_sqrt)
+  expect_equal(f_eve_dis_quasi, f_eve_df_quasi)
+  expect_equal(f_eve_dis_bin, f_eve_df_bin)
+  expect_equal(f_eve_df, f_eve_df_tb$results)
+  expect_error(f_eve(data_agr_non_euclid, trait_db = cailliez(traits_dist_non_euclid), traceB = TRUE, nbdim = "auto", set_param = list(max_nbdim = 9)),
+               "there is no optimal number of dimension, please increase the number of dimensions")
+
+
+
 
 
 
