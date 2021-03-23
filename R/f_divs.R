@@ -187,7 +187,7 @@ f_divs <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel =
   }
 
 
-  if (traitSel & is.data.frame(trait_db)) {
+  if (traitSel & is.data.frame(trait_db)) { # nocov start
     Index <- rep(1:length(col_blocks), col_blocks)
     rma <- select.list(names(trait_db[-which(names(trait_db) %in% "Taxa")]), title = "Traits selection", graphics = TRUE, multiple = T)
     # new col_blocks based on user trait selection, -1 because there is the column called Taxa
@@ -200,7 +200,7 @@ f_divs <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel =
       select(c("Taxa", rma))
     # trim and capitalise the column Taxa of the user' trait database
     trait_db$Taxa <- apply(as.data.frame(trim(trait_db$Taxa)), 1, capWords)
-  }
+  } # nocov end
 
 
 
