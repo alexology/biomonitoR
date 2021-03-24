@@ -163,11 +163,16 @@ test_that("fd_indices", {
   data_bio_0_dist <- as_biomonitor(comm_0_dist)
   data_agr_0_dist <- aggregate_taxa(data_bio_0_dist)
 
+  # fake continuous
+
+  traits_continuous <- data_ts_av[, 1:4]
+  dist_continuous <- traits_continuous
+  rownames(dist_continuous) <- dist_continuous$Taxa
+  dist_continuous <- dist(scale(dist_continuous[, -1]))
 
 
 
-
-  # functional richness
+  ### functional richness -------------------------------------------------------------------------------------
 
 
   frich_0_dist <- suppressWarnings(f_rich(data_agr, trait_db = trait_dist_0, nbdim = 3, zerodist_rm = TRUE, traceB = TRUE))
@@ -185,6 +190,32 @@ test_that("fd_indices", {
   expect_equal(frich_0_dist$taxa, frich_0_dist_test$taxa)
   expect_equal(as.matrix(frich_0_dist$traits), as.matrix(frich_0_dist_test$traits))
   expect_equal(frich_0_dist$results, frich_0_dist_test$results)
+
+  # there is another way to deal with 0, using the option cor.zero of the ade4 functions
+
+  frich_0_dist_cor_zero <- suppressWarnings(f_rich(data_agr, trait_db = trait_dist_0, nbdim = 3, zerodist_rm = FALSE, correction = "cailliez", traceB = TRUE, set_param = list(cor.zero = FALSE)))
+  expect_equal(as.matrix(frich_0_dist_cor_zero$traits), suppressWarnings(as.matrix(cailliez(trait_dist_0, cor.zero = FALSE))))
+
+
+  ### continuous traits
+
+  f_rich_cont_df <- suppressMessages(f_rich(data_agr, trait_db = traits_continuous, type = "C", distance = "euclidean", nbdim = 2, traceB = TRUE))
+  f_rich_cont_ds <- suppressMessages(f_rich(data_agr, trait_db = dist_continuous, nbdim = 2, traceB = TRUE))
+
+  expect_equal(f_rich_cont_df$taxa, f_rich_cont_ds$taxa)
+  expect_equal(f_rich_cont_df$results, f_rich_cont_ds$results)
+  expect_equal(as.matrix(f_rich_cont_ds$traits), as.matrix(dist_continuous))
+
+
+  # auto option
+  f_rich_cont_df_auto <- suppressMessages(f_rich(data_agr, trait_db = traits_continuous, type = "C", distance = "euclidean", nbdim = "auto", traceB = FALSE))
+  f_rich_cont_df_3 <- suppressMessages(f_rich(data_agr, trait_db = traits_continuous, type = "C", distance = "euclidean", nbdim = 3, traceB = FALSE))
+
+  expect_equal(f_rich_cont_df_auto, f_rich_cont_df_3)
+
+
+
+  ### other
 
 
   f_rich_dis <- f_rich(data_agr, trait_db = traits_dist)

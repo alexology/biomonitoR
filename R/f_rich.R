@@ -229,13 +229,13 @@ f_rich <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel =
 
     trait_db <- merge(trait_db, DF[, "Taxon", drop = FALSE], by = "Taxon")
 
-    if (any(!DF$Taxon == trait_db$Taxon)) stop("Taxonomic and traits taxa does not match, ask the maintainer")
+    if (any(!DF$Taxon == trait_db$Taxon)) stop("Taxonomic and traits taxa does not match, ask the maintainer") # nocov
 
     # just to be sure we are doing the right things
     rownames(trait_db) <- trait_db$Taxon
 
     if (identical(type, "F")) (tr_prep <- prep.fuzzy(trait_db[, -1], col.blocks = col_blocks))
-    if (identical(type, "B")) (tr_prep <- prep.binary(trait_db[, -1], col.blocks = col_blocks))
+    if (identical(type, "B")) (tr_prep <- prep.binary(trait_db[, -1], col.blocks = col_blocks)) # nocov
     if (identical(type, "C")) (tr_prep <- trait_db[, -1])
 
     rownames(tr_prep) <- trait_db$Taxon
@@ -268,8 +268,8 @@ f_rich <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel =
     trait_db <- trait_db[, match(DF$Taxon, colnames(trait_db)), drop = FALSE]
 
     # check if names are in the same order, both on rows and columns
-    if (any(!DF$Taxon == rownames(trait_db))) stop("Taxonomic and traits taxa does not match, ask the maintainer")
-    if (any(!DF$Taxon == colnames(trait_db))) stop("Taxonomic and traits taxa does not match, ask the maintainer")
+    if (any(!DF$Taxon == rownames(trait_db))) stop("Taxonomic and traits taxa does not match, ask the maintainer") # nocov
+    if (any(!DF$Taxon == colnames(trait_db))) stop("Taxonomic and traits taxa does not match, ask the maintainer") # nocov
 
     mat_dissim <- as.dist(trait_db)
   }
