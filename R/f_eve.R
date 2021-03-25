@@ -166,7 +166,7 @@ f_eve <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel = 
 
   if (!identical(type, "F") & !identical(type, "C") & is.data.frame(trait_db)) stop("type must be C or F when trait_db is a data.frame")
 
-  if (identical(type, "C") & identical(distance, "gower")) (warning("Are you sure to use gower distance when type is C?"))
+  if (identical(type, "C") & identical(distance, "gower")) (stop("Using gower distance when type is C is currently not allowed"))
 
   if (identical(type, "F") & identical(distance, "euclidean")) (warning("Are you sure to use euclidean distance when type is F?"))
 
@@ -223,13 +223,13 @@ f_eve <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel = 
 
     trait_db <- merge(trait_db, DF[, "Taxon", drop = FALSE], by = "Taxon")
 
-    if (any(!DF$Taxon == trait_db$Taxon)) stop("Taxonomic and traits taxa does not match, ask the maintainer")
+    if (any(!DF$Taxon == trait_db$Taxon)) stop("Taxonomic and traits taxa does not match, ask the maintainer") # nocov
 
     # just to be sure we are doing the right things
     rownames(trait_db) <- trait_db$Taxon
 
     if (identical(type, "F")) (tr_prep <- prep.fuzzy(trait_db[, -1], col.blocks = col_blocks))
-    if (identical(type, "B")) (tr_prep <- prep.binary(trait_db[, -1], col.blocks = col_blocks))
+    if (identical(type, "B")) (tr_prep <- prep.binary(trait_db[, -1], col.blocks = col_blocks)) # nocov
     if (identical(type, "C")) (tr_prep <- trait_db[, -1])
 
     rownames(tr_prep) <- trait_db$Taxon
@@ -261,8 +261,8 @@ f_eve <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel = 
     trait_db <- trait_db[, match(DF$Taxon, colnames(trait_db)), drop = FALSE]
 
     # check if names are in the same order, both on rows and columns
-    if (any(!DF$Taxon == rownames(trait_db))) stop("Taxonomic and traits taxa does not match, ask the maintainer")
-    if (any(!DF$Taxon == colnames(trait_db))) stop("Taxonomic and traits taxa does not match, ask the maintainer")
+    if (any(!DF$Taxon == rownames(trait_db))) stop("Taxonomic and traits taxa does not match, ask the maintainer") # nocov
+    if (any(!DF$Taxon == colnames(trait_db))) stop("Taxonomic and traits taxa does not match, ask the maintainer") # nocov
 
     mat_dissim <- as.dist(trait_db)
   }
