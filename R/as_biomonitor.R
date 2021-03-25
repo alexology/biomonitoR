@@ -219,7 +219,7 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
 
   if (!correct_names) {
     x <- x[!x$Taxa %in% wrong_taxa, , drop = FALSE]
-  } else {
+  } else { # nocov start
     if (length(wrong_taxa) == 0) {
       x <- x
     } else {
@@ -239,7 +239,7 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
         x[x$Taxa %in% taxa_corrected$wrong_names[i], "Taxa"] <- taxa_corrected$correct_names[i]
       }
     }
-  }
+  } # nocov end
 
   x <- aggregate(. ~ Taxa, data = x, FUN = FUN)
 
