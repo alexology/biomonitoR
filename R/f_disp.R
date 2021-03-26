@@ -128,7 +128,7 @@ f_disp <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel =
 
   if (!identical(type, "F") & !identical(type, "C") & is.data.frame(trait_db)) stop("type must be C or F when trait_db is a data.frame")
 
-  if (identical(type, "C") & identical(distance, "gower")) (warning("Are you sure to use gower distance when type is C?"))
+  if (identical(type, "C") & identical(distance, "gower")) (stop("Using gower distance when type is C is currently not allowed"))
 
   if (identical(type, "F") & identical(distance, "euclidean")) (warning("Are you sure to use euclidean distance when type is F?"))
 
@@ -307,7 +307,7 @@ f_disp <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel =
     # prepare traits to be returned
     if (!is.data.frame(trait_db)) {
       # returns the distance matrix used for the calculation as a dist object
-      trait_db <- as.dist(trait_db)
+      trait_db <- mat_dissim
     }
 
     # prepare traits to be returned

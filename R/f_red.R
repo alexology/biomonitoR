@@ -200,7 +200,7 @@ f_red <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel = 
 
   if (!identical(type, "F") & !identical(type, "C") & is.data.frame(trait_db)) stop("type must be C or F when trait_db is a data.frame")
 
-  if (identical(type, "C") & identical(distance, "gower")) (warning("Are you sure to use gower distance when type is C?"))
+  if (identical(type, "C") & identical(distance, "gower")) (stop("Using gower distance when type is C is currently not allowed"))
 
   if (identical(type, "F") & identical(distance, "euclidean")) (warning("Are you sure to use euclidean distance when type is F?"))
 
@@ -320,6 +320,12 @@ f_red <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel = 
 
   suppressWarnings(euclid.dist.mat <- is.euclid(mat_dissim, tol = set_param$tol))
 
+  if (!euclid.dist.mat) {
+    stop("Non euclidean trait distance. Euclidean property is needed. Please use the correction options
+             otherwise consider to remove taxa with the same traits.")
+  }
+
+
   if (any(mat_dissim < set_param$tol)) {
     MES <- "At least a pair of species has the same traits. Depending on your needs, this could be an issue."
     message(MES)
@@ -330,8 +336,8 @@ f_red <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel = 
 
   rownames(DF) <- DF[, "Taxon"]
 
-  tax_sim <- divc(DF[, -1])$diversity
-  raoQ <- divc(DF[, -1], mat_dissim, scale = T)$diversity
+  tax_sim <- suppressWarnings(divc(DF[, -1])$diversity)
+  raoQ <- suppressWarnings(divc(DF[, -1], mat_dissim, scale = T)$diversity)
 
 
   FRed <- tax_sim - raoQ
@@ -365,7 +371,7 @@ f_red <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel = 
     # prepare traits to be returned
     if (!is.data.frame(trait_db)) {
       # returns the distance matrix used for the calculation as a dist object
-      trait_db <- as.dist(trait_db)
+      trait_db <- mat_dissim
     }
 
     # prepare traits to be returned
