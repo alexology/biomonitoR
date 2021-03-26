@@ -1,6 +1,6 @@
 # biomonitoR
 
-A package for managinc taxonomic and functional information and for calculating indices for biomonitoring of running water, with a focus on the macroinvertebrate community.
+A package for managing taxonomic and functional information and for calculating indices for biomonitoring of running waters, with a focus on the macroinvertebrate community.
 
 [![codecov](https://codecov.io/gh/alexology/biomonitoR/branch/main/graph/badge.svg?token=Ix3zzcWgko)](https://codecov.io/gh/alexology/biomonitoR)
 [![Build Status](https://travis-ci.org/alexology/biomonitoR.svg?branch=main)](https://travis-ci.org/alexology/biomonitoR)

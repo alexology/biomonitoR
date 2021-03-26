@@ -382,6 +382,85 @@ test_that("fd_indices", {
 
   ### functional diversity -----------------------------------------------------------------------------------
 
+  fdivs_0_dist <- suppressWarnings(f_divs(data_agr, trait_db = trait_dist_0, zerodist_rm = TRUE, traceB = TRUE))
+  fdivs_0_dist_test <- f_divs(data_agr_0_dist, trait_db = trait_dist_0_test, traceB = TRUE)
+
+  expect_error(f_divs(data_agr, trait_db = trait_dist_0), "Non euclidean trait distance. Euclidean property is needed. Please use the correction options
+             otherwise consider to remove taxa with the same traits.")
+
+
+
+  expect_equal(data.frame(Taxon = "Acentrella", name = "Beraeamyia"), fdivs_0_dist$duplicated_traits)
+  expect_equal(fdivs_0_dist$taxa, fdivs_0_dist_test$taxa)
+  expect_equal(as.matrix(fdivs_0_dist$traits), as.matrix(fdivs_0_dist_test$traits))
+  expect_equal(fdivs_0_dist$results, fdivs_0_dist_test$results)
+
+  # there is another way to deal with 0, using the option cor.zero of the ade4 functions
+
+  fdivs_0_dist_cor_zero <- suppressWarnings(f_divs(data_agr, trait_db = trait_dist_0, zerodist_rm = FALSE, correction = "cailliez", traceB = TRUE, set_param = list(cor.zero = FALSE)))
+  temp_divs <- suppressWarnings(as.matrix(cailliez(trait_dist_0, cor.zero = FALSE)))
+  expect_equal(as.matrix(fdivs_0_dist_cor_zero$traits), suppressWarnings(as.matrix(cailliez(trait_dist_0, cor.zero = FALSE))))
+
+
+  ### continuous traits
+
+  f_divs_cont_df <- suppressMessages(f_divs(data_agr, trait_db = traits_continuous, type = "C", distance = "euclidean", traceB = TRUE))
+  f_divs_cont_ds <- suppressMessages(f_divs(data_agr, trait_db = dist_continuous, traceB = TRUE))
+
+  expect_equal(f_divs_cont_df$taxa, f_divs_cont_ds$taxa)
+  expect_equal(f_divs_cont_df$results, f_divs_cont_ds$results)
+  expect_equal(as.matrix(f_divs_cont_ds$traits), as.matrix(dist_continuous))
+  expect_equal(f_divs_cont_df$NA_detection, "No NAs detected")
+  expect_equal(f_divs_cont_ds$NA_detection, "NAs cannot be detected when trait_db is a dist object")
+  expect_equal(f_divs_cont_df$correction, "none")
+  expect_equal(f_divs_cont_ds$correction, "none")
+  expect_equal(f_divs_cont_df$duplicated_traits, "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
+  expect_equal(f_divs_cont_ds$duplicated_traits, "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
+
+
+  ### other
+
+  f_divs_dis <- f_divs(data_agr, trait_db = traits_dist, traceB = TRUE)
+  f_divs_df <- f_divs(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks, traceB = TRUE)
+
+  f_divs_df_tb <- f_divs(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks, traceB = TRUE)
+
+  f_divs_dis_bin <- f_divs(data_agr_bin, trait_db = traits_dist)
+  f_divs_df_bin <- f_divs(data_agr_bin, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+
+  f_divs_dis_cai <- f_divs(data_agr_non_euclid, trait_db = cailliez(traits_dist_non_euclid), traceB = TRUE)
+  f_divs_df_cai <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "cailliez", traceB = TRUE)
+
+  f_divs_dis_lin <- f_divs(data_agr_non_euclid, trait_db = lingoes(traits_dist_non_euclid), traceB = TRUE)
+  f_divs_df_lin <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "lingoes", traceB = TRUE)
+
+  f_divs_dis_sqrt <- f_divs(data_agr_non_euclid, trait_db = sqrt(traits_dist_non_euclid), traceB = TRUE)
+  f_divs_df_sqrt <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "sqrt", traceB = TRUE)
+
+  f_divs_dis_quasi <- f_divs(data_agr_non_euclid, trait_db = quasieuclid(traits_dist_non_euclid), traceB = TRUE)
+  f_divs_df_quasi <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "quasi", traceB = TRUE)
+
+  expect_error(f_divs(data_agr_non_euclid, trait_db = traits_dist_non_euclid), "Non euclidean trait distance. Euclidean property is needed. Please use the correction options
+             otherwise consider to remove taxa with the same traits.")
+  expect_equal(f_divs_dis$results, f_divs_df$results)
+  expect_equal(f_divs_dis_cai$results, f_divs_df_cai$results)
+  expect_equal(f_divs_dis_lin$results, f_divs_df_lin$results)
+  expect_equal(f_divs_dis_sqrt$results, f_divs_df_sqrt$results)
+  expect_equal(f_divs_dis_quasi$results, f_divs_df_quasi$results)
+  expect_equal(f_divs_dis_bin, f_divs_df_bin)
+  expect_equal(f_divs_df$results, f_divs_df_tb$results)
+  expect_equal(f_divs_dis$duplicated_traits, "no taxa with the same traits")
+  expect_equal(f_divs_dis_cai$correction, "none")
+  expect_equal(f_divs_dis_lin$correction, "none")
+  expect_equal(f_divs_dis_sqrt$correction, "none")
+  expect_equal(f_divs_dis_quasi$correction, "none")
+  expect_equal(f_divs_df_cai$correction, "cailliez")
+  expect_equal(f_divs_df_lin$correction, "lingoes")
+  expect_equal(f_divs_df_sqrt$correction, "sqrt")
+  expect_equal(f_divs_df_quasi$correction, "quasi")
+  expect_equal(f_divs_df$NA_detection, na_traits)
+
+
   expect_error(f_divs(data_agr), "Please provide trait_db")
   expect_error(f_divs(data_agr, trait_db = "argument"), "trait_db must be a data.frame or a dist object")
   expect_error(f_divs(data_agr, trait_db = data_ts_av, type = NULL), "Please specify a type when trait_db is a data.frame")
@@ -391,39 +470,201 @@ test_that("fd_indices", {
   expect_error(f_divs(data_agr, trait_db = data_ts_av, type = "F"), "Please provide col_blocks")
   expect_error(f_divs(data_agr, trait_db = data_ts_av, type = "F", col_blocks = c(1,1)), "The number of traits in trait_db is not equal to the sum of col_blocks")
 
-  f_divs_dis <- f_divs(data_agr, trait_db = traits_dist)
-  f_divs_df <- f_divs(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
 
-  f_divs_df_tb <- f_divs(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks, traceB = TRUE)
+  ### functional dispersion -----------------------------------------------------------------------------------
 
-  f_divs_dis_bin <- f_divs(data_agr_bin, trait_db = traits_dist)
-  f_divs_df_bin <- f_divs(data_agr_bin, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
-
-  f_divs_dis_cai <- f_divs(data_agr_non_euclid, trait_db = cailliez(traits_dist_non_euclid))
-  f_divs_df_cai <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "cailliez")
-
-  f_divs_dis_lin <- f_divs(data_agr_non_euclid, trait_db = lingoes(traits_dist_non_euclid))
-  f_divs_df_lin <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "lingoes")
-
-  f_divs_dis_sqrt <- f_divs(data_agr_non_euclid, trait_db = sqrt(traits_dist_non_euclid))
-  f_divs_df_sqrt <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "sqrt")
-
-  f_divs_dis_quasi <- f_divs(data_agr_non_euclid, trait_db = quasieuclid(traits_dist_non_euclid))
-  f_divs_df_quasi <- f_divs(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "quasi")
+  fdisp_0_dist <- suppressWarnings(f_disp(data_agr, trait_db = trait_dist_0, nbdim = 3, zerodist_rm = TRUE, traceB = TRUE))
+  fdisp_0_dist_test <- f_disp(data_agr_0_dist, trait_db = trait_dist_0_test, nbdim = 3, traceB = TRUE)
 
 
+  mess_f_disp <- capture_messages(f_disp(data_agr, trait_db = trait_dist_0, nbdim = 3))
+  mess_f_disp <- gsub("\\n", "", mess_f_disp)
+
+  expect_equal(mess_f_disp[1], "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
+  expect_equal(mess_f_disp[2], "Negative eigenvalues found, please consider to add a correction to the pcoa")
+
+
+  expect_equal(data.frame(Taxon = "Acentrella", name = "Beraeamyia"), fdisp_0_dist$duplicated_traits)
+  expect_equal(fdisp_0_dist$taxa, fdisp_0_dist_test$taxa)
+  expect_equal(as.matrix(fdisp_0_dist$traits), as.matrix(fdisp_0_dist_test$traits))
+  expect_equal(fdisp_0_dist$results, fdisp_0_dist_test$results)
+
+  # there is another way to deal with 0, using the option cor.zero of the ade4 functions
+
+  fdisp_0_dist_cor_zero <- suppressWarnings(f_disp(data_agr, trait_db = trait_dist_0, nbdim = 3, zerodist_rm = FALSE, correction = "cailliez", traceB = TRUE, set_param = list(cor.zero = FALSE)))
+  expect_equal(as.matrix(fdisp_0_dist_cor_zero$traits), suppressWarnings(as.matrix(cailliez(trait_dist_0, cor.zero = FALSE))))
+
+
+  ### continuous traits
+
+  f_disp_cont_df <- suppressMessages(f_disp(data_agr, trait_db = traits_continuous, type = "C", distance = "euclidean", nbdim = 2, traceB = TRUE))
+  f_disp_cont_ds <- suppressMessages(f_disp(data_agr, trait_db = dist_continuous, nbdim = 2, traceB = TRUE))
+
+  expect_equal(f_disp_cont_df$taxa, f_disp_cont_ds$taxa)
+  expect_equal(f_disp_cont_df$results, f_disp_cont_ds$results)
+  expect_equal(as.matrix(f_disp_cont_ds$traits), as.matrix(dist_continuous))
+  expect_equal(f_disp_cont_df$NA_detection, "No NAs detected")
+  expect_equal(f_disp_cont_ds$NA_detection, "NAs cannot be detected when trait_db is a dist object")
+  expect_equal(f_disp_cont_df$correction, "none")
+  expect_equal(f_disp_cont_ds$correction, "none")
+  expect_equal(f_disp_cont_df$nbdim, 2)
+  expect_equal(f_disp_cont_ds$nbdim, 2)
+  expect_equal(f_disp_cont_df$duplicated_traits, "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
+  expect_equal(f_disp_cont_ds$duplicated_traits, "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
+
+
+  # auto option
+  f_disp_cont_df_auto <- suppressWarnings(suppressMessages(f_disp(data_agr, trait_db = traits_continuous, type = "C", distance = "euclidean", nbdim = "auto", traceB = FALSE)))
+  f_disp_cont_df_3 <- suppressWarnings(suppressMessages(f_disp(data_agr, trait_db = traits_continuous, type = "C", distance = "euclidean", nbdim = 3, traceB = FALSE)))
+
+  expect_equal(f_disp_cont_df_auto, f_disp_cont_df_3)
 
 
 
-  expect_error(f_divs(data_agr_non_euclid, trait_db = traits_dist_non_euclid), "Non euclidean trait distance. Euclidean property is needed. Please use the correction options
+  ### other
+
+  f_disp_dis <- f_disp(data_agr, trait_db = traits_dist, traceB = TRUE)
+  f_disp_df <- f_disp(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks, traceB = TRUE)
+
+  f_disp_df_tb <- f_disp(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks, traceB = TRUE)
+
+  f_disp_dis_bin <- f_disp(data_agr_bin, trait_db = traits_dist)
+  f_disp_df_bin <- f_disp(data_agr_bin, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+
+  f_disp_dis_cai <- f_disp(data_agr_non_euclid, trait_db = cailliez(traits_dist_non_euclid), traceB = TRUE)
+  f_disp_df_cai <- f_disp(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "cailliez", traceB = TRUE)
+
+  f_disp_dis_lin <- f_disp(data_agr_non_euclid, trait_db = lingoes(traits_dist_non_euclid), traceB = TRUE)
+  f_disp_df_lin <- f_disp(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "lingoes", traceB = TRUE)
+
+  f_disp_dis_sqrt <- f_disp(data_agr_non_euclid, trait_db = sqrt(traits_dist_non_euclid), traceB = TRUE)
+  f_disp_df_sqrt <- f_disp(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "sqrt", traceB = TRUE)
+
+  f_disp_dis_quasi <- f_disp(data_agr_non_euclid, trait_db = quasieuclid(traits_dist_non_euclid), traceB = TRUE)
+  f_disp_df_quasi <- f_disp(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "quasi", traceB = TRUE)
+
+  expect_message(f_disp(data_agr_non_euclid, trait_db = traits_dist_non_euclid), "Negative eigenvalues found, please consider to add a correction to the pcoa")
+  expect_equal(f_disp_dis$results, f_disp_df$results)
+  expect_equal(f_disp_dis_cai$results, f_disp_df_cai$results)
+  expect_equal(f_disp_dis_lin$results, f_disp_df_lin$results)
+  expect_equal(f_disp_dis_sqrt$results, f_disp_df_sqrt$results)
+  expect_equal(f_disp_dis_quasi$results, f_disp_df_quasi$results)
+  expect_equal(f_disp_dis_bin, f_disp_df_bin)
+  expect_equal(f_disp_df$results, f_disp_df_tb$results)
+  expect_error(f_disp(data_agr_non_euclid, trait_db = cailliez(traits_dist_non_euclid), traceB = TRUE, nbdim = "auto", set_param = list(max_nbdim = 9)),
+               "there is no optimal number of dimension, please increase the number of dimensions")
+  expect_equal(f_disp_dis$duplicated_traits, "no taxa with the same traits")
+  expect_equal(f_disp_dis_cai$correction, "none")
+  expect_equal(f_disp_dis_lin$correction, "none")
+  expect_equal(f_disp_dis_sqrt$correction, "none")
+  expect_equal(f_disp_dis_quasi$correction, "none")
+  expect_equal(f_disp_df_cai$correction, "cailliez")
+  expect_equal(f_disp_df_lin$correction, "lingoes")
+  expect_equal(f_disp_df_sqrt$correction, "sqrt")
+  expect_equal(f_disp_df_quasi$correction, "quasi")
+  expect_equal(f_disp_df$NA_detection, na_traits)
+
+
+  expect_error(f_disp(data_agr), "Please provide trait_db")
+  expect_error(f_disp(data_agr, trait_db = "argument"), "trait_db must be a data.frame or a dist object")
+  expect_error(f_disp(data_agr, trait_db = data_ts_av, type = NULL), "Please specify a type when trait_db is a data.frame")
+  expect_error(f_disp(data_agr, trait_db = data_ts_av, type = 42), "type must be C or F when trait_db is a data.frame")
+  expect_error(f_disp(data_agr, trait_db = data_ts_av, type = "C", distance = "gower"), "Using gower distance when type is C is currently not allowed")
+  expect_warning(f_disp(data_agr, trait_db = data_ts_av, type = "F", distance = "euclidean", col_blocks = col_blocks), "Are you sure to use euclidean distance when type is F?")
+  expect_error(f_disp(data_agr, trait_db = data_ts_av, type = "F"), "Please provide col_blocks")
+  expect_error(f_disp(data_agr, trait_db = data_ts_av, type = "F", col_blocks = c(1,1)), "The number of traits in trait_db is not equal to the sum of col_blocks")
+
+
+  ### functional redundancy -----------------------------------------------------------------------------------
+
+  fred_0_dist <- suppressWarnings(f_red(data_agr, trait_db = trait_dist_0, zerodist_rm = TRUE, traceB = TRUE))
+  fred_0_dist_test <- f_red(data_agr_0_dist, trait_db = trait_dist_0_test, traceB = TRUE)
+
+  expect_error(f_red(data_agr, trait_db = trait_dist_0), "Non euclidean trait distance. Euclidean property is needed. Please use the correction options
              otherwise consider to remove taxa with the same traits.")
-  expect_equal(f_divs_dis, f_divs_df)
-  expect_equal(f_divs_dis_cai, f_divs_df_cai)
-  expect_equal(f_divs_dis_lin, f_divs_df_lin)
-  expect_equal(f_divs_dis_sqrt, f_divs_df_sqrt)
-  expect_equal(f_divs_dis_quasi, f_divs_df_quasi)
-  expect_equal(f_divs_dis_bin, f_divs_df_bin)
-  expect_equal(f_divs_df, f_divs_df_tb$results)
+
+
+
+  expect_equal(data.frame(Taxon = "Acentrella", name = "Beraeamyia"), fred_0_dist$duplicated_traits)
+  expect_equal(fred_0_dist$taxa, fred_0_dist_test$taxa)
+  expect_equal(as.matrix(fred_0_dist$traits), as.matrix(fred_0_dist_test$traits))
+  expect_equal(fred_0_dist$results, fred_0_dist_test$results)
+
+  # there is another way to deal with 0, using the option cor.zero of the ade4 functions
+
+  fred_0_dist_cor_zero <- suppressWarnings(f_red(data_agr, trait_db = trait_dist_0, zerodist_rm = FALSE, correction = "cailliez", traceB = TRUE, set_param = list(cor.zero = FALSE)))
+  temp_divs <- suppressWarnings(as.matrix(cailliez(trait_dist_0, cor.zero = FALSE)))
+  expect_equal(as.matrix(fred_0_dist_cor_zero$traits), suppressWarnings(as.matrix(cailliez(trait_dist_0, cor.zero = FALSE))))
+
+
+  ### continuous traits
+
+  f_red_cont_df <- suppressMessages(f_red(data_agr, trait_db = traits_continuous, type = "C", distance = "euclidean", traceB = TRUE))
+  f_red_cont_ds <- suppressMessages(f_red(data_agr, trait_db = dist_continuous, traceB = TRUE))
+
+  expect_equal(f_red_cont_df$taxa, f_red_cont_ds$taxa)
+  expect_equal(f_red_cont_df$results, f_red_cont_ds$results)
+  expect_equal(as.matrix(f_red_cont_ds$traits), as.matrix(dist_continuous))
+  expect_equal(f_red_cont_df$NA_detection, "No NAs detected")
+  expect_equal(f_red_cont_ds$NA_detection, "NAs cannot be detected when trait_db is a dist object")
+  expect_equal(f_red_cont_df$correction, "none")
+  expect_equal(f_red_cont_ds$correction, "none")
+  expect_equal(f_red_cont_df$duplicated_traits, "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
+  expect_equal(f_red_cont_ds$duplicated_traits, "At least a pair of species has the same traits. Depending on your needs, this could be an issue.")
+
+
+  ### other
+
+  f_red_dis <- f_red(data_agr, trait_db = traits_dist, traceB = TRUE)
+  f_red_df <- f_red(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks, traceB = TRUE)
+
+  f_red_df_tb <- f_red(data_agr, trait_db = data_ts_av, type = "F", col_blocks = col_blocks, traceB = TRUE)
+
+  f_red_dis_bin <- f_red(data_agr_bin, trait_db = traits_dist)
+  f_red_df_bin <- f_red(data_agr_bin, trait_db = data_ts_av, type = "F", col_blocks = col_blocks)
+
+  f_red_dis_cai <- f_red(data_agr_non_euclid, trait_db = cailliez(traits_dist_non_euclid), traceB = TRUE)
+  f_red_df_cai <- f_red(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "cailliez", traceB = TRUE)
+
+  f_red_dis_lin <- f_red(data_agr_non_euclid, trait_db = lingoes(traits_dist_non_euclid), traceB = TRUE)
+  f_red_df_lin <- f_red(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "lingoes", traceB = TRUE)
+
+  f_red_dis_sqrt <- f_red(data_agr_non_euclid, trait_db = sqrt(traits_dist_non_euclid), traceB = TRUE)
+  f_red_df_sqrt <- f_red(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "sqrt", traceB = TRUE)
+
+  f_red_dis_quasi <- f_red(data_agr_non_euclid, trait_db = quasieuclid(traits_dist_non_euclid), traceB = TRUE)
+  f_red_df_quasi <- f_red(data_agr_non_euclid, trait_db = data_ts_av_non_euclid, type = "F", col_blocks = col_blocks, correction = "quasi", traceB = TRUE)
+
+  expect_error(f_red(data_agr_non_euclid, trait_db = traits_dist_non_euclid), "Non euclidean trait distance. Euclidean property is needed. Please use the correction options
+             otherwise consider to remove taxa with the same traits.")
+  expect_equal(f_red_dis$results, f_red_df$results)
+  expect_equal(f_red_dis_cai$results, f_red_df_cai$results)
+  expect_equal(f_red_dis_lin$results, f_red_df_lin$results)
+  expect_equal(f_red_dis_sqrt$results, f_red_df_sqrt$results)
+  expect_equal(f_red_dis_quasi$results, f_red_df_quasi$results)
+  expect_equal(f_red_dis_bin, f_red_df_bin)
+  expect_equal(f_red_df$results, f_red_df_tb$results)
+  expect_equal(f_red_dis$duplicated_traits, "no taxa with the same traits")
+  expect_equal(f_red_dis_cai$correction, "none")
+  expect_equal(f_red_dis_lin$correction, "none")
+  expect_equal(f_red_dis_sqrt$correction, "none")
+  expect_equal(f_red_dis_quasi$correction, "none")
+  expect_equal(f_red_df_cai$correction, "cailliez")
+  expect_equal(f_red_df_lin$correction, "lingoes")
+  expect_equal(f_red_df_sqrt$correction, "sqrt")
+  expect_equal(f_red_df_quasi$correction, "quasi")
+  expect_equal(f_red_df$NA_detection, na_traits)
+
+
+  expect_error(f_red(data_agr), "Please provide trait_db")
+  expect_error(f_red(data_agr, trait_db = "argument"), "trait_db must be a data.frame or a dist object")
+  expect_error(f_red(data_agr, trait_db = data_ts_av, type = NULL), "Please specify a type when trait_db is a data.frame")
+  expect_error(f_red(data_agr, trait_db = data_ts_av, type = 42), "type must be C or F when trait_db is a data.frame")
+  expect_error(f_red(data_agr, trait_db = data_ts_av, type = "C", distance = "gower"), "Using gower distance when type is C is currently not allowed")
+  expect_warning(f_red(data_agr, trait_db = data_ts_av, type = "F", distance = "euclidean", col_blocks = col_blocks), "Are you sure to use euclidean distance when type is F?")
+  expect_error(f_red(data_agr, trait_db = data_ts_av, type = "F"), "Please provide col_blocks")
+  expect_error(f_red(data_agr, trait_db = data_ts_av, type = "F", col_blocks = c(1,1)), "The number of traits in trait_db is not equal to the sum of col_blocks")
+
 
 
 
