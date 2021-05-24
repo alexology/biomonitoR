@@ -5,7 +5,7 @@ Version: 0.9.2
 Author: Alex Laini, Gemma Burgazzi, Rossano Bolpagni, Daniel Bruno, Simone Guareschi, Cayetano Gutiérrez-Cánovas, Rafael Miranda, Cédric Mondy, Gabor Varbiro, Tommaso Cancellario
 Maintainer: Alex Laini <alex.laini@gmail.com>
 Description: Provides a tool for managing taxonomic and traits information and for calculating biomonitoring indices and metrics of running waters.
-License: GPL >= 2
+License: GPL (>=2)
 LazyData: true
 Encoding: UTF-8
 Depends: R (>= 3.00)
