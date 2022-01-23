@@ -136,7 +136,7 @@
 #'
 #' @export
 
-f_eve <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel = FALSE, col_blocks = NULL, nbdim = 2, distance = "gower", zerodist_rm = FALSE, correction = "none", traceB = FALSE, set_param = NULL) {
+f_eve <- function(x, trait_db = NULL, tax_lev = "Taxa", type = NULL, traitSel = FALSE, col_blocks = NULL, nbdim = 2, distance = "gower", zerodist_rm = FALSE, correction = "none", traceB = FALSE, set_param = list(max_nbdim = 15, prec = "Qt", tol = 1e-07, cor.zero = TRUE)) {
 
   #  check if the object x is of class "biomonitoR"
   classCheck(x)
