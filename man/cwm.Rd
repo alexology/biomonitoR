@@ -7,23 +7,23 @@
 cwm(x, trait_db = NULL, tax_lev = "Taxa", trans = log1p, traceB = FALSE)
 }
 \arguments{
-\item{x}{Results of the function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{trait_db}{A trait data base with a column \code{Taxa} and the other columns
-containing the traits.
-By default, the data base used is the one from Tachet \emph{et al} (2010) that
+\item{trait_db}{A trait \code{data.frame} with a column \code{Taxa} and the other columns
+containing traits.
+By default, the \code{data.frame} used is the one from Tachet et al. (2010) that
 can be retrieved from
 \href{https://www.freshwaterecology.info/}{freshwaterecology.info} website
 (Schmidt-Kloiber & Hering, 2015).}
 
 \item{tax_lev}{Character string giving the taxonomic level used to retrieve
-trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
-\code{"Family"} as returned by the \link{aggregatoR} function.}
+trait information. Possible levels are \code{Taxa}, \code{Species}, \code{Genus},
+\code{Family} as returned by \code{aggregate_taxa()}.}
 
-\item{trans}{The function used to transform the abundances, by default
+\item{trans}{Function for transforming the abundances, by default
 \code{log1p}.}
 
-\item{traceB}{When set to TRUE returns a list with the results of the cwm function
+\item{traceB}{When set to \code{TRUE} returns a list with the results of the \code{cwm()} function
 and the traits value used for the calculation.}
 }
 \value{
@@ -34,15 +34,10 @@ This function calculates the community-weighted means of trait categories.
 }
 \details{
 This function first takes the abundance table corresponding to the desired
-taxonomic level from the \code{x} aggregatoR object.
+taxonomic level from the \code{x} object generated with \code{aggregate_taxa()}.
 
-Then it searches from the trait data base all the information available at
-the desired level and, if required, calculates the corresponding averaged
-trait values (e.g. the family trait values are obtained by averaging all the
-trait values from taxa with trait information within this family).
-
-Finally, the community mean trait values are calculated using the transformed
-abundances (using the \code{trans} function) as weigths
+The community mean trait values are calculated using the transformed
+abundances (using the \code{trans} function) as weigths.
 }
 \examples{
 data(macro_ex)

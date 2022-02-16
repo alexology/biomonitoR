@@ -5,12 +5,12 @@
 #' This function calculates the absolute richness of a taxon or of a set taxa at the taxonomic level provided by the user.
 #'
 #'
-#' @param x Result of the function `aggregate_taxa()`.
-#' @param taxa a taxon or a vector of taxa.
-#' @param tax_lev taxonomic level at which the richness has to be calculated. It could be also a vector of taxonomic levels.
+#' @param x Result of `aggregate_taxa()`.
+#' @param taxa A taxon or a vector of taxa.
+#' @param tax_lev Taxonomic level at which richness has to be calculated. It could be also a vector of taxonomic levels.
 #' @keywords aggregate_taxa
 #' @export
-#' @seealso \code{\link{aggregate_taxa}}
+#' @seealso [aggregate_taxa] [get_taxa_abundance]
 #' @examples
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)

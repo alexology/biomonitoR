@@ -1,14 +1,14 @@
 #' add_bias_to_traits
 #'
 #' @description
-#' Add bias to traits to avoid duplicates.
+#' Add small amount of bias to traits to avoid taxa having the same traits.
 #'
 #' @param x Result of `average_traits()` or a `data.frame` with a similar structure.
 #' @param fuzzy Are you working with fuzzy traits? Default to `TRUE`.
-#' @param col_blocks A vector that contains the number of modalities for each trait
+#' @param col_blocks A vector that contains the number of modalities for each trait.
 #' @param SD The amount of bias.
 #'
-#' @details This function works by adding a small bias to traits.
+#' @details This function works by adding a small amount of bias to traits.
 #' The bias is added with the [stats::rnorm()] function.
 #' Fuzzy data are prepared with the function [ade4::prep.fuzzy()] of the `ade4` package.
 #' This function works with positive numeric traits.

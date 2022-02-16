@@ -7,12 +7,12 @@
 show_scores(index = NULL, method = NULL)
 }
 \arguments{
-\item{index}{name of the index for which information are needed.}
+\item{index}{Name of the index for which information are needed.}
 
-\item{method}{method of the index specified in \code{index}.}
+\item{method}{Method of the index specified in \code{index}.}
 }
 \description{
-This function print the databases used for the calculation of several indices implemented in biomonitoR.
+This function print the databases used for the calculation of several indices implemented in \code{biomonitoR}.
 }
 \examples{
 show_scores(index = "aspt", method = "spa")
@@ -21,4 +21,4 @@ show_scores(index = "life", method = "extence")
 \seealso{
 \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}, \code{\link{psi}}, \code{\link{epsi}}
 }
-\keyword{asBiomonitor}
+\keyword{as_biomonitor}

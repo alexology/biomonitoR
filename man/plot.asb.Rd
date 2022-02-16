@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_asb.R
 \name{plot.asb}
 \alias{plot.asb}
-\title{Plot asb object}
+\title{Plot objects generated with as_biomonitor}
 \usage{
 \method{plot}{asb}(
   x,
@@ -15,21 +15,26 @@
 )
 }
 \arguments{
-\item{x}{an object of class asb generatated with \code{as_biomonitor}.}
+\item{x}{Result of \code{as_biomonitor()}.}
 
-\item{parent}{name of the coarser taxonomic level.}
+\item{parent}{Name of the coarser taxonomic level.}
 
-\item{child}{name of the finer taxonomic level.}
+\item{child}{Name of the finer taxonomic level.}
 
-\item{type}{plot present-absence data with \code{pa}, abundance data with \code{abundance} and
+\item{type}{Plot present-absence data with \code{pa}, abundance data with \code{abundance} and
 detection probabilities with \code{frequency}.}
 
-\item{remove_empty_child}{remove empty level of the child taxonomic level.}
+\item{remove_empty_child}{Remove empty level of the child taxonomic level.}
 
-\item{trans}{transformation for abundance data.}
+\item{trans}{Transformation for abundance data.}
 
-\item{...}{further arguments to be passed to \code{plot}.}
+\item{...}{Further arguments to be passed to \code{plot}.}
 }
 \description{
 Plot 2 taxonomic levels using a sunburst visualization.
+}
+\examples{
+data(macro_ex)
+data_bio <- as_biomonitor(macro_ex)
+plot(data_bio)
 }

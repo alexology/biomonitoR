@@ -1,22 +1,21 @@
-#' life
+#' @title Lotic-invertebrate Index for Flow Evaluation index
 #'
 #' @description
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 #'
-#' This function calculates LIFE index according to most recent version used in UK.
+#' This function calculates the Lotic-invertebrate Index for Flow Evaluation index (LIFE).
 #'
-#' @param x result of the function aggregatoR.
-#' @param method possible choices are "extence" and "life_2017". A custom `data.frame` containing the scoring system can be provided by the user.
+#' @param x Result of `aggregate_taxa()`.
+#' @param method Possible choices are `extence` and `life_2017`. A custom `data.frame` containing the scoring system can be provided by the user.
 #' @param abucl Log abundance categories. Treshold are set to 1, 9, 99, 999 and 9999 as in the original paper of Extence et al. (1999).
-#' @param agg this option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
+#' @param agg This option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
 #' If `FALSE` no aggregation will be performed, while if `TRUE` aggregation will be performed according to the rules described in Details.
 #' A `data.frame` containing the aggregation rules can be provided by the user.
 #' This `data.frame` needs a column called *Taxon* containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications.
 #' `agg` cannot be `TRUE` when a `data.frame` is provided as method.
-#' @param fs_scores Scores ( fs) for different abundance categories of taxa associated with flow groups 1-4. A custom `data.frame` can be provided by the user.
-#' @param exceptions taxa that need to be exluded from the calculation.
+#' @param fs_scores Scores (fs) for different abundance categories of taxa associated with flow groups 1-4. A custom `data.frame` can be provided by the user.
+#' @param exceptions Taxa that to be excluded from the calculation.
 #' This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
-#' `agg` cannot be `TRUE` when a data.frame is provided as `method`.
 #' @param traceB if set to `TRUE` a list as specified below will be returned.
 #'
 #' @keywords life
@@ -25,8 +24,8 @@
 #' @importFrom tibble deframe
 #' @importFrom stats aggregate
 #'
-#' @details Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the Extence et al. (1999) version called "extence" and the version currently used in UK called "life_2017".
-#' If composite is set to T the following composite families are used for extence
+#' @details Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). `biomonitoR` implements the Extence et al. (1999) version called `extence` and the version currently used in UK called `life_2017`.
+#' If `agg` is set to `TRUE` the following composite families are used for `extence`:
 #'
 #' \enumerate{
 #'   \item Psychomyiidae (inc. Ecnomidae)
@@ -37,33 +36,32 @@
 #'   \item Hydrobiidae (inc. Bithyniidae)
 #' }
 #'
-#' while for "life_2017" the following are used:
+#' while for `life_2017` the following are used:
 #'
 #'  \enumerate{
 #'    \item Hydrophilidae (inc. Georissidae, Helophoridae, Hydrochidae)
 #'
 #'  }
 #'
-#' The `life` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-#' All the information used for `life` calculation can be retrieved with the function \code{\link{showscores}}.
+#' `life()` automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+#' All the information used for LIFE calculation can be retrieved with the function \code{\link{show_scores}}.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
-#'  \item `results` Results of the `life` index.
-#'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
-#'  \item `abu_df` The data.frame containing scores and abundance classes for each site.
-#'  \item `life_df` The data.frame used for the calculation containing scores for each site.
-#'  \item `composite_taxa` Taxa aggregated following the aggregation rules when agg is not `FALSE`.
-#'  \item `exceptions` A data.frame containing the containing changes made by excluding the taxa included in `exceptions`.
-#'  \item `parent_child_pairs` For instance in Spanish `bmwp` both Ferrissia and Planorbidae receive a score.
+#'  \item `results` Results of `life()`.
+#'  \item `taxa_df` The `data.frame` used for the calculation containing the abundance of taxa receiving a score.
+#'  \item `abu_df` The `data.frame` containing scores and abundance classes for each site.
+#'  \item `life_df` The `data.frame` used for the calculation containing scores for each site.
+#'  \item `composite_taxa` Taxa aggregated following the aggregation of the default method or set in `agg`.
+#'  \item `exceptions` A data.frame containing the changes made by excluding the taxa included in `exceptions`.
+#'  \item `parent_child_pairs` For instance in Spanish `bmwp` both *Ferrissia* and Planorbidae receive a score.
 #'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 #' }
 #'
 #' @references Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543-574.
 #' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated LIFE scores and algorithms.
-
 #' @export
-#' @seealso \code{\link{asBiomonitor}}
+#' @seealso [as_biomonitor]
 #' @examples
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)

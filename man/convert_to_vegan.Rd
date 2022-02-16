@@ -3,16 +3,16 @@
 \name{convert_to_biotic}
 \alias{convert_to_biotic}
 \alias{convert_to_vegan}
-\title{convert_to_vegan}
+\title{convert data to other formats}
 \usage{
 convert_to_biotic(x)
 
 convert_to_vegan(x, tax_lev = "Family")
 }
 \arguments{
-\item{x}{Result of thefunction \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{tax_lev}{taxonomic level of interest. Possible choices are Phylum, Class, Subclass, Order, Family, Subfamily, Tribus, Genus, Species, Subspecies, Taxa}
+\item{tax_lev}{The taxonomic level of interest. Possible choices are Phylum, Class, Subclass, Order, Family, Subfamily, Tribus, Genus, Species, Subspecies, Taxa}
 }
 \description{
 Utility functions to export data to other formats.
@@ -21,7 +21,7 @@ Utility functions to export data to other formats.
 \code{convert_to_vegan()} converts data to the \code{vegan} package style, with sites on rows and taxa on columns. \code{convert_to_biotic()} converts data to
 the format of \code{biotic} package. This function will extract information at the family level, with an exception for Oligochaeta.
 In \code{convert_to_biotic()} if both family and above family level taxonomic information of Oligochaeta are concurrently present,
-information will be provided for Oligochaeta only.
+information will be provided for Oligochaeta level only.
 \code{biomonitoR} automatically identify the taxonomic level at which Oligochaeta are stored (subclass is the default in \code{biomonitoR}).
 Be careful, for all the other taxa entered at taxonomic level higher than family will be discarded (e.g. Trombidiformes).
 }

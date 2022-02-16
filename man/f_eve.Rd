@@ -20,15 +20,15 @@ f_eve(
 )
 }
 \arguments{
-\item{x}{Results of function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{trait_db}{A trait database. Can be a \code{data.frame} ot a \code{dist} object.
-Taxonomic level of the traits database must match those of the taxonomic database.
+\item{trait_db}{A trait dataset. Can be a \code{data.frame} ot a \code{dist} object.
+Taxonomic level of the traits dataset must match those of the taxonomic dataset.
 No automatic check is done by the \code{function}.}
 
 \item{tax_lev}{Character string giving the taxonomic level used to retrieve
-trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
-\code{"Family"} as returned by the \link{aggregatoR} function.}
+trait information. Possible levels are \code{Taxa}, \code{Species}, \code{Genus},
+\code{Family} as returned by \code{aggregate_taxa()}.}
 
 \item{type}{The type of variables speciefied in \code{trait_db}.
 Must be one of \code{F}, fuzzy, or \code{C}, continuous.
@@ -45,74 +45,51 @@ We suggest to keep \code{nbdim} as low as possible.
 By default \code{biomonitoR} set the number of dimensions to 2. Select \code{auto} if you want the automated selection
 approach according to Maire et al. (2015).}
 
-\item{distance}{To be used to compute functional distances, \code{euclidean} or \code{gower}. Default to \code{gower}.}
+\item{distance}{To be used to compute functional distances, \code{euclidean} or \code{gower}. Default to \code{gower}. See details.}
 
 \item{zerodist_rm}{If \code{TRUE} aggregates taxa with the same traits.}
 
 \item{correction}{Correction methods for negative eigenvalues, can be one of \code{none}, \code{lingoes}, \code{cailliez}, \code{sqrt} and \code{quasi}.
 Ignored when type is set to \code{C}.}
 
-\item{traceB}{if \code{TRUE} ffrich will return a list as specified in details.}
+\item{traceB}{If \code{TRUE} returns a list as specified in details.}
 
-\item{set_param}{a list of parameters for fine tuning the calculations.
+\item{set_param}{A list of parameters for fine tuning the calculations.
 \code{max_nbdim} set the maximum number of dimension for evaluating the quality of the functional space.
 \code{prec} can be \code{Qt} or \code{QJ}, please refere to the \code{convhulln} documentation for more information.
 Deafault to \code{QJ}, less accurate but less prone to errors.
 \code{tol} a tolerance threshold for zero, see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to 1e-07.
-\code{cor.zero} = \code{TRUE} if TRUE, zero distances are not modified. see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to \code{TRUE}.}
+If \code{cor.zero} is \code{TRUE}, zero distances are not modified. See functions \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to \code{TRUE}.
+
+The \code{gower} distance refers to the mixed-variables coefficient of distance of Pavoine et al. (2009) as implemented in the \code{ade4} package.
+This distance is meant to be used with fuzzy data.}
 }
 \value{
 a vector with fuzzy functional richness results.
 \enumerate{
-\item \strong{results}: results of \code{ffeve()};
-\item \strong{traits}: a data.frame containing the traits used for the calculations;
-\item \strong{taxa}: a data.frame conaining the taxa used for th calculations;
-\item \strong{nbdim}: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
-\item \strong{correction}: the type of correction used.
-\item \strong{NA_detection}: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
-\item \strong{duplicated_traits}: if present, list the taxa with the same traits.
+\item \code{results} Results of \code{f_eve()}.
+\item \code{traits} A \code{data.frame} containing the traits used for the calculations.
+\item \code{taxa} A \code{data.frame} conaining the taxa used for the calculations.
+\item \code{nbdim} Number of dimensions used after calculating the quality of functional spaces according to Maire et al. (2015).
+\item \code{correction} The type of correction used.
+\item \code{NA_detection} A \code{data.frame} containing taxa on the first column and the corresponding trais with NAs on the second column.
+\item \code{duplicated_traits} If present, list the taxa with the same traits.
 }
 }
 \description{
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 
-This function calculates the functional richness based on trait categories.
+This function calculates functional evenness index.
 }
 \details{
-Functional richness (FRic) represents the amount of functional space filled by
-the community (Villeger et al., 2008) and it is related to the community use of
-resources and productivity (Mason et al., 2005). FRic is defined by the trait
-extremes and thus reflects the potential maximum functional dissimilarity.
-FRic is calculated as the hypervolume enclosing the functional space filled
-by the community. For this the convex hull approach is applied (Cornwell et al.,
-2006) using the Quickhull algorithm (Barber et al., 1996) that estimates the minimum
-convex hull which includes all the species considered in the previously defined
-functional space. Basically, this algorithm determines the taxa in the most extreme
-points of the functional space, links them to build the convex hull in order to
-calculate the volume inside it. In particular, the convex hull of a set of points
-S in n dimensions is the intersection of all convex sets containing S.
-For N points , ..., , the convex hull C is then given by the expression:
+Functional evenness represents a facet of functional diversity for a community with species distributed in a multidimensional functional space.
+The metric is based on the minimum spanning tree which links all the species in the multidimensional functional space.
+Then it quantifies the regularity with which species abundances are distributed along the spanning tree.
 
-\deqn{C = \sum_{j=1}^{N} \lambda_j \ p_j  : \ \lambda_j \geq \ for \ all \ j \ and \ \sum_{j=1}^{N} \lambda_j = 1}
-
-The functional T dimensional space is built using a certain number of dimensions
-(T) determined by the axes of a principal component analysis based on the trait
-dissimilarity matrix. Using a poor quality functional space could led to
-a biased assessment of FRic and false ecological conclusions so the number of
-axes retained for its estimation is case-specific and decided following the
-method proposed in Maire et al., (2015): a pragmatic approach consisting of
-computing all the possible functional spaces and selecting the most
-parsimonious one. This method uses the mSD index (mean squared deviation
-between the initial functional distance and the scaled distance in the
-functional space), which accounts explicitly for the deviation between
-the initial and final distance and penalizes the strong deviation. The mSD
-index has been widely used in statistics to assess errors and it has been
-demonstrated to work in different contexts and situations (Maire et al., 2015).
-In addition, when using Gower's distance the mSD ranges from 0 and 1,
-which helps to interpret quality. Finally, the resulting FRic variable
-is standardized by its maximum, ranging from 0 to 1. In addition, it must
-be considered that the number of taxa must be higher than the number of traits
-to have reliable FRic values (Villeger et al., 2008).
+Functional evenness values are strictly positive and constrained between 0 and 1.
+The higher they are, the higher the component of functional diversity they quantify is.
+The measure quantifies the regularity with which the functional space is filled by species, weighted by their abundance and it is independent of species richness.
+See formulas and more information in Mason et al. (2005) and Villeger et al. (2008).
 }
 \examples{
 data(macro_ex)
@@ -142,23 +119,14 @@ traits_dist <- dist.ktab(traits_dist, type = "F")
 f_eve(data_agr, trait_db = traits_dist)
 }
 \references{
-Barber, C. B., Dobkin, D. P., & Huhdanpaa, H. (1996).
-The quickhull algorithm for convex hulls. ACM Transactions on
-Mathematical Software (TOMS), 22(4), 469-483.
-
-Cornwell, W. K., Schwilk, D. W., & Ackerly, D. D. (2006).
-A trait-based test for habitat filtering: convex hull volume.
-Ecology, 87(6), 1465-1471
-
-Maire, E., Grenouillet, G., Brosse, S., & Villeger, S. (2015).
-How many dimensions are needed to accurately assess functional diversity?
-A pragmatic approach for assessing the quality of functional spaces. Global
-Ecology and Biogeography, 24(6), 728-740.
-
 Mason, N. W., Mouillot, D., Lee, W. G., and
 Wilson, J. B. (2005). Functional richness, functional evenness and functional
 divergence: the primary components of functional diversity. Oikos, 111(1),
 112-118.
+
+Pavoine, S., Vallet, J., Dufour, A. B., Gachet, S., & Daniel, H. (2009).
+On the challenge of treating various types of variables: application for improving
+the measurement of functional diversity. Oikos, 118(3), 391-402.
 
 Villeger, S., Mason, N. W., & Mouillot, D.
 (2008). New multidimensional functional diversity indices for a

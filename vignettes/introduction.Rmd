@@ -35,7 +35,6 @@ The first step is to import taxonomic dataset with the function `as_biomonitor()
 # import macroinvertebrate data
 data_bio <- as_biomonitor(macro_ex, group = "mi")
 
-data_bio
 ```
 
 
@@ -45,7 +44,6 @@ taxonomic dataset can be imported as presence-absence by levaragin on the `FUN` 
 # import macroinvertebrate data
 data_bio_bin <- as_biomonitor(macro_ex, group = "mi", FUN = bin)
 
-data_bio_bin
 ```
 
 An important feature of the `biomonitoR` package is the spell checker, built from the reference database. By default `biomonitoR` remove taxa that are not recognized by the reference database and will provide suggestion for unrecognized names. The taxonomic dataset can thus be corrected by modifying the original file, directly in R or by using the spell checker. The spell checker is enabled by setting the option `correct_names` to to `TRUE` and it will run interactively. Every taxon needs to be present in the reference database, otherwise the user is forced to exit. This behaviour is important to assure consistency with further calculations. The option `traceB` will list suggestions and correction.
@@ -61,17 +59,17 @@ macro_ex_wrong[macro_ex_wrong$Taxa %in% "Acentrella", "Taxa"] <- "Acentrela"
 data_bio.wrong <- as_biomonitor(macro_ex_wrong, group = "mi", traceB = TRUE)
 
 # "Acentrela" has been removed and a suggestion is proposed
-data_bio.wrong
+
 ```
 
 `as_biomonitor()` will create an object of class `asb` that is needed for perfroming further calculation in `biomonitoR`. It is possible to export both the taxonomic dataset and the suggestion/correction as data.frame objects using the function `as.data.frame()`.
 
 ```{r as.data }
-# export taxonomic dataset and suggestions as data.frame
+# export the taxonomic dataset and suggestions as data.frame
 
 macro_ex.df <- as.data.frame(data_bio.wrong)
 macro_ex_correction.df <- as.data.frame(data_bio.wrong, object = 2)
-macro_ex_correction.df
+
 ```
 
 
@@ -97,11 +95,6 @@ tricho
 tricho_agg <- aggregate_taxa(tricho)
 ```
 
-Data can be plotted to explore the taxonomic strucure of the data.
-
-```{r plot }
-plot(data_bio, type = "abundance", trans = log1p)
-```
 
 ## Building your own reference database
 
@@ -117,7 +110,6 @@ data(Tree)
 
 ref_custom <- ref_from_tree(Tree)
 
-ref_custom
 ```
 
 The number of taxonomic levels of the reference database is 11 and their number and names cannot be modified. There is the hope to change this beahviour in a next version of `biomonitoR`.

@@ -1,24 +1,25 @@
-#' e-psi
+#' Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index
 #'
 #' @description
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 #'
 #' This function calculates the Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index (ePSI) according to the most recent version used in UK.
-#' @param x results of the function `aggregate_taxa`.
-#' @param method method `uk`.
-#'  Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Scores*.
-#' @param agg this option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
+#' @param x Results of `aggregate_taxa()`.
+#' @param method The only avialble method is `uk`.
+#'  Users can provide their own `data.frame` (see examples) with a column called *Taxon* and the column of scores called *Scores*.
+#' @param agg This option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
 #' If `FALSE` no aggregation will be performed, while if `TRUE` aggregation will be performed according to the rules described in Details.
 #' A `data.frame` containing the aggregation rules can be provided by the user.
 #' This `data.frame` needs a column called *Taxon* containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications.
 #' `agg` cannot be `TRUE` when a `data.frame` is provided as method.
-#' @param agg  optional, a data.frame provided by the user containing the specification on how to aggregate taxa. This data.frame needs a column called *Taxon*
-#'  containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications. Used when users want to aggregate some taxonomic levels while using their own data.frame of scores (provided via `method`).
+#' @param agg  Default to `FALSE`. If set to `TRUE` `epsi()` will use the aggreation rules described in the details.
+#'  It can also be a `data.frame` provided by the user containing the specification on how to aggregate taxa. This `data.frame` needs a column called *Taxon*
+#'  containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications. Used when users want to aggregate some taxonomic levels while using their own `data.frame` of scores (provided via `method`).
 #' @param abucl Log abundance categories. Tresholds are set to 1, 9, 99, 999.
-#' @param exceptions taxa that need to be exluded from the calculation.
+#' @param exceptions Taxa that need to be exluded from the calculation.
 #' This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
 #' `agg` cannot be `TRUE` when a data.frame is provided as `method`.
-#' @param traceB if set to `TRUE` a list as specified below will be returned.
+#' @param traceB If set to `TRUE` a list as specified below will be returned.
 #' @keywords epsi
 #' @details `epsi()` implementation take into account composite taxa as follow:
 #' \enumerate{
@@ -27,18 +28,18 @@
 #'  \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
 #'  }
 #'
-#' The `epsi()` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+#' `epsi()` automatically check for parent-child pairs in the scoring system, see the return section for a definition.
 #' All the information used for `epsi()` calculation can be retrieved with the function \code{\link{show_scores}}.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
 #'  \item `results` Results of `epsi()`.
-#'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
-#'  \item `epsi_df` The data.frame used for the calculation containing scores and abundance classes for each site.
-#'  \item `composite_taxa` Taxa aggregated following the aggregation rules of the `uk_agg` method or set in the `agg` option.
-#'  \item `exceptions` A data.frame containing the containing changes made by excluding the taxa included in `exceptions`.
-#'  \item `parent_child_pairs` For instance in Spanish `bmwp` both Ferrissia and Planorbidae receive a score.
-#'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
+#'  \item `taxa_df` The `data.frame` used for the calculation containing the abundance of taxa receiving a score.
+#'  \item `epsi_df` The `data.frame` used for the calculation containing scores and abundance classes for each site.
+#'  \item `composite_taxa` Taxa aggregated following the aggregation of the default method or set in `agg`.
+#'  \item `exceptions` A `data.frame` containing the containing changes made by excluding the taxa included in `exceptions`.
+#'  \item `parent_child_pairs` Parent-child pairs are not present in  the default implementation of epsi. A `data.frame` if both a  taxon and a parent
+#'  taxon receive a score.
 #' }
 #'
 #' @references Turley MD, Bilotta GS, Chadd RP, Extence CA, Brazier RE, Burnside NG, Pickwell AG. 2016. A sediment-specific family-level biomonitoring tool to identify the impacts of fine sediment in temperate rivers and streams. Ecological Indicators 70, 151-165.

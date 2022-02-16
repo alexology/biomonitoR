@@ -15,13 +15,13 @@ dness(
 \arguments{
 \item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{complete}{if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with tax_lev}
+\item{complete}{If \code{TRUE} unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with \code{tax_lev}.}
 
-\item{tax_lev}{taxonomic level from which the indices are to be calculated}
+\item{tax_lev}{Taxonomic level from which the indices have to be calculated.}
 
-\item{method}{available methods are delta (taxonomic diversity), delta.st (taxonomic distinctness) and delta.bin (variation in taxonomic distinctness)}
+\item{method}{Available methods are delta (taxonomic diversity), delta.st (taxonomic distinctness) and delta.bin (variation in taxonomic distinctness).}
 
-\item{taxa_tree}{if TRUE dness return a list where the first element is the taxonomic diversity, taxonomic distinctness or variation of taxonomic distinctness and the second elemnt the taxonomic tree}
+\item{taxa_tree}{If \code{TRUE} \code{dness()} return a list where the first element is the taxonomic diversity, taxonomic distinctness or variation of taxonomic distinctness and the second elemnt the taxonomic tree}
 }
 \description{
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
@@ -29,7 +29,11 @@ dness(
 This function calculates the taxonomic diversity, taxonomic distinctness and variation of taxonomic distinctness.
 }
 \details{
-see Clarke and Warwick (1998) an Clarke and Warwick (2001).
+These indeces take into account the taxonomic relatedness of the species in each sample. According to Clarke and Warwick (1998, 2001),
+taxonomic diversity is the average taxonomic ‘distance’ between any two organisms chosen at random from the sample,
+taxonomic distinctness is the average path length between any two randomly chosen individuals conditional on them being from different species and
+variation in taxonomic distinctness is the variance of the path length through the taxonomic tree connecting every pair of species in the list and
+reflects the unevenness of the taxonomic tree.
 }
 \examples{
 data(oglio)
@@ -45,4 +49,3 @@ Clarke, K. R., & Warwick, R. M. (2001). A further biodiversity index applicable 
 \seealso{
 \code{\link{aggregatoR}}
 }
-\keyword{ept}

@@ -1,11 +1,11 @@
 #' general_info
 #'
-#' Function to calculate the overall richness at different taxonomic level.
-#' @param x results of the function `aggregate_taxa()`.
-#' @param taxalist if `TRUE` returns the list of taxa for each taxonomic level.
+#' Calculates the overall richness at different taxonomic level.
+#' @param x Result of `aggregate_taxa()`.
+#' @param taxalist If `TRUE` returns the list of taxa for each taxonomic level.
 #' @keywords general_info
 #' @export
-#' @seealso \code{\link{as_biomonitor}}
+#' @seealso [as_biomonitor]
 #' @examples
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)

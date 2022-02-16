@@ -5,35 +5,35 @@
 #'
 #' Functional richness calculated as the hypervolume enclosing the functional space.
 #'
-#' @param x results of function `aggregate_taxa()`
-#' @param trait_db a trait database. Can be a `data.frame` ot a `dist` object.
-#' Taxonomic level of the traits database must match those of the taxonomic database.
-#' No automatic check is done by the `function`.
-#' @param tax_lev character string giving the taxonomic level used to retrieve
-#' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
-#' `"Family"` as returned by the [aggregatoR] function.
-#' @param type the type of variables speciefied in `trait_db`.
+#' @param x Result of `aggregate_taxa()`.
+#' @param trait_db A trait dataset. Can be a `data.frame` ot a `dist` object.
+#' Taxonomic level of the traits dataset must match those of the taxonomic database.
+#' No automatic check is done.
+#' @param tax_lev Character string giving the taxonomic level used to retrieve
+#' trait information. Possible levels are `Taxa`, `Species`, `Genus`,
+#' `Family` as returned by `aggregate_taxa()`.
+#' @param type The type of variables speciefied in `trait_db`.
 #' Must be one of `F`, fuzzy, or `C`, continuous.
 #' If more control is needed please consider to provide `trait_db` as a `dist` object.
 #' It works only when `trait_db` is a `data.frame`, otherwise ingored.
-#' @param traitSel interactively select traits.
+#' @param traitSel Interactively select traits.
 #' @param col_blocks A vector that contains the number of modalities for each trait.
 #' Not needed when `euclidean` distance is used.
 #' @param nbdim number of dimensions for the multidimensional functional spaces.
 #' We suggest to keep `nbdim` as low as possible.
 #' By default `biomonitoR` set the number of dimensions to 2. Select `auto` if you want the automated selection
 #' approach according to Maire et al. (2015).
-#' @param distance to be used to compute functional distances, `euclidean` or `gower`. Default to `gower`.
+#' @param distance To be used to compute functional distances, `euclidean` or `gower`. Default to `gower`. See details.
 #' @param zerodist_rm If `TRUE` aggregates taxa with the same traits.
 #' @param correction Correction methods for negative eigenvalues, can be one of `none`, `lingoes`, `cailliez`, `sqrt` and `quasi`.
 #' Ignored when type is set to `C`.
-#' @param traceB if `TRUE` ffrich will return a list as specified in details.
-#' @param set_param a list of parameters for fine tuning the calculations.
+#' @param traceB If `TRUE` ffrich will return a list as specified in details.
+#' @param set_param A list of parameters for fine tuning the calculations.
 #' `max_nbdim` set the maximum number of dimension for evaluating the quality of the functional space.
 #' `prec` can be `Qt` or `QJ`, please refere to the `convhulln` documentation for more information.
 #' Deafault to `QJ`, less accurate but less prone to errors.
 #' `tol` a tolerance threshold for zero, see the function `is.euclid`, `lingoes` and `cailliez` from the `ade4` for more details. Default to 1e-07.
-#' `cor.zero` = `TRUE` if TRUE, zero distances are not modified. see the function `is.euclid`, `lingoes` and `cailliez` from the `ade4` for more details. Default to `TRUE`.
+#' If `cor.zero` is `TRUE`, zero distances are not modified. see the function `is.euclid`, `lingoes` and `cailliez` from the `ade4` for more details. Default to `TRUE`.
 #'
 #'
 #'
@@ -51,7 +51,7 @@
 #'  points of the functional space, links them to build the convex hull in order to
 #'  calculate the volume inside it. In particular, the convex hull of a set of points
 #'  S in n dimensions is the intersection of all convex sets containing S.
-#'  For N points , ..., , the convex hull C is then given by the expression:
+#'  For N points the convex hull C is then given by the expression:
 #'
 #'  \deqn{C = \sum_{j=1}^{N} \lambda_j \ p_j  : \ \lambda_j \geq \ for \ all \ j \ and \ \sum_{j=1}^{N} \lambda_j = 1}
 #'
@@ -74,16 +74,19 @@
 #'  be considered that the number of taxa must be higher than the number of traits
 #'  to have reliable FRic values (Villeger et al., 2008).
 #'
+#' The `gower` distance refers to the mixed-variables coefficient of distance of Pavoine et al. (2009) as implemented in the `ade4` package.
+#' This distance is meant to be used with fuzzy data.
+#'
 #' @return a vector with fuzzy functional richness results.
 #' \enumerate{
-#'  \item **results**: results of the ffred function;
-#'  \item **traits**: a data.frame containing the traits used for the calculations;
-#'  \item **taxa**: a data.frame conaining the taxa used for th calculations;
-#'  \item **nbdim**: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
-#'  \item **correction**: the type of correction used.
-#'  \item **NA_detection**: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
-#'  \item **duplicated_traits**: if present, list the taxa with the same traits.
-#'  \item `parent_child_pairs` For instance in Spanish `aspt` both Ferrissia and Planorbidae receive a score.
+#'  \item `results` Results of the `f_rich()` function.
+#'  \item `traits` A data.frame containing the traits used for the calculations.
+#'  \item `taxa` A `data.frame` conaining the taxa used for the calculations.
+#'  \item `nbdim` Number of dimensions used after calculatin the quality of functional spaces according to Maire et al. (2015).
+#'  \item `correction` The type of correction used.
+#'  \item `NA_detection` A `data.frame` containing taxa on the first column and the corresponding trais with NAs on the second column.
+#'  \item `duplicated_traits` If present, list the taxa with the same traits.
+#'  \item `parent_child_pairs` For instance in Spanish `aspt` both *Ferrissia* and Planorbidae receive a score.
 #'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 #' }
 #'
@@ -134,6 +137,9 @@
 #'   Wilson, J. B. (2005). Functional richness, functional evenness and functional
 #'   divergence: the primary components of functional diversity. Oikos, 111(1),
 #'   112-118.
+#' @references Pavoine, S., Vallet, J., Dufour, A. B., Gachet, S., & Daniel, H. (2009).
+#'  On the challenge of treating various types of variables: application for improving
+#'   the measurement of functional diversity. Oikos, 118(3), 391-402.
 #' @references Villeger, S., Mason, N. W., & Mouillot, D.
 #'   (2008). New multidimensional functional diversity indices for a
 #'   multifaceted framework in functional ecology. Ecology, 89(8), 2290-2301.

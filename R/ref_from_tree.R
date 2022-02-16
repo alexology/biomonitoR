@@ -1,10 +1,9 @@
-#' ref_from_tree
+#' @title Reference from taxonomic tree
 #'
-#' This function transforms a taxonomic tree to a reference database suitable for biomonitoR.
-#' @param x taxonomic tree. See \code{\link{Tree}} for an example.
-#' @param group merge the user database with one of the biomonitoR reference databases, default to `none`.
+#' This function transforms a taxonomic tree to a reference database suitable for `biomonitoR`.
+#' @param x Taxonomic tree. See \code{\link{Tree}} for an example.
+#' @param group Merge the user dataset with one of the `biomonitoR` reference databases, default to `none`.
 #'  If duplicated Taxa names are present this function keeps the name provided by the user.
-#'  Check the reliability of results when using group = `mi` for macroinvertebrates or group = `mf` for macrophytes.
 #' @keywords ref_from_tree
 #' @export
 #' @examples

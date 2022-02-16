@@ -5,15 +5,15 @@
 #'
 #' This function calculates the community trait specialization.
 #'
-#' @param x results of function `aggregate_taxa()`.
-#' @param trait_db a trait data base with a column `Taxa` and the other columns
-#'   containing the traits.Please check `assign_traits()` for building the trait database.
-#' @param tax_lev character string giving the taxonomic level used to retrieve
+#' @param x Result of `aggregate_taxa()`.
+#' @param trait_db A trait `data.frame` with a column `Taxa` and the other columns
+#'   containing the traits.Please check `assign_traits()` for building the trait dataset.
+#' @param tax_lev Character string giving the taxonomic level used to retrieve
 #'   trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
 #'   `"Family"` as returned by `aggregate_taxa()`.
-#' @param trans the function used to transform the abundances, by default
+#' @param trans The function used to transform the abundances, by default
 #'   `log1p`.
-#' @param traceB when set to TRUE returns a list with the results of the cwm function
+#' @param traceB When set to `TRUE` returns a list with the results of the `csi()` function
 #'   and the traits value used for the calculation.
 #'
 #' @details This function first takes the abundance table corresponding to the desired
@@ -24,15 +24,15 @@
 #'
 #' \deqn{TSI = (sum(c^{2}_tik) - 1/K) / (1 - 1/K)}
 #'
-#' with \eqn{c^{2}_tik} being the affinity of taxon `t` for the modality `k` (among
-#' `K`) of trait `i`.
+#' with \eqn{c^{2}_tik} being the affinity of taxon *t* for the modality *k* (among
+#' *K*) of trait *i*.
 #'
 #' Finally, the community trait specialization is calculated for each trait by
 #' averaging the TSIs using the transformed abundances (using the `trans`
-#' function) as weigths. Only the taxa having traits contributes to the calculation of
+#' function) as weigths. Only taxa having traits contributes to the calculation of
 #' index.
 #'
-#' @return a table with the CSI values for each trait
+#' @return a `data.frame` with the CSI values for each trait
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup n_distinct
 #' @importFrom tidyr gather spread

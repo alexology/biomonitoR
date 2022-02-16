@@ -1,4 +1,4 @@
-#' aspt
+#' Average Score Per Taxon
 #'
 #' @description
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
@@ -9,7 +9,7 @@
 #' @param method The implementation of BMWP needed to calculate ASPT. Possible choices are `a` (Armitage et al. 1983), `uk` (Davy-Bowker et al. 2010), `spa` (MAGRAMA 2011), `ita` (Buffagni et al . 2014).
 #'  Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Scores*.
 #' @param agg This option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
-#' If `FALSE` no aggregation will be performed, while if `TRUE` aggregation will be performed according to the rules described in Details.
+#' If `FALSE` no aggregation will be performed, while if `TRUE` aggregation will be performed according to the rules described in *Details*.
 #' A `data.frame` containing the aggregation rules can be provided by the user.
 #' This `data.frame` needs a column called *Taxon* containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications.
 #' `agg` cannot be `TRUE` when a `data.frame` is provided as method.
@@ -23,7 +23,7 @@
 #' @references Davy-Bowker J., Clarke R., Corbin T., Vincent H, Pretty J., Hawczak A., Blackburn J., Murphy J., Jones I., 2008. River Invertebrate Classification Tool. Final report. WFD72C. SNIFFER. 276 pp
 #' @references MAGRAMA-Ministerio de Agricultura y medio Ambiente (2011) Protocolo de muestreo y laboratorio de fauna bentonica de invertebrados en rios vadeables. ML-Rv-I-2011, Cod, 23 pp.
 #'
-#' @details ASPT represents the average scores of the families that receive the score. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker et al. (2010) and Buffagni et al. (2014) implementations take into account composite taxa as follow:
+#' @details ASPT is the average scores of the families that receive the score. Armitage scores are not reliable yet, since taxonomy has to be revised (e.g. Elminthidae are present instead of Elmidae). Davy-Bowker et al. (2010) and Buffagni et al. (2014) implementations take into account composite taxa as follow:
 #' \enumerate{
 #'   \item Psychomyiidae (inc. Ecnomidae)
 #'   \item Rhyacophilidae (inc. Glossosomatidae)
@@ -37,7 +37,7 @@
 #'   \item Oligochaeta (all the families)
 #' }
 #'
-#' Optional scores provided by the user data.frame needs to be formatted like following:
+#' Optional scores provided by the user `data.frame` needs to be formatted like following:
 #' \tabular{lc}{
 #' Taxon \tab Scores \cr
 #' Aeshnidae \tab 8 \cr
@@ -58,16 +58,16 @@
 #' }
 #'
 #'
-#' The `aspt()` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+#' The `aspt()` function automatically check for parent-child pairs in the scoring system, see the Value section for a definition.
 #' All the information used for `aspt()` calculation can be retrieved with the function \code{\link{show_scores}}.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
-#'  \item `results` Results of `aspt()`.
-#'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
-#'  \item `composite_taxa` Taxa aggregated following the aggregation rules when agg is not `NULL`.
-#'  \item `exceptions` A data.frame containing the containing changes made by excluding the taxa included in `exceptions`.
-#'  \item `parent_child_pairs` For instance in Spanish aspt both Ferrissia and Planorbidae receive a score.
+#'  \item `results` Result of `aspt()`.
+#'  \item `taxa_df` The `data.frame` used for the calculation containing the abundance of taxa receiving a score.
+#'  \item `composite_taxa` Taxa aggregated following the aggregation rules when `agg` is not `NULL`.
+#'  \item `exceptions` A `data.frame` containing the changes made by excluding the taxa included in `exceptions`.
+#'  \item `parent_child_pairs` For instance in Spanish ASPT both *Ferrissia* and Planorbidae receive a score.
 #'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 #' }
 #'
@@ -203,7 +203,7 @@ aspt <- function(x, method = "ita", agg = FALSE, exceptions = NULL, traceB = FAL
 
   names(tot.mer)[-c(1, 2)] <- st.names # assign site names, the first wo columns are taxa and scores
   tot.st <- which(names(tot.mer) %in% st.names) # column numbers of the site columns
-  ntaxa <- colSums(tot.mer[, -c(1:2), drop = F] == 1) # taxa richness, used as denominator in the aspt calculation
+  ntaxa <- colSums(tot.mer[, -c(1:2), drop = FALSE] == 1) # taxa richness, used as denominator in the aspt calculation
   tot.aspt <- apply(tot.mer$Scores * tot.mer[, tot.st, drop = F], 2, sum) / ntaxa # calculate the aspt as bmwp times the taxa richness
 
 

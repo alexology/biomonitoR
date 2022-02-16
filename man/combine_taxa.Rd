@@ -7,9 +7,9 @@
 combine_taxa(x, ntaxa = 2, tax_lev = "Taxa")
 }
 \arguments{
-\item{x}{Result of the function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{ntaxa}{Rumber of taxa.}
+\item{ntaxa}{Number of taxa.}
 
 \item{tax_lev}{Taxonomic level on which the calculation has to be made.}
 }
@@ -19,7 +19,7 @@ This function returns all the combinations of n taxa at the desired taxonomic re
 \details{
 This function is intended to help the user to identify the best subset of taxa that correlates with environmental variables.
 Metrics based on a specific group of taxa (EPT, 1-GOLD, etc) are currently used in biomonitoring. They rely on available information on the responses
-of the selected taxa to target strssors. The relationship between an environmental variable and a subset of taxa could exist and not detected due to the scarce
+of the selected taxa to target stressors. The relationship between an environmental variable and a subset of taxa could exist and not detected due to the scarce
 availaibility of autoecological data. With more than 4 taxa the calculations should become infeasible, expecially when the number
 of taxa in the user dataset is high.
 }
@@ -30,6 +30,6 @@ data_agr <- aggregate_taxa(data_bio)
 combine_taxa(data_agr, tax_lev = "Family")
 }
 \seealso{
-\code{\link{aggregate_taxa}}
+\link{aggregate_taxa}
 }
-\keyword{aggregatoR}
+\keyword{aggregate_taxa}

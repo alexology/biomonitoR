@@ -1,10 +1,10 @@
 #' abundance
 #'
-#' @description Calculates taxa abundances at the desired taxonomic level.
+#' @description Calculates taxa abundance at the desired taxonomic level.
 #' Unassigned taxa can be included or excluded from the calculation.
 #'
-#' @param x Result of the function `aggregate_taxa()`.
-#' @param tax_lev Taxonomic level.
+#' @param x Result of `aggregate_taxa()`.
+#' @param tax_lev Taxonomic level at which the calculation has to be performed.
 #' @param unassigned Does unassigned taxa need to be taken into account? If yes set unassigned to `TRUE`, otherwise `FALSE`.
 #'
 #' @keywords abundance

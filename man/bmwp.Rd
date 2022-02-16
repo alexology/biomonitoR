@@ -7,30 +7,30 @@
 bmwp(x, method = "ita", agg = FALSE, exceptions = NULL, traceB = FALSE)
 }
 \arguments{
-\item{x}{result of the function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{method}{the implementation of BMWP. Possible choices are \code{a} (Armitage et al. 1983), \code{uk} (Davy-Bowker et al. 2010), \code{spa} (MAGRAMA 2011), \code{ita} (Buffagni et al . 2014).
-Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
+\item{method}{The implementation of BMWP. Possible choices are \code{a} (Armitage et al. 1983), \code{uk} (Davy-Bowker et al. 2010), \code{spa} (MAGRAMA 2011), \code{ita} (Buffagni et al . 2014).
+Users can provide their own \code{data.frame} (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
 
-\item{agg}{this option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
+\item{agg}{This option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
 If \code{FALSE} no aggregation will be performed, while if \code{TRUE} aggregation will be performed according to the rules described in Details.
 A \code{data.frame} containing the aggregation rules can be provided by the user.
 This \code{data.frame} needs a column called \emph{Taxon} containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
 \code{agg} cannot be \code{TRUE} when a \code{data.frame} is provided as method.}
 
-\item{exceptions}{taxa that need to be exluded from the calculation.
+\item{exceptions}{Taxa that need to be exluded from the calculation.
 This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.}
 
-\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+\item{traceB}{If set to \code{TRUE} a list as specified below will be returned.}
 }
 \value{
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
 \item \code{results} Results of \code{bmwp()}.
-\item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
-\item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{NULL}.
-\item \code{exceptions} A data.frame containing the containing changes made by excluding the taxa included in \code{exceptions}.
-\item \code{parent_child_pairs} For instance in Spanish \code{bmwp} both Ferrissia and Planorbidae receive a score.
+\item \code{taxa_df} The \code{data.frame} used for the calculation containing the abundance of taxa receiving a score.
+\item \code{composite_taxa} Taxa aggregated following the aggregation rules when \code{agg} is not \code{NULL}.
+\item \code{exceptions} A \code{data.frame} containing the containing changes made by excluding the taxa included in \code{exceptions}.
+\item \code{parent_child_pairs} For instance in Spanish BMWP both \emph{Ferrissia} and Planorbidae receive a score.
 Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 }
 }
@@ -72,7 +72,7 @@ Crangonyctidae \tab Gammaridae \cr
 Niphargidae \tab Gammaridae \cr
 }
 
-The \code{bmwp()} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+The \code{bmwp()} function automatically check for parent-child pairs in the scoring system, see the return the Value section for a definition.
 All the information used for \code{bmwp()} calculation can be retrieved with the function \code{show_scores()}.
 }
 \examples{
@@ -92,4 +92,4 @@ MAGRAMA-Ministerio de Agricultura y medio Ambiente (2011) Protocolo de muestreo 
 \seealso{
 \link{aggregate_taxa} \link{aspt} \link{show_scores}
 }
-\keyword{aggregatoR}
+\keyword{aggregate_taxa}

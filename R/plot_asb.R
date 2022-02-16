@@ -1,19 +1,24 @@
-#' @title Plot asb object
+#' @title Plot objects generated with as_biomonitor
 #'
 #' @description
 #' Plot 2 taxonomic levels using a sunburst visualization.
 #'
-#' @param x an object of class asb generatated with `as_biomonitor`.
-#' @param parent name of the coarser taxonomic level.
-#' @param child name of the finer taxonomic level.
-#' @param type plot present-absence data with `pa`, abundance data with `abundance` and
+#' @param x Result of `as_biomonitor()`.
+#' @param parent Name of the coarser taxonomic level.
+#' @param child Name of the finer taxonomic level.
+#' @param type Plot present-absence data with `pa`, abundance data with `abundance` and
 #' detection probabilities with `frequency`.
-#' @param remove_empty_child remove empty level of the child taxonomic level.
-#' @param trans transformation for abundance data.
-#' @param ... further arguments to be passed to `plot`.
+#' @param remove_empty_child Remove empty level of the child taxonomic level.
+#' @param trans Transformation for abundance data.
+#' @param ... Further arguments to be passed to `plot`.
 #'
 #' @export
 #' @importFrom plotly plot_ly
+#'
+#' @examples
+#' data(macro_ex)
+#' data_bio <- as_biomonitor(macro_ex)
+#' plot(data_bio)
 
 plot.asb <- function(x, parent = "Order", child = "Family", type = "pa", remove_empty_child = FALSE, trans = NULL, ...){
 

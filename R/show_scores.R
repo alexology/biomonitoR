@@ -1,9 +1,9 @@
 #' show_scores
 #'
-#' This function print the databases used for the calculation of several indices implemented in biomonitoR.
-#' @param index name of the index for which information are needed.
-#' @param method method of the index specified in `index`.
-#' @keywords asBiomonitor
+#' This function print the databases used for the calculation of several indices implemented in `biomonitoR`.
+#' @param index Name of the index for which information are needed.
+#' @param method Method of the index specified in `index`.
+#' @keywords as_biomonitor
 #' @export
 #' @seealso \code{\link{aspt}}, \code{\link{bmwp}}, \code{\link{life}}, \code{\link{whpt}}, \code{\link{psi}}, \code{\link{epsi}}
 #' @examples
