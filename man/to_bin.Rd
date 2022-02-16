@@ -7,7 +7,7 @@
 to_bin(x)
 }
 \arguments{
-\item{x}{a \code{data.frame}}
+\item{x}{A \code{data.frame}}
 }
 \description{
 This function transforms abundance to presence-absence.

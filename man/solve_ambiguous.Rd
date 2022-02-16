@@ -2,25 +2,25 @@
 % Please edit documentation in R/solve_ambiguous.R
 \name{solve_ambiguous}
 \alias{solve_ambiguous}
-\title{solve_ambiguous}
+\title{Methods to deal with ambiguous taxa}
 \usage{
 solve_ambiguous(x, method = "MCWP")
 }
 \arguments{
-\item{x}{result of the function aggregatoR.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{method}{only methods \code{RPKC} and \code{MCWP} are currently implemented in \code{biomonitoR}. See details.}
+\item{method}{Only methods \code{RPKC} and \code{MCWP} are currently implemented in \code{biomonitoR}. See details.}
 }
 \description{
 Solve the ambiguous assignment of taxa.
 }
 \details{
 Taxonomic dataset often contains ambiguous taxa due to the difficulites in identify damaged and juvenile organisms.
-For instance Chironominae and Chironomidae could be reported in the same sample. Several techinques has been
+For instance Chironominae and Chironomidae could be reported in the same sample. Several techniques has been
 proposed to solve this issue (see Cuffney et al., 2007).
-Currently ambiguousSolver two only one algorithms to solve the problem of ambiguous assignments.
+Currently \code{solve_ambiguous()} provides two algorithms to solve the problem of ambiguous assignments.
 \code{RPKC} means Remove Parents - Keep Children. It works by removing all the higher taxonomic levels while keeping children.
-\code{MCWP} means Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of higher taxonomic levels.
+\code{MCWP} means Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of the higher taxonomic level.
 }
 \examples{
 data(macro_ex)
@@ -34,6 +34,6 @@ data_mcwp <- aggregate_taxa(data_mcwp_bio)
 Cuffney, T. F., Bilger, M. D., & Haigler, A. M. (2007). Ambiguous taxa: effects on the characterization and interpretation of invertebrate assemblages. Journal of the North American Benthological Society, 26(2), 286-307.
 }
 \seealso{
-\code{\link{aggregatoR}}
+\link{aggregate_taxa}
 }
-\keyword{aggregatoR}
+\keyword{aggregate_taxa}

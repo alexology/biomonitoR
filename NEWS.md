@@ -1,3 +1,7 @@
+2# biomonitoR 0.9.3
+
+* Implemented 3 plot functions.
+
 2# biomonitoR 0.9.2
 
 * Function deprecated in version 0.9.1 are now defunct.

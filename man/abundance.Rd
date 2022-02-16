@@ -7,14 +7,14 @@
 abundance(x, tax_lev = "Taxa", unassigned = FALSE)
 }
 \arguments{
-\item{x}{Result of the function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{tax_lev}{Taxonomic level.}
+\item{tax_lev}{Taxonomic level at which the calculation has to be performed.}
 
 \item{unassigned}{Does unassigned taxa need to be taken into account? If yes set unassigned to \code{TRUE}, otherwise \code{FALSE}.}
 }
 \description{
-Calculates taxa abundances at the desired taxonomic level.
+Calculates taxa abundance at the desired taxonomic level.
 Unassigned taxa can be included or excluded from the calculation.
 }
 \details{

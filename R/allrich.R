@@ -4,15 +4,16 @@
 #'
 #' @description
 #' This function allows the calculation of richness at different taxonomic levels and of the total abundance.
+#' A convenient function for calculating richness at all the taxonomic levels simultaneously is provided.
 #'
 #' @aliases  richness
 #'
 #' @param x Result of `aggregate_taxa()`.
-#' @param tax_lev Taxonomic level on which the calculation has to be made.
+#' @param tax_lev Taxonomic level at which the calculation has to be performed.
 #'
 #' @details `richness()` returns a warning meassage if unassigned taxa are detected at the desired taxonomic level. Unassigned taxa can be present
 #' because some taxa are entered at higher taxonomic levels than those at which the calculation is performed.
-#' For instance this problem appears when the calculation is done at genus level and some taxa has been entered at family level.
+#' For instance, this problem appears when the calculation is performed at genus level and some taxa has been entered at family level.
 #' Unassigned taxa can be present also because of missing levels in the reference database at the desired taxonomic level.
 #' This problem is present, for example, for Mollusca in the default database for macroinvertebrates.
 #' Mollusca orders are not present because there is no consensus among taxonomist (see the [www.molluscabase.org](https://www.molluscabase.org/index.php) website).

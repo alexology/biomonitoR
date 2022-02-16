@@ -1,34 +1,33 @@
-#' as_biomonitor
+#' Import data into biomonitoR format
 #'
 #' @description
-#' This function merge the user dataframe with a reference database and suggest corrections for mispelled names.
+#' This function merge the user `data.frame` with a reference dataset and suggest corrections for mispelled names.
 #'
-#' @param x a data.frame with a column called "Taxa" where store taxa names and samples on the other columns (see the example macro_ex).
-#' @param group biotic group of interest. Possible values are `mi` for macroinvertebrates, `mf` for macrophytes and `fi` for fish. The choice will set the right reference database for the specified group.
-#'  This option will not be considered if a custom reference database is provided. Default to `mi`.
-#' @param dfref a custom reference database that replaces the reference database.
-#' @param to_change a `data.frame` specifying the taxa name that needs to be changed.
-#' This `data.frame` needs a column called *Taxon* containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications.
+#' @param x A `data.frame` with a column called `Taxa` where store taxa names and samples on the other columns (see the example `macro_ex`).
+#' @param group Biotic group of interest. Possible values are `mi` for macroinvertebrates, `mf` for macrophytes and `fi` for fish. The choice will set the right reference dataset for the specified group.
+#'  This option will not be considered if a custom reference dataset is provided. Default to `mi`.
+#' @param dfref A custom reference database that replaces the built-in reference databases.
+#' @param to_change A `data.frame` specifying the taxa name that needs to be changed.
+#' This `data.frame` needs a column called *Taxon* containing taxa to aggregate and a column called *Correct_Taxon* with the aggregation specifications.
 #' By default, when group is set to `mi` Hydracarina, Hydracnidia and Acariformes are changed to Trombidiformes.
-#' @param FUN the function to be applied for aggregating rows with duplicated taxa names.
+#' @param FUN The function to be applied for aggregating rows with duplicated taxa names.
 #' It should be `sum` for abundances, while it should be `bin` for presence-absence data. Default to `sum`.
-#' @param correct_names if `TRUE` alternative names will be suggested for taxa not found in the reference database. Default to
+#' @param correct_names If `TRUE` alternative names will be suggested for taxa not found in the reference dataset. Default to
 #' `FALSE`, with which the unrecognized taxa will be removed.
-#' @param traceB track changes in taxa names.
+#' @param traceB Track changes in taxa names.
 #'
 #' @keywords as_biomonitor
-#' @details The function `as_biomonitor()` checks the taxonomy of the data.frame provided by the user and suggests correction for mispelled names.
-#' If one or more taxa names of `x` are not present in the reference database or the spell checker is not able to find any suggestion the user is asked to exit.
-#' This behaviour is to assure consistency with other functions implemented in biomonitoR.
-#' Default references databases are provided for macroinvertebrates and macrophytes.
-#' Both databases heavily rely on the information provided by the [freshwaterecology.info](https://www.freshwaterecology.info/) website.
-#' If `dfref` is not NULL a custom dictionary will be saved in the working directory to let the `as_biomonitor ()` function work correctly.
+#' @details The function `as_biomonitor()` checks the taxonomy of the `data.frame` provided by the user and suggests correction for mispelled names.
+#' If one or more taxa names of `x` are not present in the reference dataset or the spell checker is not able to find any suggestion the user is asked to exit.
+#' This behaviour is to assure consistency with other functions implemented in `biomonitoR`.
+#' Default references databases are provided for macroinvertebrates, macrophytes and fish.
+#' Reference datasets heavily rely on the information provided by the [freshwaterecology.info](https://www.freshwaterecology.info/) website.
+#' If `dfref` is not `NULL` a custom dictionary will be saved in the working directory to let the `as_biomonitor ()` function work correctly.
 #' If you are unable to build a reference database by your own please check the function \code{\link{ref_from_tree}} for a possible solution.
 #' `as_biomonitor()`  returns an object of class `asb` togheter with one of the classes `abundance` or `bin`.
 #' The function \code{\link{quick_rename}} works as the `as_biomonitor()` but returns
-#' a data.frame without the biomonitoR format.
-#' `as_biomonitor()` aggregates all the rows with the same name with the option `FUN` and converts all the `NA` to 0.
-#' If only 1 and 0 are present `x` will be imported as presence-absence.
+#' a `data.frame` without the `biomonitoR` format.
+#' `as_biomonitor()` aggregates all the rows with the same taxa name with the option `FUN` and converts all the `NA` to 0.
 #' When `group = mi` Hydracarina, Hydracnidia or Acariformes are changed to Trombidiformes given the uncertain taxonomic status of this group.
 #'
 #' @importFrom stats aggregate

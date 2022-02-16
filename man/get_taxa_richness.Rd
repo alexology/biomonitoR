@@ -7,11 +7,11 @@
 get_taxa_richness(x, taxa = NULL, tax_lev = NULL)
 }
 \arguments{
-\item{x}{Result of the function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{taxa}{a taxon or a vector of taxa.}
+\item{taxa}{A taxon or a vector of taxa.}
 
-\item{tax_lev}{taxonomic level at which the richness has to be calculated. It could be also a vector of taxonomic levels.}
+\item{tax_lev}{Taxonomic level at which richness has to be calculated. It could be also a vector of taxonomic levels.}
 }
 \description{
 This function calculates the absolute richness of a taxon or of a set taxa at the taxonomic level provided by the user.
@@ -23,6 +23,6 @@ data_agr <- aggregate_taxa(data_bio)
 get_taxa_richness(data_agr, taxa = "Ephemeroptera", tax_lev = "Family")
 }
 \seealso{
-\code{\link{aggregate_taxa}}
+\link{aggregate_taxa} \link{get_taxa_abundance}
 }
 \keyword{aggregate_taxa}

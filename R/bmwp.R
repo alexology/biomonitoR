@@ -2,18 +2,18 @@
 #'
 #' This function calculates the *Biological Monitoring Working Party* index following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 #'
-#' @param x result of the function `aggregate_taxa()`.
-#' @param method the implementation of BMWP. Possible choices are `a` (Armitage et al. 1983), `uk` (Davy-Bowker et al. 2010), `spa` (MAGRAMA 2011), `ita` (Buffagni et al . 2014).
-#'  Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Scores*.
-#' @param agg this option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
+#' @param x Result of `aggregate_taxa()`.
+#' @param method The implementation of BMWP. Possible choices are `a` (Armitage et al. 1983), `uk` (Davy-Bowker et al. 2010), `spa` (MAGRAMA 2011), `ita` (Buffagni et al . 2014).
+#'  Users can provide their own `data.frame` (see examples) with a column called *Taxon* and the column of scores called *Scores*.
+#' @param agg This option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
 #' If `FALSE` no aggregation will be performed, while if `TRUE` aggregation will be performed according to the rules described in Details.
 #' A `data.frame` containing the aggregation rules can be provided by the user.
 #' This `data.frame` needs a column called *Taxon* containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications.
 #' `agg` cannot be `TRUE` when a `data.frame` is provided as method.
-#' @param exceptions taxa that need to be exluded from the calculation.
+#' @param exceptions Taxa that need to be exluded from the calculation.
 #' This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
-#' @param traceB if set to `TRUE` a list as specified below will be returned.
-#' @keywords aggregatoR
+#' @param traceB If set to `TRUE` a list as specified below will be returned.
+#' @keywords aggregate_taxa
 #' @references Armitage, P. D., Moss, D., Wright, J. F., & Furse, M. T. (1983). The performance of a new biological water quality score system based on macroinvertebrates over a wide range of unpolluted running-water sites. Water research, 17(3), 333-347.
 #' @references Davy-Bowker J., Clarke R., Corbin T., Vincent H, Pretty J., Hawczak A., Blackburn J., Murphy J., Jones I., 2008. River Invertebrate Classification Tool. Final report. WFD72C. SNIFFER. 276 pp
 #' @references MAGRAMA-Ministerio de Agricultura y medio Ambiente (2011) Protocolo de muestreo y laboratorio de fauna bentonica de invertebrados en rios vadeables. ML-Rv-I-2011, Cod, 23 pp.
@@ -52,16 +52,16 @@
 #' }
 #'
 #'
-#' The `bmwp()` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+#' The `bmwp()` function automatically check for parent-child pairs in the scoring system, see the return the Value section for a definition.
 #' All the information used for `bmwp()` calculation can be retrieved with the function `show_scores()`.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
 #'  \item `results` Results of `bmwp()`.
-#'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
-#'  \item `composite_taxa` Taxa aggregated following the aggregation rules when agg is not `NULL`.
-#'  \item `exceptions` A data.frame containing the containing changes made by excluding the taxa included in `exceptions`.
-#'  \item `parent_child_pairs` For instance in Spanish `bmwp` both Ferrissia and Planorbidae receive a score.
+#'  \item `taxa_df` The `data.frame` used for the calculation containing the abundance of taxa receiving a score.
+#'  \item `composite_taxa` Taxa aggregated following the aggregation rules when `agg` is not `NULL`.
+#'  \item `exceptions` A `data.frame` containing the containing changes made by excluding the taxa included in `exceptions`.
+#'  \item `parent_child_pairs` For instance in Spanish BMWP both *Ferrissia* and Planorbidae receive a score.
 #'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 #' }
 #'

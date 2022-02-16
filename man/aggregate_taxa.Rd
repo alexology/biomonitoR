@@ -7,14 +7,15 @@
 aggregate_taxa(x, FUN = sum)
 }
 \arguments{
-\item{x}{Result of as_biomonitor}
+\item{x}{Result of \code{as_biomonitor()}.}
 
-\item{FUN}{the function to be applied for aggregating to higher taxonomic levels.
+\item{FUN}{The function to be applied for aggregating at higher taxonomic levels.
 Must be sum for both abundances and presence-absence data.
-Default to \code{sum}.}
+Default to \code{sum()}.}
 }
 \description{
-This function prepares data for further calculations.
+This function aggregates taxa at various taxonomic levels. Preparing data with \code{aggregate_taxa()} is necessary for
+further calculations.
 }
 \examples{
 data(macro_ex)

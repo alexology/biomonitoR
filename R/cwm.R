@@ -5,29 +5,24 @@
 #'
 #' @details
 #' This function first takes the abundance table corresponding to the desired
-#' taxonomic level from the `x` aggregatoR object.
+#' taxonomic level from the `x` object generated with `aggregate_taxa()`.
 #'
-#' Then it searches from the trait data base all the information available at
-#' the desired level and, if required, calculates the corresponding averaged
-#' trait values (e.g. the family trait values are obtained by averaging all the
-#' trait values from taxa with trait information within this family).
+#' The community mean trait values are calculated using the transformed
+#' abundances (using the `trans` function) as weigths.
 #'
-#' Finally, the community mean trait values are calculated using the transformed
-#' abundances (using the `trans` function) as weigths
-#'
-#' @param x Results of the function `aggregate_taxa()`.
-#' @param trait_db A trait data base with a column `Taxa` and the other columns
-#'   containing the traits.
-#'   By default, the data base used is the one from Tachet *et al* (2010) that
+#' @param x Result of `aggregate_taxa()`.
+#' @param trait_db A trait `data.frame` with a column `Taxa` and the other columns
+#'   containing traits.
+#'   By default, the `data.frame` used is the one from Tachet et al. (2010) that
 #'   can be retrieved from
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
 #' @param tax_lev Character string giving the taxonomic level used to retrieve
-#'   trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
-#'   `"Family"` as returned by the [aggregatoR] function.
-#' @param trans The function used to transform the abundances, by default
+#'   trait information. Possible levels are `Taxa`, `Species`, `Genus`,
+#'   `Family` as returned by `aggregate_taxa()`.
+#' @param trans Function for transforming the abundances, by default
 #'   `log1p`.
-#' @param traceB When set to TRUE returns a list with the results of the cwm function
+#' @param traceB When set to `TRUE` returns a list with the results of the `cwm()` function
 #'   and the traits value used for the calculation.
 #'
 #' @return a table with the CWM values of each trait (trait modality)

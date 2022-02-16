@@ -2,7 +2,7 @@
 % Please edit documentation in R/psi.R
 \name{psi}
 \alias{psi}
-\title{psi}
+\title{Proportion of Sediment-sensitive Invertebrates index}
 \usage{
 psi(
   x,
@@ -15,13 +15,13 @@ psi(
 )
 }
 \arguments{
-\item{x}{result of the function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{method}{the only choice is \code{extence}. Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Score}.}
+\item{method}{The only choice is \code{extence}. Users can provide their own \code{data.frame} (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Score}.}
 
 \item{abucl}{Log abundance categories. Treshold are set to 1, 9, 99 and 999 as in the original paper of Extence et al. (2013).}
 
-\item{agg}{this option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
+\item{agg}{This option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
 If \code{FALSE} no aggregation will be performed, while if \code{TRUE} aggregation will be performed according to the rules described in Details.
 A \code{data.frame} containing the aggregation rules can be provided by the user.
 This \code{data.frame} needs a column called \emph{Taxon} containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
@@ -30,9 +30,8 @@ This \code{data.frame} needs a column called \emph{Taxon} containing the taxon t
 \item{fssr_scores}{Optional, scores (fssr) for different abundance categories of taxa associated with
 \emph{Fine Sediment Sensitivity Ratings}. To be used when a custom \code{method} is provided.}
 
-\item{exceptions}{taxa that need to be exluded from the calculation.
-This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
-\code{agg} cannot be \code{TRUE} when a data.frame is provided as \code{method}.}
+\item{exceptions}{Taxa that to be excluded from the calculation.
+This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.}
 
 \item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
 }
@@ -40,31 +39,32 @@ This option can be useful, for instance, to exclude an alien species belonging t
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
 \item \code{results} Results of \code{psi()}.
-\item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
-\item \code{abu_df} The data.frame containing fssr scores and abundance classes for each site.
-\item \code{psi_df} The data.frame used for the calculation containing scores for each site.
-\item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{NULL}.
-\item \code{exceptions} A data.frame containing the con.
-\item \code{parent_child_pairs} For instance in Spanish \code{aspt()} both Ferrissia and Planorbidae receive a score.
+\item \code{taxa_df} The \code{data.frame} used for the calculation containing the abundance of taxa receiving a score.
+\item \code{abu_df} The \code{data.frame} containing fssr scores and abundance classes for each site.
+\item \code{psi_df} The \code{data.frame} used for the calculation containing scores for each site.
+\item \code{composite_taxa} Taxa aggregated following the aggregation of the default method or set in \code{agg}.
+\item \code{exceptions} A \code{data.frame} containing the changes made by excluding the taxa included in \code{exceptions}.
+\item \code{parent_child_pairs} For instance in Spanish BMWP both \emph{Ferrissia} and Planorbidae receive a score.
 Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 }
 }
 \description{
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 
-This function calculates the \emph{Proportion of Sediment-sensitive Invertebrates index} (PSI) according to the most recent version used in UK.
+This function calculates the Proportion of Sediment-sensitive Invertebrates index (PSI) according to the most recent version used in UK.
 }
 \details{
 Although Extence et al 2013 did not suggest any aggregation rule, the \code{psi()} implementation of \code{biomonitoR}
 allows for a default aggregation as specified below. Custom aggregation rules can be provided as a \code{data.frame}.
+
 \enumerate{
 \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
 \item Siphlonuridae (inc. Ameletidae)
 \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
 }
 
-The \code{psi()} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-All the information used for \code{psi} calculation can be retrieved with \code{showscores()}.
+\code{psi()} automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for PSI calculation can be retrieved with \code{show_scores()}.
 }
 \section{Acknowledgements}{
  We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated PSI scores and algorithms.
@@ -104,6 +104,6 @@ psi(data_agr, method = psi_fssr, agg = psi_acc, fssr_scores = fssr_scores, trace
 Extence CA, Chadd RP, England J, Dunbar MJ, Wood PJ, Taylor ED. 2013. The assessment of fine sediment accumulation in rivers using macro-invertebrate community response. River Research and Applications 29, 17-55.
 }
 \seealso{
-\code{\link{asBiomonitor}}
+\link{as_biomonitor}
 }
 \keyword{psi}

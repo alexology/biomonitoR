@@ -2,7 +2,7 @@
 % Please edit documentation in R/life.R
 \name{life}
 \alias{life}
-\title{life}
+\title{Lotic-invertebrate Index for Flow Evaluation index}
 \usage{
 life(
   x,
@@ -15,47 +15,46 @@ life(
 )
 }
 \arguments{
-\item{x}{result of the function aggregatoR.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{method}{possible choices are "extence" and "life_2017". A custom \code{data.frame} containing the scoring system can be provided by the user.}
+\item{method}{Possible choices are \code{extence} and \code{life_2017}. A custom \code{data.frame} containing the scoring system can be provided by the user.}
 
 \item{abucl}{Log abundance categories. Treshold are set to 1, 9, 99, 999 and 9999 as in the original paper of Extence et al. (1999).}
 
-\item{agg}{this option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
+\item{agg}{This option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
 If \code{FALSE} no aggregation will be performed, while if \code{TRUE} aggregation will be performed according to the rules described in Details.
 A \code{data.frame} containing the aggregation rules can be provided by the user.
 This \code{data.frame} needs a column called \emph{Taxon} containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
 \code{agg} cannot be \code{TRUE} when a \code{data.frame} is provided as method.}
 
-\item{fs_scores}{Scores ( fs) for different abundance categories of taxa associated with flow groups 1-4. A custom \code{data.frame} can be provided by the user.}
+\item{fs_scores}{Scores (fs) for different abundance categories of taxa associated with flow groups 1-4. A custom \code{data.frame} can be provided by the user.}
 
-\item{exceptions}{taxa that need to be exluded from the calculation.
-This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
-\code{agg} cannot be \code{TRUE} when a data.frame is provided as \code{method}.}
+\item{exceptions}{Taxa that to be excluded from the calculation.
+This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.}
 
 \item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
 }
 \value{
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
-\item \code{results} Results of the \code{life} index.
-\item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
-\item \code{abu_df} The data.frame containing scores and abundance classes for each site.
-\item \code{life_df} The data.frame used for the calculation containing scores for each site.
-\item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{FALSE}.
-\item \code{exceptions} A data.frame containing the containing changes made by excluding the taxa included in \code{exceptions}.
-\item \code{parent_child_pairs} For instance in Spanish \code{bmwp} both Ferrissia and Planorbidae receive a score.
+\item \code{results} Results of \code{life()}.
+\item \code{taxa_df} The \code{data.frame} used for the calculation containing the abundance of taxa receiving a score.
+\item \code{abu_df} The \code{data.frame} containing scores and abundance classes for each site.
+\item \code{life_df} The \code{data.frame} used for the calculation containing scores for each site.
+\item \code{composite_taxa} Taxa aggregated following the aggregation of the default method or set in \code{agg}.
+\item \code{exceptions} A data.frame containing the changes made by excluding the taxa included in \code{exceptions}.
+\item \code{parent_child_pairs} For instance in Spanish \code{bmwp} both \emph{Ferrissia} and Planorbidae receive a score.
 Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 }
 }
 \description{
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 
-This function calculates LIFE index according to most recent version used in UK.
+This function calculates the Lotic-invertebrate Index for Flow Evaluation index (LIFE).
 }
 \details{
-Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). biomonitoR implements the Extence et al. (1999) version called "extence" and the version currently used in UK called "life_2017".
-If composite is set to T the following composite families are used for extence
+Lotic-invertebrate Index for Flow (LIFE) was originally proposed by Extence et al. (1999). \code{biomonitoR} implements the Extence et al. (1999) version called \code{extence} and the version currently used in UK called \code{life_2017}.
+If \code{agg} is set to \code{TRUE} the following composite families are used for \code{extence}:
 
 \enumerate{
 \item Psychomyiidae (inc. Ecnomidae)
@@ -66,15 +65,15 @@ If composite is set to T the following composite families are used for extence
 \item Hydrobiidae (inc. Bithyniidae)
 }
 
-while for "life_2017" the following are used:
+while for \code{life_2017} the following are used:
 
 \enumerate{
 \item Hydrophilidae (inc. Georissidae, Helophoridae, Hydrochidae)
 
 }
 
-The \code{life} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-All the information used for \code{life} calculation can be retrieved with the function \code{\link{showscores}}.
+\code{life()} automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for LIFE calculation can be retrieved with the function \code{\link{show_scores}}.
 }
 \section{Acknowledgements}{
  We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated LIFE scores and algorithms.
@@ -114,6 +113,6 @@ life(data_agr, method = life_fg, agg = life_acc, fs_scores = fs_scores, traceB =
 Extence CA, Balbi DM, Chadd RP. 1999. River flow indexing using British benthic macroinvertebrates: a framework for setting hydroecological objectives. Regulated Rivers: Research and Management 15: 543-574.
 }
 \seealso{
-\code{\link{asBiomonitor}}
+\link{as_biomonitor}
 }
 \keyword{life}

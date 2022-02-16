@@ -8,10 +8,10 @@
 #'
 #'
 #'
-#' @param x result of the function aggregatoR.
-#' @param taxa a taxon or a vector of taxa.
+#' @param x Result of `aggregate_taxa()`.
+#' @param taxa A taxon or a vector of taxa.
 #' @details This function does not check for parent-child pairs but it should handle them pretty well.
-#' @keywords aggregatoR
+#' @keywords aggregate_taxa
 #' @export
 #' @seealso \code{\link{aggregatoR}} \code{\link{ambiguousSolver}}
 #' @examples

@@ -1,26 +1,25 @@
-#' whpt
+#' Whalley Hawkes Paisley Trigg index
 #'
 #' @description
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 #'
-#' This function calculates *Whalley Hawkes Paisley Trigg* index according to version used in UK in 2017.
+#' This function calculates the Whalley Hawkes Paisley Trigg index (WHPT).
 #'
-#' @param x result of the function `aggregatoR`.
-#' @param method the only choice is `uk`.Users can provide their own data.frame (see examples) with a column called *Taxon*, a column called *ABUCLASS* and a column called *Scores*.
-#' @param type presence only `po` or abundance `ab`.
-#' @param metric possible choices are `aspt`, `ntaxa`, `bmwp`.
-#' @param agg this option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
+#' @param x Result of `aggregate_taxa()`.
+#' @param method The only choice is `uk`. Users can provide their own data.frame (see examples) with a column called *Taxon*, a column called *ABUCLASS* and a column called *Scores*.
+#' @param type Presence only `po` or abundance `ab`.
+#' @param metric Possible choices are `aspt`, `ntaxa`, `bmwp`.
+#' @param agg This option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
 #' If `FALSE` no aggregation will be performed, while if `TRUE` aggregation will be performed according to the rules described in Details.
 #' A `data.frame` containing the aggregation rules can be provided by the user.
 #' This `data.frame` needs a column called *Taxon* containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications.
 #' `agg` cannot be `TRUE` when a `data.frame` is provided as method.
 #' @param abucl Log abundance categories. Treshold are set to 1, 9, 99 and 999.
-#' @param exceptions taxa that need to be exluded from the calculation.
+#' @param exceptions Taxa that need to be exluded from the calculation.
 #' This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
-#' `agg` cannot be `TRUE` when a data.frame is provided as `method`.
-#' @param traceB if set to `TRUE` a list as specified below will be returned.
+#' @param traceB If set to `TRUE` a list as specified below will be returned.
 #' @keywords whpt
-#' @details WHPT is a revision of BMWP and it takes into account the abundances of organisms. The following aggregation is used if agg is set equal to `TRUE`:
+#' @details WHPT is a revision of BMWP and it takes into account the abundances of organisms. The following aggregation is used if `agg` is set equal to `TRUE`:
 #'
 #' \enumerate{
 #'   \item Psychomyiidae (inc. Ecnomidae)
@@ -31,18 +30,18 @@
 #'   \item Hydrobiidae (inc. Bithyniidae)
 #' }
 #'
-#' The `whpt` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-#' All the information used for `whpt` calculation can be retrieved with the function \code{\link{showscores} }.
+#' `whpt()` automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+#' All the information used for WHPT calculation can be retrieved with the function \code{\link{show_scores}}.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
-#'  \item `results` Results of the `whpt` index.
-#'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
-#'  \item `abu_df` The data.frame containing fssr scores and abundance classes for each site.
-#'  \item `whpt_df` The data.frame used for the calculation containing scores for each site.
-#'  \item `composite_taxa` Taxa aggregated following the aggregation rules when agg is not `NULL`.
-#'  \item `exceptions` A data.frame containing the con.
-#'  \item `parent_child_pairs` For instance in Spanish `aspt` both Ferrissia and Planorbidae receive a score.
+#'  \item `results` Results of `whpt()`.
+#'  \item `taxa_df` The `data.frame` used for the calculation containing the abundance of taxa receiving a score.
+#'  \item `abu_df` The `data.frame` containing abundance classes for each site.
+#'  \item `whpt_df` The `data.frame` used for the calculation containing scores for each site.
+#'  \item `composite_taxa` Taxa aggregated following the aggregation of the default method or set in `agg`.
+#'  \item `exceptions` A `data.frame` containing the changes made by excluding the taxa included in `exceptions`.
+#'  \item `parent_child_pairs` For instance in Spanish BMWP both *Ferrissia* and Planorbidae receive a score.
 #'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 #' }
 #' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated WHPT scores and algorithms.
@@ -51,7 +50,7 @@
 #' @importFrom tibble deframe
 #' @importFrom stats aggregate
 #' @export
-#' @seealso \code{\link{asBiomonitor}}, \code{\link{aspt}}, \code{\link{bmwp}}
+#' @seealso [as_biomonitor], [aspt], [bmwp]
 #' @examples
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)

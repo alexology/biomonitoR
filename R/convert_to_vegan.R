@@ -1,16 +1,16 @@
-#' convert_to_vegan
+#' @title convert data to other formats
 #'
 #' @description
 #' Utility functions to export data to other formats.
 #'
-#' @param x Result of thefunction `aggregate_taxa()`.
-#' @param tax_lev taxonomic level of interest. Possible choices are Phylum, Class, Subclass, Order, Family, Subfamily, Tribus, Genus, Species, Subspecies, Taxa
+#' @param x Result of `aggregate_taxa()`.
+#' @param tax_lev The taxonomic level of interest. Possible choices are Phylum, Class, Subclass, Order, Family, Subfamily, Tribus, Genus, Species, Subspecies, Taxa
 #'
 #' @keywords convert_to_vegan
 #' @details `convert_to_vegan()` converts data to the `vegan` package style, with sites on rows and taxa on columns. `convert_to_biotic()` converts data to
 #' the format of `biotic` package. This function will extract information at the family level, with an exception for Oligochaeta.
 #' In `convert_to_biotic()` if both family and above family level taxonomic information of Oligochaeta are concurrently present,
-#' information will be provided for Oligochaeta only.
+#' information will be provided for Oligochaeta level only.
 #' `biomonitoR` automatically identify the taxonomic level at which Oligochaeta are stored (subclass is the default in `biomonitoR`).
 #' Be careful, for all the other taxa entered at taxonomic level higher than family will be discarded (e.g. Trombidiformes).
 #' @export

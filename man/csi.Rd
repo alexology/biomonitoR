@@ -10,23 +10,23 @@ csi(x, trait_db = NULL, tax_lev = "Taxa", trans = log1p, traceB = FALSE)
 tsi(x, trait_db = NULL, tax_lev = "Taxa")
 }
 \arguments{
-\item{x}{results of function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{trait_db}{a trait data base with a column \code{Taxa} and the other columns
-containing the traits.Please check \code{assign_traits()} for building the trait database.}
+\item{trait_db}{A trait \code{data.frame} with a column \code{Taxa} and the other columns
+containing the traits.Please check \code{assign_traits()} for building the trait dataset.}
 
-\item{tax_lev}{character string giving the taxonomic level used to retrieve
+\item{tax_lev}{Character string giving the taxonomic level used to retrieve
 trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
 \code{"Family"} as returned by \code{aggregate_taxa()}.}
 
-\item{trans}{the function used to transform the abundances, by default
+\item{trans}{The function used to transform the abundances, by default
 \code{log1p}.}
 
-\item{traceB}{when set to TRUE returns a list with the results of the cwm function
+\item{traceB}{When set to \code{TRUE} returns a list with the results of the \code{csi()} function
 and the traits value used for the calculation.}
 }
 \value{
-a table with the CSI values for each trait
+a \code{data.frame} with the CSI values for each trait
 }
 \description{
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
@@ -42,12 +42,12 @@ using the following formula:
 
 \deqn{TSI = (sum(c^{2}_tik) - 1/K) / (1 - 1/K)}
 
-with \eqn{c^{2}_tik} being the affinity of taxon \code{t} for the modality \code{k} (among
-\code{K}) of trait \code{i}.
+with \eqn{c^{2}_tik} being the affinity of taxon \emph{t} for the modality \emph{k} (among
+\emph{K}) of trait \emph{i}.
 
 Finally, the community trait specialization is calculated for each trait by
 averaging the TSIs using the transformed abundances (using the \code{trans}
-function) as weigths. Only the taxa having traits contributes to the calculation of
+function) as weigths. Only taxa having traits contributes to the calculation of
 index.
 }
 \section{Functions}{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/bin.R
 \name{bin}
 \alias{bin}
-\title{bin}
+\title{Check a vector for presence-absence}
 \usage{
 bin(x)
 }
@@ -10,5 +10,13 @@ bin(x)
 \item{x}{A vector of numbers.}
 }
 \description{
-Function for calculating presence-absence from a vector. It does not take into account NAs.
+Function for calculating presence-absence from a vector. It does not take into account \code{NA}.
+}
+\examples{
+
+# There is at least a presence
+bin(c(0, 1, 10))
+
+# There are not presence
+bin(c(0, 0))
 }

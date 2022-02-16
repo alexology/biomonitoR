@@ -3,7 +3,7 @@
 #' @description
 #' This function transforms abundance to presence-absence.
 #'
-#' @param x a `data.frame`
+#' @param x A `data.frame`
 #'
 #' @details
 #' `to_bin` will transform values greter than 0 to 1.

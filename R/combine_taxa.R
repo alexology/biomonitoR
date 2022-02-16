@@ -1,18 +1,18 @@
 #' combine_taxa
 #'
 #' This function returns all the combinations of n taxa at the desired taxonomic resolution.
-#' @param x Result of the function `aggregate_taxa()`.
-#' @param ntaxa Rumber of taxa.
+#' @param x Result of `aggregate_taxa()`.
+#' @param ntaxa Number of taxa.
 #' @param tax_lev Taxonomic level on which the calculation has to be made.
 #' @details This function is intended to help the user to identify the best subset of taxa that correlates with environmental variables.
 #' Metrics based on a specific group of taxa (EPT, 1-GOLD, etc) are currently used in biomonitoring. They rely on available information on the responses
-#' of the selected taxa to target strssors. The relationship between an environmental variable and a subset of taxa could exist and not detected due to the scarce
+#' of the selected taxa to target stressors. The relationship between an environmental variable and a subset of taxa could exist and not detected due to the scarce
 #' availaibility of autoecological data. With more than 4 taxa the calculations should become infeasible, expecially when the number
 #' of taxa in the user dataset is high.
-#' @keywords aggregatoR
+#' @keywords aggregate_taxa
 #' @importFrom utils combn
 #' @export
-#' @seealso \code{\link{aggregate_taxa}}
+#' @seealso [aggregate_taxa]
 #' @examples
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)

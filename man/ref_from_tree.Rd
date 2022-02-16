@@ -2,19 +2,22 @@
 % Please edit documentation in R/ref_from_tree.R
 \name{ref_from_tree}
 \alias{ref_from_tree}
-\title{ref_from_tree}
+\title{Reference from taxonomic tree
+
+This function transforms a taxonomic tree to a reference database suitable for \code{biomonitoR}.}
 \usage{
 ref_from_tree(x, group = "none")
 }
 \arguments{
-\item{x}{taxonomic tree. See \code{\link{Tree}} for an example.}
+\item{x}{Taxonomic tree. See \code{\link{Tree}} for an example.}
 
-\item{group}{merge the user database with one of the biomonitoR reference databases, default to \code{none}.
-If duplicated Taxa names are present this function keeps the name provided by the user.
-Check the reliability of results when using group = \code{mi} for macroinvertebrates or group = \code{mf} for macrophytes.}
+\item{group}{Merge the user dataset with one of the \code{biomonitoR} reference databases, default to \code{none}.
+If duplicated Taxa names are present this function keeps the name provided by the user.}
 }
 \description{
-This function transforms a taxonomic tree to a reference database suitable for biomonitoR.
+Reference from taxonomic tree
+
+This function transforms a taxonomic tree to a reference database suitable for \code{biomonitoR}.
 }
 \examples{
 data(Tree)

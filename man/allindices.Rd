@@ -16,7 +16,7 @@
 \alias{invsimpson}
 \alias{mcintosh}
 \alias{fisher}
-\title{Functions for calculating diversity, eveness and dominance indices.}
+\title{Functions for calculating diversity, evenness and dominance indices.}
 \usage{
 allindices(x, tax_lev = "Taxa", base = exp(1))
 
@@ -45,14 +45,15 @@ shannon(x, base = exp(1), tax_lev = "Taxa")
 simpson(x, tax_lev = "Taxa")
 }
 \arguments{
-\item{x}{Result of the function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{tax_lev}{Taxonomic level on which the calculation has to be made.}
+\item{tax_lev}{Taxonomic level at which the calculation has to be performed.}
 
-\item{base}{The base of the logarithm}
+\item{base}{The base of the logarithm for indices with log transformation.}
 }
 \description{
-Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
+Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices. A convenient
+function for calculating all the indices simultaneously is provided.
 }
 \details{
 Shannon index:
@@ -65,13 +66,13 @@ Menhinick diversity:
 \deqn{D_{mn}=\frac{S}{\sqrt(N)}}
 Brillouin index:
 \deqn{HB=\frac{\log(N) -\sum(\log(n_{i})) }{N}}
-Simpson's index is calculated as D. biomonitoR returns 1 - D and 1/D when \code{index} is set to \code{Simpson} or \code{Invsimpson}.
+Simpson's index is calculated as D. \code{biomonitoR} returns 1 - D and 1/D when \code{index} is set to \code{simpson()} or \code{invsimpson()}.
 \deqn{D=\sum_{i=1}^{S} p_{i}^{2}}
 Simpson's evenness:
 \deqn{D_{1/D}=\frac{1/D}{\sqrt(S)}}
 Berger-Parker index:
 \deqn{d=\frac{N_{max}}{N}}
-The inverse of this index is also provided when \code{index} is set to \code{Invberpar}. McIntosh's diversity:
+The inverse of this index is also provided with \code{invberpar()}. McIntosh's diversity:
 \deqn{D=\frac{N-U}{N-\sqrt(N)}}
 where
 \deqn{U=\sqrt(\sum_{i=1}^{S} n_{i}^{2})}
@@ -80,8 +81,8 @@ Fisher alpha is calculated as follow:
 where x is estimated from the iterative solution of:
 \deqn{\frac{S}{N}=-\frac{N(1-x)}{x} \log(1-x)}
 
-p_i is the proportion of individuals found in the i-th species, n_i is the number of individuals found in the i-th species, S the species richness,
-N the number of individuals and N_max the number of individuals in the most abundant species. All the indices are calculated according to Magurran (2004).
+\emph{p_i} is the proportion of individuals found in the i-th species, \emph{n_i} is the number of individuals found in the i-th species, \emph{S} the species richness,
+\emph{N} the number of individuals and \emph{N_max} the number of individuals in the most abundant species. All the indices are calculated according to Magurran (2004).
 }
 \section{Functions}{
 \itemize{

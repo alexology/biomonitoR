@@ -1,12 +1,13 @@
 #' aggregate_taxa
 #'
 #' @description
-#' This function prepares data for further calculations.
+#' This function aggregates taxa at various taxonomic levels. Preparing data with `aggregate_taxa()` is necessary for
+#' further calculations.
 #'
-#' @param x Result of as_biomonitor
-#' @param FUN the function to be applied for aggregating to higher taxonomic levels.
+#' @param x Result of `as_biomonitor()`.
+#' @param FUN The function to be applied for aggregating at higher taxonomic levels.
 #' Must be sum for both abundances and presence-absence data.
-#' Default to `sum`.
+#' Default to `sum()`.
 #'
 #' @keywords aggregate_taxa
 #'

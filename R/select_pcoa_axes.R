@@ -1,4 +1,4 @@
-#' select_pcoa_axes
+#' @title Select optimal number of pcoa axes
 #'
 #'
 #' @description
@@ -6,32 +6,33 @@
 #'
 #' Select the number of the axis for the calculation of functional richness.
 #'
-#' @param x a distance matrix.
-#' @param method the measure of the quality of the functional space. Can be `cor`, `legendre` and `maire`.
-#' @param tresh the treshold for selecting the axis. By default is 0.7 for `cor` and `legendre` and
+#' @param x A distance matrix.
+#' @param method Quality measure of the functional space. Can be `cor`, `legendre` and `maire`.
+#' @param tresh the treshold for selecting the optimal number of axes. By default is 0.7 for `cor` and `legendre` and
 #' 0.01 for `maire`.
-#' @param nbdim the maximum number of dimension when the option is set to `maire`. Default to 15.
-#' @details This function provide some information to select the number of axis for the calculation of
-#' functional richness. As implemented in biomonitoR, functional richness require a pcoa to be computed from
-#' the trait distances. For calculating functional richness a subset of the number of axis originating
+#' @param nbdim The maximum number of dimension when the option is set to `maire`. Default to 15.
+#'
+#' @details This function provides some information to select the number of axes for the calculation of
+#' functional richness. As implemented in `biomonitoR`, functional richness requires a pcoa to be computed from
+#' the trait distances. For calculating functional richness a subset of the number of axes originating
 #' from the pcoa is kept. The choiche of the number of axis can affect the calculation and some
-#' information about how much the subset represents the original distance matrix. To this purpose, 3 measures
+#' information about how much the subset represents the original distance matrix is desirable. To this purpose, 3 measures
 #' are provide. The `cor` option represents the correlation between the distance of the points in the
-#' reduced space and distance matrix. The distance of points in the reduced space is calculated
-#' with the `dist` function on the coordinates of the selected number of axis.
+#' reduced space and the original distance matrix. The distance of points in the reduced space is calculated
+#' with the `dist()` function from the `stats` package on the coordinates of the selected number of axis.
 #' A p-value based on a mantel statistic is also provided.
 #' The `legendre` option calculates the R^2 like ratio as described by Legendre and Legendre (2008)
-#' and implemented in the FD package.
+#' and implemented in the `FD` package.
 #' The `maire` option calculate the quality of the functional space according to Maire et al. (2015).
-#' The function selectPcoaAxis provide also information about the euclidean property of the trait
+#' The function selectPcoaAxis also provides information about the euclidean property of the trait
 #' distance. The lack of this property can lead to biases and some solutions are proposed here and
-#' described in Legendre and Legendre (2008). Please take a look also to the help of the FD
-#' function dbFD for further information.
+#' described in Legendre and Legendre (2008). Please take a look also to the help of the `FD`
+#' function `dbFD` for further information.
 #'
-#' @keywords aggregatoR
+#' @keywords aggregate_taxa
 #' @export
 #' @importFrom dplyr bind_rows
-#' @seealso \code{\link{aggregatoR}}
+#' @seealso [aggregate_taxa]
 #' @examples
 #'
 #' library(ade4)
