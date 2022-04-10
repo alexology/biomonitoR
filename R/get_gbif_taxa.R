@@ -12,10 +12,11 @@
 #' @examples
 #' \dontrun{
 #'
+#' data(macro_ex)
 #' dfref_gbif <- get_gbif_taxa_tree(macro_ex[, "Taxa"])
 #' data_asb <- as_biomonitor(macro_ex, dfref = dfref_gbif$taxonomy)
 #' data_agg <- aggregate_taxa(data_asb)
-#' } data(macro_ex)
+#' }
 
 
 
