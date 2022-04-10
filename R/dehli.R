@@ -4,7 +4,7 @@
 #' This function calculates the *Average Score Per Taxon* index following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 #'
 #' @param x Result of `aggregate_taxa()`.
-#' @param method The implementation of BMWP needed to calculate ASPT. Possible choices are `a` (Armitage et al. 1983), `uk` (Davy-Bowker et al. 2010), `spa` (MAGRAMA 2011), `ita` (Buffagni et al . 2014).
+#' @param method The implementation of DEHLI needed to calculate ASPT. The only choice is `chadd_2017` (Chadd et al . 2017).
 #'  Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Scores*.
 #' @param agg This option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
 #' If `FALSE` no aggregation will be performed, while if `TRUE` aggregation will be performed according to the rules described in *Details*.
@@ -15,9 +15,24 @@
 #' This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
 #' @param traceB If set to `TRUE` a list as specified below will be returned.
 #'
+#'
 #' @keywords dehli
 #'
 #' @references Chadd, R. P., England, J. A., Constable, D., Dunbar, M. J., Extence, C. A., Leeming, D. J., Murray-Bligh Wood J.A., P. J. (2017). An index to track the ecological effects of drought development and recovery on riverine invertebrate communities. Ecological Indicators, 82, 344-356.
+#'
+#' @details The DEHLI index measures the effect of flow intermittency on the macroinvertebrate community.
+#' It assigning weights to taxa on the basis of their likely association with key stages of channel drying.
+#' DEHLI is the average score of the taxa receiving a score, similary to [aspt].
+#'
+#' The follwing composite taxa are used:
+#' \enumerate{
+#'   \item Philopotamus (inc. Wormaldia)
+#'   \item Brachyptera (inc. Rhabdiopteryx)
+#'   \item Protonemura (inc. Amphinemura)
+#'   \item Protonemura (inc. Nemurella)
+#'   \item Habrophlebia (inc. Leptophlebia)
+#' }
+#'
 #'
 #' The `dehli()` function automatically check for parent-child pairs in the scoring system, see the Value section for a definition.
 #' All the information used for `dehli()` calculation can be retrieved with the function \code{\link{show_scores}}.

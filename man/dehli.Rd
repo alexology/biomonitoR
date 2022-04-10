@@ -9,7 +9,7 @@ dehli(x, method = "chadd_2017", agg = TRUE, exceptions = NULL, traceB = FALSE)
 \arguments{
 \item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{method}{The implementation of BMWP needed to calculate ASPT. Possible choices are \code{a} (Armitage et al. 1983), \code{uk} (Davy-Bowker et al. 2010), \code{spa} (MAGRAMA 2011), \code{ita} (Buffagni et al . 2014).
+\item{method}{The implementation of DEHLI needed to calculate ASPT. The only choice is \code{chadd_2017} (Chadd et al . 2017).
 Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
 
 \item{agg}{This option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
@@ -37,6 +37,23 @@ Abundances of the higher taxonomic level need therefore to be adjusted by subtra
 \description{
 This function calculates the \emph{Average Score Per Taxon} index following Armitage et al. (1983), Davy-Bowker et al. (2007) and Alba-Tercedor & Sanchez-Ortega (1988) implementations.
 }
+\details{
+The DEHLI index measures the effect of flow intermittency on the macroinvertebrate community.
+It assigning weights to taxa on the basis of their likely association with key stages of channel drying.
+DEHLI is the average score of the taxa receiving a score, similary to \link{aspt}.
+
+The follwing composite taxa are used:
+\enumerate{
+\item Philopotamus (inc. Wormaldia)
+\item Brachyptera (inc. Rhabdiopteryx)
+\item Protonemura (inc. Amphinemura)
+\item Protonemura (inc. Nemurella)
+\item Habrophlebia (inc. Leptophlebia)
+}
+
+The \code{dehli()} function automatically check for parent-child pairs in the scoring system, see the Value section for a definition.
+All the information used for \code{dehli()} calculation can be retrieved with the function \code{\link{show_scores}}.
+}
 \examples{
 data(macro_ex)
 data_bio <- as_biomonitor(macro_ex)
@@ -46,9 +63,6 @@ dehli(data_agr)
 }
 \references{
 Chadd, R. P., England, J. A., Constable, D., Dunbar, M. J., Extence, C. A., Leeming, D. J., Murray-Bligh Wood J.A., P. J. (2017). An index to track the ecological effects of drought development and recovery on riverine invertebrate communities. Ecological Indicators, 82, 344-356.
-
-The \code{dehli()} function automatically check for parent-child pairs in the scoring system, see the Value section for a definition.
-All the information used for \code{dehli()} calculation can be retrieved with the function \code{\link{show_scores}}.
 }
 \seealso{
 \link{aggregate_taxa} \link{bmwp}
