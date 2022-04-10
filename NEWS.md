@@ -2,6 +2,8 @@
 
 * Implemented 2 plot functions.
 * Added the function `abundance_classes` to transform abundance-coverage data into abundance-coverage classes.
+* Function `dehli` added.
+* Function `get_gbif_taxa_tree` added.
 
 2# biomonitoR 0.9.2
 

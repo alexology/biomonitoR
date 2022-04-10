@@ -2,7 +2,7 @@ Package: biomonitoR
 Type: Package
 Title: biomonitoring indices and metrics
 Version: 0.9.3
-Author: Alex Laini, Gemma Burgazzi, Rossano Bolpagni, Daniel Bruno, Simone Guareschi, Cayetano Gutiérrez-Cánovas, Rafael Miranda, Cédric Mondy, Gabor Varbiro, Tommaso Cancellario
+Author: Alex Laini, Simone Guareschi, Rossano Bolpagni, Gemma Burgazzi, Daniel Bruno, Cayetano Gutiérrez-Cánovas, Rafael Miranda, Cédric Mondy, Gabor Varbiro, Tommaso Cancellario
 Maintainer: Alex Laini <alex.laini@gmail.com>
 Description: Provides a tool for managing taxonomic and traits information and for calculating biomonitoring indices and metrics of running waters.
 License: GPL (>= 2)
@@ -19,7 +19,8 @@ Imports: hunspell,
     ape,
     lifecycle,
     plotly,
-    RColorBrewer
+    RColorBrewer,
+    rjson
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests: 

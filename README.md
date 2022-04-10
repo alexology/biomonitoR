@@ -11,6 +11,7 @@ A package for managing taxonomic and functional information and for calculating 
 
 ```R
 # install the devtools package and then
+# The devtools package requires and updated version of Rtools.
 library(devtools)
 
 install_github("alexology/biomonitoR", ref = "main", build_vignettes = TRUE)
@@ -33,6 +34,7 @@ library(devtools)
 
 install_github("alexology/biomonitoR", ref = "old_version")
 ```
+
 
 # Basic usage
 
