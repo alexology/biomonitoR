@@ -2,14 +2,12 @@
 % Please edit documentation in R/get_gbif_taxa.R
 \name{get_gbif_taxa_tree}
 \alias{get_gbif_taxa_tree}
-\title{Create biomonitoR dataset from GBIF}
+\title{Create \code{biomonitoR} dataset from GBIF}
 \usage{
-get_gbif_taxa_tree(x, synonym = FALSE, ref_from_tree = FALSE)
+get_gbif_taxa_tree(x, ref_from_tree = FALSE)
 }
 \arguments{
 \item{x}{Vector containing your taxa list.}
-
-\item{synonym}{If \code{TRUE} synonyms are substituted with their accepted name.}
 
 \item{ref_from_tree}{Create a reference database in the \code{biomonitoR} format. See \link{ref_from_tree}.}
 }

@@ -2,8 +2,8 @@
 
 * Implemented 2 plot functions.
 * Added the function `abundance_classes` to transform abundance-coverage data into abundance-coverage classes.
-* Function `dehli` added.
-* Function `get_gbif_taxa_tree` added.
+* New macroinvertebrate-based indices! Functions `dehli` and `flow_T` added.
+* New functions for building reference datasets from online resources! Function `get_gbif_taxa_tree`, `get_iucn_taxa_tree`, `get_nbn_taxa_tree` and `get_worms_taxa_tree` added.
 
 2# biomonitoR 0.9.2
 
