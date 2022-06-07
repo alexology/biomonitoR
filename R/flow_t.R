@@ -36,8 +36,6 @@ flow_t <- function(x, tax_lev = "Taxa", type = "ab", trans = NULL){
   data_ts <- assign_traits(x)
   data_ts_av <- average_traits(data_ts)
 
-  data_ts_av <- data_ts_av[, c("CURRENT")]
-
   numerator <- c("CURRENT_3", "CURRENT_4")
   denominator <- c("CURRENT_1", "CURRENT_2", "CURRENT_3", "CURRENT_4")
 
