@@ -4,6 +4,8 @@
 #' @description Function to create a reference `biomonitoR` dataset using API from the National Biodiversity Network (NBN).
 #' @param x Vector contain your Taxa list. This is the base list to create your custom reference database.
 #' @param ref_from_tree Create a reference database in the `biomonitoR` format. See [ref_from_tree].
+#' @details Check carefully the results. In the NBN database, sometimes the subgenus information
+#' is embedded in the species name (e.g Genus (Subgenus) species). This can cause problems to other `biomonitoR` functions.
 #' @seealso [as_biomonitor] [get_gbif_taxa_tree] [get_iucn_taxa_tree] [get_worms_taxa_tree]
 #' @export
 #' @examples
@@ -58,8 +60,12 @@ get_nbn_taxa_tree <- function(x, ref_from_tree = FALSE) {
         url.2 <- paste0("https://species-ws.nbnatlas.org/classification/", key)
         content.2 <- fromJSON(file = url.2)
 
+        content.2.df <- data.frame(Reduce(rbind, content.2))
         synonym.1 <- data.frame(synonym = x[j],
-                                accepted = content.2[[10]]$scientificName)
+                                accepted = as.character(content.2.df$scientificName[nrow(content.2.df)]))
+
+        # synonym.1 <- data.frame(synonym = x[j],
+        #                         accepted = content.2[[10]]$scientificName)
         synonym <- rbind(synonym.1, synonym)
 
       } else {

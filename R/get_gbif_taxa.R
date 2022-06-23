@@ -20,10 +20,10 @@
 
 
 get_gbif_taxa_tree <- function(x, ref_from_tree = FALSE) {
-
   tax <- data.frame() # Create dataframe to store biomonitoR taxa
   notFind <- data.frame() # Create dataframe to store not find taxa
   synonym <- data.frame() # Create dataframe containing synonym names
+  status <- data.frame() # Create dataframe containing status names
 
   for(j in 1:length(x)){
     print(paste("----",j, "of", length(x), "----", x[j], "----"))
@@ -65,6 +65,11 @@ get_gbif_taxa_tree <- function(x, ref_from_tree = FALSE) {
 
       tax <- rbind(tax, taxa.bior)
 
+
+      status.1 <- data.frame(taxa = x[j],
+                             status = ifelse("status" %in% names(content.2), content.2$status, content.2$taxonomicStatus))
+      status <- rbind(status, status.1)
+
     } else {
       notFind.1 <- data.frame(taxa = x[j])
       notFind <- rbind(notFind, notFind.1)
@@ -89,7 +94,8 @@ get_gbif_taxa_tree <- function(x, ref_from_tree = FALSE) {
     return(list(
       taxonomy = tax,
       notFindTaxa = notFind,
-      synonym = synonym
+      synonym = synonym,
+      status = status
     ))
   }
 }

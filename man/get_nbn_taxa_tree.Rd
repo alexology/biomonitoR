@@ -14,6 +14,10 @@ get_nbn_taxa_tree(x, ref_from_tree = FALSE)
 \description{
 Function to create a reference \code{biomonitoR} dataset using API from the National Biodiversity Network (NBN).
 }
+\details{
+Check carefully the results. In the NBN database, sometimes the subgenus information
+is embedded in the species name (e.g Genus (Subgenus) species). This can cause problems to other \code{biomonitoR} functions.
+}
 \examples{
 
 \dontrun{
