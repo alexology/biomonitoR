@@ -1,6 +1,10 @@
 2# biomonitoR 0.9.3
 
-* Implemented 3 plot functions.
+* Implemented 2 plot functions.
+* Added the function `abundance_classes` to transform abundance-coverage data into abundance-coverage classes.
+* New macroinvertebrate-based indices! Functions `dehli` and `flow_T` added.
+* New functions for building reference datasets from online resources! Function `get_gbif_taxa_tree`, `get_iucn_taxa_tree`, `get_nbn_taxa_tree` and `get_worms_taxa_tree` added.
+* New macrophyte-based index! Function `ibmr` added.
 
 2# biomonitoR 0.9.2
 
@@ -14,11 +18,11 @@
 
 2# biomonitoR 0.9.1
 
-* Function names changed according to the tidiverse style guide.
+* Function names changed according to the tidyverse style guide.
 * Argument `fuzzy` added to the `add_bias_to_traits()` function. This option allows to add bias also to non-fuzzy data. Argument `traceB` removed.
 * Code styled according to the tidyverse style guide with the `styler` package.
 * Tests added with the testthat package.
-* Bug fixed. `as_biomonitor` always imported binary data as an object of class `bin`. Users are free to do whatever they want with their data and this behaviour has been removed.
+* Bug fixed. `as_biomonitor` always imported binary data as an object of class `bin`. Users are free to do whatever they want with their data and this behavior has been removed.
 * Bug fixed. `psi` incorrectly assigned site names.
 
 2# biomonitoR 0.9

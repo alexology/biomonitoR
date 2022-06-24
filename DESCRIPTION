@@ -2,10 +2,41 @@ Package: biomonitoR
 Type: Package
 Title: biomonitoring indices and metrics
 Version: 0.9.3
-Author: Alex Laini, Gemma Burgazzi, Rossano Bolpagni, Daniel Bruno, Simone Guareschi, Cayetano Gutiérrez-Cánovas, Rafael Miranda, Cédric Mondy, Gabor Varbiro, Tommaso Cancellario
-Maintainer: Alex Laini <alex.laini@gmail.com>
+Authors@R: 
+    c(person(given = "Alex",
+             family = "Laini",
+             role = c("aut", "cre"),
+             email = "alex.laini@gmail.com",
+             comment = c(ORCID = "0000-0002-3458-7538")),
+      person(given = "Tommaso",
+             family = "Cancellario",
+             role = "aut"),
+      person(given = "Simone",
+             family = "Guareschi",
+             role = "aut"),             
+      person(given = "Daniel",
+             family = "Bruno",
+             role = "aut"),
+      person(given = "Cayetano",
+             family = "Gutiérrez-Cánovas",
+             role = "aut"),
+      person(given = "Cédric",
+             family = "Mondy",
+             role = "aut"),
+      person(given = "Rossano",
+             family = "Bolpagni",
+             role = "ctb"),
+      person(given = "Gemma",
+             family = "Burgazzi",
+             role = "ctb"),
+      person(given = "Rafael",
+             family = "Miranda",
+             role = "ctb"),
+      person(given = "Gabor",
+             family = "Varbiro",
+             role = "ctb"))
 Description: Provides a tool for managing taxonomic and traits information and for calculating biomonitoring indices and metrics of running waters.
-License: GPL (>=2)
+License: GPL (>= 2)
 LazyData: true
 Encoding: UTF-8
 Depends: R (>= 4.00)
@@ -19,7 +50,8 @@ Imports: hunspell,
     ape,
     lifecycle,
     plotly,
-    RColorBrewer
+    RColorBrewer,
+    rjson
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests: 

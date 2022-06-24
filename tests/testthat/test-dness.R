@@ -13,8 +13,8 @@ test_that("dness", {
   taxdis <- vegan::taxa2dist(tax_tree, varstep=FALSE)
   veg_res <- vegan::taxondive(comm_dness, taxdis, match.force = FALSE)
 
-  expect_equal(data_dness, veg_res$D)
-  expect_equal(data_dness_star, veg_res$Dstar)
-  expect_equal(data_dness_bin, veg_res$Dplus)
+  expect_identical(data_dness, veg_res$D, tolerance = 0.000001)
+  expect_identical(data_dness_star, veg_res$Dstar, tolerance = 0.000001)
+  expect_identical(data_dness_bin, veg_res$Dplus, tolerance = 0.000001)
 
 })

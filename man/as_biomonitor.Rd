@@ -17,7 +17,7 @@ as_biomonitor(
 \arguments{
 \item{x}{A \code{data.frame} with a column called \code{Taxa} where store taxa names and samples on the other columns (see the example \code{macro_ex}).}
 
-\item{group}{Biotic group of interest. Possible values are \code{mi} for macroinvertebrates, \code{mf} for macrophytes and \code{fi} for fish. The choice will set the right reference dataset for the specified group.
+\item{group}{Biotic group of interest. Possible values are \code{mi} for macroinvertebrates, \code{mf} for macrophytes, \code{fi} for fish and \code{di} for diatoms. The choice will set the right reference dataset for the specified group.
 This option will not be considered if a custom reference dataset is provided. Default to \code{mi}.}
 
 \item{dfref}{A custom reference database that replaces the built-in reference databases.}

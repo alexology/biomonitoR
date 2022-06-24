@@ -4,7 +4,7 @@
 #' This function merge the user `data.frame` with a reference dataset and suggest corrections for mispelled names.
 #'
 #' @param x A `data.frame` with a column called `Taxa` where store taxa names and samples on the other columns (see the example `macro_ex`).
-#' @param group Biotic group of interest. Possible values are `mi` for macroinvertebrates, `mf` for macrophytes and `fi` for fish. The choice will set the right reference dataset for the specified group.
+#' @param group Biotic group of interest. Possible values are `mi` for macroinvertebrates, `mf` for macrophytes, `fi` for fish and `di` for diatoms. The choice will set the right reference dataset for the specified group.
 #'  This option will not be considered if a custom reference dataset is provided. Default to `mi`.
 #' @param dfref A custom reference database that replaces the built-in reference databases.
 #' @param to_change A `data.frame` specifying the taxa name that needs to be changed.
@@ -106,6 +106,11 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
     ref <- fi_ref
   }
 
+  if (group == "di") {
+    # fish
+    ref <- di_ref
+  }
+
   # allow the users to use their own reference database
   if (!is.null(dfref)) {
     dfref[is.na(dfref)] <- ""
@@ -121,15 +126,19 @@ as_biomonitor <- function(x, group = "mi", dfref = NULL, to_change = "default", 
     if (identical(group, "mi")) {
       dic.path <- system.file("dict", "mi_dictionary.txt", package = "biomonitoR")
       # very important to set cache equal to FALSE, otherwise suggestNames will provide inconsistent results.
-      dictio <- dictionary(dic.path, cache = F)
+      dictio <- dictionary(dic.path, cache = FALSE)
     }
     if (identical(group, "mf")) {
       dic.path <- system.file("dict", "mf_dictionary.txt", package = "biomonitoR")
-      dictio <- dictionary(dic.path, cache = F)
+      dictio <- dictionary(dic.path, cache = FALSE)
     }
     if (identical(group, "fi")) {
       dic.path <- system.file("dict", "fi_dictionary.txt", package = "biomonitoR")
-      dictio <- dictionary(dic.path, cache = F)
+      dictio <- dictionary(dic.path, cache = FALSE)
+    }
+    if (identical(group, "di")) {
+      dic.path <- system.file("dict", "di_dictionary.txt", package = "biomonitoR")
+      dictio <- dictionary(dic.path, cache = FALSE)
     }
   }
 

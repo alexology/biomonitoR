@@ -26,7 +26,7 @@ test_that("traits", {
   # no need to run assign_traits, just to show its use
   oglio_ts <- assign_traits(oglio_agg , trait_db = traits_mf , group = "mf")
   oglio_ts_fam <- assign_traits(oglio_agg , trait_db = traits_mf , group = "mf", tax_lev = "Family")
-  expect_equal(dim(oglio_ts), c(40, 28))
+  expect_equal(dim(oglio_ts), c(44, 28))
 
 
 
