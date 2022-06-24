@@ -9,7 +9,8 @@ ibmr(
   method = "ita",
   exceptions = NULL,
   coverage_coef = FALSE,
-  coverage_classes = c(0.1, 1, 10, 50)
+  coverage_classes = c(0.1, 1, 10, 50),
+  traceB = FALSE
 )
 }
 \arguments{
@@ -24,14 +25,37 @@ This option can be useful, for instance, to exclude an alien species belonging t
 \item{coverage_coef}{Are data already represented with coverage coefficients? Set to \code{TRUE} if this is not the case.}
 
 \item{coverage_classes}{Thresholds to transform abundances into coverage classes.}
+
+\item{traceB}{If set to \code{TRUE} a list as specified below will be returned.}
+}
+\value{
+If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
+\itemize{
+\item \code{results} Result of \code{aspt()}.
+\item \code{taxa_df} The \code{data.frame} used for the calculation containing the abundance of taxa receiving a score.
+\item \code{exceptions} A \code{data.frame} containing the changes made by excluding the taxa included in \code{exceptions}.
+\item \code{parent_child_pairs} For instance in Spanish ASPT both \emph{Ferrissia} and Planorbidae receive a score.
+Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
+}
 }
 \description{
-\Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
+\Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
 
 This function calculates the IBMR index following Minciardi et al. (2009).
 }
 \details{
-The \code{traceB} argument will be implemented soon.
+The function \code{ibmr()} calculates the index as follow:
+\deqn{ibmr= \frac{\sum_{i=1}^{S} C{i} E{i} K{i}} {\sum_{i=1}^{S} E{i} K{i}}}
+
+where S is the number of taxa, i the ith taxon, Ci the sensitivity score, Ei the stenoecia coefficient
+and Ki the coverage coefficient.
+
+Be careful when using data already transformed in coverage classes. The function \code{ibmr()} will sum
+the classes if needed and this will result in wrong results. For example, if a taxon has only genus level
+scores and two species of this genus are present, \code{ibmr()} will sum their coverage classes. This can result
+in taxa having a coverage class higher than the highest coverage class allowed.
+
+All the information used for \code{ibmr()} calculation can be retrieved with the function \link{show_scores}.
 }
 \examples{
 data(oglio)
@@ -45,4 +69,4 @@ Minciardi, M. R., Spada, C. D., Rossi, G. L., Angius, R., Orru, G., Mancini, L.,
 \seealso{
 \link{aggregate_taxa}
 }
-\keyword{aspt}
+\keyword{ibmr}
