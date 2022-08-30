@@ -37,8 +37,8 @@
 #' Default to `Taxa`, the maximum taxonomic level is `Family`.
 #' @param dfref Reference dataset as used in the function `aggregate_taxa()`.
 #' @param filter_by_distance Filter the results according to the taxonomic distance. Possible values are `pos`, `neg` or a positive integer.
-#' @param col_blocks A vector containing the number of modalities for each trait.
-#'
+#' @param col_blocks A vector containing the number of modalities for each trait. IF `NULL`, the default Tachet et al. (2010) `col_blocks` will be assigned.
+#' @param type The type of variables specified in `trait_db`. Must be one of `F`, fuzzy, or `C`, continuous.
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread

@@ -12,10 +12,10 @@
 #' @param tax_lev Character string giving the taxonomic level used to retrieve
 #' trait information. Possible levels are `Taxa`, `Species`, `Genus`,
 #' `Family` as returned by `aggregate_taxa()`.
-#' @param type The type of variables speciefied in `trait_db`.
+#' @param type The type of variables specified in `trait_db`.
 #' Must be one of `F`, fuzzy, or `C`, continuous.
 #' If more control is needed please consider to provide `trait_db` as a `dist` object.
-#' It works only when `trait_db` is a `data.frame`, otherwise ingored.
+#' It works only when `trait_db` is a `data.frame`, otherwise ignored.
 #' @param traitSel Interactively select traits.
 #' @param col_blocks A vector that contains the number of modalities for each trait.
 #' Not needed when `euclidean` distance is used.
