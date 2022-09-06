@@ -30,10 +30,10 @@ No automatic check is done.}
 trait information. Possible levels are \code{Taxa}, \code{Species}, \code{Genus},
 \code{Family} as returned by \code{aggregate_taxa()}.}
 
-\item{type}{The type of variables speciefied in \code{trait_db}.
+\item{type}{The type of variables specified in \code{trait_db}.
 Must be one of \code{F}, fuzzy, or \code{C}, continuous.
 If more control is needed please consider to provide \code{trait_db} as a \code{dist} object.
-It works only when \code{trait_db} is a \code{data.frame}, otherwise ingored.}
+It works only when \code{trait_db} is a \code{data.frame}, otherwise ignored.}
 
 \item{traitSel}{Interactively select traits.}
 

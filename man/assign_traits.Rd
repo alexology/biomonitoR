@@ -16,7 +16,7 @@ assign_traits(
   filter_by_distance = NULL
 )
 
-average_traits(x, col_blocks = NULL)
+average_traits(x, col_blocks = NULL, type = "F")
 
 sample_traits(x)
 }
@@ -41,7 +41,9 @@ Default to \code{Taxa}, the maximum taxonomic level is \code{Family}.}
 
 \item{filter_by_distance}{Filter the results according to the taxonomic distance. Possible values are \code{pos}, \code{neg} or a positive integer.}
 
-\item{col_blocks}{A vector containing the number of modalities for each trait.}
+\item{col_blocks}{A vector containing the number of modalities for each trait. IF \code{NULL}, the default Tachet et al. (2010) \code{col_blocks} will be assigned.}
+
+\item{type}{The type of variables specified in \code{trait_db}. Must be one of \code{F}, fuzzy, or \code{C}, continuous.}
 }
 \description{
 A function for assigning traits to taxa at different taxonomic levels.
