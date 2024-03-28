@@ -19,50 +19,50 @@ f_red(
 )
 }
 \arguments{
-\item{x}{results of function \code{aggregate_taxa()}.}
+\item{x}{Results of \code{aggregate_taxa()}.}
 
-\item{trait_db}{a trait database. Can be a \code{data.frame} ot a \code{dist} object.
-Taxonomic level of the traits database must match those of the taxonomic database.
-No automatic check is done by the \code{function}.}
+\item{trait_db}{A trait dataset. Can be a \code{data.frame} ot a \code{dist} object.
+Taxonomic level of the traits dataset must match those of the taxonomic database.
+No automatic check is done.}
 
-\item{tax_lev}{character string giving the taxonomic level used to retrieve
-trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
-\code{"Family"} as returned by the \link{aggregatoR} function.}
+\item{tax_lev}{Character string giving the taxonomic level used to retrieve
+trait information. Possible levels are \code{Taxa}, \code{Species}, \code{Genus},
+\code{Family} as returned by \code{aggregate_taxa()}.}
 
-\item{type}{the type of variables speciefied in \code{trait_db}.
+\item{type}{The type of variables speciefied in \code{trait_db}.
 Must be one of \code{F}, fuzzy, or \code{C}, continuous.
 If more control is needed please consider to provide \code{trait_db} as a \code{dist} object.
 It works only when \code{trait_db} is a \code{data.frame}, otherwise ingored.}
 
-\item{traitSel}{interactively select traits.}
+\item{traitSel}{Interactively select traits.}
 
 \item{col_blocks}{A vector that contains the number of modalities for each trait.
 Not needed when \code{euclidean} distance is used.
 By default \code{biomonitoR} select the optimal number of dimensions with the quality of the functional space approach.}
 
-\item{distance}{to be used to compute functional distances, \code{euclidean} or \code{gower}. Default to \code{gower}.}
+\item{distance}{To be used to compute functional distances, \code{euclidean} or \code{gower}. Default to \code{gower}. See details.}
 
 \item{zerodist_rm}{If \code{TRUE} aggregates taxa with the same traits.}
 
-\item{traceB}{if \code{TRUE} ffrich will return a list as specified in details.}
+\item{traceB}{if \code{TRUE} returns a list as specified in details.}
 
 \item{correction}{Correction methods for negative eigenvalues, can be one of \code{none}, \code{lingoes} , \code{cailliez}, \code{sqrt} and \code{quasi}.
 Ignored when type is set to \code{C}.}
 
-\item{set_param}{a list of parameters for fine tuning the calculations.
+\item{set_param}{A list of parameters for fine tuning the calculations.
 \code{tol} a tolerance threshold for zero, see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to 1e-07.
-\code{cor.zero} = \code{TRUE} if TRUE, zero distances are not modified. see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to \code{TRUE}.}
+If \code{cor.zero} is \code{TRUE}, zero distances are not modified. see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to \code{TRUE}.}
 }
 \value{
 a vector with fuzzy functional richness results.
 \enumerate{
-\item \strong{results}: results of \code{f_red()};
-\item \strong{traits}: a data.frame containing the traits used for the calculations;
-\item \strong{taxa}: a data.frame conaining the taxa used for th calculations;
-\item \strong{nbdim}: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
-\item \strong{correction}: the type of correction used.
-\item \strong{NA_detection}: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
-\item \strong{duplicated_traits}: if present, list the taxa with the same traits.
+\item \code{results} Results of \code{f_red()}.
+\item \code{traits} A \code{data.frame} containing the traits used for the calculations.
+\item \code{taxa} A \code{data.frame} conaining the taxa used for the calculations.
+\item \code{nbdim} Number of dimensions used after calculatin the quality of functional spaces according to Maire et al. (2015).
+\item \code{correction} The type of correction used.
+\item \code{NA_detection} A \code{data.frame} containing taxa on the first column and the corresponding trais with NAs on the second column.
+\item \code{duplicated_traits} If present, list the taxa with the same traits.
 }
 }
 \description{
@@ -116,6 +116,9 @@ need such redundancy to perform their functions efficiently and stably over time
 in non-redundant communities since the loss or replacement of one species could
 lead to loss of unique traits or functions (Hooper et al. 2005), increasing
 ecosystem vulnerability (Elmqvist et al. 2003).
+
+The \code{gower} distance refers to the mixed-variables coefficient of distance of Pavoine et al. (2009) as implemented in the \code{ade4} package.
+This distance is meant to be used with fuzzy data.
 
 Taxa without traits assigned in the trait database are removed from both the trait and abundance databases.
 }
@@ -181,6 +184,10 @@ functioning: a consensus of current knowledge. Ecological Monographs,
 Lawton, J.H. & Brown, V.K. (1993) Redundancy in ecosystems.
 Biodiversity and Ecosystem Function (eds E.-D. Schulze & H.A. Mooney),
 pp. 255-270. Springer-Verlag, Berlin.
+
+Pavoine, S., Vallet, J., Dufour, A. B., Gachet, S., & Daniel, H. (2009).
+On the challenge of treating various types of variables: application for improving
+the measurement of functional diversity. Oikos, 118(3), 391-402.
 
 Pillar, V. D., Blanco, C. C., Muller, S. C., Sosinski, E. E.,
 Joner, F., & Duarte, L. D. (2013). Functional redundancy and stability

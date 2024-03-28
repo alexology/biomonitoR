@@ -2,7 +2,7 @@
 % Please edit documentation in R/epsi.R
 \name{epsi}
 \alias{epsi}
-\title{e-psi}
+\title{Empyrically-weighted Proportion of Sediment-sensitive Invertebrates index}
 \usage{
 epsi(
   x,
@@ -14,32 +14,33 @@ epsi(
 )
 }
 \arguments{
-\item{x}{results of the function \code{aggregate_taxa}.}
+\item{x}{Results of \code{aggregate_taxa()}.}
 
-\item{method}{method \code{uk}.
-Users can provide their own data.frame (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
+\item{method}{The only avialble method is \code{uk}.
+Users can provide their own \code{data.frame} (see examples) with a column called \emph{Taxon} and the column of scores called \emph{Scores}.}
 
-\item{agg}{optional, a data.frame provided by the user containing the specification on how to aggregate taxa. This data.frame needs a column called \emph{Taxon}
-containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications. Used when users want to aggregate some taxonomic levels while using their own data.frame of scores (provided via \code{method}).}
+\item{agg}{Default to \code{FALSE}. If set to \code{TRUE} \code{epsi()} will use the aggreation rules described in the details.
+It can also be a \code{data.frame} provided by the user containing the specification on how to aggregate taxa. This \code{data.frame} needs a column called \emph{Taxon}
+containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications. Used when users want to aggregate some taxonomic levels while using their own \code{data.frame} of scores (provided via \code{method}).}
 
 \item{abucl}{Log abundance categories. Tresholds are set to 1, 9, 99, 999.}
 
-\item{exceptions}{taxa that need to be exluded from the calculation.
+\item{exceptions}{Taxa that need to be exluded from the calculation.
 This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
 \code{agg} cannot be \code{TRUE} when a data.frame is provided as \code{method}.}
 
-\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+\item{traceB}{If set to \code{TRUE} a list as specified below will be returned.}
 }
 \value{
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
 \item \code{results} Results of \code{epsi()}.
-\item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
-\item \code{epsi_df} The data.frame used for the calculation containing scores and abundance classes for each site.
-\item \code{composite_taxa} Taxa aggregated following the aggregation rules of the \code{uk_agg} method or set in the \code{agg} option.
-\item \code{exceptions} A data.frame containing the containing changes made by excluding the taxa included in \code{exceptions}.
-\item \code{parent_child_pairs} For instance in Spanish \code{bmwp} both Ferrissia and Planorbidae receive a score.
-Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
+\item \code{taxa_df} The \code{data.frame} used for the calculation containing the abundance of taxa receiving a score.
+\item \code{epsi_df} The \code{data.frame} used for the calculation containing scores and abundance classes for each site.
+\item \code{composite_taxa} Taxa aggregated following the aggregation of the default method or set in \code{agg}.
+\item \code{exceptions} A \code{data.frame} containing the containing changes made by excluding the taxa included in \code{exceptions}.
+\item \code{parent_child_pairs} Parent-child pairs are not present in  the default implementation of epsi. A \code{data.frame} if both a  taxon and a parent
+taxon receive a score.
 }
 }
 \description{
@@ -55,7 +56,7 @@ This function calculates the Empyrically-weighted Proportion of Sediment-sensiti
 \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
 }
 
-The \code{epsi()} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+\code{epsi()} automatically check for parent-child pairs in the scoring system, see the return section for a definition.
 All the information used for \code{epsi()} calculation can be retrieved with the function \code{\link{show_scores}}.
 }
 \section{Acknowledgements}{

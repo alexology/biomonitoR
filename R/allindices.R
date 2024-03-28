@@ -1,13 +1,14 @@
 #' @name allindices
-#' @title Functions for calculating diversity, eveness and dominance indices.
+#' @title Functions for calculating diversity, evenness and dominance indices.
 #'
-#' @description Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices.
+#' @description Functions for calculating shannon, simpson, margalef, menhinick, pielou and other indices. A convenient
+#' function for calculating all the indices simultaneously is provided.
 #'
 #' @aliases  shannon simpson margalef menhinick pielou berpar brill esimpson invberpar invsimpson mcintosh fisher allindices
 #'
-#' @param x Result of the function `aggregate_taxa()`.
-#' @param base The base of the logarithm
-#' @param tax_lev Taxonomic level on which the calculation has to be made.
+#' @param x Result of `aggregate_taxa()`.
+#' @param base The base of the logarithm for indices with log transformation.
+#' @param tax_lev Taxonomic level at which the calculation has to be performed.
 #'
 #' @details Shannon index:
 #' \deqn{H'=-\sum_{i=1}^{S} p_{i}\log(p_{i})}
@@ -19,13 +20,13 @@
 #' \deqn{D_{mn}=\frac{S}{\sqrt(N)}}
 #' Brillouin index:
 #' \deqn{HB=\frac{\log(N) -\sum(\log(n_{i})) }{N}}
-#' Simpson's index is calculated as D. biomonitoR returns 1 - D and 1/D when `index` is set to `Simpson` or `Invsimpson`.
+#' Simpson's index is calculated as D. `biomonitoR` returns 1 - D and 1/D when `index` is set to `simpson()` or `invsimpson()`.
 #' \deqn{D=\sum_{i=1}^{S} p_{i}^{2}}
 #' Simpson's evenness:
 #' \deqn{D_{1/D}=\frac{1/D}{\sqrt(S)}}
 #' Berger-Parker index:
 #' \deqn{d=\frac{N_{max}}{N}}
-#' The inverse of this index is also provided when `index` is set to `Invberpar`. McIntosh's diversity:
+#' The inverse of this index is also provided with `invberpar()`. McIntosh's diversity:
 #' \deqn{D=\frac{N-U}{N-\sqrt(N)}}
 #' where
 #' \deqn{U=\sqrt(\sum_{i=1}^{S} n_{i}^{2})}
@@ -35,8 +36,8 @@
 #' \deqn{\frac{S}{N}=-\frac{N(1-x)}{x} \log(1-x)}
 #'
 #'
-#' p_i is the proportion of individuals found in the i-th species, n_i is the number of individuals found in the i-th species, S the species richness,
-#'  N the number of individuals and N_max the number of individuals in the most abundant species. All the indices are calculated according to Magurran (2004).
+#' *p_i* is the proportion of individuals found in the i-th species, *n_i* is the number of individuals found in the i-th species, *S* the species richness,
+#'  *N* the number of individuals and *N_max* the number of individuals in the most abundant species. All the indices are calculated according to Magurran (2004).
 #' @keywords shannon, simpson, margalef, menhinick, pielou
 #' @export
 #' @seealso [aggregate_taxa]

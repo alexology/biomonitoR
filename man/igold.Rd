@@ -7,22 +7,22 @@
 igold(x, traceB = FALSE)
 }
 \arguments{
-\item{x}{results of function aggregatoR}
+\item{x}{Results of \code{aggregate_taxa()}.}
 
-\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+\item{traceB}{If set to \code{TRUE} a list as specified below will be returned.}
 }
 \value{
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
 \item \code{results} Results of the \code{igold} index.
-\item \code{taxa_df} The data.frame used for the calculation containing the abundance of the GOLD taxa.
+\item \code{taxa_df} The \code{data.frame} used for the calculation containing the abundance of the GOLD taxa.
 }
 }
 \description{
 This function calculates the 1 - GOLD metric, where GOLD stands for Gastropoda, Oligochaeta and Diptera. This metric should decrease with increasing organic pollution (Pinto et al., 2004).
 }
 \details{
-The metric 1 - GOLD is calculated as 1 minus the relative abundance of Gastropoda, Oligochaeta and Diptera. If a custom database is provided (see \code{\link{aggregatoR}}) please be sure that Gastropoda are at Class, Oligochaeta at Sublclass and Diptera at Order level, otherwise the gold calculation will be meaningless.
+The metric 1 - GOLD is calculated as 1 minus the relative abundance of Gastropoda, Oligochaeta and Diptera. If a custom database is provided (see \link{aggregate_taxa}) please be sure that Gastropoda are at Class, Oligochaeta at Sublclass and Diptera at Order level, otherwise the gold calculation will be meaningless.
 If this is the case please see \code{get_taxa_abundance()}.
 }
 \examples{

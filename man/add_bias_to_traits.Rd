@@ -11,15 +11,15 @@ add_bias_to_traits(x, fuzzy = TRUE, col_blocks = NULL, SD = 0.001)
 
 \item{fuzzy}{Are you working with fuzzy traits? Default to \code{TRUE}.}
 
-\item{col_blocks}{A vector that contains the number of modalities for each trait}
+\item{col_blocks}{A vector that contains the number of modalities for each trait.}
 
 \item{SD}{The amount of bias.}
 }
 \description{
-Add bias to traits to avoid duplicates.
+Add small amount of bias to traits to avoid taxa having the same traits.
 }
 \details{
-This function works by adding a small bias to traits.
+This function works by adding a small amount of bias to traits.
 The bias is added with the \code{\link[stats:Normal]{stats::rnorm()}} function.
 Fuzzy data are prepared with the function \code{\link[ade4:dist.ktab]{ade4::prep.fuzzy()}} of the \code{ade4} package.
 This function works with positive numeric traits.

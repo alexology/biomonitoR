@@ -1,43 +1,44 @@
-#' assign_traits
+#' Assign traits to taxa at different taxonomic levels
 #'
 #' @description
-#' A function for scaling traits across taxonomic levels.
+#' A function for assigning traits to taxa at different taxonomic levels.
 #'
 #' @details
 #' This function allows to obtain missing traits for a target taxon by taking traits from lower or to upper taxomic levels.
-#' For instance, consider the case where the genus Acroloxus is present in the user dataset and the species Acroloxus lacustris
-#' in the traits database. A simple merge would exclude Acroloxus from the tha analysis since Acroloxus and A. lacustris
-#' would not match. The function assign_traits allows to assign Acroloxus lacustris traits to Acroloxus.
+#' For instance, consider the case where the genus *Acroloxus* is present in the user dataset and the species *Acroloxus lacustris*
+#' in the traits dataset. A simple merge would exclude *Acroloxus* from the tha analysis since Acroloxus and *A. lacustris*
+#' would not match. The function assign_traits allows to assign *Acroloxus lacustris* traits to *Acroloxus*.
 #' This function works also in the opposite direction. Consider the case where there are no traits for the target taxon and
-#' the target taxon has not been identified at species level. The function assign_traits will assign the traits of the nearest taxonomic level
-#' to the target taxa (e.g. Tanypodinae traits assign to Ablabesmyia monilis). Consider also these examples to understand the behaviour of this
-#' function. For instance Anabolia lombarda is present in the user taxomic dataset while only Anabolia nervosa and Anabolia are present
-#' in the trait database. In this case assign_traits will assing to A. lombarda only the traits of Anabolia.
-#' Moreover, let assume that Coelostoma is present in the user dataset while only Berosus and Crenitis punctatostriata are present in the traits database.
-#' Here assign_traits will assign to Coelostoma the scores of Berosus and C. punctatostriata since they belong to the same family and there are no information at family level. \cr \cr
-#' The function assign_traits will measure the taxonomic distance between the target taxa and the taxa used to assign the trait score. This distance
-#' can be negative (e.g. Species to Genus) and positive (e.g. Genus to Species). The distance is measured assigning values as follows:
-#' 1 (Species to Genus) , 2 (Species to family), -1 (Family to Genus), etc. assign_traits considers only the
-#' taxonomic levels from Subspecies to Family (Subspecies, Species, Genus, Tribus, Subfamily, Family).
+#' the target taxon has not been identified at species level. The function assign_traits will assign the traits of the taxon nearest in the taxonomic tree
+#'  (e.g. Tanypodinae traits assign to *Ablabesmyia monilis*). Consider also these examples to understand the behaviour of this
+#' function. For instance *Anabolia lombarda* is present in the user taxomic dataset while only *Anabolia nervosa* and *Anabolia* are present
+#' in the trait database. In this case `assign_traits()` will assign only the traits of *Anabolia* to *A. lombarda*.
+#' Moreover, let's assume that *Coelostoma* is present in the user dataset while only *Berosus* and *Crenitis punctatostriata* are present in the traits dataset.
+#' Here `assign_traits()` will assign the scores of *Berosus* and *C. punctatostriata* to *Coelostoma* because they belong to the same family and there are no information at family level. \cr \cr
+#' The function `assign_traits()` will calculate the taxonomic distance between the target taxa and the taxa used to assign the trait score. This distance
+#' can be positive (e.g. Species to Genus) and negative (e.g. Genus to Species). The distance is measured assigning values as follows:
+#' 1 (Species to Genus), 4 (Species to family), -3 (Family to Genus), etc. `assign_traits()` considers only the
+#' taxonomic levels from Subspecies to Family (Subspecies, Species, Genus, Tribus, Subfamily, Family).\cr
+#' The function `average_traits()` averages traits when traits from multiple taxa are assigned to the same taxon. \cr
+#' Th function `sample_traits()` samples traits from one taxon when multiple taxa are assigned to the same taxon.
 #'
 #'
-#' @param x Results of `aggregate_taxa()`
-#' @param trait_db A trait data base with a column `Taxa` and the other columns
+#' @param x Results of `aggregate_taxa()`.
+#' @param trait_db A trait `data.frame` with a column `Taxa` and the other columns
 #'   containing the traits.
-#'   By default, the database used is the one from Tachet *et al* (2010) that
+#'   By default, the dataset used is the one from Tachet et al. (2010) for macroinvertebrates that
 #'   can be retrieved from
 #'   [freshwaterecology.info](https://www.freshwaterecology.info/) website
 #'   (Schmidt-Kloiber & Hering, 2015).
-#'   It includes traits only for macroinvertebrates.
 #' @param group Biotic group of interest. Possible values are `mi` for macroinvertebrates, `mf` for macrophytes and `fi` for fish.
 #'  The choice will set the right reference database for the specified group.
 #'  This option will not be considered if a custom reference database is provided. Default to `mi`.
-#' @param tax_lev Taxonomic level on which the calculation has to be made.
+#' @param tax_lev Taxonomic level at which the calculation has to be performed.
 #' Default to `Taxa`, the maximum taxonomic level is `Family`.
-#' @param dfref Reference database as used in the function aggregatoR.
-#' @param filter_by_distance Filter the results according to the taxonomic distance. Possible values are `pos`, `neg` or a positive integer. See details.
-#' @param col_blocks A vector that contains the number of modalities for each trait
-#'
+#' @param dfref Reference dataset as used in the function `aggregate_taxa()`.
+#' @param filter_by_distance Filter the results according to the taxonomic distance. Possible values are `pos`, `neg` or a positive integer.
+#' @param col_blocks A vector containing the number of modalities for each trait. IF `NULL`, the default Tachet et al. (2010) `col_blocks` will be assigned.
+#' @param type The type of variables specified in `trait_db`. Must be one of `F`, fuzzy, or `C`, continuous.
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread

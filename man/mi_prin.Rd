@@ -3,19 +3,21 @@
 \docType{data}
 \name{mi_prin}
 \alias{mi_prin}
-\title{Apennine invertebrate dataset}
+\title{Apennines invertebrate dataset}
 \format{
-A data frame with 59 rows and 41 variables.
+A data frame with 59 rows (taxa names) and 41 variables (stream codes).
 }
 \usage{
 mi_prin
 }
 \description{
-This dataset is derived from samples taken during the NOACQUA project aiming at evaluating "Community responses and ecosystem processes in
-intermittent streams".
-It consists of information taken at different taxonomic levels, mainly at genus and family levels.
-Macroinvertebrates were collected at ten points per site with a surber net with a frame of 0.05 m2 and a mesh net of 500 micrometers.
-All the available microhabitats were investigated. Data are reported as abundances.
-The NOACQUA project (Prot. 201572HW8F) was funded by the Italian Ministry of Education, University and Research.
+This dataset is derived from samples taken during the PRIN project NOACQUA
+"Community responses and ecosystem processes in intermittent streams".
+It consists of information at different taxonomic levels, mainly at genus and family level.
+Macroinvertebrates were collected from Apennine streams in North Italy
+(Emilia Romagna region) at ten points per site with a Surber net with a frame
+of 0.05 m2 and a mesh net of 500 micrometers. All the available aquatic microhabitats
+were investigated. Data are reported as abundances. The NOACQUA project (Prot. 201572HW8F)
+was funded by the Italian Ministry of Education, University and Research.
 }
 \keyword{datasets}

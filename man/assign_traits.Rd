@@ -5,7 +5,7 @@
 \alias{assign_traits}
 \alias{average_traits}
 \alias{sample_traits}
-\title{assign_traits}
+\title{Assign traits to taxa at different taxonomic levels}
 \usage{
 assign_traits(
   x,
@@ -16,53 +16,56 @@ assign_traits(
   filter_by_distance = NULL
 )
 
-average_traits(x, col_blocks = NULL)
+average_traits(x, col_blocks = NULL, type = "F")
 
 sample_traits(x)
 }
 \arguments{
-\item{x}{Results of \code{aggregate_taxa()}}
+\item{x}{Results of \code{aggregate_taxa()}.}
 
-\item{trait_db}{A trait data base with a column \code{Taxa} and the other columns
+\item{trait_db}{A trait \code{data.frame} with a column \code{Taxa} and the other columns
 containing the traits.
-By default, the database used is the one from Tachet \emph{et al} (2010) that
+By default, the dataset used is the one from Tachet et al. (2010) for macroinvertebrates that
 can be retrieved from
 \href{https://www.freshwaterecology.info/}{freshwaterecology.info} website
-(Schmidt-Kloiber & Hering, 2015).
-It includes traits only for macroinvertebrates.}
+(Schmidt-Kloiber & Hering, 2015).}
 
 \item{group}{Biotic group of interest. Possible values are \code{mi} for macroinvertebrates, \code{mf} for macrophytes and \code{fi} for fish.
 The choice will set the right reference database for the specified group.
 This option will not be considered if a custom reference database is provided. Default to \code{mi}.}
 
-\item{tax_lev}{Taxonomic level on which the calculation has to be made.
+\item{tax_lev}{Taxonomic level at which the calculation has to be performed.
 Default to \code{Taxa}, the maximum taxonomic level is \code{Family}.}
 
-\item{dfref}{Reference database as used in the function aggregatoR.}
+\item{dfref}{Reference dataset as used in the function \code{aggregate_taxa()}.}
 
-\item{filter_by_distance}{Filter the results according to the taxonomic distance. Possible values are \code{pos}, \code{neg} or a positive integer. See details.}
+\item{filter_by_distance}{Filter the results according to the taxonomic distance. Possible values are \code{pos}, \code{neg} or a positive integer.}
 
-\item{col_blocks}{A vector that contains the number of modalities for each trait}
+\item{col_blocks}{A vector containing the number of modalities for each trait. IF \code{NULL}, the default Tachet et al. (2010) \code{col_blocks} will be assigned.}
+
+\item{type}{The type of variables specified in \code{trait_db}. Must be one of \code{F}, fuzzy, or \code{C}, continuous.}
 }
 \description{
-A function for scaling traits across taxonomic levels.
+A function for assigning traits to taxa at different taxonomic levels.
 }
 \details{
 This function allows to obtain missing traits for a target taxon by taking traits from lower or to upper taxomic levels.
-For instance, consider the case where the genus Acroloxus is present in the user dataset and the species Acroloxus lacustris
-in the traits database. A simple merge would exclude Acroloxus from the tha analysis since Acroloxus and A. lacustris
-would not match. The function assign_traits allows to assign Acroloxus lacustris traits to Acroloxus.
+For instance, consider the case where the genus \emph{Acroloxus} is present in the user dataset and the species \emph{Acroloxus lacustris}
+in the traits dataset. A simple merge would exclude \emph{Acroloxus} from the tha analysis since Acroloxus and \emph{A. lacustris}
+would not match. The function assign_traits allows to assign \emph{Acroloxus lacustris} traits to \emph{Acroloxus}.
 This function works also in the opposite direction. Consider the case where there are no traits for the target taxon and
-the target taxon has not been identified at species level. The function assign_traits will assign the traits of the nearest taxonomic level
-to the target taxa (e.g. Tanypodinae traits assign to Ablabesmyia monilis). Consider also these examples to understand the behaviour of this
-function. For instance Anabolia lombarda is present in the user taxomic dataset while only Anabolia nervosa and Anabolia are present
-in the trait database. In this case assign_traits will assing to A. lombarda only the traits of Anabolia.
-Moreover, let assume that Coelostoma is present in the user dataset while only Berosus and Crenitis punctatostriata are present in the traits database.
-Here assign_traits will assign to Coelostoma the scores of Berosus and C. punctatostriata since they belong to the same family and there are no information at family level. \cr \cr
-The function assign_traits will measure the taxonomic distance between the target taxa and the taxa used to assign the trait score. This distance
-can be negative (e.g. Species to Genus) and positive (e.g. Genus to Species). The distance is measured assigning values as follows:
-1 (Species to Genus) , 2 (Species to family), -1 (Family to Genus), etc. assign_traits considers only the
-taxonomic levels from Subspecies to Family (Subspecies, Species, Genus, Tribus, Subfamily, Family).
+the target taxon has not been identified at species level. The function assign_traits will assign the traits of the taxon nearest in the taxonomic tree
+(e.g. Tanypodinae traits assign to \emph{Ablabesmyia monilis}). Consider also these examples to understand the behaviour of this
+function. For instance \emph{Anabolia lombarda} is present in the user taxomic dataset while only \emph{Anabolia nervosa} and \emph{Anabolia} are present
+in the trait database. In this case \code{assign_traits()} will assign only the traits of \emph{Anabolia} to \emph{A. lombarda}.
+Moreover, let's assume that \emph{Coelostoma} is present in the user dataset while only \emph{Berosus} and \emph{Crenitis punctatostriata} are present in the traits dataset.
+Here \code{assign_traits()} will assign the scores of \emph{Berosus} and \emph{C. punctatostriata} to \emph{Coelostoma} because they belong to the same family and there are no information at family level. \cr \cr
+The function \code{assign_traits()} will calculate the taxonomic distance between the target taxa and the taxa used to assign the trait score. This distance
+can be positive (e.g. Species to Genus) and negative (e.g. Genus to Species). The distance is measured assigning values as follows:
+1 (Species to Genus), 4 (Species to family), -3 (Family to Genus), etc. \code{assign_traits()} considers only the
+taxonomic levels from Subspecies to Family (Subspecies, Species, Genus, Tribus, Subfamily, Family).\cr
+The function \code{average_traits()} averages traits when traits from multiple taxa are assigned to the same taxon. \cr
+Th function \code{sample_traits()} samples traits from one taxon when multiple taxa are assigned to the same taxon.
 }
 \section{Functions}{
 \itemize{

@@ -3,18 +3,18 @@
 #' @description
 #' A function to select traits based on taxonomic distance.
 #'
-#' @param x result of the `assign_traits()` function.
-#' @param method can be `nearest`, `nearest+`, `nearest-`, `nearest+-` and `neareast-+`.
+#' @param x Result of `assign_traits()`.
+#' @param method Can be `nearest`, `nearest+`, `nearest-`, `nearest+-` and `neareast-+`.
 #'  Please see details for further information.
-#' @param traceB if `TRUE` it will return a vector containing taxa excluded from the selection process
+#' @param traceB If `TRUE` it will return a vector containing taxa excluded from the selection process
 #'  because they did not meet the requirments of the selection.
 #'
-#' @details Method `nearest` select the traits belonging to the nearest taxa irrispective of their position
+#' @details Method `nearest` selects the traits belonging to the nearest taxa irrispective of their position
 #' in the taxonomic tree.
-#' Method `nearest+` select the traits belonging to the nearest taxa that have a taxonomic level equal or finer
-#' than the target one. Method `nearest-` do the opposite.
-#' Method `nearest+` select the traits belonging to the nearest taxa giving priority to taxa having
-#' taxonomic level equal or finer than the target one. Method `nearest-+` do the opposite.
+#' Method `nearest+` selects the traits belonging to the nearest taxa that have a taxonomic level equal or finer
+#' than the target one. Method `nearest-` does the opposite.
+#' Method `nearest+-` selects the traits belonging to the nearest taxa giving priority to taxa having
+#' taxonomic level equal or finer than the target one. Method `nearest-+` does the opposite.
 #'
 #' @export
 #' @examples

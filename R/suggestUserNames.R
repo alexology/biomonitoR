@@ -4,18 +4,22 @@
 suggestUserNames <- function(x, group = "mi") {
   if (group == "mi") {
     dic.path <- system.file("dict", "mi_dictionary.txt", package = "biomonitoR")
-    dictio <- dictionary(dic.path, cache = F)
+    dictio <- dictionary(dic.path, cache = FALSE)
   }
   if (group == "mf") {
     dic.path <- system.file("dict", "mf_dictionary.txt", package = "biomonitoR")
-    dictio <- dictionary(dic.path, cache = F)
+    dictio <- dictionary(dic.path, cache = FALSE)
   }
   if (group == "fi") {
     dic.path <- system.file("dict", "fi_dictionary.txt", package = "biomonitoR")
-    dictio <- dictionary(dic.path, cache = F)
+    dictio <- dictionary(dic.path, cache = FALSE)
+  }
+  if (group == "di") {
+    dic.path <- system.file("dict", "di_dictionary.txt", package = "biomonitoR")
+    dictio <- dictionary(dic.path, cache = FALSE)
   }
   taxaCar <- as.character(x$Taxa)
-  taxaCar <- sapply(taxaCar, capWords, USE.NAMES = F)
+  taxaCar <- sapply(taxaCar, capWords, USE.NAMES = FALSE)
 
   # replace space with underscore to be compatible with hunspell
   taxaCar <- gsub(" ", "_", taxaCar)
@@ -28,7 +32,7 @@ suggestUserNames <- function(x, group = "mi") {
   # This part of the function change the wrong names to correct
   # the user is provided with an interactive selection interface with select.list
 
-  n <- which(nameCheck == F) # number of wrong names
+  n <- which(nameCheck == FALSE) # number of wrong names
   if (length(n) == 0) {
     return(n)
   }

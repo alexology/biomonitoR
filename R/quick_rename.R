@@ -2,8 +2,8 @@
 #'
 #' This function allow the user to change the wrong taxa names according to the deault reference databases implemented in `biomonitoR`.
 #' @param x a data.frame as specified in details
-#' @param group biotic group of interest. Possible values are `mi` for macroinvertebrates and `mf` for macrophytes. Default to `mi`.
-#' @param write_table if TRUE `quick_rename()` will save a txt file with changes provided by the user
+#' @param group biotic group of interest. Possible values are `mi` for macroinvertebrates, `mf` for macrophytes `fi` for fish and `di` for diatoms. Default to `mi`.
+#' @param write_table if TRUE `quick_rename()` will save a txt file with changes provided by the user.
 #' @keywords as_biomonitor
 #' @details data.frame must have a column called "Taxa" where put species, genus or family names. See data(macro_ex) for an example dataset.\cr
 #' The function `quick_rename()` will suggest correct name while allowing the user to insert a name (Enter taxon name).

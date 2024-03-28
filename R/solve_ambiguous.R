@@ -1,20 +1,22 @@
-#' solve_ambiguous
+#' @title Methods to deal with ambiguous taxa
 #'
 #' @description
 #' Solve the ambiguous assignment of taxa.
 #'
-#' @param x result of the function aggregatoR.
-#' @param method only methods `RPKC` and `MCWP` are currently implemented in `biomonitoR`. See details.
+#' @param x Result of `aggregate_taxa()`.
+#' @param method Only methods `RPKC` and `MCWP` are currently implemented in `biomonitoR`. See details.
+#'
 #' @details Taxonomic dataset often contains ambiguous taxa due to the difficulites in identify damaged and juvenile organisms.
-#' For instance Chironominae and Chironomidae could be reported in the same sample. Several techinques has been
+#' For instance Chironominae and Chironomidae could be reported in the same sample. Several techniques has been
 #' proposed to solve this issue (see Cuffney et al., 2007).
-#' Currently ambiguousSolver two only one algorithms to solve the problem of ambiguous assignments.
+#' Currently `solve_ambiguous()` provides two algorithms to solve the problem of ambiguous assignments.
 #' `RPKC` means Remove Parents - Keep Children. It works by removing all the higher taxonomic levels while keeping children.
-#' `MCWP` means Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of higher taxonomic levels.
-#' @keywords aggregatoR
+#' `MCWP` means Merge Children with Parents. It works by assignign the abundances of lower taxonomic levels to those of the higher taxonomic level.
+#'
+#' @keywords aggregate_taxa
 #' @references Cuffney, T. F., Bilger, M. D., & Haigler, A. M. (2007). Ambiguous taxa: effects on the characterization and interpretation of invertebrate assemblages. Journal of the North American Benthological Society, 26(2), 286-307.
 #' @export
-#' @seealso \code{\link{aggregatoR}}
+#' @seealso [aggregate_taxa]
 #' @examples
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)

@@ -1,20 +1,20 @@
-#' psi
+#' @title Proportion of Sediment-sensitive Invertebrates index
 #'
 #' @description
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 #'
-#' This function calculates the *Proportion of Sediment-sensitive Invertebrates index* (PSI) according to the most recent version used in UK.
-#' @param x result of the function `aggregate_taxa()`.
-#' @param method the only choice is `extence`. Users can provide their own data.frame (see examples) with a column called *Taxon* and the column of scores called *Score*.
+#' This function calculates the Proportion of Sediment-sensitive Invertebrates index (PSI) according to the most recent version used in UK.
+#'
+#' @param x Result of `aggregate_taxa()`.
+#' @param method The only choice is `extence`. Users can provide their own `data.frame` (see examples) with a column called *Taxon* and the column of scores called *Score*.
 #' @param abucl Log abundance categories. Treshold are set to 1, 9, 99 and 999 as in the original paper of Extence et al. (2013).
-#' @param agg this option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
+#' @param agg This option allows the composite family approach. It can be `FALSE`, `TRUE` or a `data.frame`.
 #' If `FALSE` no aggregation will be performed, while if `TRUE` aggregation will be performed according to the rules described in Details.
 #' A `data.frame` containing the aggregation rules can be provided by the user.
 #' This `data.frame` needs a column called *Taxon* containing the taxon to aggregate and a column called *Correct_Taxon* with the aggregation specifications.
 #' `agg` cannot be `TRUE` when a `data.frame` is provided as method.
-#' @param exceptions taxa that need to be exluded from the calculation.
+#' @param exceptions Taxa that to be excluded from the calculation.
 #' This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
-#' `agg` cannot be `TRUE` when a data.frame is provided as `method`.
 #' @param fssr_scores Optional, scores (fssr) for different abundance categories of taxa associated with
 #'  *Fine Sediment Sensitivity Ratings*. To be used when a custom `method` is provided.
 #' @param traceB if set to `TRUE` a list as specified below will be returned.
@@ -22,24 +22,25 @@
 #' @keywords psi
 #' @details Although Extence et al 2013 did not suggest any aggregation rule, the `psi()` implementation of `biomonitoR`
 #' allows for a default aggregation as specified below. Custom aggregation rules can be provided as a `data.frame`.
+#'
 #' \enumerate{
 #'  \item Tipulidae (inc. Limoniidae, Pediciidae & Cylindrotomidae)
 #'  \item Siphlonuridae (inc. Ameletidae)
 #'  \item Hydrophilidae (inc. Georissidae, Helophoridae & Hydrochidae)
 #'  }
 #'
-#' The `psi()` function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-#' All the information used for `psi` calculation can be retrieved with `showscores()`.
+#' `psi()` automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+#' All the information used for PSI calculation can be retrieved with `show_scores()`.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
 #'  \item `results` Results of `psi()`.
-#'  \item `taxa_df` The data.frame used for the calculation containing the abundance of taxa receiving a score.
-#'  \item `abu_df` The data.frame containing fssr scores and abundance classes for each site.
-#'  \item `psi_df` The data.frame used for the calculation containing scores for each site.
-#'  \item `composite_taxa` Taxa aggregated following the aggregation rules when agg is not `NULL`.
-#'  \item `exceptions` A data.frame containing the con.
-#'  \item `parent_child_pairs` For instance in Spanish `aspt()` both Ferrissia and Planorbidae receive a score.
+#'  \item `taxa_df` The `data.frame` used for the calculation containing the abundance of taxa receiving a score.
+#'  \item `abu_df` The `data.frame` containing fssr scores and abundance classes for each site.
+#'  \item `psi_df` The `data.frame` used for the calculation containing scores for each site.
+#'  \item `composite_taxa` Taxa aggregated following the aggregation of the default method or set in `agg`.
+#'  \item `exceptions` A `data.frame` containing the changes made by excluding the taxa included in `exceptions`.
+#'  \item `parent_child_pairs` For instance in Spanish BMWP both *Ferrissia* and Planorbidae receive a score.
 #'  Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 #' }
 #'
@@ -50,7 +51,7 @@
 #' @importFrom tibble deframe
 #' @importFrom stats aggregate
 #' @export
-#' @seealso \code{\link{asBiomonitor}}
+#' @seealso [as_biomonitor]
 #' @examples
 #' data(macro_ex)
 #' data_bio <- as_biomonitor(macro_ex)

@@ -1,21 +1,21 @@
 #' get_taxa_abundance
 #'
 #' @description
-#' This function calculates the absolute or relative abundance of a taxon or of a set taxa.
+#' Calculates the absolute or relative abundance of a taxon or of a set taxa.
 #'
-#' @param x result of the function aggregatoR.
-#' @param taxa a taxon or a vector of taxa.
-#' @param rel if TRUE calculates relative abundance. Default to FALSE.
+#' @param x Result of `aggregate_taxa()`.
+#' @param taxa A taxon or a vector of taxa.
+#' @param rel If `TRUE` calculates relative abundance. Default to `FALSE`.
 #'
 #' @details This function does not check for parent-child pairs. For instance if the vector of taxa contains both the genus *Baetis* and the
-#' family Baetidae, the abundance of the genus *Baetis* will be double counted. Check the function \code{\link{ambiguousSolver}} for a solution
+#' family Baetidae, the abundance of the genus *Baetis* will be double counted. Check the function `solve_ambiguous()` for a solution
 #' to this problem.
 #'
 #' @keywords aggregatoR
 #'
 #' @export
 #'
-#' @seealso \code{\link{aggregate_taxa}} \code{\link{solve_ambiguous}}
+#' @seealso [aggregate_taxa] [solve_ambiguous] [get_taxa_richness]
 #'
 #' @examples
 #' data(macro_ex)

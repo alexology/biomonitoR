@@ -2,7 +2,7 @@
 % Please edit documentation in R/whpt.R
 \name{whpt}
 \alias{whpt}
-\title{whpt}
+\title{Whalley Hawkes Paisley Trigg index}
 \usage{
 whpt(
   x,
@@ -16,15 +16,15 @@ whpt(
 )
 }
 \arguments{
-\item{x}{result of the function \code{aggregatoR}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{method}{the only choice is \code{uk}.Users can provide their own data.frame (see examples) with a column called \emph{Taxon}, a column called \emph{ABUCLASS} and a column called \emph{Scores}.}
+\item{method}{The only choice is \code{uk}. Users can provide their own data.frame (see examples) with a column called \emph{Taxon}, a column called \emph{ABUCLASS} and a column called \emph{Scores}.}
 
-\item{type}{presence only \code{po} or abundance \code{ab}.}
+\item{type}{Presence only \code{po} or abundance \code{ab}.}
 
-\item{metric}{possible choices are \code{aspt}, \code{ntaxa}, \code{bmwp}.}
+\item{metric}{Possible choices are \code{aspt}, \code{ntaxa}, \code{bmwp}.}
 
-\item{agg}{this option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
+\item{agg}{This option allows the composite family approach. It can be \code{FALSE}, \code{TRUE} or a \code{data.frame}.
 If \code{FALSE} no aggregation will be performed, while if \code{TRUE} aggregation will be performed according to the rules described in Details.
 A \code{data.frame} containing the aggregation rules can be provided by the user.
 This \code{data.frame} needs a column called \emph{Taxon} containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
@@ -32,32 +32,31 @@ This \code{data.frame} needs a column called \emph{Taxon} containing the taxon t
 
 \item{abucl}{Log abundance categories. Treshold are set to 1, 9, 99 and 999.}
 
-\item{exceptions}{taxa that need to be exluded from the calculation.
-This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.
-\code{agg} cannot be \code{TRUE} when a data.frame is provided as \code{method}.}
+\item{exceptions}{Taxa that need to be exluded from the calculation.
+This option can be useful, for instance, to exclude an alien species belonging to an autochthonous family.}
 
-\item{traceB}{if set to \code{TRUE} a list as specified below will be returned.}
+\item{traceB}{If set to \code{TRUE} a list as specified below will be returned.}
 }
 \value{
 If \code{traceB} is set to \code{TRUE} a list with the following elements will be returned:
 \itemize{
-\item \code{results} Results of the \code{whpt} index.
-\item \code{taxa_df} The data.frame used for the calculation containing the abundance of taxa receiving a score.
-\item \code{abu_df} The data.frame containing fssr scores and abundance classes for each site.
-\item \code{whpt_df} The data.frame used for the calculation containing scores for each site.
-\item \code{composite_taxa} Taxa aggregated following the aggregation rules when agg is not \code{NULL}.
-\item \code{exceptions} A data.frame containing the con.
-\item \code{parent_child_pairs} For instance in Spanish \code{aspt} both Ferrissia and Planorbidae receive a score.
+\item \code{results} Results of \code{whpt()}.
+\item \code{taxa_df} The \code{data.frame} used for the calculation containing the abundance of taxa receiving a score.
+\item \code{abu_df} The \code{data.frame} containing abundance classes for each site.
+\item \code{whpt_df} The \code{data.frame} used for the calculation containing scores for each site.
+\item \code{composite_taxa} Taxa aggregated following the aggregation of the default method or set in \code{agg}.
+\item \code{exceptions} A \code{data.frame} containing the changes made by excluding the taxa included in \code{exceptions}.
+\item \code{parent_child_pairs} For instance in Spanish BMWP both \emph{Ferrissia} and Planorbidae receive a score.
 Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 }
 }
 \description{
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
 
-This function calculates \emph{Whalley Hawkes Paisley Trigg} index according to version used in UK in 2017.
+This function calculates the Whalley Hawkes Paisley Trigg index (WHPT).
 }
 \details{
-WHPT is a revision of BMWP and it takes into account the abundances of organisms. The following aggregation is used if agg is set equal to \code{TRUE}:
+WHPT is a revision of BMWP and it takes into account the abundances of organisms. The following aggregation is used if \code{agg} is set equal to \code{TRUE}:
 
 \enumerate{
 \item Psychomyiidae (inc. Ecnomidae)
@@ -68,8 +67,8 @@ WHPT is a revision of BMWP and it takes into account the abundances of organisms
 \item Hydrobiidae (inc. Bithyniidae)
 }
 
-The \code{whpt} function automatically check for parent-child pairs in the scoring system, see the return section for a definition.
-All the information used for \code{whpt} calculation can be retrieved with the function \code{\link{showscores} }.
+\code{whpt()} automatically check for parent-child pairs in the scoring system, see the return section for a definition.
+All the information used for WHPT calculation can be retrieved with the function \code{\link{show_scores}}.
 }
 \section{Acknowledgements}{
  We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated WHPT scores and algorithms.
@@ -89,6 +88,6 @@ whpt(data_agr, type = "po", metric = "bmwp")
 lapply(show_scores("whpt", "uk"), head)
 }
 \seealso{
-\code{\link{asBiomonitor}}, \code{\link{aspt}}, \code{\link{bmwp}}
+\link{as_biomonitor}, \link{aspt}, \link{bmwp}
 }
 \keyword{whpt}

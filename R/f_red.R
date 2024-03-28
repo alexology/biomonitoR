@@ -52,41 +52,44 @@
 #' lead to loss of unique traits or functions (Hooper et al. 2005), increasing
 #' ecosystem vulnerability (Elmqvist et al. 2003).
 #'
-#' @param x results of function `aggregate_taxa()`.
-#' @param trait_db a trait database. Can be a `data.frame` ot a `dist` object.
-#' Taxonomic level of the traits database must match those of the taxonomic database.
-#' No automatic check is done by the `function`.
-#' @param tax_lev character string giving the taxonomic level used to retrieve
-#' trait information. Possible levels are `"Taxa"`, `"Species"`, `"Genus"`,
-#' `"Family"` as returned by the [aggregatoR] function.
-#' @param type the type of variables speciefied in `trait_db`.
+#' The `gower` distance refers to the mixed-variables coefficient of distance of Pavoine et al. (2009) as implemented in the `ade4` package.
+#' This distance is meant to be used with fuzzy data.
+#'
+#' @param x Results of `aggregate_taxa()`.
+#' @param trait_db A trait dataset. Can be a `data.frame` ot a `dist` object.
+#' Taxonomic level of the traits dataset must match those of the taxonomic database.
+#' No automatic check is done.
+#' @param tax_lev Character string giving the taxonomic level used to retrieve
+#' trait information. Possible levels are `Taxa`, `Species`, `Genus`,
+#' `Family` as returned by `aggregate_taxa()`.
+#' @param type The type of variables speciefied in `trait_db`.
 #' Must be one of `F`, fuzzy, or `C`, continuous.
 #' If more control is needed please consider to provide `trait_db` as a `dist` object.
 #' It works only when `trait_db` is a `data.frame`, otherwise ingored.
-#' @param traitSel interactively select traits.
+#' @param traitSel Interactively select traits.
 #' @param col_blocks A vector that contains the number of modalities for each trait.
 #' Not needed when `euclidean` distance is used.
 #' By default `biomonitoR` select the optimal number of dimensions with the quality of the functional space approach.
-#' @param distance to be used to compute functional distances, `euclidean` or `gower`. Default to `gower`.
+#' @param distance To be used to compute functional distances, `euclidean` or `gower`. Default to `gower`. See details.
 #' @param zerodist_rm If `TRUE` aggregates taxa with the same traits.
 #' @param correction Correction methods for negative eigenvalues, can be one of `none`, `lingoes` , `cailliez`, `sqrt` and `quasi`.
 #' Ignored when type is set to `C`.
-#' @param traceB if `TRUE` ffrich will return a list as specified in details.
-#' @param set_param a list of parameters for fine tuning the calculations.
+#' @param traceB if `TRUE` returns a list as specified in details.
+#' @param set_param A list of parameters for fine tuning the calculations.
 #' `tol` a tolerance threshold for zero, see the function `is.euclid`, `lingoes` and `cailliez` from the `ade4` for more details. Default to 1e-07.
-#' `cor.zero` = `TRUE` if TRUE, zero distances are not modified. see the function `is.euclid`, `lingoes` and `cailliez` from the `ade4` for more details. Default to `TRUE`.
+#' If `cor.zero` is `TRUE`, zero distances are not modified. see the function `is.euclid`, `lingoes` and `cailliez` from the `ade4` for more details. Default to `TRUE`.
 #'
 #' @details Taxa without traits assigned in the trait database are removed from both the trait and abundance databases.
 #'
 #' @return a vector with fuzzy functional richness results.
 #' \enumerate{
-#'  \item **results**: results of `f_red()`;
-#'  \item **traits**: a data.frame containing the traits used for the calculations;
-#'  \item **taxa**: a data.frame conaining the taxa used for th calculations;
-#'  \item **nbdim**: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
-#'  \item **correction**: the type of correction used.
-#'  \item **NA_detection**: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
-#'  \item **duplicated_traits**: if present, list the taxa with the same traits.
+#'  \item `results` Results of `f_red()`.
+#'  \item `traits` A `data.frame` containing the traits used for the calculations.
+#'  \item `taxa` A `data.frame` conaining the taxa used for the calculations.
+#'  \item `nbdim` Number of dimensions used after calculatin the quality of functional spaces according to Maire et al. (2015).
+#'  \item `correction` The type of correction used.
+#'  \item `NA_detection` A `data.frame` containing taxa on the first column and the corresponding trais with NAs on the second column.
+#'  \item `duplicated_traits` If present, list the taxa with the same traits.
 #' }
 #'
 #'
@@ -151,6 +154,9 @@
 #' @references Lawton, J.H. & Brown, V.K. (1993) Redundancy in ecosystems.
 #'   Biodiversity and Ecosystem Function (eds E.-D. Schulze & H.A. Mooney),
 #'   pp. 255-270. Springer-Verlag, Berlin.
+#' @references Pavoine, S., Vallet, J., Dufour, A. B., Gachet, S., & Daniel, H. (2009).
+#'  On the challenge of treating various types of variables: application for improving
+#'   the measurement of functional diversity. Oikos, 118(3), 391-402.
 #' @references Pillar, V. D., Blanco, C. C., Muller, S. C., Sosinski, E. E.,
 #'   Joner, F., & Duarte, L. D. (2013). Functional redundancy and stability
 #'   in plant communities. Journal of Vegetation Science, 24(5), 963-974.

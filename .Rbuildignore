@@ -6,3 +6,6 @@
 ^custom_dictio.aff
 ^custom_dictio.dic
 ^.covrignore$
+^doc$
+^Meta$
+^LICENSE\.md$

@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_biomonitor.R
 \name{as_biomonitor}
 \alias{as_biomonitor}
-\title{as_biomonitor}
+\title{Import data into biomonitoR format}
 \usage{
 as_biomonitor(
   x,
@@ -15,41 +15,40 @@ as_biomonitor(
 )
 }
 \arguments{
-\item{x}{a data.frame with a column called "Taxa" where store taxa names and samples on the other columns (see the example macro_ex).}
+\item{x}{A \code{data.frame} with a column called \code{Taxa} where store taxa names and samples on the other columns (see the example \code{macro_ex}).}
 
-\item{group}{biotic group of interest. Possible values are \code{mi} for macroinvertebrates, \code{mf} for macrophytes and \code{fi} for fish. The choice will set the right reference database for the specified group.
-This option will not be considered if a custom reference database is provided. Default to \code{mi}.}
+\item{group}{Biotic group of interest. Possible values are \code{mi} for macroinvertebrates, \code{mf} for macrophytes, \code{fi} for fish and \code{di} for diatoms. The choice will set the right reference dataset for the specified group.
+This option will not be considered if a custom reference dataset is provided. Default to \code{mi}.}
 
-\item{dfref}{a custom reference database that replaces the reference database.}
+\item{dfref}{A custom reference database that replaces the built-in reference databases.}
 
-\item{to_change}{a \code{data.frame} specifying the taxa name that needs to be changed.
-This \code{data.frame} needs a column called \emph{Taxon} containing the taxon to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
+\item{to_change}{A \code{data.frame} specifying the taxa name that needs to be changed.
+This \code{data.frame} needs a column called \emph{Taxon} containing taxa to aggregate and a column called \emph{Correct_Taxon} with the aggregation specifications.
 By default, when group is set to \code{mi} Hydracarina, Hydracnidia and Acariformes are changed to Trombidiformes.}
 
-\item{FUN}{the function to be applied for aggregating rows with duplicated taxa names.
+\item{FUN}{The function to be applied for aggregating rows with duplicated taxa names.
 It should be \code{sum} for abundances, while it should be \code{bin} for presence-absence data. Default to \code{sum}.}
 
-\item{correct_names}{if \code{TRUE} alternative names will be suggested for taxa not found in the reference database. Default to
+\item{correct_names}{If \code{TRUE} alternative names will be suggested for taxa not found in the reference dataset. Default to
 \code{FALSE}, with which the unrecognized taxa will be removed.}
 
-\item{traceB}{track changes in taxa names.}
+\item{traceB}{Track changes in taxa names.}
 }
 \description{
-This function merge the user dataframe with a reference database and suggest corrections for mispelled names.
+This function merge the user \code{data.frame} with a reference dataset and suggest corrections for mispelled names.
 }
 \details{
-The function \code{as_biomonitor()} checks the taxonomy of the data.frame provided by the user and suggests correction for mispelled names.
-If one or more taxa names of \code{x} are not present in the reference database or the spell checker is not able to find any suggestion the user is asked to exit.
-This behaviour is to assure consistency with other functions implemented in biomonitoR.
-Default references databases are provided for macroinvertebrates and macrophytes.
-Both databases heavily rely on the information provided by the \href{https://www.freshwaterecology.info/}{freshwaterecology.info} website.
-If \code{dfref} is not NULL a custom dictionary will be saved in the working directory to let the \code{as_biomonitor ()} function work correctly.
+The function \code{as_biomonitor()} checks the taxonomy of the \code{data.frame} provided by the user and suggests correction for mispelled names.
+If one or more taxa names of \code{x} are not present in the reference dataset or the spell checker is not able to find any suggestion the user is asked to exit.
+This behaviour is to assure consistency with other functions implemented in \code{biomonitoR}.
+Default references databases are provided for macroinvertebrates, macrophytes and fish.
+Reference datasets heavily rely on the information provided by the \href{https://www.freshwaterecology.info/}{freshwaterecology.info} website.
+If \code{dfref} is not \code{NULL} a custom dictionary will be saved in the working directory to let the \code{as_biomonitor ()} function work correctly.
 If you are unable to build a reference database by your own please check the function \code{\link{ref_from_tree}} for a possible solution.
 \code{as_biomonitor()}  returns an object of class \code{asb} togheter with one of the classes \code{abundance} or \code{bin}.
 The function \code{\link{quick_rename}} works as the \code{as_biomonitor()} but returns
-a data.frame without the biomonitoR format.
-\code{as_biomonitor()} aggregates all the rows with the same name with the option \code{FUN} and converts all the \code{NA} to 0.
-If only 1 and 0 are present \code{x} will be imported as presence-absence.
+a \code{data.frame} without the \code{biomonitoR} format.
+\code{as_biomonitor()} aggregates all the rows with the same taxa name with the option \code{FUN} and converts all the \code{NA} to 0.
 When \code{group = mi} Hydracarina, Hydracnidia or Acariformes are changed to Trombidiformes given the uncertain taxonomic status of this group.
 }
 \examples{

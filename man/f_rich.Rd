@@ -20,22 +20,22 @@ f_rich(
 )
 }
 \arguments{
-\item{x}{results of function \code{aggregate_taxa()}}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{trait_db}{a trait database. Can be a \code{data.frame} ot a \code{dist} object.
-Taxonomic level of the traits database must match those of the taxonomic database.
-No automatic check is done by the \code{function}.}
+\item{trait_db}{A trait dataset. Can be a \code{data.frame} ot a \code{dist} object.
+Taxonomic level of the traits dataset must match those of the taxonomic database.
+No automatic check is done.}
 
-\item{tax_lev}{character string giving the taxonomic level used to retrieve
-trait information. Possible levels are \code{"Taxa"}, \code{"Species"}, \code{"Genus"},
-\code{"Family"} as returned by the \link{aggregatoR} function.}
+\item{tax_lev}{Character string giving the taxonomic level used to retrieve
+trait information. Possible levels are \code{Taxa}, \code{Species}, \code{Genus},
+\code{Family} as returned by \code{aggregate_taxa()}.}
 
-\item{type}{the type of variables speciefied in \code{trait_db}.
+\item{type}{The type of variables specified in \code{trait_db}.
 Must be one of \code{F}, fuzzy, or \code{C}, continuous.
 If more control is needed please consider to provide \code{trait_db} as a \code{dist} object.
-It works only when \code{trait_db} is a \code{data.frame}, otherwise ingored.}
+It works only when \code{trait_db} is a \code{data.frame}, otherwise ignored.}
 
-\item{traitSel}{interactively select traits.}
+\item{traitSel}{Interactively select traits.}
 
 \item{col_blocks}{A vector that contains the number of modalities for each trait.
 Not needed when \code{euclidean} distance is used.}
@@ -45,33 +45,33 @@ We suggest to keep \code{nbdim} as low as possible.
 By default \code{biomonitoR} set the number of dimensions to 2. Select \code{auto} if you want the automated selection
 approach according to Maire et al. (2015).}
 
-\item{distance}{to be used to compute functional distances, \code{euclidean} or \code{gower}. Default to \code{gower}.}
+\item{distance}{To be used to compute functional distances, \code{euclidean} or \code{gower}. Default to \code{gower}. See details.}
 
 \item{zerodist_rm}{If \code{TRUE} aggregates taxa with the same traits.}
 
 \item{correction}{Correction methods for negative eigenvalues, can be one of \code{none}, \code{lingoes}, \code{cailliez}, \code{sqrt} and \code{quasi}.
 Ignored when type is set to \code{C}.}
 
-\item{traceB}{if \code{TRUE} ffrich will return a list as specified in details.}
+\item{traceB}{If \code{TRUE} ffrich will return a list as specified in details.}
 
-\item{set_param}{a list of parameters for fine tuning the calculations.
+\item{set_param}{A list of parameters for fine tuning the calculations.
 \code{max_nbdim} set the maximum number of dimension for evaluating the quality of the functional space.
 \code{prec} can be \code{Qt} or \code{QJ}, please refere to the \code{convhulln} documentation for more information.
 Deafault to \code{QJ}, less accurate but less prone to errors.
 \code{tol} a tolerance threshold for zero, see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to 1e-07.
-\code{cor.zero} = \code{TRUE} if TRUE, zero distances are not modified. see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to \code{TRUE}.}
+If \code{cor.zero} is \code{TRUE}, zero distances are not modified. see the function \code{is.euclid}, \code{lingoes} and \code{cailliez} from the \code{ade4} for more details. Default to \code{TRUE}.}
 }
 \value{
 a vector with fuzzy functional richness results.
 \enumerate{
-\item \strong{results}: results of the ffred function;
-\item \strong{traits}: a data.frame containing the traits used for the calculations;
-\item \strong{taxa}: a data.frame conaining the taxa used for th calculations;
-\item \strong{nbdim}: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
-\item \strong{correction}: the type of correction used.
-\item \strong{NA_detection}: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
-\item \strong{duplicated_traits}: if present, list the taxa with the same traits.
-\item \code{parent_child_pairs} For instance in Spanish \code{aspt} both Ferrissia and Planorbidae receive a score.
+\item \code{results} Results of the \code{f_rich()} function.
+\item \code{traits} A data.frame containing the traits used for the calculations.
+\item \code{taxa} A \code{data.frame} conaining the taxa used for the calculations.
+\item \code{nbdim} Number of dimensions used after calculatin the quality of functional spaces according to Maire et al. (2015).
+\item \code{correction} The type of correction used.
+\item \code{NA_detection} A \code{data.frame} containing taxa on the first column and the corresponding trais with NAs on the second column.
+\item \code{duplicated_traits} If present, list the taxa with the same traits.
+\item \code{parent_child_pairs} For instance in Spanish \code{aspt} both \emph{Ferrissia} and Planorbidae receive a score.
 Abundances of the higher taxonomic level need therefore to be adjusted by subtracting the abundances of the lower taxonomic level.
 }
 }
@@ -93,7 +93,7 @@ functional space. Basically, this algorithm determines the taxa in the most extr
 points of the functional space, links them to build the convex hull in order to
 calculate the volume inside it. In particular, the convex hull of a set of points
 S in n dimensions is the intersection of all convex sets containing S.
-For N points , ..., , the convex hull C is then given by the expression:
+For N points the convex hull C is then given by the expression:
 
 \deqn{C = \sum_{j=1}^{N} \lambda_j \ p_j  : \ \lambda_j \geq \ for \ all \ j \ and \ \sum_{j=1}^{N} \lambda_j = 1}
 
@@ -115,6 +115,9 @@ which helps to interpret quality. Finally, the resulting FRic variable
 is standardized by its maximum, ranging from 0 to 1. In addition, it must
 be considered that the number of taxa must be higher than the number of traits
 to have reliable FRic values (Villeger et al., 2008).
+
+The \code{gower} distance refers to the mixed-variables coefficient of distance of Pavoine et al. (2009) as implemented in the \code{ade4} package.
+This distance is meant to be used with fuzzy data.
 }
 \examples{
 data(macro_ex)
@@ -161,6 +164,10 @@ Mason, N. W., Mouillot, D., Lee, W. G., and
 Wilson, J. B. (2005). Functional richness, functional evenness and functional
 divergence: the primary components of functional diversity. Oikos, 111(1),
 112-118.
+
+Pavoine, S., Vallet, J., Dufour, A. B., Gachet, S., & Daniel, H. (2009).
+On the challenge of treating various types of variables: application for improving
+the measurement of functional diversity. Oikos, 118(3), 391-402.
 
 Villeger, S., Mason, N. W., & Mouillot, D.
 (2008). New multidimensional functional diversity indices for a

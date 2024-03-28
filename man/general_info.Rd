@@ -7,12 +7,12 @@
 general_info(x, taxalist = FALSE)
 }
 \arguments{
-\item{x}{results of the function \code{aggregate_taxa()}.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{taxalist}{if \code{TRUE} returns the list of taxa for each taxonomic level.}
+\item{taxalist}{If \code{TRUE} returns the list of taxa for each taxonomic level.}
 }
 \description{
-Function to calculate the overall richness at different taxonomic level.
+Calculates the overall richness at different taxonomic level.
 }
 \examples{
 data(macro_ex)
@@ -21,6 +21,6 @@ data_agr <- aggregate_taxa(data_bio)
 general_info(data_agr)
 }
 \seealso{
-\code{\link{as_biomonitor}}
+\link{as_biomonitor}
 }
 \keyword{general_info}

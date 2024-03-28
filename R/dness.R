@@ -7,14 +7,20 @@
 #'
 #'
 #' @param x Result of `aggregate_taxa()`.
-#' @param complete if TRUE unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with tax_lev
-#' @param tax_lev taxonomic level from which the indices are to be calculated
-#' @param method available methods are delta (taxonomic diversity), delta.st (taxonomic distinctness) and delta.bin (variation in taxonomic distinctness)
-#' @param taxa_tree if TRUE dness return a list where the first element is the taxonomic diversity, taxonomic distinctness or variation of taxonomic distinctness and the second elemnt the taxonomic tree
-#' @keywords ept
+#' @param complete If `TRUE` unassigned taxon are removed from the taxonomic list of the desired taxonomic level set with `tax_lev`.
+#' @param tax_lev Taxonomic level from which the indices have to be calculated.
+#' @param method Available methods are delta (taxonomic diversity), delta.st (taxonomic distinctness) and delta.bin (variation in taxonomic distinctness).
+#' @param taxa_tree If `TRUE` `dness()` return a list where the first element is the taxonomic diversity, taxonomic distinctness or variation of taxonomic distinctness and the second elemnt the taxonomic tree
+#'
+#' @details These indeces take into account the taxonomic relatedness of the species in each sample. According to Clarke and Warwick (1998, 2001),
+#' taxonomic diversity is the average taxonomic ‘distance’ between any two organisms chosen at random from the sample,
+#' taxonomic distinctness is the average path length between any two randomly chosen individuals conditional on them being from different species and
+#' variation in taxonomic distinctness is the variance of the path length through the taxonomic tree connecting every pair of species in the list and
+#' reflects the unevenness of the taxonomic tree.
+#'
+#'
 #' @references Clarke, K. R., & Warwick, R. M. (1998). A taxonomic distinctness index and its statistical properties. Journal of applied ecology, 35(4), 523-531.
 #' @references Clarke, K. R., & Warwick, R. M. (2001). A further biodiversity index applicable to species lists: variation in taxonomic distinctness. Marine ecology Progress series, 216, 265-278.
-#' @details see Clarke and Warwick (1998) an Clarke and Warwick (2001).
 #' @export
 #' @seealso \code{\link{aggregatoR}}
 #' @examples

@@ -1,16 +1,16 @@
 #' igold
 #'
 #' This function calculates the 1 - GOLD metric, where GOLD stands for Gastropoda, Oligochaeta and Diptera. This metric should decrease with increasing organic pollution (Pinto et al., 2004).
-#' @param x results of function aggregatoR
-#' @param traceB if set to `TRUE` a list as specified below will be returned.
+#' @param x Results of `aggregate_taxa()`.
+#' @param traceB If set to `TRUE` a list as specified below will be returned.
 #' @keywords ept
-#' @details The metric 1 - GOLD is calculated as 1 minus the relative abundance of Gastropoda, Oligochaeta and Diptera. If a custom database is provided (see \code{\link{aggregatoR}}) please be sure that Gastropoda are at Class, Oligochaeta at Sublclass and Diptera at Order level, otherwise the gold calculation will be meaningless.
+#' @details The metric 1 - GOLD is calculated as 1 minus the relative abundance of Gastropoda, Oligochaeta and Diptera. If a custom database is provided (see [aggregate_taxa]) please be sure that Gastropoda are at Class, Oligochaeta at Sublclass and Diptera at Order level, otherwise the gold calculation will be meaningless.
 #' If this is the case please see `get_taxa_abundance()`.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
 #'  \item `results` Results of the `igold` index.
-#'  \item `taxa_df` The data.frame used for the calculation containing the abundance of the GOLD taxa.
+#'  \item `taxa_df` The `data.frame` used for the calculation containing the abundance of the GOLD taxa.
 #' }
 #'
 #' @importFrom stats aggregate

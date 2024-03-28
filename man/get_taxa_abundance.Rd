@@ -7,18 +7,18 @@
 get_taxa_abundance(x, taxa = NULL, rel = FALSE)
 }
 \arguments{
-\item{x}{result of the function aggregatoR.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{taxa}{a taxon or a vector of taxa.}
+\item{taxa}{A taxon or a vector of taxa.}
 
-\item{rel}{if TRUE calculates relative abundance. Default to FALSE.}
+\item{rel}{If \code{TRUE} calculates relative abundance. Default to \code{FALSE}.}
 }
 \description{
-This function calculates the absolute or relative abundance of a taxon or of a set taxa.
+Calculates the absolute or relative abundance of a taxon or of a set taxa.
 }
 \details{
 This function does not check for parent-child pairs. For instance if the vector of taxa contains both the genus \emph{Baetis} and the
-family Baetidae, the abundance of the genus \emph{Baetis} will be double counted. Check the function \code{\link{ambiguousSolver}} for a solution
+family Baetidae, the abundance of the genus \emph{Baetis} will be double counted. Check the function \code{solve_ambiguous()} for a solution
 to this problem.
 }
 \examples{
@@ -29,6 +29,6 @@ get_taxa_abundance(data_agr, taxa = "Ephemeroptera")
 get_taxa_abundance(data_agr, taxa = c("Setodes", "Orthocladiinae"), rel = TRUE)
 }
 \seealso{
-\code{\link{aggregate_taxa}} \code{\link{solve_ambiguous}}
+\link{aggregate_taxa} \link{solve_ambiguous} \link{get_taxa_richness}
 }
 \keyword{aggregatoR}

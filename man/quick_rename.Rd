@@ -9,9 +9,9 @@ quick_rename(x, group = "mi", write_table = FALSE)
 \arguments{
 \item{x}{a data.frame as specified in details}
 
-\item{group}{biotic group of interest. Possible values are \code{mi} for macroinvertebrates and \code{mf} for macrophytes. Default to \code{mi}.}
+\item{group}{biotic group of interest. Possible values are \code{mi} for macroinvertebrates, \code{mf} for macrophytes \code{fi} for fish and \code{di} for diatoms. Default to \code{mi}.}
 
-\item{write_table}{if TRUE \code{quick_rename()} will save a txt file with changes provided by the user}
+\item{write_table}{if TRUE \code{quick_rename()} will save a txt file with changes provided by the user.}
 }
 \description{
 This function allow the user to change the wrong taxa names according to the deault reference databases implemented in \code{biomonitoR}.

@@ -7,9 +7,9 @@
 remove_taxa(x, taxa = NULL)
 }
 \arguments{
-\item{x}{result of the function aggregatoR.}
+\item{x}{Result of \code{aggregate_taxa()}.}
 
-\item{taxa}{a taxon or a vector of taxa.}
+\item{taxa}{A taxon or a vector of taxa.}
 }
 \description{
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
@@ -28,4 +28,4 @@ remove_taxa(data_agr, taxa = "Ephemeroptera")
 \seealso{
 \code{\link{aggregatoR}} \code{\link{ambiguousSolver}}
 }
-\keyword{aggregatoR}
+\keyword{aggregate_taxa}

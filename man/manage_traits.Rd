@@ -7,24 +7,24 @@
 manage_traits(x, method = "nearest+-", traceB = FALSE)
 }
 \arguments{
-\item{x}{result of the \code{assign_traits()} function.}
+\item{x}{Result of \code{assign_traits()}.}
 
-\item{method}{can be \code{nearest}, \verb{nearest+}, \verb{nearest-}, \verb{nearest+-} and \verb{neareast-+}.
+\item{method}{Can be \code{nearest}, \verb{nearest+}, \verb{nearest-}, \verb{nearest+-} and \verb{neareast-+}.
 Please see details for further information.}
 
-\item{traceB}{if \code{TRUE} it will return a vector containing taxa excluded from the selection process
+\item{traceB}{If \code{TRUE} it will return a vector containing taxa excluded from the selection process
 because they did not meet the requirments of the selection.}
 }
 \description{
 A function to select traits based on taxonomic distance.
 }
 \details{
-Method \code{nearest} select the traits belonging to the nearest taxa irrispective of their position
+Method \code{nearest} selects the traits belonging to the nearest taxa irrispective of their position
 in the taxonomic tree.
-Method \verb{nearest+} select the traits belonging to the nearest taxa that have a taxonomic level equal or finer
-than the target one. Method \verb{nearest-} do the opposite.
-Method \verb{nearest+} select the traits belonging to the nearest taxa giving priority to taxa having
-taxonomic level equal or finer than the target one. Method \verb{nearest-+} do the opposite.
+Method \verb{nearest+} selects the traits belonging to the nearest taxa that have a taxonomic level equal or finer
+than the target one. Method \verb{nearest-} does the opposite.
+Method \verb{nearest+-} selects the traits belonging to the nearest taxa giving priority to taxa having
+taxonomic level equal or finer than the target one. Method \verb{nearest-+} does the opposite.
 }
 \examples{
 data(macro_ex)
