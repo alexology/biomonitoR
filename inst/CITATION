@@ -1,16 +1,16 @@
 citHeader("To cite biomonitoR in publications use:")
 
 citEntry(entry = "Article",
-  title = "Taxonomic and functional responses of benthic macroinvertebrate communities to hydrological and water quality variations in a heavily regulated river",
-  author       = personList(as.person("Alex Laini"), as.person("Pierluigi Viaroli"), as.person("Alex rossano Bolpagni"), as.person("tommaso Cancellario"), as.person("Erica Racchetti"), as.person("Simone Guareschi")),
-  year         = "2019",
-  journal    = "Water",
-  volume = "11",
-  pages = "1478",
-  doi = "doi.org/10.3390/w11071478",
+  title = "biomonitoR: an R package for managing ecological data and calculating biomonitoring indices.",
+  author       = personList(as.person("Alex Laini"), as.person("Simone Guareschi"), as.person("Rossano Bolpagni"), as.person("Gemma Burgazzi"), as.person("Daniel Bruno"), as.person("Cayetano Gutiérrez-Cánovas"), as.person("Rafael Miranda"), as.person("Cédric Mondy"), as.person("Gábor Várbíró"), as.person("Tommaso Cancellario")),
+  year         = "2022",
+  journal    = "PeerJ",
+  volume = "10",
+  pages = "e14183",
+  doi = "doi.org/10.7717/peerj.14183",
 
   textVersion  =
-  paste("Laini Alex, Viaroli Pierluigi, Bolpagni Rossano, Cancellario Tommaso, Racchetti Erica, Guareschi Simone (2019).",
-        "Taxonomic and functional responses of benthic macroinvertebrate communities to hydrological and water quality                variations in a heavily regulated river.",
-        "Water, 11, 1478.")
+  paste("Laini A, Guareschi S, Bolpagni R, Burgazzi G, Bruno D, Gutiérrez-Cánovas C, Miranda R, Mondy C, Várbíró G, Cancellario T. 2022. biomonitoR: an R package for managing ecological data and calculating biomonitoring indices. PeerJ 10:e14183 https://doi.org/10.7717/peerj.14183")
 )
+
+
