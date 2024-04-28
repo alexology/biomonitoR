@@ -1,4 +1,4 @@
-#' f_rich
+#' Functional richness
 #'
 #' @description
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
