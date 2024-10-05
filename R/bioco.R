@@ -52,11 +52,12 @@ bioco <- function(x, alien = NULL, dfref = NULL, digits = 2) {
 
   # if dfref = NULL check if x is of class biomonitor mi, mf or fi, otherwise dfref is needed
 
-  if (inherits(x, "custom") & (identical(dfref, "mi") | identical(dfref, "mf"))) (stop("Please provide the dfref you used for as_biomonitor"))
+  if (inherits(x, "custom") & (identical(dfref, "mi") | identical(dfref, "mf")| identical(dfref, "di"))) (stop("Please provide the dfref you used for as_biomonitor"))
 
   if (is.null(dfref)) stop("Please set dfref")
   if (identical(dfref, "mi")) (ref <- mi_ref)
   if (identical(dfref, "mf")) (ref <- mf_ref)
+  if (identical(dfref, "fi")) (ref <- fi_ref)
   if (is.data.frame(dfref)) (ref <- dfref)
 
 

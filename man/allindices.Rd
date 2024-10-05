@@ -86,31 +86,31 @@ where x is estimated from the iterative solution of:
 }
 \section{Functions}{
 \itemize{
-\item \code{berpar}: Berger-Parker index
+\item \code{berpar()}: Berger-Parker index
 
-\item \code{brill}: Brillouin index
+\item \code{brill()}: Brillouin index
 
-\item \code{esimpson}: Simpson's evenness
+\item \code{esimpson()}: Simpson's evenness
 
-\item \code{fisher}: Fisher alpha
+\item \code{fisher()}: Fisher alpha
 
-\item \code{invberpar}: Inverse Berger-Parker
+\item \code{invberpar()}: Inverse Berger-Parker
 
-\item \code{invsimpson}: Inverse Simpson
+\item \code{invsimpson()}: Inverse Simpson
 
-\item \code{margalef}: Margalef diversity index
+\item \code{margalef()}: Margalef diversity index
 
-\item \code{mcintosh}: McIntosh dominance index
+\item \code{mcintosh()}: McIntosh dominance index
 
-\item \code{menhinick}: Menhinick index
+\item \code{menhinick()}: Menhinick index
 
-\item \code{pielou}: Pielou's evenness index
+\item \code{pielou()}: Pielou's evenness index
 
-\item \code{shannon}: Shannon index
+\item \code{shannon()}: Shannon index
 
-\item \code{simpson}: Simpson's Index of Diversity
+\item \code{simpson()}: Simpson's Index of Diversity
+
 }}
-
 \examples{
 data(macro_ex)
 data_bio <- as_biomonitor(macro_ex)

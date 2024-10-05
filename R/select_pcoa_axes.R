@@ -1,6 +1,4 @@
 #' @title Select optimal number of pcoa axes
-#'
-#'
 #' @description
 #' \Sexpr[results=rd, stage=render]{ lifecycle::badge("experimental") }
 #'

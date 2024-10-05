@@ -69,11 +69,11 @@ Th function \code{sample_traits()} samples traits from one taxon when multiple t
 }
 \section{Functions}{
 \itemize{
-\item \code{average_traits}: average traits values for fuzzy data
+\item \code{average_traits()}: average traits values for fuzzy data
 
-\item \code{sample_traits}: sample_traits
+\item \code{sample_traits()}: sample_traits
+
 }}
-
 \examples{
 data(macro_ex)
 

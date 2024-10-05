@@ -27,9 +27,9 @@ Be careful, for all the other taxa entered at taxonomic level higher than family
 }
 \section{Functions}{
 \itemize{
-\item \code{convert_to_biotic}: convert data to biotic format
-}}
+\item \code{convert_to_biotic()}: convert data to biotic format
 
+}}
 \examples{
 data(macro_ex)
 data_bio <- as_biomonitor(macro_ex)

@@ -28,9 +28,9 @@ Mollusca orders are not present because there is no consensus among taxonomist (
 }
 \section{Functions}{
 \itemize{
-\item \code{richness}: Taxonomic richness
-}}
+\item \code{richness()}: Taxonomic richness
 
+}}
 \examples{
 data(macro_ex)
 data_bio <- as_biomonitor(macro_ex)

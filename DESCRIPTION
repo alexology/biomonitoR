@@ -1,7 +1,7 @@
 Package: biomonitoR
 Type: Package
 Title: biomonitoring indices and metrics
-Version: 0.9.3
+Version: 0.9.4
 Authors@R: 
     c(person(given = "Alex",
              family = "Laini",
@@ -43,7 +43,6 @@ Depends: R (>= 4.00)
 Imports: hunspell,
     dplyr,
     tidyr,
-    FD,
     geometry,
     ade4,
     tibble,
@@ -52,7 +51,7 @@ Imports: hunspell,
     plotly,
     RColorBrewer,
     rjson
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
@@ -60,6 +59,7 @@ Suggests:
     testthat (>= 3.0.0),
     vegan,
     abdiv,
-    covr
+    covr,
+    FD
 VignetteBuilder: knitr
 Config/testthat/edition: 3

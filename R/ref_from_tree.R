@@ -1,5 +1,6 @@
 #' @title Reference from taxonomic tree
 #'
+#' @description
 #' This function transforms a taxonomic tree to a reference database suitable for `biomonitoR`.
 #' @param x Taxonomic tree. See \code{\link{Tree}} for an example.
 #' @param group Merge the user dataset with one of the `biomonitoR` reference databases, default to `none`.
