@@ -2,9 +2,7 @@
 % Please edit documentation in R/ref_from_tree.R
 \name{ref_from_tree}
 \alias{ref_from_tree}
-\title{Reference from taxonomic tree
-
-This function transforms a taxonomic tree to a reference database suitable for \code{biomonitoR}.}
+\title{Reference from taxonomic tree}
 \usage{
 ref_from_tree(x, group = "none")
 }
@@ -15,8 +13,6 @@ ref_from_tree(x, group = "none")
 If duplicated Taxa names are present this function keeps the name provided by the user.}
 }
 \description{
-Reference from taxonomic tree
-
 This function transforms a taxonomic tree to a reference database suitable for \code{biomonitoR}.
 }
 \examples{

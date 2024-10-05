@@ -52,9 +52,9 @@ index.
 }
 \section{Functions}{
 \itemize{
-\item \code{tsi}: taxon specialization index
-}}
+\item \code{tsi()}: taxon specialization index
 
+}}
 \examples{
 data(macro_ex)
 
