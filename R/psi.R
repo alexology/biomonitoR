@@ -31,6 +31,7 @@
 #'
 #' `psi()` automatically check for parent-child pairs in the scoring system, see the return section for a definition.
 #' All the information used for PSI calculation can be retrieved with `show_scores()`.
+#' Please note that, to obtain data equivalent to those from the UK Environmental Agency, it is highly recommended to treat \emph{Ancylus}, \emph{Ancylus fluviatilis} and Ancylidae at the family level as Ancylidae (FSSR = A) rather than "Planorbidae". In PSI calculations, we suggest using \code{aggregate = FALSE}, while in E-PSI (Turley et al., 2015), \code{aggregate = TRUE} may be necessary.
 #'
 #' @return If `traceB` is set to `TRUE` a list with the following elements will be returned:
 #' \itemize{
@@ -45,7 +46,7 @@
 #' }
 #'
 #' @references Extence CA, Chadd RP, England J, Dunbar MJ, Wood PJ, Taylor ED. 2013. The assessment of fine sediment accumulation in rivers using macro-invertebrate community response. River Research and Applications 29, 17-55.
-#' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated PSI scores and algorithms.
+#' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated PSI scores and algorithms. The validation exercise was performed at EA site 54017 (England, water body: Worfe; invertebrate data from 2000 to 2025). Data exploration and validation were made possible thanks to the RS grant AL\251060: "Advancing River biomonitoring: a multi-country evaluation of multiple metrics" (PI: Simone Guareschi).
 #' @importFrom dplyr '%>%' select inner_join group_by summarise rename filter
 #' @importFrom tidyr pivot_longer pivot_wider
 #' @importFrom tibble deframe
