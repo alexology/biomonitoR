@@ -42,9 +42,11 @@
 #'  taxon receive a score.
 #' }
 #'
+#' Please note that, to obtain data equivalent to those from the UK Environmental Agency, it is highly recommended to treat \emph{Ancylus}, \emph{Ancylus fluviatilis} and Ancylidae at the family level as Ancylidae (FSSR = A) rather than "Planorbidae". In PSI calculations, we suggest using \code{aggregate = FALSE}, while in E-PSI (Turley et al., 2015), \code{aggregate = TRUE} may be necessary.
+#'
 #' @references Turley MD, Bilotta GS, Chadd RP, Extence CA, Brazier RE, Burnside NG, Pickwell AG. 2016. A sediment-specific family-level biomonitoring tool to identify the impacts of fine sediment in temperate rivers and streams. Ecological Indicators 70, 151-165.
 #' @references Turley MD, Bilotta GS, Krueger T, Brazier RE, Extence CA. 2015. Developing an improved biomonitoring tool for fine sediment: combining expert knowledge and empirical data. Ecological indicators 54, 82-86.
-#' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated ePSI scores and algorithms.
+#' @section Acknowledgements: We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated ePSI scores and algorithms. The validation exercise was performed at EA site 54017 (England, water body: Worfe; invertebrate data from 2000 to 2025). Data exploration and validation were made possible thanks to the RS grant AL\251060: "Advancing River biomonitoring: a multi-country evaluation of multiple metrics" (PI: Simone Guareschi).
 #' @importFrom stats aggregate reshape
 #' @export
 #' @seealso \code{\link{aggregate_taxa}}
