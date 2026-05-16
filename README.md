@@ -3,38 +3,13 @@
 A package for managing taxonomic and functional information and for calculating indices for biomonitoring of running waters, with a focus on the macroinvertebrate community.
 
 [![codecov](https://codecov.io/gh/alexology/biomonitoR/branch/main/graph/badge.svg?token=Ix3zzcWgko)](https://codecov.io/gh/alexology/biomonitoR)
-[![Build Status](https://travis-ci.org/alexology/biomonitoR.svg?branch=main)](https://travis-ci.org/alexology/biomonitoR)
-
 
 
 # Installation
 
 ```R
-# install the devtools package and then
-# The devtools package requires and updated version of Rtools.
-library(devtools)
-
-install_github("alexology/biomonitoR", ref = "main", build_vignettes = TRUE)
+remotes::install_github("alexology/biomonitoR", ref = "main")
 ```
-
-To install the newest version:
-
-```R
-# install the devtools package and then
-library(devtools)
-
-install_github("alexology/biomonitoR", ref = "develop", build_vignettes = TRUE)
-```
-
-To install old and deprecated version:
-
-```R
-# install the devtools package and then
-library(devtools)
-
-install_github("alexology/biomonitoR", ref = "old_version")
-```
-
 
 # Basic usage
 
@@ -66,20 +41,6 @@ bmwp(data_agr, method = "spa")
 aspt(data_agr, method = "spa")
 
 ```
-
-## Vignettes
-
-To have some more information on how to use biomonitoR take a look to the vignettes:
-
-```R
-# import data in biomonitoR
-vignette("introduction", package = "biomonitoR")
-
-# trait-based analysis
-vignette("functional", package = "biomonitoR")
-
-```
-
 
 ## Acknowledgments
 This package is based upon work from COST Action CA15113 (SMIRES, Science and Management of Intermittent Rivers and Ephemeral Streams,[www.smires.eu](http://www.smires.eu/)), supported by COST (European Cooperation in Science and Technology).
