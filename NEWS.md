@@ -1,3 +1,7 @@
+# biomonitoR 0.9.5
+* New function added. `bio_index()` computes predefined and custom trait-based indexes.
+
+
 # biomonitoR 0.9.4
 
 * Bug fixed. `flow_t()` did not correctly assign traits to taxonomic levels other than `Taxa`.

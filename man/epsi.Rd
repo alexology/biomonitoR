@@ -42,6 +42,8 @@ If \code{traceB} is set to \code{TRUE} a list with the following elements will b
 \item \code{parent_child_pairs} Parent-child pairs are not present in  the default implementation of epsi. A \code{data.frame} if both a  taxon and a parent
 taxon receive a score.
 }
+
+Please note that, to obtain data equivalent to those from the UK Environmental Agency, it is highly recommended to treat \emph{Ancylus}, \emph{Ancylus fluviatilis} and Ancylidae at the family level as Ancylidae (FSSR = A) rather than "Planorbidae". In PSI calculations, we suggest using \code{aggregate = FALSE}, while in E-PSI (Turley et al., 2015), \code{aggregate = TRUE} may be necessary.
 }
 \description{
 \Sexpr[results=rd, stage=render]{ lifecycle::badge("maturing") }
@@ -60,7 +62,7 @@ This function calculates the Empyrically-weighted Proportion of Sediment-sensiti
 All the information used for \code{epsi()} calculation can be retrieved with the function \code{\link{show_scores}}.
 }
 \section{Acknowledgements}{
- We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated ePSI scores and algorithms.
+ We thank Carol Fitzpatrick, Richard Chadd, Judy England and Rachel Stubbington for providing us with the most updated ePSI scores and algorithms. The validation exercise was performed at EA site 54017 (England, water body: Worfe; invertebrate data from 2000 to 2025). Data exploration and validation were made possible thanks to the RS grant AL\251060: "Advancing River biomonitoring: a multi-country evaluation of multiple metrics" (PI: Simone Guareschi).
 }
 
 \examples{
