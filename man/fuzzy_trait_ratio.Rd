@@ -27,7 +27,7 @@ fuzzy_trait_ratio(
 
 \item{denominator}{Names of the columns to set as the denominator.}
 
-\item{trans}{The function used to transform the abundances, by default \code{log1p}.}
+\item{trans}{The function used to transform the abundances, by default \code{NULL}.}
 }
 \description{
 This function calculates indices starting from fuzzy coded data.

@@ -14,9 +14,11 @@
 #' @param num Character vector. Trait(s) to be used in the numerator for a custom index. Required if `index = "custom"`.
 #' @param den Character vector. Trait(s) to be used in the denominator for a custom index. Required if `index = "custom"`.
 #' @param col_blocks Integer vector. A vector containing the number of modalities for each trait. IF NULL, the default Tachet et al. (2010) col_blocks will be assigned.
+#' @param col_order A character vector specifying the trait columns to use, in their intended block order. Required when
+#'   index = "custom". All columns referenced by num and den must be included.
 #'
 #' @return A numeric vector or data frame with the trait-based index per sample.
-#' 
+#'
 #' @details
 #'
 #' - When `index = "custom"`, you must provide both `num` and `den`, defining the trait columns for the ratio.
@@ -24,8 +26,7 @@
 #' The function automatically filters taxa with zero values in the selected trait columns and averages traits across blocks.
 #'
 #' @examples
-#' \dontrun{
-#' 
+#'
 #' Example 1
 #'  data(mi_prin)
 #'  mi_prin <- mi_prin[1:10, 1:5]
@@ -33,57 +34,54 @@
 #'  data_bio <- as_biomonitor(mi_prin)
 #'  data_agr <- aggregate_taxa(data_bio)
 #'  bio_index(x = data_agr)
-#'  
-#'  Example 2
+#'
+#' Example 2
 #'  set.seed(16)
-#'  t_db <- data.frame(Taxa = data_ts$Taxa,
-#'                     a_1 = runif(length(data_ts$Taxa)),
-#'                     b_1 = runif(length(data_ts$Taxa)),
-#'                     c_1 = runif(length(data_ts$Taxa)),
-#'                     a_2 = runif(length(data_ts$Taxa)),
-#'                     b_2 = runif(length(data_ts$Taxa)),
-#'                     c_2 = runif(length(data_ts$Taxa)),
-#'                     d_2 = runif(length(data_ts$Taxa)))
-#'  bio_index(x = data_agr, num = "a_1", den = c("b_1", "c_1"), 
-#'            index = "custom", col_blocks = 3, trait_db = t_db)
-#' }
+#'  t_db <- data.frame(Taxa = mi_prin$Taxa,
+#'                     a_1 = runif(length(mi_prin$Taxa)),
+#'                     b_1 = runif(length(mi_prin$Taxa)),
+#'                     c_1 = runif(length(mi_prin$Taxa)),
+#'                     a_2 = runif(length(mi_prin$Taxa)),
+#'                     b_2 = runif(length(mi_prin$Taxa)),
+#'                     c_2 = runif(length(mi_prin$Taxa)),
+#'                     d_2 = runif(length(mi_prin$Taxa)))
+#'  bio_index(x = data_agr, num = "a_1", den = c("b_1", "c_1"),
+#'            index = "custom", col_blocks = 3, trait_db = t_db,
+#'            col_order = c("a_1", "b_1", "c_1"))
 #'
 #' @seealso \code{\link{assign_traits}}, \code{\link{average_traits}}, \code{\link{fuzzy_trait_ratio}}
 #' @export
 
-# Set blocks for traits assignation
-select_blocks <- function(df, blocks) {
-  starts <- cumsum(c(1, blocks[-length(blocks)]))
-  ends <- cumsum(blocks)
-  
-  blocks_list <- mapply(function(start, end) df[, start:end, drop = FALSE],
-                        starts, ends, SIMPLIFY = FALSE)
-  
-  return(blocks_list)
-}
-
 
 # Main function
-bio_index <- function(x, tax_lev = "Taxa", trait_db = NULL, type = "ab", trans = NULL, 
-                      index = c("trophic_t"), rm_taxa = TRUE, group = "mi", 
+bio_index <- function(x, tax_lev = "Taxa", trait_db = NULL, type = "ab", trans = NULL,
+                      index = c("trophic_t"), rm_taxa = TRUE, group = "mi",
                       num = NULL, den = NULL, col_blocks = NULL, col_order = NULL){
-  
+
   index_values <- c("trophic_t", "saprobity_t", "temperature_t", "custom")
-  
+
   # Add a check for index
   if (!all(index %in% index_values)) {
     stop("Invalid 'index' value(s). Must be one or more of: ", paste(index_values, collapse = ", "))
   }
-  
+
   if (any(index != "custom") && (!is.null(num) || !is.null(den))) {
     stop("You can set numerator and denominator ONLY if all indices are 'custom'")
   }
   if ("custom" %in% index && (is.null(num) || is.null(den))) {
     stop("For custom index, both numerator and denominator must be provided")
   }
-  
+
+  if ("custom" %in% index && is.null(col_order)) {
+    stop("For custom index, please provide a col_order")
+  }
+
+  if ("custom" %in% index && is.null(col_blocks)) {
+    stop("For custom index, please provide a col_blocks")
+  }
+
   compute_single_index <- function(idx) {
-    
+
     # Select the numerator/denominator for the index calculation
     if (idx == "trophic_t") {
       numerator <- c("TROPHIC_1")
@@ -91,64 +89,79 @@ bio_index <- function(x, tax_lev = "Taxa", trait_db = NULL, type = "ab", trans =
       col_blocks <- 3
       col_order <- c("TROPHIC_1", "TROPHIC_2", "TROPHIC_3")
     }
-    
+
     if (idx == "saprobity_t") {
       numerator <- c("SAPROBITY_1", "SAPROBITY_2")
       denominator <- c("SAPROBITY_1", "SAPROBITY_2","SAPROBITY_3", "SAPROBITY_4", "SAPROBITY_5")
       col_blocks <- 5
       col_order <- c("SAPROBITY_1", "SAPROBITY_2","SAPROBITY_3", "SAPROBITY_4", "SAPROBITY_5")
     }
-    
+
     if (idx == "temperature_t") {
       numerator <- c("TEMPERATURE_1")
       denominator <- c("TEMPERATURE_1", "TEMPERATURE_2", "TEMPERATURE_3")
       col_blocks <- 3
       col_order <- c("TEMPERATURE_1", "TEMPERATURE_2", "TEMPERATURE_3")
     }
-    
+
     if (idx == "custom") {
       numerator <- num
       denominator <- den
+      col_blocks <- col_blocks
+      col_order = col_order
     }
-    
+
     # Assign traits
     data_ts <- if (is.null(trait_db)) {
       assign_traits(x, tax_lev = tax_lev, group = group)
     } else {
       assign_traits(x, tax_lev = tax_lev, trait_db = trait_db)
     }
-    
+
     data_ts_temp <- data_ts[, c("Taxa",
                                 "Taxa_db",
                                 "Traits_taxlev",
                                 "Traits_real",
                                 "Taxonomic_distance",
                                 col_order)]
-    
+
     db <- data_ts_temp[, col_order]
-    db_block <- select_blocks(db, col_blocks)
+    db_block <- .select_blocks(db, col_blocks)
     db_block <- lapply(db_block, function(block) rowSums(block) > 0)
-    
+
     if (rm_taxa) {
       non_zero_rows <- Reduce("&", db_block)
     } else {
       non_zero_rows <- Reduce("|", db_block)
     }
-    
+
     data_ts <- data_ts_temp[non_zero_rows, , drop = FALSE]
     data_ts_av <- average_traits(data_ts, col_blocks = col_blocks)
     data_ts_av[is.na(data_ts_av)] <- 0
-    
-    res <- fuzzy_trait_ratio(x, tax_lev = tax_lev, trait_db = data_ts_av, type = type, 
+
+    res <- fuzzy_trait_ratio(x, tax_lev = tax_lev, trait_db = data_ts_av, type = type,
                              numerator = numerator, denominator = denominator, trans = trans)
-    
+
     return(res)
   }
-  
-  
+
+
   results <- lapply(index, compute_single_index)
   names(results) <- index
-  
+
   return(results)
-  
+
 }
+
+
+# Set blocks for traits assignation
+.select_blocks <- function(df, blocks) {
+  starts <- cumsum(c(1, blocks[-length(blocks)]))
+  ends <- cumsum(blocks)
+
+  blocks_list <- mapply(function(start, end) df[, start:end, drop = FALSE],
+                        starts, ends, SIMPLIFY = FALSE)
+
+  return(blocks_list)
+}
+

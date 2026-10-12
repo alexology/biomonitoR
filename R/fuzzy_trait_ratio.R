@@ -8,7 +8,7 @@
 #' @param type Presence only `po` or abundance `ab`.
 #' @param numerator Names of the columns to set as the numerator.
 #' @param denominator Names of the columns to set as the denominator.
-#' @param trans The function used to transform the abundances, by default `log1p`.
+#' @param trans The function used to transform the abundances, by default `NULL`.
 #' @details This function best performs with standardized fuzzy coded data that sum up to 1 for each taxon.
 #' For each taxon, it works by i) summing the scores at the numerator, ii) summing the scores at the denominator,
 #' iii) multiplying these sums for the abundance of the target taxon. This step is performed for all the taxa in a community.
